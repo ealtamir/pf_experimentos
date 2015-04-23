@@ -1,0 +1,23 @@
+//
+//  test_constants.h
+//  pf2
+//
+//  Created by Enzo Altamiranda G on 22.04.15.
+//  Copyright (c) 2015 Enzo Altamiranda G. All rights reserved.
+//
+
+#ifndef pf2_test_constants_h
+#define pf2_test_constants_h
+
+const btScalar BALL_RESTITUTION = btScalar(.8);
+const btScalar BALL_FRICTION = btScalar(.5);
+
+const btVector3 GRAVITY = btVector3(0, 0, 0);
+
+const btScalar GROUND_FRICTION = btScalar(1);
+const btScalar GROUND_RESTITUTION = btScalar(1);
+
+const btScalar WALL_RESTITUTION = btScalar(.5);
+const btScalar WALL_FRICTION = btScalar(.5);
+
+#endif

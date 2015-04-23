@@ -1,18 +1,17 @@
-//
-//  BouncingBall.cpp
-//  pf2
-//
-//  Created by Enzo Altamiranda G on 15.04.15.
-//  Copyright (c) 2015 Enzo Altamiranda G. All rights reserved.
-//
 
-#include "BouncingBall.h"
+#include "Experiment.h"
 #include "GLDebugDrawer.h"
 #include <BulletDynamics/btBulletDynamicsCommon.h>
+#include "test_constants.h"
 
 GLDebugDrawer debugDrawerSphere;
 
-void BouncingBall::initPhysics()
+Experiment::Experiment()
+{
+    startTime = time(0);
+}
+
+void Experiment::initPhysics()
 {
     setTexturing(true);
     setShadows(true);
@@ -29,53 +28,44 @@ void BouncingBall::initPhysics()
     
     m_dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, overlappingPairCache, constraintSolver, collision_config);
     
-    btVector3 gravity(0, -10, 0);
-    
-    m_dynamicsWorld->setGravity(gravity);
+    m_dynamicsWorld->setGravity(GRAVITY);
     m_dynamicsWorld->setDebugDrawer(&debugDrawerSphere);
     
-    createGround();
-    createWall();
-    createBall();
-    
+    initializeBodies();
+
     clientResetScene();
 }
 
-void BouncingBall::createGround()
+
+btRigidBody* Experiment::createGround()
 {
     btCollisionShape* groundShape = new btBoxShape(btVector3(btScalar(200.), btScalar(1.), btScalar(200.)));
     //    btCollisionShape* planeShape = new btStaticPlaneShape(btVector3(0, 1, 0), 1);
     btTransform groundTransform;
     groundTransform.setIdentity();
     groundTransform.setOrigin(btVector3(0, -0.5, 0));
-    btRigidBody* ground = localCreateRigidBody(btScalar(0.), groundTransform, groundShape);
-    ground->setFriction(btScalar(.5));
+    return localCreateRigidBody(btScalar(0.), groundTransform, groundShape);
 }
 
-void BouncingBall::createWall()
+btRigidBody* Experiment::createWall()
 {
     btCollisionShape* wallShape = new btBoxShape(btVector3(btScalar(20), btScalar(20), btScalar(1)));
     btTransform groundTransform;
     groundTransform.setIdentity();
     groundTransform.setOrigin(btVector3(0, 10.5, 10));
-    wall = localCreateRigidBody(btScalar(0), groundTransform, wallShape);
-    wall->setFriction(btScalar(.5));
-    wall->setRestitution(btScalar(.2));
+    return localCreateRigidBody(btScalar(0), groundTransform, wallShape);
 }
 
-void BouncingBall::createBall()
+btRigidBody* Experiment::createBall()
 {
     btCollisionShape* sphereShape = new btSphereShape(2.);
     btTransform groundTransform;
     groundTransform.setIdentity();
     groundTransform.setOrigin(btVector3(0, 20, -30));
-    ball = localCreateRigidBody(1, groundTransform, sphereShape);
-    ball->setFriction(btScalar(.5));
-    ball->setRestitution(btScalar(.5));
-
+    return localCreateRigidBody(1, groundTransform, sphereShape);
 }
 
-void BouncingBall::clientMoveAndDisplay()
+void Experiment::clientMoveAndDisplay()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
@@ -89,6 +79,7 @@ void BouncingBall::clientMoveAndDisplay()
     if (m_dynamicsWorld)
     {
         initObjects();
+        worldStep();
         m_dynamicsWorld->stepSimulation(ms / 1000000.);
         //optional but useful: debug drawing
         m_dynamicsWorld->debugDrawWorld();
@@ -101,12 +92,15 @@ void BouncingBall::clientMoveAndDisplay()
     swapBuffers();
 }
 
-void BouncingBall::displayCallback()
+void Experiment::displayCallback()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
     if (m_dynamicsWorld)
+    {
         m_dynamicsWorld->debugDrawWorld();
+        worldStep();
+    }
     
     renderme();
     
@@ -114,16 +108,8 @@ void BouncingBall::displayCallback()
     swapBuffers();
 }
 
-void BouncingBall::initObjects() {
-    if (objectsInitialized) {
-        return;
-    }
-    ball->activate(true);
-    ball->applyCentralImpulse(btVector3(0, 0, 50));
-    objectsInitialized = true;
-}
 
-void BouncingBall::keyboardCallback(unsigned char key, int x, int y)
+void Experiment::keyboardCallback(unsigned char key, int x, int y)
 {
     switch (key)
     {

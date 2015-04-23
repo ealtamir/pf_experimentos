@@ -6,13 +6,15 @@
 //  Copyright (c) 2015 Enzo Altamiranda G. All rights reserved.
 //
 
-#include "BouncingBall.h"
+#include "FallingBall.h"
+#include "GLDebugDrawer.h"
 #include "TranslatingCubeDemo.h"
 
 int main(int argc,char* argv[])
 {
-    BouncingBall demoApp;
-    //	demoApp.configDebugDrawer(&debugDrawer);
+    FallingBall demoApp;
+    
+    //demoApp.configDebugDrawer(&debugDrawer);
     
     demoApp.initPhysics();
     demoApp.setCameraDistance(btScalar(80.));
