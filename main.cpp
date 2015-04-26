@@ -6,18 +6,18 @@
 //  Copyright (c) 2015 Enzo Altamiranda G. All rights reserved.
 //
 
-#include "FallingBall.h"
+
 #include "GLDebugDrawer.h"
-#include "TranslatingCubeDemo.h"
+#include "TranslatingCube.h"
 
 int main(int argc,char* argv[])
 {
-    FallingBall demoApp;
+    TranslatingCube demoApp;
     
     //demoApp.configDebugDrawer(&debugDrawer);
     
     demoApp.initPhysics();
-    demoApp.setCameraDistance(btScalar(80.));
+    demoApp.setCameraDistance(btScalar(40.));
     demoApp.setCameraForwardAxis(0 );
 //    demoApp.setCameraUp(btVector3(10, 50, -10));
     

@@ -23,9 +23,6 @@ void FallingBall::initializeBodies() {
 
 
 void FallingBall::initObjects() {
-    if (objectsInitialized) {
-        return;
-    }
     ball->activate(true);
     ball->setLinearVelocity(btVector3(0, -5, 0));
     objectsInitialized = true;

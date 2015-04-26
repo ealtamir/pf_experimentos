@@ -49,10 +49,11 @@ btRigidBody* Experiment::createGround()
 
 btRigidBody* Experiment::createWall()
 {
-    btCollisionShape* wallShape = new btBoxShape(btVector3(btScalar(20), btScalar(20), btScalar(1)));
+    btCollisionShape* wallShape = new btBoxShape(btVector3(btScalar(40), btScalar(40), btScalar(1)));
     btTransform groundTransform;
     groundTransform.setIdentity();
-    groundTransform.setOrigin(btVector3(0, 10.5, 10));
+    groundTransform.setOrigin(btVector3(-4, 10.5, -4));
+//    groundTransform.setRotation(btQuaternion(0, 1, 0, 30));
     return localCreateRigidBody(btScalar(0), groundTransform, wallShape);
 }
 
@@ -63,6 +64,17 @@ btRigidBody* Experiment::createBall()
     groundTransform.setIdentity();
     groundTransform.setOrigin(btVector3(0, 20, -30));
     return localCreateRigidBody(1, groundTransform, sphereShape);
+}
+
+btRigidBody* Experiment::createCube()
+{
+    float size = 3;
+    float sizeScalar = btScalar(size);
+    btCollisionShape* boxShape = new btBoxShape(btVector3(sizeScalar, sizeScalar, sizeScalar));
+    btTransform boxTransform;
+    boxTransform.setIdentity();
+    boxTransform.setOrigin(btVector3(0, size, 0));
+    return localCreateRigidBody(1, boxTransform, boxShape);
 }
 
 void Experiment::clientMoveAndDisplay()
@@ -78,9 +90,11 @@ void Experiment::clientMoveAndDisplay()
     
     if (m_dynamicsWorld)
     {
-        initObjects();
+        if (!objectsInitialized) {
+            initObjects();
+        }
         worldStep();
-        m_dynamicsWorld->stepSimulation(ms / 1000000.);
+        m_dynamicsWorld->stepSimulation(1 / 60.);
         //optional but useful: debug drawing
         m_dynamicsWorld->debugDrawWorld();
     }

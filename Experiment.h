@@ -47,11 +47,15 @@ protected:
     
     btRigidBody* createBall();
     
+    btRigidBody* createCube();
+    
     virtual void initializeBodies() = 0;
     
     virtual void initObjects() = 0;
     
     virtual void worldStep() = 0;
+    
+    virtual bool stopExperiment() = 0;
 };
 
 

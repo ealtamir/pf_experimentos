@@ -10,14 +10,16 @@
 #define pf2_test_constants_h
 
 const btScalar BALL_RESTITUTION = btScalar(.8);
-const btScalar BALL_FRICTION = btScalar(.5);
+const btScalar BALL_FRICTION = btScalar(.1);
 
-const btVector3 GRAVITY = btVector3(0, 0, 0);
+const btVector3 GRAVITY = btVector3(0, -10, 0);
 
 const btScalar GROUND_FRICTION = btScalar(1);
 const btScalar GROUND_RESTITUTION = btScalar(1);
 
-const btScalar WALL_RESTITUTION = btScalar(.5);
-const btScalar WALL_FRICTION = btScalar(.5);
+const btScalar WALL_RESTITUTION = btScalar(1);
+const btScalar WALL_FRICTION = btScalar(1);
+
+const btScalar BOX_FRICTION = btScalar(.5);
 
 #endif
