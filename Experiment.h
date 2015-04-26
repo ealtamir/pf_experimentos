@@ -21,6 +21,9 @@
 #include <BulletDynamics/btBulletDynamicsCommon.h>
 #include <time.h>
 
+const btScalar DEFAULT_EXPERIMENT_INTERVAL = 0.001;
+const btScalar DEFAULT_CHANGE_COUNTER = 10;
+
 class Experiment : public PlatformDemoApplication
 {
 protected:

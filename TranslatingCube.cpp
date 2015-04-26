@@ -10,6 +10,11 @@
 #include "test_constants.h"
 
 
+TranslatingCube::TranslatingCube()
+{
+    
+}
+
 void TranslatingCube::initializeBodies()
 {
     box = createCube();
@@ -30,13 +35,13 @@ void TranslatingCube::initObjects()
 
 void TranslatingCube::worldStep()
 {
-    float seconds = difftime(time(0), startTime);
-    if (seconds > 0.0)
-    {
+    if (!stopExperiment()) {
         startTime = time(0);
         btTransform trans;
         box->getMotionState()->getWorldTransform(trans);
         printf("x = %f\n", trans.getOrigin().getX());
+    } else {
+        exit(0);
     }
 }
 

@@ -15,13 +15,15 @@
 
 class TranslatingCube : public Experiment
 {
-
+public:
+    TranslatingCube();
+    
 private:
     btRigidBody* ground;
     btRigidBody* box;
     btRigidBody* wall;
     
-    ObjectStoppedCondition condition;
+    ObjectStoppedCondition condition = NULL;
     
 protected:
     void initializeBodies();
