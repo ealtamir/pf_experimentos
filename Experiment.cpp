@@ -2,6 +2,7 @@
 #include "Experiment.h"
 #include "GLDebugDrawer.h"
 #include <BulletDynamics/btBulletDynamicsCommon.h>
+#include <BulletCollision/Gimpact/btGImpactCollisionAlgorithm.h>
 #include "test_constants.h"
 
 GLDebugDrawer debugDrawerSphere;
@@ -16,23 +17,19 @@ void Experiment::initPhysics()
     setTexturing(true);
     setShadows(true);
     
+    btBroadphaseInterface* broadphase = new btDbvtBroadphase();
     btDefaultCollisionConfiguration* collision_config = new btDefaultCollisionConfiguration();
     btCollisionDispatcher* dispatcher = new btCollisionDispatcher(collision_config);
+    btGImpactCollisionAlgorithm::registerAlgorithm(dispatcher);
     
-    btVector3 worldAabbMin(-10000, -10000, -10000);
-    btVector3 worldAabbMax(10000, 10000, 10000);
-    
-    btBroadphaseInterface* overlappingPairCache = new btAxisSweep3(worldAabbMin, worldAabbMax);
-    
-    btConstraintSolver* constraintSolver = new btSequentialImpulseConstraintSolver;
-    
-    m_dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, overlappingPairCache, constraintSolver, collision_config);
+    btSequentialImpulseConstraintSolver* solver = new btSequentialImpulseConstraintSolver();
+
+    m_dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, solver, collision_config);
     
     m_dynamicsWorld->setGravity(GRAVITY);
     m_dynamicsWorld->setDebugDrawer(&debugDrawerSphere);
     
     initializeBodies();
-
     clientResetScene();
 }
 
@@ -53,28 +50,30 @@ btRigidBody* Experiment::createWall()
     btTransform groundTransform;
     groundTransform.setIdentity();
     groundTransform.setOrigin(btVector3(-4, 10.5, -4));
-//    groundTransform.setRotation(btQuaternion(0, 1, 0, 30));
     return localCreateRigidBody(btScalar(0), groundTransform, wallShape);
 }
 
 btRigidBody* Experiment::createBall()
 {
-    btCollisionShape* sphereShape = new btSphereShape(2.);
+    float radius = 2.;
+    int mass = 1;
+    btCollisionShape* sphereShape = new btSphereShape(radius);
     btTransform groundTransform;
     groundTransform.setIdentity();
-    groundTransform.setOrigin(btVector3(0, 20, -30));
-    return localCreateRigidBody(1, groundTransform, sphereShape);
+    groundTransform.setOrigin(BALL_ORIGIN);
+    return localCreateRigidBody(mass, groundTransform, sphereShape);
 }
 
 btRigidBody* Experiment::createCube()
 {
     float size = 3;
     float sizeScalar = btScalar(size);
+    float mass = 1;
     btCollisionShape* boxShape = new btBoxShape(btVector3(sizeScalar, sizeScalar, sizeScalar));
     btTransform boxTransform;
     boxTransform.setIdentity();
     boxTransform.setOrigin(btVector3(0, size, 0));
-    return localCreateRigidBody(1, boxTransform, boxShape);
+    return localCreateRigidBody(mass, boxTransform, boxShape);
 }
 
 void Experiment::clientMoveAndDisplay()

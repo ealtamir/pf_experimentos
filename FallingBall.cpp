@@ -19,20 +19,29 @@ void FallingBall::initializeBodies() {
         
     ground->setFriction(GROUND_FRICTION);
     ground->setRestitution(GROUND_RESTITUTION);
+    
+    condition = ObjectStoppedCondition(ball);
+    ball->setDamping(0, 0);
 }
 
 
 void FallingBall::initObjects() {
     ball->activate(true);
-    ball->setLinearVelocity(btVector3(0, -5, 0));
+    ball->setLinearVelocity(BALL_VELOCITY);
     objectsInitialized = true;
 }
 
 void FallingBall::worldStep() {
     float seconds = difftime(time(0), startTime);
-    if (seconds > 0.1)
-    {
+//    if (!stopExperiment())
+//    {
         startTime = time(0);
-        printf("speedY: %f\n", ball->getLinearVelocity().getY());
-    }
+        printf("V_y: %f\n", ball->getLinearVelocity().getY());
+//    }
+    ball->activate(true);
+}
+
+bool FallingBall::stopExperiment()
+{
+    return condition.stopConditionMet();
 }

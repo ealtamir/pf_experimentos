@@ -20,6 +20,8 @@
 #include <stdio.h>
 #include <BulletDynamics/btBulletDynamicsCommon.h>
 #include <time.h>
+#include <string>
+#include "ObjectStoppedCondition.h"
 
 const btScalar DEFAULT_EXPERIMENT_INTERVAL = 0.001;
 const btScalar DEFAULT_CHANGE_COUNTER = 10;
@@ -40,10 +42,20 @@ public:
     
     virtual void displayCallback();
     
+    void enableStoppingCondition(bool status) {
+        stoppingConditionEnabled = status;
+    }
+    
+    virtual std::string getName() {
+        return "Experiment";
+    }
+    
 private:
     virtual void keyboardCallback(unsigned char key, int x, int y);
     
 protected:
+    ObjectStoppedCondition condition = NULL;
+    
     btRigidBody* createGround();
     
     btRigidBody* createWall();
@@ -59,6 +71,9 @@ protected:
     virtual void worldStep() = 0;
     
     virtual bool stopExperiment() = 0;
+    
+    bool stoppingConditionEnabled = true;
+
 };
 
 

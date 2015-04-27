@@ -30,7 +30,7 @@ void TranslatingCube::initObjects()
 {
     objectsInitialized = true;
     box->activate(true);
-    box->setLinearVelocity(btVector3(10, 0, 0));
+    box->setLinearVelocity(BOX_INITIAL_VEL);
 }
 
 void TranslatingCube::worldStep()
@@ -39,8 +39,8 @@ void TranslatingCube::worldStep()
         startTime = time(0);
         btTransform trans;
         box->getMotionState()->getWorldTransform(trans);
-        printf("x = %f\n", trans.getOrigin().getX());
-    } else {
+        printf("%f\n", trans.getOrigin().getX());
+    } else if (stoppingConditionEnabled) {
         exit(0);
     }
 }

@@ -24,6 +24,9 @@ protected:
     void initObjects();
     
     void worldStep();
+    
+    bool stopExperiment();
+
 };
 
 

@@ -11,8 +11,10 @@
 
 const btScalar BALL_RESTITUTION = btScalar(.8);
 const btScalar BALL_FRICTION = btScalar(.1);
+const btVector3 BALL_VELOCITY = btVector3(0, -10, 0);
+const btVector3 BALL_ORIGIN = btVector3(0, 4, 0);
 
-const btVector3 GRAVITY = btVector3(0, -10, 0);
+const btVector3 GRAVITY = btVector3(0, 0, 0);
 
 const btScalar GROUND_FRICTION = btScalar(1);
 const btScalar GROUND_RESTITUTION = btScalar(1);
@@ -20,6 +22,7 @@ const btScalar GROUND_RESTITUTION = btScalar(1);
 const btScalar WALL_RESTITUTION = btScalar(1);
 const btScalar WALL_FRICTION = btScalar(1);
 
-const btScalar BOX_FRICTION = btScalar(.5);
+const btScalar BOX_FRICTION = btScalar(.75);
+const btVector3 BOX_INITIAL_VEL = btVector3(10, 0, 0);
 
 #endif

@@ -23,7 +23,6 @@ private:
     btRigidBody* box;
     btRigidBody* wall;
     
-    ObjectStoppedCondition condition = NULL;
     
 protected:
     void initializeBodies();

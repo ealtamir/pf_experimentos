@@ -8,19 +8,21 @@
 
 
 #include "GLDebugDrawer.h"
-#include "TranslatingCube.h"
+//#include "TranslatingCube.h"
+#include "FallingBall.h"
 
 int main(int argc,char* argv[])
 {
-    TranslatingCube demoApp;
+    FallingBall demoApp;
+    demoApp.enableStoppingCondition(false);
     
     //demoApp.configDebugDrawer(&debugDrawer);
     
     demoApp.initPhysics();
-    demoApp.setCameraDistance(btScalar(40.));
-    demoApp.setCameraForwardAxis(0 );
-//    demoApp.setCameraUp(btVector3(10, 50, -10));
+    demoApp.setCameraDistance(btScalar(60.));
+//    demoApp.setCameraForwardAxis(0);
+    demoApp.setCameraUp(btVector3(0, 10, 0));
     
-    return glutmain(argc, argv, 1024, 768,"Translating Cube",&demoApp);
+    return glutmain(argc, argv, 1024, 768, "Experiment",&demoApp);
     
 }
