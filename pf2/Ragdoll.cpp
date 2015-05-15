@@ -326,6 +326,14 @@ btScalar(0.)));
 		m_ownerWorld->addConstraint(m_joints[JOINT_RIGHT_KNEE], true);
 	}
 /// *************************** ///
+    
+/// ******* RIGHT FOOT ******** ///
+
+///
+
+/// ******* LEFT FOOT ********* ///
+    
+///
 
 }
 

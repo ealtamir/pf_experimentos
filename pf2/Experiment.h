@@ -23,6 +23,8 @@
 #include <string>
 #include "ObjectStoppedCondition.h"
 
+#include "Ragdoll.h"
+
 const btScalar DEFAULT_EXPERIMENT_INTERVAL = 0.001;
 const btScalar DEFAULT_CHANGE_COUNTER = 10;
 
@@ -63,6 +65,8 @@ protected:
     btRigidBody* createBall();
     
     btRigidBody* createCube();
+    
+    RagDoll* createRagdoll();
     
     virtual void initializeBodies() = 0;
     

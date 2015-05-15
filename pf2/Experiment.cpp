@@ -76,6 +76,12 @@ btRigidBody* Experiment::createCube()
     return localCreateRigidBody(mass, boxTransform, boxShape);
 }
 
+RagDoll* Experiment::createRagdoll()
+{
+    RagDoll* ragDoll = new RagDoll (m_dynamicsWorld, btVector3 (0,0,0),2.f);
+    return ragDoll;
+}
+
 void Experiment::clientMoveAndDisplay()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

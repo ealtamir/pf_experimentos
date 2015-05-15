@@ -9,20 +9,22 @@
 
 #include "GLDebugDrawer.h"
 //#include "TranslatingCube.h"
-#include "FallingBall.h"
+//#include "FallingBall.h"
+#include "Ragdoll_experiment.h"
 
 int main(int argc,char* argv[])
 {
-    FallingBall demoApp;
+    Ragdoll_experiment demoApp;
     demoApp.enableStoppingCondition(false);
     
-    //demoApp.configDebugDrawer(&debugDrawer);
+//    demoApp.configDebugDrawer(&debugDrawer);
     
     demoApp.initPhysics();
-    demoApp.setCameraDistance(btScalar(60.));
+    demoApp.setCameraDistance(btScalar(5.));
 //    demoApp.setCameraForwardAxis(0);
-    demoApp.setCameraUp(btVector3(0, 10, 0));
+    demoApp.setCameraUp(btVector3(0, 5, 0));
+
     
-    return glutmain(argc, argv, 1024, 768, "Experiment",&demoApp);
+    return glutmain(argc, argv, 800, 600, "Experiment",&demoApp);
     
 }

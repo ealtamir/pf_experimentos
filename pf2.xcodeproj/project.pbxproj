@@ -41,6 +41,7 @@
 		C65D452A1AF3081F0083F04E /* LinearMath.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C65D45291AF3081F0083F04E /* LinearMath.framework */; };
 		C65D452D1AF308ED0083F04E /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C65D452C1AF308ED0083F04E /* OpenGL.framework */; };
 		C65D452F1AF308F90083F04E /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C65D452E1AF308F90083F04E /* GLUT.framework */; };
+		E247021A1B05866800135879 /* Ragdoll_experiment.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E24702181B05866800135879 /* Ragdoll_experiment.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -114,6 +115,8 @@
 		C65D45291AF3081F0083F04E /* LinearMath.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LinearMath.framework; path = /Library/Frameworks/LinearMath.framework; sourceTree = "<absolute>"; };
 		C65D452C1AF308ED0083F04E /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = ../../../../System/Library/Frameworks/OpenGL.framework; sourceTree = "<group>"; };
 		C65D452E1AF308F90083F04E /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = ../../../../System/Library/Frameworks/GLUT.framework; sourceTree = "<group>"; };
+		E24702181B05866800135879 /* Ragdoll_experiment.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Ragdoll_experiment.cpp; sourceTree = "<group>"; };
+		E24702191B05866800135879 /* Ragdoll_experiment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ragdoll_experiment.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -216,6 +219,7 @@
 		C65D45121AF307060083F04E /* experiments */ = {
 			isa = PBXGroup;
 			children = (
+				E24702171B05863300135879 /* ragdoll_experiments */,
 				C65D45131AF307390083F04E /* aux */,
 				C65D45161AF307690083F04E /* falling_ball */,
 				C65D45141AF307580083F04E /* translating_cube */,
@@ -283,6 +287,15 @@
 			name = frameworks;
 			sourceTree = "<group>";
 		};
+		E24702171B05863300135879 /* ragdoll_experiments */ = {
+			isa = PBXGroup;
+			children = (
+				E24702181B05866800135879 /* Ragdoll_experiment.cpp */,
+				E24702191B05866800135879 /* Ragdoll_experiment.h */,
+			);
+			name = ragdoll_experiments;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -341,6 +354,7 @@
 			files = (
 				C65D44E51AF305C00083F04E /* Win32GenericJointDemo.cpp in Sources */,
 				C65D450E1AF306DC0083F04E /* stb_image.cpp in Sources */,
+				E247021A1B05866800135879 /* Ragdoll_experiment.cpp in Sources */,
 				C65D44DF1AF305C00083F04E /* GenericJointDemo.cpp in Sources */,
 				C65D44E21AF305C00083F04E /* Ragdoll.cpp in Sources */,
 				C65D450A1AF306DC0083F04E /* GLDebugFont.cpp in Sources */,
@@ -485,6 +499,7 @@
 				C65D44C71AF3054B0083F04E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
