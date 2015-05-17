@@ -33,8 +33,10 @@ RagDoll::RagDoll (btDynamicsWorld* ownerWorld, const btVector3& positionOffset,
 	m_shapes[BODYPART_HEAD] = new btCapsuleShape(btScalar(scale_ragdoll*0.10), btScalar(scale_ragdoll*0.05));
 	m_shapes[BODYPART_LEFT_UPPER_LEG] = new btCapsuleShape(btScalar(scale_ragdoll*0.07), btScalar(scale_ragdoll*0.45));
 	m_shapes[BODYPART_LEFT_LOWER_LEG] = new btCapsuleShape(btScalar(scale_ragdoll*0.05), btScalar(scale_ragdoll*0.37));
+    m_shapes[BODYPART_LEFT_FOOT] = new btBoxShape(btVector3(btScalar(scale_ragdoll*0.075), btScalar(scale_ragdoll*0.03), btScalar(scale_ragdoll*0.15)));
 	m_shapes[BODYPART_RIGHT_UPPER_LEG] = new btCapsuleShape(btScalar(scale_ragdoll*0.07), btScalar(scale_ragdoll*0.45));
 	m_shapes[BODYPART_RIGHT_LOWER_LEG] = new btCapsuleShape(btScalar(scale_ragdoll*0.05), btScalar(scale_ragdoll*0.37));
+    m_shapes[BODYPART_RIGHT_FOOT] = new btBoxShape(btVector3(btScalar(scale_ragdoll*0.075), btScalar(scale_ragdoll*0.03), btScalar(scale_ragdoll*0.15)));
 	m_shapes[BODYPART_LEFT_UPPER_ARM] = new btCapsuleShape(btScalar(scale_ragdoll*0.05), btScalar(scale_ragdoll*0.33));
 	m_shapes[BODYPART_LEFT_LOWER_ARM] = new btCapsuleShape(btScalar(scale_ragdoll*0.04), btScalar(scale_ragdoll*0.25));
 	m_shapes[BODYPART_RIGHT_UPPER_ARM] = new btCapsuleShape(btScalar(scale_ragdoll*0.05), btScalar(scale_ragdoll*0.33));
@@ -73,6 +75,14 @@ btScalar(0.)));
 	transform.setIdentity();
 	transform.setOrigin(btVector3(btScalar(0.18*scale_ragdoll), btScalar(0.2*scale_ragdoll), btScalar(0.)));
 	m_bodies[BODYPART_RIGHT_LOWER_LEG] = localCreateRigidBody(btScalar(1.), offset*transform, m_shapes[BODYPART_RIGHT_LOWER_LEG]);
+    
+    transform.setIdentity();
+    transform.setOrigin(btVector3(btScalar(0.18*scale_ragdoll), btScalar(0.2*scale_ragdoll), btScalar(0.)));
+    m_bodies[BODYPART_LEFT_FOOT] = localCreateRigidBody(btScalar(1.), offset*transform, m_shapes[BODYPART_LEFT_FOOT]);
+    
+    transform.setIdentity();
+    transform.setOrigin(btVector3(btScalar(0.18*scale_ragdoll), btScalar(0.2*scale_ragdoll), btScalar(0.)));
+    m_bodies[BODYPART_RIGHT_FOOT] = localCreateRigidBody(btScalar(1.), offset*transform, m_shapes[BODYPART_RIGHT_FOOT]);
 
 	transform.setIdentity();
 	transform.setOrigin(btVector3(btScalar(-0.35*scale_ragdoll), btScalar(1.45*scale_ragdoll), btScalar(0.)));
@@ -127,11 +137,7 @@ btScalar(0.)));
 		m_joints[JOINT_SPINE_HEAD] = joint6DOF;
 		m_ownerWorld->addConstraint(m_joints[JOINT_SPINE_HEAD], true);
 	}
-/// *************************** ///
-
-
-
-
+/// ****************************** ///
 /// ******* LEFT SHOULDER ******** ///
 	{
 		localA.setIdentity(); localB.setIdentity();
@@ -154,8 +160,6 @@ btScalar(0.)));
 		m_ownerWorld->addConstraint(m_joints[JOINT_LEFT_SHOULDER], true);
 	}
 /// *************************** ///
-
-
 /// ******* RIGHT SHOULDER ******** ///
 	{
 		localA.setIdentity(); localB.setIdentity();
@@ -177,7 +181,6 @@ btScalar(0.)));
 		m_ownerWorld->addConstraint(m_joints[JOINT_RIGHT_SHOULDER], true);
 	}
 /// *************************** ///
-
 /// ******* LEFT ELBOW ******** ///
 	{
 		localA.setIdentity(); localB.setIdentity();
@@ -197,7 +200,6 @@ btScalar(0.)));
 		m_ownerWorld->addConstraint(m_joints[JOINT_LEFT_ELBOW], true);
 	}
 /// *************************** ///
-
 /// ******* RIGHT ELBOW ******** ///
 	{
 		localA.setIdentity(); localB.setIdentity();
@@ -218,9 +220,7 @@ btScalar(0.)));
 		m_ownerWorld->addConstraint(m_joints[JOINT_RIGHT_ELBOW], true);
 	}
 /// *************************** ///
-
-
-/// ******* PELVIS ******** ///
+/// ********* PELVIS ********** ///
 	{
 		localA.setIdentity(); localB.setIdentity();
 
@@ -241,8 +241,7 @@ btScalar(0.)));
 		m_ownerWorld->addConstraint(m_joints[JOINT_PELVIS_SPINE], true);
 	}
 /// *************************** ///
-
-/// ******* LEFT HIP ******** ///
+/// ******* LEFT HIP ********** ///
 	{
 		localA.setIdentity(); localB.setIdentity();
 
@@ -263,8 +262,6 @@ btScalar(0.)));
 		m_ownerWorld->addConstraint(m_joints[JOINT_LEFT_HIP], true);
 	}
 /// *************************** ///
-
-
 /// ******* RIGHT HIP ******** ///
 	{
 		localA.setIdentity(); localB.setIdentity();
@@ -284,9 +281,7 @@ btScalar(0.)));
 		m_joints[JOINT_RIGHT_HIP] = joint6DOF;
 		m_ownerWorld->addConstraint(m_joints[JOINT_RIGHT_HIP], true);
 	}
-/// *************************** ///
-
-
+/// ************************** ///
 /// ******* LEFT KNEE ******** ///
 	{
 		localA.setIdentity(); localB.setIdentity();
@@ -306,7 +301,25 @@ btScalar(0.)));
 		m_ownerWorld->addConstraint(m_joints[JOINT_LEFT_KNEE], true);
 	}
 /// *************************** ///
-
+/// ******* LEFT FOOT ********* ///
+    {
+        localA.setIdentity(); localB.setIdentity();
+        
+        localA.setOrigin(btVector3(btScalar(0.), btScalar(-0.225*scale_ragdoll), btScalar(0.)));
+        localB.setOrigin(btVector3(btScalar(0.), btScalar(0.), btScalar(scale_ragdoll*0.15*0.8)));
+        joint6DOF =  new btGeneric6DofConstraint (*m_bodies[BODYPART_LEFT_LOWER_LEG], *m_bodies[BODYPART_LEFT_FOOT], localA, localB,useLinearReferenceFrameA);
+        
+#ifdef RIGID
+        joint6DOF->setAngularLowerLimit(btVector3(-SIMD_EPSILON,-SIMD_EPSILON,-SIMD_EPSILON));
+        joint6DOF->setAngularUpperLimit(btVector3(SIMD_EPSILON,SIMD_EPSILON,SIMD_EPSILON));
+#else
+        joint6DOF->setAngularLowerLimit(btVector3(-SIMD_PI*0.2,-SIMD_EPSILON,-SIMD_EPSILON));
+        joint6DOF->setAngularUpperLimit(btVector3(SIMD_PI*0.5,SIMD_EPSILON,SIMD_EPSILON));
+#endif
+        m_joints[JOINT_LEFT_FOOT] = joint6DOF;
+        m_ownerWorld->addConstraint(m_joints[JOINT_LEFT_FOOT], true);
+    }
+/// *************************** ///
 /// ******* RIGHT KNEE ******** ///
 	{
 		localA.setIdentity(); localB.setIdentity();
@@ -326,13 +339,24 @@ btScalar(0.)));
 		m_ownerWorld->addConstraint(m_joints[JOINT_RIGHT_KNEE], true);
 	}
 /// *************************** ///
-    
 /// ******* RIGHT FOOT ******** ///
-
-///
-
-/// ******* LEFT FOOT ********* ///
-    
+    {
+        localA.setIdentity(); localB.setIdentity();
+        
+        localA.setOrigin(btVector3(btScalar(0.), btScalar(-0.225*scale_ragdoll), btScalar(0.)));
+        localB.setOrigin(btVector3(btScalar(0.), btScalar(0.), btScalar(scale_ragdoll*0.15*0.8)));
+        joint6DOF =  new btGeneric6DofConstraint (*m_bodies[BODYPART_RIGHT_LOWER_LEG], *m_bodies[BODYPART_RIGHT_FOOT], localA, localB,useLinearReferenceFrameA);
+        
+#ifdef RIGID
+        joint6DOF->setAngularLowerLimit(btVector3(-SIMD_EPSILON,-SIMD_EPSILON,-SIMD_EPSILON));
+        joint6DOF->setAngularUpperLimit(btVector3(SIMD_EPSILON,SIMD_EPSILON,SIMD_EPSILON));
+#else
+        joint6DOF->setAngularLowerLimit(btVector3(-SIMD_PI*0.2,-SIMD_EPSILON,-SIMD_EPSILON));
+        joint6DOF->setAngularUpperLimit(btVector3(SIMD_PI*0.5,SIMD_EPSILON,SIMD_EPSILON));
+#endif
+        m_joints[JOINT_RIGHT_FOOT] = joint6DOF;
+        m_ownerWorld->addConstraint(m_joints[JOINT_RIGHT_FOOT], true);
+    }
 ///
 
 }
