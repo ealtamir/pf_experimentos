@@ -69,6 +69,7 @@ btScalar(0.)));
 	m_bodies[BODYPART_LEFT_LOWER_LEG] = localCreateRigidBody(btScalar(1.), offset*transform, m_shapes[BODYPART_LEFT_LOWER_LEG]);
 
 	transform.setIdentity();
+//    transform.setRotation(btQuaternion(1., 0., 0., 0.8));
 	transform.setOrigin(btVector3(btScalar(0.18*scale_ragdoll), btScalar(0.65*scale_ragdoll), btScalar(0.)));
 	m_bodies[BODYPART_RIGHT_UPPER_LEG] = localCreateRigidBody(btScalar(1.), offset*transform, m_shapes[BODYPART_RIGHT_UPPER_LEG]);
 
@@ -79,11 +80,13 @@ btScalar(0.)));
     transform.setIdentity();
     transform.setOrigin(btVector3(btScalar(0.18*scale_ragdoll), btScalar(0.2*scale_ragdoll), btScalar(0.)));
     m_bodies[BODYPART_LEFT_FOOT] = localCreateRigidBody(btScalar(1.), offset*transform, m_shapes[BODYPART_LEFT_FOOT]);
+    m_bodies[BODYPART_LEFT_FOOT]->setFriction(btScalar(0.8));
     
     transform.setIdentity();
     transform.setOrigin(btVector3(btScalar(0.18*scale_ragdoll), btScalar(0.2*scale_ragdoll), btScalar(0.)));
     m_bodies[BODYPART_RIGHT_FOOT] = localCreateRigidBody(btScalar(1.), offset*transform, m_shapes[BODYPART_RIGHT_FOOT]);
-
+    m_bodies[BODYPART_RIGHT_FOOT]->setFriction(btScalar(0.8));
+    
 	transform.setIdentity();
 	transform.setOrigin(btVector3(btScalar(-0.35*scale_ragdoll), btScalar(1.45*scale_ragdoll), btScalar(0.)));
 	transform.getBasis().setEulerZYX(0,0,SIMD_HALF_PI);

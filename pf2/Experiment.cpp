@@ -37,9 +37,9 @@ void Experiment::initPhysics()
 btRigidBody* Experiment::createGround()
 {
     btCollisionShape* groundShape = new btBoxShape(btVector3(btScalar(50.), btScalar(1.), btScalar(50.)));
-    //    btCollisionShape* planeShape = new btStaticPlaneShape(btVector3(0, 1, 0), 1);
     btTransform groundTransform = btTransform();
-    groundTransform.setRotation(btQuaternion(1., 0., 0., 0.2));
+//    groundTransform.setRotation(btQuaternion(1., 0., 0., 0.2));
+    groundTransform.setIdentity();
     groundTransform.setOrigin(btVector3(0, -1.5, 0));
     return localCreateRigidBody(btScalar(0.), groundTransform, groundShape);
 }
@@ -78,7 +78,7 @@ btRigidBody* Experiment::createCube()
 
 RagDoll* Experiment::createRagdoll()
 {
-    RagDoll* ragDoll = new RagDoll (m_dynamicsWorld, btVector3(0,2*0.2,0),2.f);
+    RagDoll* ragDoll = new RagDoll (m_dynamicsWorld, btVector3(0,-0.3,0),2.f);
     return ragDoll;
 }
 

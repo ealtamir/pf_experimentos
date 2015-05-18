@@ -57,12 +57,14 @@ class RagDoll
 
 	btDynamicsWorld* m_ownerWorld;
 	btCollisionShape* m_shapes[BODYPART_COUNT];
-	btRigidBody* m_bodies[BODYPART_COUNT];
+	
 	btTypedConstraint* m_joints[JOINT_COUNT];
 
 	btRigidBody* localCreateRigidBody (btScalar mass, const btTransform& startTransform, btCollisionShape* shape);
 
 public:
+    btRigidBody* m_bodies[BODYPART_COUNT];
+    
 	RagDoll (btDynamicsWorld* ownerWorld,
 				const btVector3& positionOffset,
 				btScalar scale_ragdoll = btScalar(1.0));
