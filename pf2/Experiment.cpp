@@ -132,8 +132,17 @@ void Experiment::keyboardCallback(unsigned char key, int x, int y)
 {
     switch (key)
     {
-        case ' ':
-            objectsInitialized = false;
+        case 'n':
+            ragDoll->m_bodies[RagDoll::BODYPART_LEFT_UPPER_LEG]->applyTorqueImpulse(btVector3(btScalar(5.),btScalar(0.),btScalar(0.)));
+//            ragDoll->m_bodies[RagDoll::BODYPART_LEFT_LOWER_LEG]->applyTorqueImpulse(btVector3(btScalar(1.),btScalar(0.),btScalar(0.)));
+            break;
+        case 'm':
+            ragDoll->m_bodies[RagDoll::BODYPART_RIGHT_UPPER_LEG]->applyTorqueImpulse(btVector3(btScalar(5.),btScalar(0.),btScalar(0.)));
+//            ragDoll->m_bodies[RagDoll::BODYPART_RIGHT_LOWER_LEG]->applyTorqueImpulse(btVector3(btScalar(1.),btScalar(0.),btScalar(0.)));
+            break;
+        case 'v':
+            ragDoll->m_bodies[RagDoll::BODYPART_PELVIS]->applyCentralImpulse(btVector3(0, 0, -5));
+            break;
         default:
             DemoApplication::keyboardCallback(key, x, y);
     }

@@ -17,7 +17,6 @@ class Ragdoll_experiment : public Experiment
 {
 private:
     btRigidBody* ground;
-    RagDoll* ragDoll;
     
 protected:
     void initializeBodies();

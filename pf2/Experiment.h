@@ -36,6 +36,8 @@ protected:
     time_t startTime;
     
 public:
+    RagDoll* ragDoll;
+    
     Experiment();
     
     virtual void initPhysics();
@@ -51,8 +53,7 @@ public:
     virtual std::string getName() {
         return "Experiment";
     }
-    
-private:
+
     virtual void keyboardCallback(unsigned char key, int x, int y);
     
 protected:

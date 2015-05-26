@@ -24,9 +24,9 @@ void Ragdoll_experiment::initObjects() {
 }
 
 void Ragdoll_experiment::worldStep() {
-    float seconds = difftime(time(0), startTime);
+    //float seconds = difftime(time(0), startTime);
     startTime = time(0);
-    ragDoll->m_bodies[1]->applyForce(btVector3(0, 85, -10), btVector3(0, 0, 0));
+    ragDoll->m_bodies[RagDoll::BODYPART_PELVIS]->applyForce(btVector3(0, 35, -5), btVector3(0., 0., 0.));
 }
 
 bool Ragdoll_experiment::stopExperiment()
