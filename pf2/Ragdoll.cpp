@@ -89,17 +89,32 @@ RagDoll::RagDoll (btDynamicsWorld* ownerWorld, const btVector3& positionOffset,
 //	transform.setOrigin(btVector3(btScalar(0.), btScalar(scale_ragdoll*1.6), btScalar(0.)));
 //	m_bodies[BODYPART_HEAD] = localCreateRigidBody(btScalar(1.), offset*transform, m_shapes[BODYPART_HEAD]);
 
-	transform.setIdentity();
-	transform.setOrigin(btVector3(btScalar(-0.18*scale_ragdoll), btScalar(0.65*scale_ragdoll + scale_ragdoll*0.45*0.5),btScalar(-scale_ragdoll*0.45/2)));
-    transform.getBasis().setEulerZYX(SIMD_HALF_PI,0,0);
-	m_bodies[BODYPART_LEFT_UPPER_LEG] = localCreateRigidBody(btScalar(1.), offset*transform, m_shapes[BODYPART_LEFT_UPPER_LEG]);
-
-	transform.setIdentity();
-	transform.setOrigin(btVector3(btScalar(-0.18*scale_ragdoll), btScalar(0.2*scale_ragdoll + scale_ragdoll*0.45), btScalar(-scale_ragdoll*0.45)));
-	m_bodies[BODYPART_LEFT_LOWER_LEG] = localCreateRigidBody(btScalar(1.), offset*transform, m_shapes[BODYPART_LEFT_LOWER_LEG]);
-
+    
+//**** LEFT LEG START HINGED ****//
+//	transform.setIdentity();
+//	transform.setOrigin(btVector3(btScalar(-0.18*scale_ragdoll), btScalar(0.65*scale_ragdoll + scale_ragdoll*0.45*0.5),btScalar(-scale_ragdoll*0.45/2)));
+//    transform.getBasis().setEulerZYX(SIMD_HALF_PI,0,0);
+//	m_bodies[BODYPART_LEFT_UPPER_LEG] = localCreateRigidBody(btScalar(1.), offset*transform, m_shapes[BODYPART_LEFT_UPPER_LEG]);
+//
+//	transform.setIdentity();
+//	transform.setOrigin(btVector3(btScalar(-0.18*scale_ragdoll), btScalar(0.2*scale_ragdoll + scale_ragdoll*0.45), btScalar(-scale_ragdoll*0.45)));
+//	m_bodies[BODYPART_LEFT_LOWER_LEG] = localCreateRigidBody(btScalar(1.), offset*transform, m_shapes[BODYPART_LEFT_LOWER_LEG]);
+//
+//    transform.setIdentity();
+//    transform.setOrigin(btVector3(btScalar(-0.18*scale_ragdoll), btScalar(scale_ragdoll*0.37), btScalar(-scale_ragdoll*0.45)));
+//    m_bodies[BODYPART_LEFT_FOOT] = localCreateRigidBody(btScalar(1.), offset*transform, m_shapes[BODYPART_LEFT_FOOT]);
+//    m_bodies[BODYPART_LEFT_FOOT]->setFriction(btScalar(1.));
+    
     transform.setIdentity();
-    transform.setOrigin(btVector3(btScalar(-0.18*scale_ragdoll), btScalar(scale_ragdoll*0.37), btScalar(-scale_ragdoll*0.45)));
+    transform.setOrigin(btVector3(btScalar(0.18*scale_ragdoll), btScalar(0.65*scale_ragdoll), btScalar(0.)));
+    m_bodies[BODYPART_LEFT_UPPER_LEG] = localCreateRigidBody(btScalar(1.), offset*transform, m_shapes[BODYPART_LEFT_UPPER_LEG]);
+    
+    transform.setIdentity();
+    transform.setOrigin(btVector3(btScalar(0.18*scale_ragdoll), btScalar(0.2*scale_ragdoll), btScalar(0.)));
+    m_bodies[BODYPART_LEFT_LOWER_LEG] = localCreateRigidBody(btScalar(1.), offset*transform, m_shapes[BODYPART_LEFT_LOWER_LEG]);
+    
+    transform.setIdentity();
+    transform.setOrigin(btVector3(btScalar(0.18*scale_ragdoll), btScalar(0.), btScalar(-0.*scale_ragdoll)));
     m_bodies[BODYPART_LEFT_FOOT] = localCreateRigidBody(btScalar(1.), offset*transform, m_shapes[BODYPART_LEFT_FOOT]);
     m_bodies[BODYPART_LEFT_FOOT]->setFriction(btScalar(1.));
     
