@@ -23,8 +23,39 @@ Written by: Marten Svanfeldt
 RagDoll::RagDoll (btDynamicsWorld* ownerWorld, const btVector3& positionOffset,
 	btScalar scale_ragdoll)	: m_ownerWorld (ownerWorld)
 {
+    btConvexHullShape* left_foot = new btConvexHullShape(0,0,sizeof(btVector3));
+    left_foot->addPoint(btVector3(0                      ,scale_ragdoll*0.03     ,0));
+    left_foot->addPoint(btVector3(scale_ragdoll*0.075*2  ,2*scale_ragdoll*0.03   ,0));
+    
+    left_foot->addPoint(btVector3(0                      ,scale_ragdoll*0.03/10  ,2*scale_ragdoll*0.15/4));
+    left_foot->addPoint(btVector3(scale_ragdoll*0.075*2  ,scale_ragdoll*0.03/10  ,2*scale_ragdoll*0.15/4));
+    
+    left_foot->addPoint(btVector3(0                      ,0                      ,2*scale_ragdoll*0.15/2));
+    left_foot->addPoint(btVector3(scale_ragdoll*0.075*2  ,0                      ,2*scale_ragdoll*0.15/2));
+    
+    left_foot->addPoint(btVector3(0                      ,scale_ragdoll*0.03/10  ,2*scale_ragdoll*0.15*3/4));
+    left_foot->addPoint(btVector3(scale_ragdoll*0.075*2  ,scale_ragdoll*0.03/10  ,2*scale_ragdoll*0.15*3/4));
+    
+    left_foot->addPoint(btVector3(0                      ,scale_ragdoll*0.03     ,2*scale_ragdoll*0.15));
+    left_foot->addPoint(btVector3(scale_ragdoll*0.075*2  ,scale_ragdoll*0.03     ,2*scale_ragdoll*0.15));
+    
+    btConvexHullShape* right_foot = new btConvexHullShape(0,0,sizeof(btVector3));
+    right_foot->addPoint(btVector3(0                      ,scale_ragdoll*0.03     ,0));
+    right_foot->addPoint(btVector3(scale_ragdoll*0.075*2  ,2*scale_ragdoll*0.03   ,0));
+    
+    right_foot->addPoint(btVector3(0                      ,scale_ragdoll*0.03/10  ,2*scale_ragdoll*0.15/4));
+    right_foot->addPoint(btVector3(scale_ragdoll*0.075*2  ,scale_ragdoll*0.03/10  ,2*scale_ragdoll*0.15/4));
+    
+    right_foot->addPoint(btVector3(0                      ,0                      ,2*scale_ragdoll*0.15/2));
+    right_foot->addPoint(btVector3(scale_ragdoll*0.075*2  ,0                      ,2*scale_ragdoll*0.15/2));
+    
+    right_foot->addPoint(btVector3(0                      ,scale_ragdoll*0.03/10  ,2*scale_ragdoll*0.15*3/4));
+    right_foot->addPoint(btVector3(scale_ragdoll*0.075*2  ,scale_ragdoll*0.03/10  ,2*scale_ragdoll*0.15*3/4));
+    
+    right_foot->addPoint(btVector3(0                      ,scale_ragdoll*0.03     ,2*scale_ragdoll*0.15));
+    right_foot->addPoint(btVector3(scale_ragdoll*0.075*2  ,scale_ragdoll*0.03     ,2*scale_ragdoll*0.15));
 
-
+    
 	// Setup the geometry
 	m_shapes[BODYPART_PELVIS] = new btCapsuleShape(
 	btScalar(scale_ragdoll*0.15), btScalar(scale_ragdoll*0.20));
@@ -32,10 +63,10 @@ RagDoll::RagDoll (btDynamicsWorld* ownerWorld, const btVector3& positionOffset,
 //	m_shapes[BODYPART_HEAD] = new btCapsuleShape(btScalar(scale_ragdoll*0.10), btScalar(scale_ragdoll*0.05));
 	m_shapes[BODYPART_LEFT_UPPER_LEG] = new btCapsuleShape(btScalar(scale_ragdoll*0.07), btScalar(scale_ragdoll*0.45));
 	m_shapes[BODYPART_LEFT_LOWER_LEG] = new btCapsuleShape(btScalar(scale_ragdoll*0.05), btScalar(scale_ragdoll*0.37));
-    m_shapes[BODYPART_LEFT_FOOT] = new btBoxShape(btVector3(btScalar(scale_ragdoll*0.075), btScalar(scale_ragdoll*0.03), btScalar(scale_ragdoll*0.15)));
+    m_shapes[BODYPART_LEFT_FOOT] = (btCollisionShape *)left_foot;//new btBoxShape(btVector3(btScalar(scale_ragdoll*0.075), btScalar(scale_ragdoll*0.03), btScalar(scale_ragdoll*0.15)));
 	m_shapes[BODYPART_RIGHT_UPPER_LEG] = new btCapsuleShape(btScalar(scale_ragdoll*0.07), btScalar(scale_ragdoll*0.45));
 	m_shapes[BODYPART_RIGHT_LOWER_LEG] = new btCapsuleShape(btScalar(scale_ragdoll*0.05), btScalar(scale_ragdoll*0.37));
-    m_shapes[BODYPART_RIGHT_FOOT] = new btBoxShape(btVector3(btScalar(scale_ragdoll*0.075), btScalar(scale_ragdoll*0.03), btScalar(scale_ragdoll*0.15)));
+    m_shapes[BODYPART_RIGHT_FOOT] = right_foot;//new btBoxShape(btVector3(btScalar(scale_ragdoll*0.075), btScalar(scale_ragdoll*0.03), btScalar(scale_ragdoll*0.15)));
 //	m_shapes[BODYPART_LEFT_UPPER_ARM] = new btCapsuleShape(btScalar(scale_ragdoll*0.05), btScalar(scale_ragdoll*0.33));
 //	m_shapes[BODYPART_LEFT_LOWER_ARM] = new btCapsuleShape(btScalar(scale_ragdoll*0.04), btScalar(scale_ragdoll*0.25));
 //	m_shapes[BODYPART_RIGHT_UPPER_ARM] = new btCapsuleShape(btScalar(scale_ragdoll*0.05), btScalar(scale_ragdoll*0.33));
@@ -307,15 +338,15 @@ RagDoll::RagDoll (btDynamicsWorld* ownerWorld, const btVector3& positionOffset,
         localA.setIdentity(); localB.setIdentity();
         
         localA.setOrigin(btVector3(btScalar(0.), btScalar(-0.225*scale_ragdoll), btScalar(0.)));
-        localB.setOrigin(btVector3(btScalar(0.), btScalar(0.), btScalar(scale_ragdoll*0.15*0.8)));
+        localB.setOrigin(btVector3(btScalar(scale_ragdoll*0.075), btScalar(scale_ragdoll*0.03), btScalar(scale_ragdoll*0.15)));
         joint6DOF =  new btGeneric6DofConstraint (*m_bodies[BODYPART_LEFT_LOWER_LEG], *m_bodies[BODYPART_LEFT_FOOT], localA, localB,useLinearReferenceFrameA);
         
 #ifdef RIGID
         joint6DOF->setAngularLowerLimit(btVector3(-SIMD_EPSILON,-SIMD_EPSILON,-SIMD_EPSILON));
         joint6DOF->setAngularUpperLimit(btVector3(SIMD_EPSILON,SIMD_EPSILON,SIMD_EPSILON));
 #else
-        joint6DOF->setAngularLowerLimit(btVector3(-SIMD_PI*0.3,-SIMD_EPSILON,-SIMD_EPSILON));
-        joint6DOF->setAngularUpperLimit(btVector3(SIMD_PI*0.4,SIMD_EPSILON,SIMD_EPSILON));
+        joint6DOF->setAngularLowerLimit(btVector3(-SIMD_PI*0.,-SIMD_EPSILON,-SIMD_EPSILON));
+        joint6DOF->setAngularUpperLimit(btVector3(SIMD_PI*0.,SIMD_EPSILON,SIMD_EPSILON));
 #endif
         m_joints[JOINT_LEFT_FOOT] = joint6DOF;
         m_ownerWorld->addConstraint(m_joints[JOINT_LEFT_FOOT], true);
@@ -345,15 +376,15 @@ RagDoll::RagDoll (btDynamicsWorld* ownerWorld, const btVector3& positionOffset,
         localA.setIdentity(); localB.setIdentity();
         
         localA.setOrigin(btVector3(btScalar(0.), btScalar(-0.225*scale_ragdoll), btScalar(0.)));
-        localB.setOrigin(btVector3(btScalar(0.), btScalar(0.), btScalar(scale_ragdoll*0.15*0.8)));
+        localB.setOrigin(btVector3(btScalar(scale_ragdoll*0.075), btScalar(scale_ragdoll*0.03), btScalar(scale_ragdoll*0.15)));
         joint6DOF =  new btGeneric6DofConstraint (*m_bodies[BODYPART_RIGHT_LOWER_LEG], *m_bodies[BODYPART_RIGHT_FOOT], localA, localB,useLinearReferenceFrameA);
         
 #ifdef RIGID
         joint6DOF->setAngularLowerLimit(btVector3(-SIMD_EPSILON,-SIMD_EPSILON,-SIMD_EPSILON));
         joint6DOF->setAngularUpperLimit(btVector3(SIMD_EPSILON,SIMD_EPSILON,SIMD_EPSILON));
 #else
-        joint6DOF->setAngularLowerLimit(btVector3(-SIMD_PI*0.3,-SIMD_EPSILON,-SIMD_EPSILON));
-        joint6DOF->setAngularUpperLimit(btVector3(SIMD_PI*0.4,SIMD_EPSILON,SIMD_EPSILON));
+        joint6DOF->setAngularLowerLimit(btVector3(-SIMD_PI*0.,-SIMD_EPSILON,-SIMD_EPSILON));
+        joint6DOF->setAngularUpperLimit(btVector3(SIMD_PI*0.,SIMD_EPSILON,SIMD_EPSILON));
 #endif
         m_joints[JOINT_RIGHT_FOOT] = joint6DOF;
         m_ownerWorld->addConstraint(m_joints[JOINT_RIGHT_FOOT], true);
