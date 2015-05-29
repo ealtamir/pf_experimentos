@@ -38,7 +38,7 @@ btRigidBody* Experiment::createGround()
 {
     btCollisionShape* groundShape = new btBoxShape(btVector3(btScalar(50.), btScalar(1.), btScalar(50.)));
     btTransform groundTransform = btTransform();
-    groundTransform.setRotation(btQuaternion(1., 0., 0., 0.1));
+    groundTransform.setRotation(btQuaternion(1., 0., 0., 0.2));
 //    groundTransform.setIdentity();
     groundTransform.setOrigin(btVector3(0, -1.5, 0));
     return localCreateRigidBody(btScalar(0.), groundTransform, groundShape);
@@ -133,17 +133,17 @@ void Experiment::keyboardCallback(unsigned char key, int x, int y)
     switch (key)
     {
         case 'n':
-            ragDoll->m_bodies[RagDoll::BODYPART_LEFT_UPPER_LEG]->applyTorqueImpulse(btVector3(btScalar(4.),btScalar(0.),btScalar(0.)));
+//            ragDoll->m_bodies[RagDoll::BODYPART_LEFT_UPPER_LEG]->applyTorqueImpulse(btVector3(btScalar(4.),btScalar(0.),btScalar(0.)));
 //            ragDoll->m_bodies[RagDoll::BODYPART_PELVIS]->applyCentralImpulse(btVector3(0, 5, 0));
-            ragDoll->m_bodies[RagDoll::BODYPART_LEFT_LOWER_LEG]->applyTorqueImpulse(btVector3(btScalar(3.),btScalar(0.),btScalar(0.)));
+//            ragDoll->m_bodies[RagDoll::BODYPART_LEFT_LOWER_LEG]->applyTorqueImpulse(btVector3(btScalar(3.),btScalar(0.),btScalar(0.)));
             break;
         case 'm':
-            ragDoll->m_bodies[RagDoll::BODYPART_RIGHT_UPPER_LEG]->applyTorqueImpulse(btVector3(btScalar(4.),btScalar(0.),btScalar(0.)));
+//            ragDoll->m_bodies[RagDoll::BODYPART_RIGHT_UPPER_LEG]->applyTorqueImpulse(btVector3(btScalar(4.),btScalar(0.),btScalar(0.)));
 //            ragDoll->m_bodies[RagDoll::BODYPART_PELVIS]->applyCentralImpulse(btVector3(0, 5, 0));
-            ragDoll->m_bodies[RagDoll::BODYPART_RIGHT_LOWER_LEG]->applyTorqueImpulse(btVector3(btScalar(3.),btScalar(0.),btScalar(0.)));
+//            ragDoll->m_bodies[RagDoll::BODYPART_RIGHT_LOWER_LEG]->applyTorqueImpulse(btVector3(btScalar(3.),btScalar(0.),btScalar(0.)));
             break;
         case 'v':
-            ragDoll->m_bodies[RagDoll::BODYPART_PELVIS]->applyCentralImpulse(btVector3(0, 0, -5));
+//            ragDoll->m_bodies[RagDoll::BODYPART_PELVIS]->applyCentralImpulse(btVector3(0, 0, -5));
             break;
         default:
             DemoApplication::keyboardCallback(key, x, y);

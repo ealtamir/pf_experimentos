@@ -23,42 +23,42 @@ Written by: Marten Svanfeldt
 RagDoll::RagDoll (btDynamicsWorld* ownerWorld, const btVector3& positionOffset,
 	btScalar scale_ragdoll)	: m_ownerWorld (ownerWorld)
 {
+    
     btConvexHullShape* left_foot = new btConvexHullShape(0,0,sizeof(btVector3));
     left_foot->addPoint(btVector3(0                      ,scale_ragdoll*0.03     ,0));
     left_foot->addPoint(btVector3(scale_ragdoll*0.075*2  ,2*scale_ragdoll*0.03   ,0));
     
-    left_foot->addPoint(btVector3(0                      ,scale_ragdoll*0.03/10  ,2*scale_ragdoll*0.15/4));
-    left_foot->addPoint(btVector3(scale_ragdoll*0.075*2  ,scale_ragdoll*0.03/10  ,2*scale_ragdoll*0.15/4));
+    left_foot->addPoint(btVector3(0                      ,scale_ragdoll*0.03/10  ,2*scale_ragdoll*0.15/8));
+    left_foot->addPoint(btVector3(scale_ragdoll*0.075*2  ,scale_ragdoll*0.03/10  ,2*scale_ragdoll*0.15/8));
     
-    left_foot->addPoint(btVector3(0                      ,0                      ,2*scale_ragdoll*0.15/2));
-    left_foot->addPoint(btVector3(scale_ragdoll*0.075*2  ,0                      ,2*scale_ragdoll*0.15/2));
+    left_foot->addPoint(btVector3(0                      ,0                      ,2*scale_ragdoll*0.15/4));
+    left_foot->addPoint(btVector3(scale_ragdoll*0.075*2  ,0                      ,2*scale_ragdoll*0.15/4));
     
-    left_foot->addPoint(btVector3(0                      ,scale_ragdoll*0.03/10  ,2*scale_ragdoll*0.15*3/4));
-    left_foot->addPoint(btVector3(scale_ragdoll*0.075*2  ,scale_ragdoll*0.03/10  ,2*scale_ragdoll*0.15*3/4));
+    left_foot->addPoint(btVector3(0                      ,scale_ragdoll*0.03/10  ,2*scale_ragdoll*0.15*3/8));
+    left_foot->addPoint(btVector3(scale_ragdoll*0.075*2  ,scale_ragdoll*0.03/10  ,2*scale_ragdoll*0.15*3/8));
     
-    left_foot->addPoint(btVector3(0                      ,scale_ragdoll*0.03     ,2*scale_ragdoll*0.15));
-    left_foot->addPoint(btVector3(scale_ragdoll*0.075*2  ,scale_ragdoll*0.03     ,2*scale_ragdoll*0.15));
+    left_foot->addPoint(btVector3(0                      ,scale_ragdoll*0.03     ,2*scale_ragdoll*0.15/2));
+    left_foot->addPoint(btVector3(scale_ragdoll*0.075*2  ,scale_ragdoll*0.03     ,2*scale_ragdoll*0.15/2));
     
     btConvexHullShape* right_foot = new btConvexHullShape(0,0,sizeof(btVector3));
     right_foot->addPoint(btVector3(0                      ,scale_ragdoll*0.03     ,0));
     right_foot->addPoint(btVector3(scale_ragdoll*0.075*2  ,2*scale_ragdoll*0.03   ,0));
     
-    right_foot->addPoint(btVector3(0                      ,scale_ragdoll*0.03/10  ,2*scale_ragdoll*0.15/4));
-    right_foot->addPoint(btVector3(scale_ragdoll*0.075*2  ,scale_ragdoll*0.03/10  ,2*scale_ragdoll*0.15/4));
+    right_foot->addPoint(btVector3(0                      ,scale_ragdoll*0.03/10  ,2*scale_ragdoll*0.15/8));
+    right_foot->addPoint(btVector3(scale_ragdoll*0.075*2  ,scale_ragdoll*0.03/10  ,2*scale_ragdoll*0.15/8));
     
-    right_foot->addPoint(btVector3(0                      ,0                      ,2*scale_ragdoll*0.15/2));
-    right_foot->addPoint(btVector3(scale_ragdoll*0.075*2  ,0                      ,2*scale_ragdoll*0.15/2));
+    right_foot->addPoint(btVector3(0                      ,0                      ,2*scale_ragdoll*0.15/4));
+    right_foot->addPoint(btVector3(scale_ragdoll*0.075*2  ,0                      ,2*scale_ragdoll*0.15/4));
     
-    right_foot->addPoint(btVector3(0                      ,scale_ragdoll*0.03/10  ,2*scale_ragdoll*0.15*3/4));
-    right_foot->addPoint(btVector3(scale_ragdoll*0.075*2  ,scale_ragdoll*0.03/10  ,2*scale_ragdoll*0.15*3/4));
+    right_foot->addPoint(btVector3(0                      ,scale_ragdoll*0.03/10  ,2*scale_ragdoll*0.15*3/8));
+    right_foot->addPoint(btVector3(scale_ragdoll*0.075*2  ,scale_ragdoll*0.03/10  ,2*scale_ragdoll*0.15*3/8));
     
-    right_foot->addPoint(btVector3(0                      ,scale_ragdoll*0.03     ,2*scale_ragdoll*0.15));
-    right_foot->addPoint(btVector3(scale_ragdoll*0.075*2  ,scale_ragdoll*0.03     ,2*scale_ragdoll*0.15));
+    right_foot->addPoint(btVector3(0                      ,scale_ragdoll*0.03     ,2*scale_ragdoll*0.15/2));
+    right_foot->addPoint(btVector3(scale_ragdoll*0.075*2  ,scale_ragdoll*0.03     ,2*scale_ragdoll*0.15/2));
 
     
 	// Setup the geometry
-	m_shapes[BODYPART_PELVIS] = new btCapsuleShape(
-	btScalar(scale_ragdoll*0.15), btScalar(scale_ragdoll*0.20));
+	m_shapes[BODYPART_PELVIS] = new btCapsuleShape(btScalar(scale_ragdoll*0.15), btScalar(scale_ragdoll*0.20));
 //	m_shapes[BODYPART_SPINE] = new btCapsuleShape(btScalar(scale_ragdoll*0.15), btScalar(scale_ragdoll*0.28));
 //	m_shapes[BODYPART_HEAD] = new btCapsuleShape(btScalar(scale_ragdoll*0.10), btScalar(scale_ragdoll*0.05));
 	m_shapes[BODYPART_LEFT_UPPER_LEG] = new btCapsuleShape(btScalar(scale_ragdoll*0.07), btScalar(scale_ragdoll*0.45));
@@ -78,7 +78,8 @@ RagDoll::RagDoll (btDynamicsWorld* ownerWorld, const btVector3& positionOffset,
 
 	btTransform transform;
 	transform.setIdentity();
-	transform.setOrigin(btVector3(btScalar(0.), btScalar(scale_ragdoll*1.), btScalar(0.)));
+	transform.setOrigin(btVector3(btScalar(0.37*scale_ragdoll*0.5+0.45*scale_ragdoll*0.5+scale_ragdoll*0.20*0.5), btScalar(scale_ragdoll*1.), btScalar(0.)));
+    transform.getBasis().setEulerZYX(-SIMD_PI/6,0.,-SIMD_PI/6);
 	m_bodies[BODYPART_PELVIS] = localCreateRigidBody(btScalar(1.), offset*transform, m_shapes[BODYPART_PELVIS]);
 
 //	transform.setIdentity();
@@ -105,29 +106,37 @@ RagDoll::RagDoll (btDynamicsWorld* ownerWorld, const btVector3& positionOffset,
 //    m_bodies[BODYPART_LEFT_FOOT] = localCreateRigidBody(btScalar(1.), offset*transform, m_shapes[BODYPART_LEFT_FOOT]);
 //    m_bodies[BODYPART_LEFT_FOOT]->setFriction(btScalar(1.));
     
+    //LEFT
     transform.setIdentity();
-    transform.setOrigin(btVector3(btScalar(0.18*scale_ragdoll), btScalar(0.65*scale_ragdoll), btScalar(0.)));
+    transform.setOrigin(btVector3(btScalar(-0.185*scale_ragdoll+0.37*scale_ragdoll*0.5+0.45*scale_ragdoll*0.5*0.5), btScalar(0.65*scale_ragdoll*0.866+scale_ragdoll*0.20/2*0.866), btScalar(0.)));
+    transform.getBasis().setEulerZYX(0,0,-SIMD_PI/6);
     m_bodies[BODYPART_LEFT_UPPER_LEG] = localCreateRigidBody(btScalar(1.), offset*transform, m_shapes[BODYPART_LEFT_UPPER_LEG]);
     
     transform.setIdentity();
-    transform.setOrigin(btVector3(btScalar(0.18*scale_ragdoll), btScalar(0.2*scale_ragdoll), btScalar(0.)));
+    transform.setOrigin(btVector3(btScalar(-0.185*scale_ragdoll+0.37*scale_ragdoll*0.5*0.5), btScalar(scale_ragdoll*0.37+scale_ragdoll*0.20/2*0.866), btScalar(scale_ragdoll*0.37*0.5)));
+    transform.getBasis().setEulerZYX(-SIMD_PI/2,0,0);
     m_bodies[BODYPART_LEFT_LOWER_LEG] = localCreateRigidBody(btScalar(1.), offset*transform, m_shapes[BODYPART_LEFT_LOWER_LEG]);
     
     transform.setIdentity();
-    transform.setOrigin(btVector3(btScalar(0.18*scale_ragdoll), btScalar(0.), btScalar(-0.*scale_ragdoll)));
+    transform.setOrigin(btVector3(btScalar(-0.185*scale_ragdoll-scale_ragdoll*0.075), btScalar(scale_ragdoll*0.37-2*scale_ragdoll*0.15/2+scale_ragdoll*0.20/2*0.866), btScalar(scale_ragdoll*0.37)));
+    transform.getBasis().setEulerZYX(-SIMD_PI/2,0,0);
     m_bodies[BODYPART_LEFT_FOOT] = localCreateRigidBody(btScalar(1.), offset*transform, m_shapes[BODYPART_LEFT_FOOT]);
     m_bodies[BODYPART_LEFT_FOOT]->setFriction(btScalar(1.));
     
+    //RIGHT
 	transform.setIdentity();
-	transform.setOrigin(btVector3(btScalar(0.18*scale_ragdoll), btScalar(0.65*scale_ragdoll), btScalar(0.)));
+    transform.getBasis().setEulerZYX(0,0,-SIMD_PI/6);
+	transform.setOrigin(btVector3(btScalar(0.185*scale_ragdoll+0.37*scale_ragdoll*0.5+0.45*scale_ragdoll*0.5*0.5), btScalar(0.65*scale_ragdoll*0.866), btScalar(0.)));
 	m_bodies[BODYPART_RIGHT_UPPER_LEG] = localCreateRigidBody(btScalar(1.), offset*transform, m_shapes[BODYPART_RIGHT_UPPER_LEG]);
 
 	transform.setIdentity();
-	transform.setOrigin(btVector3(btScalar(0.18*scale_ragdoll), btScalar(0.2*scale_ragdoll), btScalar(0.)));
+    transform.getBasis().setEulerZYX(0,0,-SIMD_PI/6);
+	transform.setOrigin(btVector3(btScalar(0.185*scale_ragdoll+0.37*scale_ragdoll*0.5*0.5), btScalar(0.2*scale_ragdoll), btScalar(0.)));
 	m_bodies[BODYPART_RIGHT_LOWER_LEG] = localCreateRigidBody(btScalar(1.), offset*transform, m_shapes[BODYPART_RIGHT_LOWER_LEG]);
     
     transform.setIdentity();
-    transform.setOrigin(btVector3(btScalar(0.18*scale_ragdoll), btScalar(0.), btScalar(-0.*scale_ragdoll)));
+    transform.getBasis().setEulerZYX(0,0,-SIMD_PI/6);
+    transform.setOrigin(btVector3(btScalar(0.185*scale_ragdoll-scale_ragdoll*0.075), btScalar(0.), btScalar(-2*scale_ragdoll*0.15/2)));
     m_bodies[BODYPART_RIGHT_FOOT] = localCreateRigidBody(btScalar(1.), offset*transform, m_shapes[BODYPART_RIGHT_FOOT]);
     m_bodies[BODYPART_RIGHT_FOOT]->setFriction(btScalar(1.));
     
@@ -379,8 +388,8 @@ RagDoll::RagDoll (btDynamicsWorld* ownerWorld, const btVector3& positionOffset,
 		joint6DOF->setAngularLowerLimit(btVector3(-SIMD_EPSILON,-SIMD_EPSILON,-SIMD_EPSILON));
 		joint6DOF->setAngularUpperLimit(btVector3(SIMD_EPSILON,SIMD_EPSILON,SIMD_EPSILON));
 #else
-		joint6DOF->setAngularLowerLimit(btVector3(-SIMD_EPSILON,-SIMD_EPSILON,-SIMD_EPSILON));
-		joint6DOF->setAngularUpperLimit(btVector3(SIMD_PI*0.7f,SIMD_EPSILON,SIMD_EPSILON));
+		joint6DOF->setAngularLowerLimit(btVector3(-SIMD_EPSILON*0.,-SIMD_EPSILON,-SIMD_EPSILON));
+		joint6DOF->setAngularUpperLimit(btVector3(SIMD_PI*0.7f*0.,SIMD_EPSILON,SIMD_EPSILON));
 #endif
 		m_joints[JOINT_RIGHT_KNEE] = joint6DOF;
 		m_ownerWorld->addConstraint(m_joints[JOINT_RIGHT_KNEE], true);
