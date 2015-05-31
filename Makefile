@@ -1,11 +1,12 @@
-CC = gcc
+CC = g++
 CFLAGS = $(patsubst %, -I%, $(INCLUDES))
-INCLUDES = ../include ../include/opengl
-LIB_DIR = ../lib
-OBJ_DIR = obj
-BIN_DIR = ../bin
-OPENGL_FILES = $(wildcard opengl/*.cpp)
-CPP_FILES = $(wildcard *.cpp)
+INCLUDES = include include/opengl
+SRC_DIR = src
+LIB_DIR = lib
+OBJ_DIR = $(SRC_DIR)/obj
+BIN_DIR = bin
+OPENGL_FILES = $(wildcard $(SRC_DIR)/opengl/*.cpp)
+CPP_FILES = $(wildcard $(SRC_DIR)/*.cpp)
 
 GRAPHIC_LIBS = OpenGL GLUT
 BULLET_LIBS = LinearMath BulletCollision BulletDynamics
@@ -22,8 +23,8 @@ $(OBJ_DIR)/%.o: %.cpp
 $(OBJ_DIR)/opengl/%.o: $.cpp
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-printer: $(OBJ) $(OPENGL_OBJ)
-	gcc $(FRAMEWORKS) -o $(BIN_DIR)/$@ $^ $(CFLAGS)
+walker.out: $(OBJ) $(OPENGL_OBJ)
+	$(CC) $(FRAMEWORKS) -o $(BIN_DIR)/$@ $^ $(CFLAGS)
 
 .PHONY: clean
 
