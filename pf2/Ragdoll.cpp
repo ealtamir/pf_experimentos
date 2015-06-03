@@ -306,16 +306,26 @@ RagDoll::RagDoll (btDynamicsWorld* ownerWorld, const btVector3& positionOffset,
 
 		localB.setOrigin(btVector3(btScalar(0.), btScalar(0.225*scale_ragdoll), btScalar(0.)));
 
-		joint6DOF = new btGeneric6DofConstraint(*m_bodies[BODYPART_PELVIS], *m_bodies[BODYPART_LEFT_UPPER_LEG], localA, localB,useLinearReferenceFrameA);
+        joint6DOFSpring = new btGeneric6DofSpringConstraint(*m_bodies[BODYPART_PELVIS], *m_bodies[BODYPART_LEFT_UPPER_LEG], localA, localB, useLinearReferenceFrameA);
+        joint6DOFSpring->enableSpring(3, true);
+        joint6DOFSpring->enableSpring(4, true);
+        joint6DOFSpring->enableSpring(5, true);
+        joint6DOFSpring->setStiffness(3, btScalar(5.));
+        joint6DOFSpring->setStiffness(4, btScalar(5.));
+        joint6DOFSpring->setStiffness(5, btScalar(5.));
+        joint6DOFSpring->setDamping(3, btScalar(0.01));
+        joint6DOFSpring->setDamping(4, btScalar(0.01));
+        joint6DOFSpring->setDamping(5, btScalar(0.01));
+        joint6DOFSpring->setEquilibriumPoint();
 
 #ifdef RIGID
-		joint6DOF->setAngularLowerLimit(btVector3(-SIMD_EPSILON,-SIMD_EPSILON,-SIMD_EPSILON));
-		joint6DOF->setAngularUpperLimit(btVector3(SIMD_EPSILON,SIMD_EPSILON,SIMD_EPSILON));
+		joint6DOFSpring->setAngularLowerLimit(btVector3(-SIMD_EPSILON,-SIMD_EPSILON,-SIMD_EPSILON));
+		joint6DOFSpring->setAngularUpperLimit(btVector3(SIMD_EPSILON,SIMD_EPSILON,SIMD_EPSILON));
 #else
-		joint6DOF->setAngularLowerLimit(btVector3(-SIMD_PI*0.75,-SIMD_EPSILON,-SIMD_EPSILON));
-		joint6DOF->setAngularUpperLimit(btVector3(SIMD_HALF_PI,SIMD_EPSILON,SIMD_HALF_PI*0.6f));
+		joint6DOFSpring->setAngularLowerLimit(btVector3(-SIMD_PI*0.75,-SIMD_EPSILON,-SIMD_EPSILON));
+		joint6DOFSpring->setAngularUpperLimit(btVector3(SIMD_HALF_PI,SIMD_EPSILON,SIMD_HALF_PI*0.6f));
 #endif
-		m_joints[JOINT_LEFT_HIP] = joint6DOF;
+		m_joints[JOINT_LEFT_HIP] = joint6DOFSpring;
 		m_ownerWorld->addConstraint(m_joints[JOINT_LEFT_HIP], true);
 	}
 /// *************************** ///
@@ -326,16 +336,26 @@ RagDoll::RagDoll (btDynamicsWorld* ownerWorld, const btVector3& positionOffset,
 		localA.setOrigin(btVector3(btScalar(0.18*scale_ragdoll), btScalar(-0.10*scale_ragdoll), btScalar(0.)));
 		localB.setOrigin(btVector3(btScalar(0.), btScalar(0.225*scale_ragdoll), btScalar(0.)));
 
-		joint6DOF = new btGeneric6DofConstraint(*m_bodies[BODYPART_PELVIS], *m_bodies[BODYPART_RIGHT_UPPER_LEG], localA, localB,useLinearReferenceFrameA);
+        joint6DOFSpring = new btGeneric6DofSpringConstraint(*m_bodies[BODYPART_PELVIS], *m_bodies[BODYPART_RIGHT_UPPER_LEG], localA, localB, useLinearReferenceFrameA);
+        joint6DOFSpring->enableSpring(3, true);
+        joint6DOFSpring->enableSpring(4, true);
+        joint6DOFSpring->enableSpring(5, true);
+        joint6DOFSpring->setStiffness(3, btScalar(5.));
+        joint6DOFSpring->setStiffness(4, btScalar(5.));
+        joint6DOFSpring->setStiffness(5, btScalar(5.));
+        joint6DOFSpring->setDamping(3, btScalar(0.01));
+        joint6DOFSpring->setDamping(4, btScalar(0.01));
+        joint6DOFSpring->setDamping(5, btScalar(0.01));
+        joint6DOFSpring->setEquilibriumPoint();
 
 #ifdef RIGID
-		joint6DOF->setAngularLowerLimit(btVector3(-SIMD_EPSILON,-SIMD_EPSILON,-SIMD_EPSILON));
-		joint6DOF->setAngularUpperLimit(btVector3(SIMD_EPSILON,SIMD_EPSILON,SIMD_EPSILON));
+		joint6DOFSpring->setAngularLowerLimit(btVector3(-SIMD_EPSILON,-SIMD_EPSILON,-SIMD_EPSILON));
+		joint6DOFSpring->setAngularUpperLimit(btVector3(SIMD_EPSILON,SIMD_EPSILON,SIMD_EPSILON));
 #else
-		joint6DOF->setAngularLowerLimit(btVector3(-SIMD_PI*0.75,-SIMD_EPSILON,-SIMD_HALF_PI*0.6f));
-		joint6DOF->setAngularUpperLimit(btVector3(SIMD_HALF_PI,SIMD_EPSILON,SIMD_EPSILON));
+		joint6DOFSpring->setAngularLowerLimit(btVector3(-SIMD_PI*0.75,-SIMD_EPSILON,-SIMD_HALF_PI*0.6f));
+		joint6DOFSpring->setAngularUpperLimit(btVector3(SIMD_HALF_PI,SIMD_EPSILON,SIMD_EPSILON));
 #endif
-		m_joints[JOINT_RIGHT_HIP] = joint6DOF;
+		m_joints[JOINT_RIGHT_HIP] = joint6DOFSpring;
 		m_ownerWorld->addConstraint(m_joints[JOINT_RIGHT_HIP], true);
 	}
 /// ************************** ///
@@ -349,6 +369,16 @@ RagDoll::RagDoll (btDynamicsWorld* ownerWorld, const btVector3& positionOffset,
         joint6DOFSpring->enableSpring(3, true);
         joint6DOFSpring->enableSpring(4, true);
         joint6DOFSpring->enableSpring(5, true);
+        joint6DOFSpring->setStiffness(3, btScalar(5.));
+        joint6DOFSpring->setStiffness(4, btScalar(5.));
+        joint6DOFSpring->setStiffness(5, btScalar(5.));
+        joint6DOFSpring->setDamping(3, btScalar(0.01));
+        joint6DOFSpring->setDamping(4, btScalar(0.01));
+        joint6DOFSpring->setDamping(5, btScalar(0.01));
+        joint6DOFSpring->setEquilibriumPoint(3, btScalar(0));
+        joint6DOFSpring->setEquilibriumPoint(4, btScalar(0));
+        joint6DOFSpring->setEquilibriumPoint(3, btScalar(0));
+
         
 #ifdef RIGID
 		joint6DOFSpring->setAngularLowerLimit(btVector3(-SIMD_EPSILON,-SIMD_EPSILON,-SIMD_EPSILON));

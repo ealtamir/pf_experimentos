@@ -38,7 +38,7 @@ btRigidBody* Experiment::createGround()
 {
     btCollisionShape* groundShape = new btBoxShape(btVector3(btScalar(50.), btScalar(1.), btScalar(50.)));
     btTransform groundTransform = btTransform();
-    groundTransform.setRotation(btQuaternion(1., 0., 0., 0.2));
+    groundTransform.setRotation(btQuaternion(1., 0., 0., 0.4));
 //    groundTransform.setIdentity();
     groundTransform.setOrigin(btVector3(0, -1.5, 0));
     return localCreateRigidBody(btScalar(0.), groundTransform, groundShape);
