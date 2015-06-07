@@ -26,7 +26,7 @@ RagDoll::RagDoll (btDynamicsWorld* ownerWorld, const btVector3& positionOffset,
     
     btConvexHullShape* left_foot = new btConvexHullShape(0,0,sizeof(btVector3));
     left_foot->addPoint(btVector3(0                      ,scale_ragdoll*0.03     ,0));
-    left_foot->addPoint(btVector3(scale_ragdoll*0.075*2  ,2*scale_ragdoll*0.03   ,0));
+    left_foot->addPoint(btVector3(scale_ragdoll*0.075*2  ,scale_ragdoll*0.03   ,0));
     
     left_foot->addPoint(btVector3(0                      ,scale_ragdoll*0.03/10  ,2*scale_ragdoll*0.15/8));
     left_foot->addPoint(btVector3(scale_ragdoll*0.075*2  ,scale_ragdoll*0.03/10  ,2*scale_ragdoll*0.15/8));
@@ -42,7 +42,7 @@ RagDoll::RagDoll (btDynamicsWorld* ownerWorld, const btVector3& positionOffset,
     
     btConvexHullShape* right_foot = new btConvexHullShape(0,0,sizeof(btVector3));
     right_foot->addPoint(btVector3(0                      ,scale_ragdoll*0.03     ,0));
-    right_foot->addPoint(btVector3(scale_ragdoll*0.075*2  ,2*scale_ragdoll*0.03   ,0));
+    right_foot->addPoint(btVector3(scale_ragdoll*0.075*2  ,scale_ragdoll*0.03   ,0));
     
     right_foot->addPoint(btVector3(0                      ,scale_ragdoll*0.03/10  ,2*scale_ragdoll*0.15/8));
     right_foot->addPoint(btVector3(scale_ragdoll*0.075*2  ,scale_ragdoll*0.03/10  ,2*scale_ragdoll*0.15/8));
@@ -78,8 +78,8 @@ RagDoll::RagDoll (btDynamicsWorld* ownerWorld, const btVector3& positionOffset,
 
 	btTransform transform;
 	transform.setIdentity();
-	transform.setOrigin(btVector3(btScalar(0.37*scale_ragdoll*0.5+0.45*scale_ragdoll*0.5+scale_ragdoll*0.20*0.5), btScalar(scale_ragdoll*1.), btScalar(0.)));
-    transform.getBasis().setEulerZYX(-SIMD_PI/6,0.,-SIMD_PI/6);
+	transform.setOrigin(btVector3(btScalar(0.), btScalar(scale_ragdoll*1.035), btScalar(0.)));
+    transform.getBasis().setEulerZYX(0.,0.,0.);
 	m_bodies[BODYPART_PELVIS] = localCreateRigidBody(btScalar(1.), offset*transform, m_shapes[BODYPART_PELVIS]);
 
 //	transform.setIdentity();
@@ -108,35 +108,35 @@ RagDoll::RagDoll (btDynamicsWorld* ownerWorld, const btVector3& positionOffset,
     
     //LEFT
     transform.setIdentity();
-    transform.setOrigin(btVector3(btScalar(-0.185*scale_ragdoll+0.37*scale_ragdoll*0.5+0.45*scale_ragdoll*0.5*0.5), btScalar(0.65*scale_ragdoll*0.866+scale_ragdoll*0.20/2*0.866), btScalar(0.)));
-    transform.getBasis().setEulerZYX(0,0,-SIMD_PI/6);
+    transform.setOrigin(btVector3(btScalar(-0.1825*scale_ragdoll), btScalar(0.71*scale_ragdoll), btScalar(0.)));
+    transform.getBasis().setEulerZYX(0.,0.,0.);
     m_bodies[BODYPART_LEFT_UPPER_LEG] = localCreateRigidBody(btScalar(1.), offset*transform, m_shapes[BODYPART_LEFT_UPPER_LEG]);
     
     transform.setIdentity();
-    transform.setOrigin(btVector3(btScalar(-0.185*scale_ragdoll+0.37*scale_ragdoll*0.5*0.5), btScalar(scale_ragdoll*0.37+scale_ragdoll*0.20/2*0.866), btScalar(scale_ragdoll*0.37*0.5)));
-    transform.getBasis().setEulerZYX(-SIMD_PI/2,0,0);
+    transform.setOrigin(btVector3(btScalar(-0.1825*scale_ragdoll), btScalar(0.25*scale_ragdoll), btScalar(0.)));
+    transform.getBasis().setEulerZYX(0.,0.,0.);
     m_bodies[BODYPART_LEFT_LOWER_LEG] = localCreateRigidBody(btScalar(1.), offset*transform, m_shapes[BODYPART_LEFT_LOWER_LEG]);
     
     transform.setIdentity();
-    transform.setOrigin(btVector3(btScalar(-0.185*scale_ragdoll-scale_ragdoll*0.075), btScalar(scale_ragdoll*0.37-2*scale_ragdoll*0.15/2+scale_ragdoll*0.20/2*0.866), btScalar(scale_ragdoll*0.37)));
-    transform.getBasis().setEulerZYX(-SIMD_PI/2,0,0);
+    transform.setOrigin(btVector3(btScalar(-0.1825*scale_ragdoll*3/2), btScalar(0.), btScalar(-scale_ragdoll*0.15/2)));
+    transform.getBasis().setEulerZYX(0.,0.,0.);
     m_bodies[BODYPART_LEFT_FOOT] = localCreateRigidBody(btScalar(1.), offset*transform, m_shapes[BODYPART_LEFT_FOOT]);
     m_bodies[BODYPART_LEFT_FOOT]->setFriction(btScalar(1.));
     
     //RIGHT
 	transform.setIdentity();
-    transform.getBasis().setEulerZYX(0,0,-SIMD_PI/6);
-	transform.setOrigin(btVector3(btScalar(0.185*scale_ragdoll+0.37*scale_ragdoll*0.5+0.45*scale_ragdoll*0.5*0.5), btScalar(0.65*scale_ragdoll*0.866), btScalar(0.)));
+    transform.getBasis().setEulerZYX(0.,0.,0.);
+	transform.setOrigin(btVector3(btScalar(0.1825*scale_ragdoll), btScalar(0.71*scale_ragdoll), btScalar(0.)));
 	m_bodies[BODYPART_RIGHT_UPPER_LEG] = localCreateRigidBody(btScalar(1.), offset*transform, m_shapes[BODYPART_RIGHT_UPPER_LEG]);
 
 	transform.setIdentity();
-    transform.getBasis().setEulerZYX(0,0,-SIMD_PI/6);
-	transform.setOrigin(btVector3(btScalar(0.185*scale_ragdoll+0.37*scale_ragdoll*0.5*0.5), btScalar(0.2*scale_ragdoll), btScalar(0.)));
+    transform.getBasis().setEulerZYX(0.,0.,0.);
+	transform.setOrigin(btVector3(btScalar(0.1825*scale_ragdoll), btScalar(0.25*scale_ragdoll), btScalar(0.)));
 	m_bodies[BODYPART_RIGHT_LOWER_LEG] = localCreateRigidBody(btScalar(1.), offset*transform, m_shapes[BODYPART_RIGHT_LOWER_LEG]);
     
     transform.setIdentity();
-    transform.getBasis().setEulerZYX(0,0,-SIMD_PI/6);
-    transform.setOrigin(btVector3(btScalar(0.185*scale_ragdoll-scale_ragdoll*0.075), btScalar(0.), btScalar(-2*scale_ragdoll*0.15/2)));
+    transform.getBasis().setEulerZYX(0.,0.,0.);
+    transform.setOrigin(btVector3(btScalar(0.1825*scale_ragdoll/2), btScalar(0.), btScalar(-scale_ragdoll*0.15/2)));
     m_bodies[BODYPART_RIGHT_FOOT] = localCreateRigidBody(btScalar(1.), offset*transform, m_shapes[BODYPART_RIGHT_FOOT]);
     m_bodies[BODYPART_RIGHT_FOOT]->setFriction(btScalar(1.));
     
@@ -302,7 +302,7 @@ RagDoll::RagDoll (btDynamicsWorld* ownerWorld, const btVector3& positionOffset,
 	{
 		localA.setIdentity(); localB.setIdentity();
 
-		localA.setOrigin(btVector3(btScalar(-0.18*scale_ragdoll), btScalar(-0.10*scale_ragdoll), btScalar(0.)));
+		localA.setOrigin(btVector3(btScalar(-0.1825*scale_ragdoll), btScalar(-0.10*scale_ragdoll), btScalar(0.)));
 
 		localB.setOrigin(btVector3(btScalar(0.), btScalar(0.225*scale_ragdoll), btScalar(0.)));
 
@@ -316,7 +316,9 @@ RagDoll::RagDoll (btDynamicsWorld* ownerWorld, const btVector3& positionOffset,
         joint6DOFSpring->setDamping(3, btScalar(0.01));
         joint6DOFSpring->setDamping(4, btScalar(0.01));
         joint6DOFSpring->setDamping(5, btScalar(0.01));
-        joint6DOFSpring->setEquilibriumPoint();
+        joint6DOFSpring->setEquilibriumPoint(3, btScalar(0));
+        joint6DOFSpring->setEquilibriumPoint(4, btScalar(0));
+        joint6DOFSpring->setEquilibriumPoint(5, btScalar(0));
 
 #ifdef RIGID
 		joint6DOFSpring->setAngularLowerLimit(btVector3(-SIMD_EPSILON,-SIMD_EPSILON,-SIMD_EPSILON));
@@ -333,7 +335,7 @@ RagDoll::RagDoll (btDynamicsWorld* ownerWorld, const btVector3& positionOffset,
 	{
 		localA.setIdentity(); localB.setIdentity();
 
-		localA.setOrigin(btVector3(btScalar(0.18*scale_ragdoll), btScalar(-0.10*scale_ragdoll), btScalar(0.)));
+		localA.setOrigin(btVector3(btScalar(0.1825*scale_ragdoll), btScalar(-0.10*scale_ragdoll), btScalar(0.)));
 		localB.setOrigin(btVector3(btScalar(0.), btScalar(0.225*scale_ragdoll), btScalar(0.)));
 
         joint6DOFSpring = new btGeneric6DofSpringConstraint(*m_bodies[BODYPART_PELVIS], *m_bodies[BODYPART_RIGHT_UPPER_LEG], localA, localB, useLinearReferenceFrameA);
@@ -346,7 +348,9 @@ RagDoll::RagDoll (btDynamicsWorld* ownerWorld, const btVector3& positionOffset,
         joint6DOFSpring->setDamping(3, btScalar(0.01));
         joint6DOFSpring->setDamping(4, btScalar(0.01));
         joint6DOFSpring->setDamping(5, btScalar(0.01));
-        joint6DOFSpring->setEquilibriumPoint();
+        joint6DOFSpring->setEquilibriumPoint(3, btScalar(0));
+        joint6DOFSpring->setEquilibriumPoint(4, btScalar(0));
+        joint6DOFSpring->setEquilibriumPoint(5, btScalar(0));
 
 #ifdef RIGID
 		joint6DOFSpring->setAngularLowerLimit(btVector3(-SIMD_EPSILON,-SIMD_EPSILON,-SIMD_EPSILON));
@@ -364,7 +368,7 @@ RagDoll::RagDoll (btDynamicsWorld* ownerWorld, const btVector3& positionOffset,
 		localA.setIdentity(); localB.setIdentity();
 
 		localA.setOrigin(btVector3(btScalar(0.), btScalar(-0.225*scale_ragdoll), btScalar(0.)));
-		localB.setOrigin(btVector3(btScalar(0.), btScalar(0.185*scale_ragdoll), btScalar(0.)));
+		localB.setOrigin(btVector3(btScalar(0.), btScalar(0.235*scale_ragdoll), btScalar(0.)));
         joint6DOFSpring = new btGeneric6DofSpringConstraint(*m_bodies[BODYPART_LEFT_UPPER_LEG], *m_bodies[BODYPART_LEFT_LOWER_LEG], localA, localB, useLinearReferenceFrameA);
         joint6DOFSpring->enableSpring(3, true);
         joint6DOFSpring->enableSpring(4, true);
@@ -377,7 +381,7 @@ RagDoll::RagDoll (btDynamicsWorld* ownerWorld, const btVector3& positionOffset,
         joint6DOFSpring->setDamping(5, btScalar(0.01));
         joint6DOFSpring->setEquilibriumPoint(3, btScalar(0));
         joint6DOFSpring->setEquilibriumPoint(4, btScalar(0));
-        joint6DOFSpring->setEquilibriumPoint(3, btScalar(0));
+        joint6DOFSpring->setEquilibriumPoint(5, btScalar(0));
 
         
 #ifdef RIGID
@@ -395,8 +399,8 @@ RagDoll::RagDoll (btDynamicsWorld* ownerWorld, const btVector3& positionOffset,
     {
         localA.setIdentity(); localB.setIdentity();
         
-        localA.setOrigin(btVector3(btScalar(0.), btScalar(-0.225*scale_ragdoll), btScalar(0.)));
-        localB.setOrigin(btVector3(btScalar(scale_ragdoll*0.075), btScalar(scale_ragdoll*0.03), btScalar(scale_ragdoll*0.15)));
+        localA.setOrigin(btVector3(btScalar(0.), btScalar(-0.25*scale_ragdoll), btScalar(0.)));
+        localB.setOrigin(btVector3(btScalar(scale_ragdoll*0.075), btScalar(scale_ragdoll*0.015), btScalar(scale_ragdoll*0.15/2)));
         joint6DOF =  new btGeneric6DofConstraint (*m_bodies[BODYPART_LEFT_LOWER_LEG], *m_bodies[BODYPART_LEFT_FOOT], localA, localB,useLinearReferenceFrameA);
         
 #ifdef RIGID
@@ -415,7 +419,7 @@ RagDoll::RagDoll (btDynamicsWorld* ownerWorld, const btVector3& positionOffset,
 		localA.setIdentity(); localB.setIdentity();
 
 		localA.setOrigin(btVector3(btScalar(0.), btScalar(-0.225*scale_ragdoll), btScalar(0.)));
-		localB.setOrigin(btVector3(btScalar(0.), btScalar(0.185*scale_ragdoll), btScalar(0.)));
+		localB.setOrigin(btVector3(btScalar(0.), btScalar(0.235*scale_ragdoll), btScalar(0.)));
         joint6DOFSpring = new btGeneric6DofSpringConstraint(*m_bodies[BODYPART_RIGHT_UPPER_LEG], *m_bodies[BODYPART_RIGHT_LOWER_LEG], localA, localB, useLinearReferenceFrameA);
         joint6DOFSpring->enableSpring(3, true);
         joint6DOFSpring->enableSpring(4, true);
@@ -426,7 +430,9 @@ RagDoll::RagDoll (btDynamicsWorld* ownerWorld, const btVector3& positionOffset,
         joint6DOFSpring->setDamping(3, btScalar(0.01));
         joint6DOFSpring->setDamping(4, btScalar(0.01));
         joint6DOFSpring->setDamping(5, btScalar(0.01));
-        joint6DOFSpring->setEquilibriumPoint();
+        joint6DOFSpring->setEquilibriumPoint(3, btScalar(0));
+        joint6DOFSpring->setEquilibriumPoint(4, btScalar(0));
+        joint6DOFSpring->setEquilibriumPoint(5, btScalar(0));
         
 #ifdef RIGID
         joint6DOFSpring->setAngularLowerLimit(btVector3(-SIMD_EPSILON,-SIMD_EPSILON,-SIMD_EPSILON));
@@ -443,8 +449,8 @@ RagDoll::RagDoll (btDynamicsWorld* ownerWorld, const btVector3& positionOffset,
     {
         localA.setIdentity(); localB.setIdentity();
         
-        localA.setOrigin(btVector3(btScalar(0.), btScalar(-0.225*scale_ragdoll), btScalar(0.)));
-        localB.setOrigin(btVector3(btScalar(scale_ragdoll*0.075), btScalar(scale_ragdoll*0.03), btScalar(scale_ragdoll*0.15)));
+        localA.setOrigin(btVector3(btScalar(0.), btScalar(-0.25*scale_ragdoll), btScalar(0.)));
+        localB.setOrigin(btVector3(btScalar(scale_ragdoll*0.075), btScalar(scale_ragdoll*0.015), btScalar(scale_ragdoll*0.15/2)));
         joint6DOF =  new btGeneric6DofConstraint (*m_bodies[BODYPART_RIGHT_LOWER_LEG], *m_bodies[BODYPART_RIGHT_FOOT], localA, localB,useLinearReferenceFrameA);
         
 #ifdef RIGID
