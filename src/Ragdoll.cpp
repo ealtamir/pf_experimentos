@@ -20,16 +20,11 @@ Written by: Marten Svanfeldt
 
 //#define RIGID 1
 
-RagDoll::RagDoll (btDynamicsWorld* ownerWorld, const btVector3& positionOffset,
-    btScalar scale_ragdoll)    : m_ownerWorld (ownerWorld)
+RagDoll::RagDoll (btDynamicsWorld* ownerWorld, const btVector3& positionOffset, btScalar scale_ragdoll) : m_ownerWorld (ownerWorld)
 {
-
-
     // Setup the geometry
-    m_shapes[BODYPART_PELVIS] = new btCapsuleShape(
-    btScalar(scale_ragdoll*0.15), btScalar(scale_ragdoll*0.20));
-    m_shapes[BODYPART_SPINE] = new btCapsuleShape(
-    btScalar(scale_ragdoll*0.15), btScalar(scale_ragdoll*0.28));
+    m_shapes[BODYPART_PELVIS] = new btCapsuleShape(btScalar(scale_ragdoll*0.15), btScalar(scale_ragdoll*0.20));
+    m_shapes[BODYPART_SPINE] = new btCapsuleShape(btScalar(scale_ragdoll*0.15), btScalar(scale_ragdoll*0.28));
     m_shapes[BODYPART_HEAD] = new btCapsuleShape(btScalar(scale_ragdoll*0.10), btScalar(scale_ragdoll*0.05));
     m_shapes[BODYPART_LEFT_UPPER_LEG] = new btCapsuleShape(btScalar(scale_ragdoll*0.07), btScalar(scale_ragdoll*0.45));
     m_shapes[BODYPART_LEFT_LOWER_LEG] = new btCapsuleShape(btScalar(scale_ragdoll*0.05), btScalar(scale_ragdoll*0.37));

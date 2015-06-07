@@ -20,7 +20,7 @@ FRAMEWORKS = $(patsubst %, -framework %, $(_FRAMEWORKS))
 $(OBJ_DIR)/%.o: %.cpp
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-$(OBJ_DIR)/opengl/%.o: $.cpp
+$(OBJ_DIR)/opengl/%.o: %.cpp
 	$(CC) -c -o $@ $< $(CFLAGS)
 
 walker.out: $(OBJ) $(OPENGL_OBJ)
