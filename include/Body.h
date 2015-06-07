@@ -2,7 +2,8 @@
 #define BODY_H_INCLUDED
 
 #include <vector>
-#include <BulletDynamics/btBulletDynamicsCommon>
+#include <BulletDynamics/btBulletDynamicsCommon.h>
+#include "BodyGroup.h"
 
 class Body {
 
@@ -10,8 +11,8 @@ public:
 	Body(btDynamicsWorld* world);
 	virtual ~Body();
 
-private:
-	std::vector<BodyGroups*> bodyGroups;
+protected:
+	std::vector<BodyGroup*> bodyGroups;
 	btDynamicsWorld* world;
 
 };

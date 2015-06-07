@@ -1,7 +1,7 @@
-#ifndef BODYPART_H_INCLUDE
-#define BODYPART_H_INCLUDE
+#ifndef BODYPART_H_INCLUDED
+#define BODYPART_H_INCLUDED
 
-#include <BulletDynamics/btBulletDynamicsCommon>
+#include <BulletDynamics/btBulletDynamicsCommon.h>
 #include <string>
 
 class BodyPart {
@@ -10,11 +10,12 @@ public:
 	BodyPart();
 	virtual ~BodyPart();
 
-private:
+	btRigidBody* getRigidBody() {return body;};
+
+protected:
 	btRigidBody* body;
 	std::string identifier;
 
-	btRigidBody* getRigidBody() {return body;};
 };
 
 

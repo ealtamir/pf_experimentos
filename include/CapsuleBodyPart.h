@@ -6,7 +6,9 @@
 class CapsuleBodyPart : public BodyPart {
 
 public:
-	CapsuleBodyPart(btScalar radius, btScalar height, btScalar mass);
+	CapsuleBodyPart(btScalar radius, btScalar height,
+			btScalar mass, const btVector3 origin);
 	~CapsuleBodyPart();
-}
+};
+
 #endif

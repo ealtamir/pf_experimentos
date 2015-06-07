@@ -1,4 +1,4 @@
-#include "PassiveWakerBody.h"
+#include "PassiveWalkerBody.h"
 #include "ArmBodyGroup.h"
 
 
@@ -6,7 +6,7 @@ PassiveWalkerBody::PassiveWalkerBody(btDynamicsWorld* world) : Body(world) {
 	BodyGroup* arm = new ArmBodyGroup();
 	bodyGroups.push_back(arm);
 
-	arm.initBodyGroup(world);
+	arm->initBodyGroup(world);
 }
 
 PassiveWalkerBody::~PassiveWalkerBody() {

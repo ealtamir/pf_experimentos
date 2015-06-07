@@ -9,27 +9,23 @@
 #ifndef __pf2__Experiment__
 #define __pf2__Experiment__
 
-#ifdef _WINDOWS
-#include "Win32DemoApplication.h"
-#define PlatformDemoApplication Win32DemoApplication
-#else
-#include "GlutDemoApplication.h"
-#define PlatformDemoApplication GlutDemoApplication
-#endif
-
 #include <stdio.h>
-#include <BulletDynamics/btBulletDynamicsCommon.h>
 #include <time.h>
 #include <string>
+
+#include <BulletDynamics/btBulletDynamicsCommon.h>
+#include "GlutDemoApplication.h"
+
 #include "ObjectStoppedCondition.h"
 
 const btScalar DEFAULT_EXPERIMENT_INTERVAL = 0.001;
 const btScalar DEFAULT_CHANGE_COUNTER = 10;
 
-class Experiment : public PlatformDemoApplication
+class Experiment : public GlutDemoApplication
 {
 public:
     Experiment();
+    virtual ~Experiment();
 
     virtual void initPhysics();
 
@@ -46,22 +42,11 @@ public:
     }
 
 private:
-    virtual void keyboardCallback(unsigned char key, int x, int y);
+    btRigidBody* createGround();
 
 protected:
     bool objectsInitialized = false;
-
-    time_t startTime;
-
-    ObjectStoppedCondition condition = NULL;
-
-    btRigidBody* createGround();
-
-    btRigidBody* createWall();
-
-    btRigidBody* createBall();
-
-    btRigidBody* createCube();
+    bool stoppingConditionEnabled = true;
 
     virtual void initializeBodies() = 0;
 
@@ -71,7 +56,7 @@ protected:
 
     virtual bool stopExperiment() = 0;
 
-    bool stoppingConditionEnabled = true;
+    virtual void keyboardCallback(unsigned char key, int x, int y);
 
 };
 

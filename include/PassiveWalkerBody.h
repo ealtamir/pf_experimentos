@@ -3,7 +3,7 @@
 
 #include "Body.h"
 #include "BodyGroup.h"
-#include <BulletDynamics/btBulletDynamicsCommon>
+#include <BulletDynamics/btBulletDynamicsCommon.h>
 #include <vector>
 
 class PassiveWalkerBody : public Body {
