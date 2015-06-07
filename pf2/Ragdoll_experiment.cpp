@@ -24,9 +24,13 @@ void Ragdoll_experiment::initObjects() {
 }
 
 void Ragdoll_experiment::worldStep() {
-    //float seconds = difftime(time(0), startTime);
-    startTime = time(0);
-    ragDoll->m_bodies[RagDoll::BODYPART_PELVIS]->applyForce(btVector3(0, 40, 0), btVector3(0., 0., 0.));
+    ragDoll->m_bodies[RagDoll::BODYPART_PELVIS]->applyForce(btVector3(5*sin(startTime*SIMD_PI/100), 60, 0), btVector3(0., 0., 0.));
+    for (int i = 0; i < RagDoll::BODYPART_COUNT; ++i) {
+        ragDoll->m_bodies[i]->applyForce(btVector3(0, 0, -1), btVector3(0., 0., 0.));
+    }
+    printf("%f\n", 5*sin(startTime*SIMD_PI/100));
+    printf("%d\n", startTime);
+    startTime++;
 }
 
 bool Ragdoll_experiment::stopExperiment()

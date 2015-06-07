@@ -113,7 +113,7 @@ RagDoll::RagDoll (btDynamicsWorld* ownerWorld, const btVector3& positionOffset,
     m_bodies[BODYPART_LEFT_UPPER_LEG] = localCreateRigidBody(btScalar(1.), offset*transform, m_shapes[BODYPART_LEFT_UPPER_LEG]);
     
     transform.setIdentity();
-    transform.getBasis().setEulerZYX(-SIMD_HALF_PI,0.,-SIMD_HALF_PI/5);
+    transform.getBasis().setEulerZYX(-SIMD_HALF_PI,0.,0.);
     transform.setOrigin(btVector3(btScalar(-0.1825*scale_ragdoll+0.485*scale_ragdoll*0.3090), btScalar(0.485*scale_ragdoll+scale_ragdoll*(1-0.9510)), btScalar(0.235*scale_ragdoll)));
     m_bodies[BODYPART_LEFT_LOWER_LEG] = localCreateRigidBody(btScalar(1.), offset*transform, m_shapes[BODYPART_LEFT_LOWER_LEG]);
     
@@ -302,9 +302,9 @@ RagDoll::RagDoll (btDynamicsWorld* ownerWorld, const btVector3& positionOffset,
 	{
 		localA.setIdentity(); localB.setIdentity();
 
-		localA.setOrigin(btVector3(btScalar(-0.1825*scale_ragdoll), btScalar(-0.10*scale_ragdoll), btScalar(0.)));
+		localA.setOrigin(btVector3(btScalar(-0.15*scale_ragdoll), btScalar(-0.10*scale_ragdoll), btScalar(0.)));
 
-		localB.setOrigin(btVector3(btScalar(0.), btScalar(0.225*scale_ragdoll), btScalar(0.)));
+		localB.setOrigin(btVector3(btScalar(0.07), btScalar(0.225*scale_ragdoll), btScalar(0.)));
 
         joint6DOFSpring = new btGeneric6DofSpringConstraint(*m_bodies[BODYPART_PELVIS], *m_bodies[BODYPART_LEFT_UPPER_LEG], localA, localB, useLinearReferenceFrameA);
         joint6DOFSpring->enableSpring(3, false);
@@ -335,8 +335,8 @@ RagDoll::RagDoll (btDynamicsWorld* ownerWorld, const btVector3& positionOffset,
 	{
 		localA.setIdentity(); localB.setIdentity();
 
-		localA.setOrigin(btVector3(btScalar(0.1825*scale_ragdoll), btScalar(-0.10*scale_ragdoll), btScalar(0.)));
-		localB.setOrigin(btVector3(btScalar(0.), btScalar(0.225*scale_ragdoll), btScalar(0.)));
+		localA.setOrigin(btVector3(btScalar(0.15*scale_ragdoll), btScalar(-0.10*scale_ragdoll), btScalar(0.)));
+		localB.setOrigin(btVector3(btScalar(-0.07), btScalar(0.225*scale_ragdoll), btScalar(0.)));
 
         joint6DOFSpring = new btGeneric6DofSpringConstraint(*m_bodies[BODYPART_PELVIS], *m_bodies[BODYPART_RIGHT_UPPER_LEG], localA, localB, useLinearReferenceFrameA);
         joint6DOFSpring->enableSpring(3, false);
@@ -373,9 +373,9 @@ RagDoll::RagDoll (btDynamicsWorld* ownerWorld, const btVector3& positionOffset,
         joint6DOFSpring->enableSpring(3, true);
         joint6DOFSpring->enableSpring(4, true);
         joint6DOFSpring->enableSpring(5, true);
-        joint6DOFSpring->setStiffness(3, btScalar(10.));
-        joint6DOFSpring->setStiffness(4, btScalar(10.));
-        joint6DOFSpring->setStiffness(5, btScalar(10.));
+        joint6DOFSpring->setStiffness(3, btScalar(5.));
+        joint6DOFSpring->setStiffness(4, btScalar(5.));
+        joint6DOFSpring->setStiffness(5, btScalar(5.));
         joint6DOFSpring->setDamping(3, btScalar(0.01));
         joint6DOFSpring->setDamping(4, btScalar(0.01));
         joint6DOFSpring->setDamping(5, btScalar(0.01));
@@ -424,9 +424,9 @@ RagDoll::RagDoll (btDynamicsWorld* ownerWorld, const btVector3& positionOffset,
         joint6DOFSpring->enableSpring(3, true);
         joint6DOFSpring->enableSpring(4, true);
         joint6DOFSpring->enableSpring(5, true);
-        joint6DOFSpring->setStiffness(3, btScalar(10.));
-        joint6DOFSpring->setStiffness(4, btScalar(10.));
-        joint6DOFSpring->setStiffness(5, btScalar(10.));
+        joint6DOFSpring->setStiffness(3, btScalar(5.));
+        joint6DOFSpring->setStiffness(4, btScalar(5.));
+        joint6DOFSpring->setStiffness(5, btScalar(5.));
         joint6DOFSpring->setDamping(3, btScalar(0.01));
         joint6DOFSpring->setDamping(4, btScalar(0.01));
         joint6DOFSpring->setDamping(5, btScalar(0.01));

@@ -9,7 +9,7 @@ GLDebugDrawer debugDrawerSphere;
 
 Experiment::Experiment()
 {
-    startTime = time(0);
+    startTime = 0;
 }
 
 void Experiment::initPhysics()
@@ -38,9 +38,9 @@ btRigidBody* Experiment::createGround()
 {
     btCollisionShape* groundShape = new btBoxShape(btVector3(btScalar(50.), btScalar(1.), btScalar(50.)));
     btTransform groundTransform = btTransform();
-    groundTransform.setRotation(btQuaternion(1., 0., 0., 0.3));
+    groundTransform.setRotation(btQuaternion(1., 0., 0., 0.));
 //    groundTransform.setIdentity();
-    groundTransform.setOrigin(btVector3(0, -1.7, 0));
+    groundTransform.setOrigin(btVector3(0, -0.01-1.5+1.5*(1-0.9510), 0));
     return localCreateRigidBody(btScalar(0.), groundTransform, groundShape);
 }
 

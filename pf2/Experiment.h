@@ -33,10 +33,10 @@ class Experiment : public PlatformDemoApplication
 protected:
     bool objectsInitialized = false;
     
-    time_t startTime;
-    
 public:
     RagDoll* ragDoll;
+    
+    int startTime;
     
     Experiment();
     
