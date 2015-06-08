@@ -7,7 +7,6 @@
 class BodyPart {
 
 public:
-	BodyPart();
 	virtual ~BodyPart();
 
 	btRigidBody* getRigidBody() {return body;};

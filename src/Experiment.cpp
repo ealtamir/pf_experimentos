@@ -8,8 +8,12 @@
 
 GLDebugDrawer debugDrawerSphere;
 
-Experiment::Experiment()
-{
+Experiment::Experiment() {
+    // Does Nothing
+}
+
+Experiment::~Experiment() {
+
 }
 
 void Experiment::initPhysics()

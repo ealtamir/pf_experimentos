@@ -16,8 +16,3 @@ CapsuleBodyPart::CapsuleBodyPart(btScalar radius, btScalar height, btScalar mass
 
 	body = new btRigidBody(capsuleCI);
 }
-
-CapsuleBodyPart::~CapsuleBodyPart() {
-	delete body->getMotionState();
-	delete body;
-}

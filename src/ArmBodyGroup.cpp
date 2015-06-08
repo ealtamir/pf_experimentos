@@ -22,8 +22,9 @@ ArmBodyGroup::ArmBodyGroup(float multiplier, const btVector3& positionOffset) {
 	bodyParts.push_back(&upperArm);
 }
 
-void ArmBodyGroup::initBodyGroup(btDynamicsWorld* world) {
+ArmBodyGroup::~ArmBodyGroup() {
 	for (BodyPart* part : bodyParts) {
-		world->addRigidBody(part->getRigidBody());
+		delete part->getRigidBody()->getMotionState();
+		delete part->getRigidBody();
 	}
 }

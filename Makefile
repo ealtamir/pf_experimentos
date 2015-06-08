@@ -1,5 +1,5 @@
-CC = g++
-CFLAGS = $(patsubst %, -I%, $(INCLUDES)) -std=c++11
+CC = clang++
+CFLAGS = $(patsubst %, -I%, $(INCLUDES)) -std=c++11 -stdlib=libstdc++
 INCLUDES = include include/opengl
 SRC_DIR = src
 LIB_DIR = lib
