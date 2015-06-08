@@ -25,6 +25,8 @@ void Ragdoll_experiment::initObjects() {
 
 void Ragdoll_experiment::worldStep() {
     ragDoll->m_bodies[RagDoll::BODYPART_PELVIS]->applyForce(btVector3(5*sin(startTime*SIMD_PI/100), 60, 0), btVector3(0., 0., 0.));
+    ragDoll->m_bodies[RagDoll::BODYPART_RIGHT_UPPER_LEG]-> applyCentralForce(btVector3(0,5*sin(startTime*SIMD_PI/100), 0));
+    ragDoll->m_bodies[RagDoll::BODYPART_LEFT_UPPER_LEG]-> applyCentralForce(btVector3(0,5*cos(startTime*SIMD_PI/100), 0));
     for (int i = 0; i < RagDoll::BODYPART_COUNT; ++i) {
         ragDoll->m_bodies[i]->applyForce(btVector3(0, 0, -1), btVector3(0., 0., 0.));
     }
