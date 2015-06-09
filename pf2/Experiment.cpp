@@ -145,6 +145,12 @@ void Experiment::keyboardCallback(unsigned char key, int x, int y)
         case 'v':
 //            ragDoll->m_bodies[RagDoll::BODYPART_PELVIS]->applyCentralImpulse(btVector3(0, 0, -5));
             break;
+        case ' ':
+            //OJO!! Esto solo sirve para el RagDoll
+            printf("--------------------------------ESPACIO\n");
+            startTime=0;
+            DemoApplication::keyboardCallback(key, x, y);
+            break;
         default:
             DemoApplication::keyboardCallback(key, x, y);
     }
