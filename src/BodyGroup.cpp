@@ -9,5 +9,8 @@ void BodyGroup::addRigidBodiesToWorld(btDynamicsWorld* world) {
 	for (BodyPart* part : bodyParts) {
 		world->addRigidBody(part->getRigidBody());
 	}
+    for (btTypedConstraint* constraint : constraints) {
+        world->addConstraint(constraint);
+    }
 }
 

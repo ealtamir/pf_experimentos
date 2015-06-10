@@ -12,6 +12,7 @@ public:
 
 protected:
 	std::vector<BodyPart*> bodyParts;
+    std::vector<btTypedConstraint*> constraints;
 
 	virtual void addRigidBodiesToWorld(btDynamicsWorld* world);
 };

@@ -6,9 +6,22 @@
 class ArmBodyGroup : public BodyGroup {
 
 public:
-	ArmBodyGroup(float multiplier = 1.0,
+	ArmBodyGroup(double multiplier = 1.0,
 			const btVector3& positionOffset = btVector3(0, 20, 0));
 	~ArmBodyGroup();
+    
+private:
+    btGeneric6DofConstraint*
+    joinArmParts(BodyPart* lowerArm, BodyPart* upperArm, double multiplier);
+    
+    BodyPart*
+    generateArmPart(const double r, const double h, const double m,
+                    const btVector3& positionOffset);
+
+    // radius, height and mass
+    const double LOWER_ARM_R = 0.04, LOWER_ARM_H = 0.25,LOWER_ARM_M = 1.0;
+    const double UPPER_ARM_R = 0.05, UPPER_ARM_H = 0.33,
+        UPPER_ARM_M = 1.0;
 };
 
 #endif
