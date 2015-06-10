@@ -8,12 +8,12 @@
 class BodyGroup {
 
 public:
-	void initBodyGroup(btDynamicsWorld* world);
+	virtual void initBodyGroup(btDynamicsWorld* world);
 
 protected:
 	std::vector<BodyPart*> bodyParts;
 
-	void addRigidBodiesToWorld(btDynamicsWorld* world);
+	virtual void addRigidBodiesToWorld(btDynamicsWorld* world);
 };
 
 #endif

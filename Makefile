@@ -1,5 +1,5 @@
 CC = clang++
-CFLAGS = $(patsubst %, -I%, $(INCLUDES)) -std=c++11 -stdlib=libstdc++
+CFLAGS = $(patsubst %, -I%, $(INCLUDES)) -std=c++11 -stdlib=libc++
 INCLUDES = include include/opengl
 SRC_DIR = src
 LIB_DIR = lib
@@ -18,6 +18,7 @@ _FRAMEWORKS = $(GRAPHIC_LIBS) $(BULLET_LIBS)
 FRAMEWORKS = $(patsubst %, -framework %, $(_FRAMEWORKS))
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
+	mkdir -p src/obj/opengl/
 	$(CC) -c -o $@ $< $(CFLAGS)
 
 $(OBJ_DIR)/opengl/%.o: $(SRC_DIR)/opengl/%.cpp

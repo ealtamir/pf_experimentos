@@ -9,7 +9,7 @@ int main(int argc,char* argv[])
     PassiveWalkerExperiment demoApp;
     demoApp.enableStoppingCondition(false);
     demoApp.initPhysics();
-    demoApp.setCameraDistance(btScalar(20.));
+    demoApp.setCameraDistance(btScalar(5.));
     demoApp.setCameraUp(btVector3(0, 10, 0));
     return glutmain(argc, argv, 1024, 768, "Experiment",&demoApp);
 }
