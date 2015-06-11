@@ -28,10 +28,26 @@ void Ragdoll_experiment::worldStep() {
     ragDoll->m_bodies[RagDoll::BODYPART_PELVIS]->applyTorque(btVector3(0,3*sin(startTime*SIMD_PI/100),0));
     ragDoll->m_bodies[RagDoll::BODYPART_PELVIS]->applyForce(btVector3(0, 60, 0), btVector3(0., 0., 0.));
     
-    ragDoll->m_bodies[RagDoll::BODYPART_RIGHT_UPPER_LEG]->applyTorque(btVector3(-20*cos(startTime*SIMD_PI/100),0,0));
-    ragDoll->m_bodies[RagDoll::BODYPART_RIGHT_LOWER_LEG]->applyTorque(btVector3(10*cos(startTime*SIMD_PI/100),0,0));
-    ragDoll->m_bodies[RagDoll::BODYPART_LEFT_UPPER_LEG]->applyTorque(btVector3(20*cos(startTime*SIMD_PI/100),0,0));
-    ragDoll->m_bodies[RagDoll::BODYPART_LEFT_LOWER_LEG]->applyTorque(btVector3(-10*cos(startTime*SIMD_PI/100),0,0));
+    /*ragDoll->m_bodies[RagDoll::BODYPART_PELVIS]->applyForce(btVector3(0, 53, 0), btVector3(0., 0., 0.));
+    if(startTime < 35) {
+        ragDoll->m_bodies[RagDoll::BODYPART_PELVIS]->applyTorque(btVector3(0, -2, 0));
+    }
+    if(sin(startTime*SIMD_PI/70) < -0.99) {
+       ragDoll->m_bodies[RagDoll::BODYPART_PELVIS]->applyForce(btVector3(30, 0, 0), btVector3(0., 0., 0.));
+       ragDoll->m_bodies[RagDoll::BODYPART_PELVIS]->applyTorque(btVector3(0, 10, 0));
+    }
+    if(sin(startTime*SIMD_PI/70) > 0.99) {
+        ragDoll->m_bodies[RagDoll::BODYPART_PELVIS]->applyForce(btVector3(-30, 0, 0), btVector3(0., 0., 0.));
+        ragDoll->m_bodies[RagDoll::BODYPART_PELVIS]->applyTorque(btVector3(0, -10, 0));
+    }*/
+    
+    
+    
+    
+    ragDoll->m_bodies[RagDoll::BODYPART_RIGHT_UPPER_LEG]->applyTorque(btVector3(-15*cos(startTime*SIMD_PI/100),0,0));
+    ragDoll->m_bodies[RagDoll::BODYPART_RIGHT_LOWER_LEG]->applyTorque(btVector3(7*cos(startTime*SIMD_PI/100),0,0));
+    ragDoll->m_bodies[RagDoll::BODYPART_LEFT_UPPER_LEG]->applyTorque(btVector3(15*cos(startTime*SIMD_PI/100),0,0));
+    ragDoll->m_bodies[RagDoll::BODYPART_LEFT_LOWER_LEG]->applyTorque(btVector3(-7*cos(startTime*SIMD_PI/100),0,0));
     
     
     for (int i = 0; i < RagDoll::BODYPART_COUNT; ++i) {
