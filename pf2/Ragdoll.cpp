@@ -308,10 +308,10 @@ RagDoll::RagDoll (btDynamicsWorld* ownerWorld, const btVector3& positionOffset,
 
         joint6DOFSpring = new btGeneric6DofSpringConstraint(*m_bodies[BODYPART_PELVIS], *m_bodies[BODYPART_LEFT_UPPER_LEG], localA, localB, useLinearReferenceFrameA);
         joint6DOFSpring->enableSpring(3, false);
-        joint6DOFSpring->enableSpring(4, false);
+        joint6DOFSpring->enableSpring(4, true);
         joint6DOFSpring->enableSpring(5, false);
         joint6DOFSpring->setStiffness(3, btScalar(5.));
-        joint6DOFSpring->setStiffness(4, btScalar(5.));
+        joint6DOFSpring->setStiffness(4, btScalar(50.));
         joint6DOFSpring->setStiffness(5, btScalar(5.));
         joint6DOFSpring->setDamping(3, btScalar(0.01));
         joint6DOFSpring->setDamping(4, btScalar(0.01));

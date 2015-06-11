@@ -24,21 +24,23 @@ void Ragdoll_experiment::initObjects() {
 }
 
 void Ragdoll_experiment::worldStep() {
-    //ragDoll->m_bodies[RagDoll::BODYPART_PELVIS]->applyForce(btVector3(5*sin(startTime*SIMD_PI/100), 60, 0), btVector3(0., 0., 0.));
-    ragDoll->m_bodies[RagDoll::BODYPART_PELVIS]->applyForce(btVector3(0, 60, 0), btVector3(0., 0., 0.));
-    ragDoll->m_bodies[RagDoll::BODYPART_RIGHT_UPPER_LEG]->applyTorque(btVector3(20*sin(startTime*SIMD_PI/100),0,0));
-    ragDoll->m_bodies[RagDoll::BODYPART_RIGHT_LOWER_LEG]->applyTorque(btVector3(-10*sin(startTime*SIMD_PI/100),0,0));
-    ragDoll->m_bodies[RagDoll::BODYPART_LEFT_UPPER_LEG]->applyTorque(btVector3(20*cos(startTime*SIMD_PI/100),0,0));
-    ragDoll->m_bodies[RagDoll::BODYPART_LEFT_LOWER_LEG]->applyTorque(btVector3(-10*cos(startTime*SIMD_PI/100),0,0));
-    
-    
-    for (int i = 0; i < RagDoll::BODYPART_COUNT; ++i) {
-        ragDoll->m_bodies[i]->applyForce(btVector3(0, 0, -1), btVector3(0., 0., 0.));
+    ragDoll->m_bodies[RagDoll::BODYPART_PELVIS]->applyForce(btVector3(0, 53, 0), btVector3(0., 0., 0.));
+    if(startTime < 35) {
+        ragDoll->m_bodies[RagDoll::BODYPART_PELVIS]->applyTorque(btVector3(0, -2, 0));
+    }
+    if(sin(startTime*SIMD_PI/70) < -0.99) {
+        ragDoll->m_bodies[RagDoll::BODYPART_PELVIS]->applyForce(btVector3(30, 0, 0), btVector3(0., 0., 0.));
+        ragDoll->m_bodies[RagDoll::BODYPART_PELVIS]->applyTorque(btVector3(0, 10, 0));
+    }
+    if(sin(startTime*SIMD_PI/70) > 0.99) {
+        ragDoll->m_bodies[RagDoll::BODYPART_PELVIS]->applyForce(btVector3(-30, 0, 0), btVector3(0., 0., 0.));
+        ragDoll->m_bodies[RagDoll::BODYPART_PELVIS]->applyTorque(btVector3(0, -10, 0));
     }
     
-    printf("left_upper_leg: %f\n", 20*cos(startTime*SIMD_PI/100));
-    printf("right_upper_leg: %f\n", 20*sin(startTime*SIMD_PI/100+SIMD_PI/4));
-    printf("TimeStep: %d\n", startTime);
+    for (int i = 0; i < RagDoll::BODYPART_COUNT; ++i) {
+        ragDoll->m_bodies[i]->applyForce(btVector3(0, 0, -1.5), btVector3(0., 0., 0.));
+    }
+
     startTime++;
 }
 
