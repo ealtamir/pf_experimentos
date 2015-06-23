@@ -3,8 +3,9 @@
 
 
 
-ArmBodyGroup::ArmBodyGroup(const double multiplier,
-                           const btVector3& positionOffset) {
+ArmBodyGroup::ArmBodyGroup(btDynamicsWorld* world,
+                           const double multiplier,
+                           const btVector3& positionOffset) : BodyGroup(world) {
     
 	BodyPart* lowerArm = generateArmPart(
 		multiplier * LOWER_ARM_R,
@@ -22,57 +23,24 @@ ArmBodyGroup::ArmBodyGroup(const double multiplier,
 	bodyParts.push_back(lowerArm);
 	bodyParts.push_back(upperArm);
     
-    btTypedConstraint* elbow = joinArmParts(lowerArm, upperArm, multiplier);
+    btTypedConstraint* elbow = joinArmParts(upperArm, lowerArm, multiplier);
     
     constraints.push_back(elbow);
     
 }
 
 
-
-ArmBodyGroup::~ArmBodyGroup() {
-	for (BodyPart* part : bodyParts) {
-		delete part->getRigidBody()->getMotionState();
-		delete part->getRigidBody();
-	}
-}
-
-
-
 btGeneric6DofConstraint*
-ArmBodyGroup::joinArmParts(BodyPart* lowerArm, BodyPart* upperArm,
+ArmBodyGroup::joinArmParts(BodyPart* upperArm, BodyPart* lowerArm,
                            double multiplier) {
-    btGeneric6DofConstraint* joint6DOF;
-    btTransform lowerTrans, upperTrans;
-    bool useLinearReferenceFrameA = true;
-    
-    upperTrans.setIdentity();
-    lowerTrans.setIdentity();
-    
     btVector3 upperOrigin(0, 0.18 * multiplier, 0);
     btVector3 lowerOrigin(0, -0.14 * multiplier, 0);
-    
-    upperTrans.setOrigin(upperOrigin);
-    lowerTrans.setOrigin(lowerOrigin);
 
-    joint6DOF = new btGeneric6DofConstraint(*upperArm->getRigidBody(),
-                                            *lowerArm->getRigidBody(),
-                                            upperTrans,
-                                            lowerTrans,
-                                            useLinearReferenceFrameA
-    );
+    // Algo que usa Bullet
+    btVector3 angularUpperLimit(SIMD_PI * 0.7f, SIMD_EPSILON, SIMD_EPSILON);
     
-    #ifdef RIGID
-    joint6DOF->setAngularLowerLimit(btVector3(-SIMD_EPSILON,-SIMD_EPSILON,-SIMD_EPSILON));
-    joint6DOF->setAngularUpperLimit(btVector3(SIMD_EPSILON,SIMD_EPSILON,SIMD_EPSILON));
-    #else
-    joint6DOF->setAngularLowerLimit(btVector3(-SIMD_EPSILON,-SIMD_EPSILON,-SIMD_EPSILON));
-    joint6DOF->setAngularUpperLimit(btVector3(SIMD_PI*0.7f,SIMD_EPSILON,SIMD_EPSILON));
-    #endif
-    
-    return joint6DOF;
+    return create6DoFConstraint(upperArm, lowerArm, upperOrigin, lowerOrigin, angularUpperLimit, multiplier);
 }
-
 
 
 BodyPart*

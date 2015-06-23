@@ -6,16 +6,16 @@
 class ArmBodyGroup : public BodyGroup {
 
 public:
-	ArmBodyGroup(double multiplier = 1.0,
+	ArmBodyGroup(btDynamicsWorld* world, double multiplier = 1.0,
 			const btVector3& positionOffset = btVector3(0, 20, 0));
-	~ArmBodyGroup();
-    
 private:
     btGeneric6DofConstraint*
-    joinArmParts(BodyPart* lowerArm, BodyPart* upperArm, double multiplier);
+    joinArmParts(BodyPart* upperArm, BodyPart* lowerArm, double multiplier);
     
     BodyPart*
-    generateArmPart(const double r, const double h, const double m,
+    generateArmPart(const double r,
+                    const double h,
+                    const double m,
                     const btVector3& positionOffset);
 
     // radius, height and mass
