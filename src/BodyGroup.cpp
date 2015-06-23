@@ -46,7 +46,7 @@ BodyGroup::create6DoFConstraint(BodyPart* p1,
     p2Trans.setOrigin(offset2);
     
     joint6DOF = new btGeneric6DofConstraint(*p1->getRigidBody(),
-                                            *p1->getRigidBody(),
+                                            *p2->getRigidBody(),
                                             p1Trans,
                                             p2Trans,
                                             useLinearReferenceFrameA
