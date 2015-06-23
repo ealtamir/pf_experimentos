@@ -7,13 +7,13 @@ ArmBodyGroup::ArmBodyGroup(btDynamicsWorld* world,
                            const double multiplier,
                            const btVector3& positionOffset) : BodyGroup(world) {
     
-	BodyPart* lowerArm = generateArmPart(
-		multiplier * LOWER_ARM_R,
+	BodyPart* lowerArm = generateStandardPart(
+        multiplier * LOWER_ARM_R,
 		multiplier * LOWER_ARM_H,
 		LOWER_ARM_M,
 		positionOffset
 	);
-	BodyPart* upperArm = generateArmPart(
+	BodyPart* upperArm = generateStandardPart(
 		multiplier * UPPER_ARM_R,
 		multiplier * UPPER_ARM_H,
 		UPPER_ARM_M,
@@ -26,7 +26,6 @@ ArmBodyGroup::ArmBodyGroup(btDynamicsWorld* world,
     btTypedConstraint* elbow = joinArmParts(upperArm, lowerArm, multiplier);
     
     constraints.push_back(elbow);
-    
 }
 
 
@@ -40,12 +39,4 @@ ArmBodyGroup::joinArmParts(BodyPart* upperArm, BodyPart* lowerArm,
     btVector3 angularUpperLimit(SIMD_PI * 0.7f, SIMD_EPSILON, SIMD_EPSILON);
     
     return create6DoFConstraint(upperArm, lowerArm, upperOrigin, lowerOrigin, angularUpperLimit, multiplier);
-}
-
-
-BodyPart*
-ArmBodyGroup::generateArmPart(const double r, const double h, const double m,
-                const btVector3& positionOffset) {
-    return new CapsuleBodyPart(btScalar(r), btScalar(h),
-                               btScalar(m), positionOffset);
 }

@@ -5,10 +5,15 @@
 #include <BulletDynamics/btBulletDynamicsCommon.h>
 #include <vector>
 
+
+
 class PassiveWalkerBody : public Body {
+
 
 public:
 	PassiveWalkerBody(btDynamicsWorld* world);
+    
+    const double MULTIPLIER = 1.0;
 
 };
 #endif

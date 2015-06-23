@@ -23,7 +23,7 @@ private:
                     const btVector3& positionOffset);
     
     
-    const double LOWER_LEG_R = 0.05, LOWER_LEG_H = 0.45, LOWER_LEG_M = 1;
+    const double LOWER_LEG_R = 0.05, LOWER_LEG_H = 0.37, LOWER_LEG_M = 1;
     const double UPPER_LEG_R = 0.07, UPPER_LEG_H = 0.45, UPPER_LEG_M = 1;
 };
 

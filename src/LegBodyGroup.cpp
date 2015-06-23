@@ -5,13 +5,13 @@
 LegBodyGroup::LegBodyGroup(btDynamicsWorld* world,
                            double multiplier,
                            const btVector3 positionOffset) : BodyGroup(world){
-    BodyPart* lowerLeg = generateLegPart(multiplier * LOWER_LEG_H,
-                                         multiplier * LOWER_LEG_R,
+    BodyPart* lowerLeg = generateLegPart(multiplier * LOWER_LEG_R,
+                                         multiplier * LOWER_LEG_H,
                                          LOWER_LEG_M,
                                          positionOffset);
     
-    BodyPart* upperLeg = generateLegPart(multiplier * UPPER_LEG_H,
-                                         multiplier * UPPER_LEG_R,
+    BodyPart* upperLeg = generateLegPart(multiplier * UPPER_LEG_R,
+                                         multiplier * UPPER_LEG_H,
                                          UPPER_LEG_M,
                                          positionOffset);
     

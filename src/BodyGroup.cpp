@@ -1,4 +1,5 @@
 #include "BodyGroup.h"
+#include "CapsuleBodyPart.h"
 
 
 BodyGroup::~BodyGroup() {
@@ -27,6 +28,7 @@ void BodyGroup::addRigidBodiesToWorld() {
         world->addConstraint(constraint);
     }
 }
+
 
 btGeneric6DofConstraint*
 BodyGroup::create6DoFConstraint(BodyPart* p1,
@@ -61,6 +63,27 @@ BodyGroup::create6DoFConstraint(BodyPart* p1,
 #endif
     
     return joint6DOF;
+}
+
+
+btGeneric6DofConstraint*
+BodyGroup::genericPartJoin(BodyPart *upperPart,
+                           BodyPart *lowerPart,
+                           const btVector3 upperOffset,
+                           const btVector3 lowerOffset,
+                           double multiplier) {
+    
+    btVector3 angularUpperLimit(SIMD_PI * 0.7f, SIMD_EPSILON, SIMD_EPSILON);
+    return create6DoFConstraint(upperPart, lowerPart, upperOffset, lowerOffset, angularUpperLimit, multiplier);
+}
+
+BodyPart*
+BodyGroup::generateStandardPart(const double r,
+                                const double h,
+                                const double m,
+                                const btVector3 &positionOffset) {
+    return new CapsuleBodyPart(btScalar(r), btScalar(h),
+                               btScalar(m), positionOffset);
 }
 
 
