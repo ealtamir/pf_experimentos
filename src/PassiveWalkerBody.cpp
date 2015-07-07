@@ -7,17 +7,17 @@
 
 PassiveWalkerBody::PassiveWalkerBody(btDynamicsWorld* world) : Body::Body(world) {
     BodyGroup* left_arm = new ArmBodyGroup(world,
-                                      PassiveWalkerBody::MULTIPLIER,
-                                      btVector3(0, 10, 0));
+                                           PassiveWalkerBody::MULTIPLIER,
+                                           btVector3(0, 10, 0));
     BodyGroup* right_arm = new ArmBodyGroup(world,
                                            PassiveWalkerBody::MULTIPLIER,
                                            btVector3(0, 10, 0));
     BodyGroup* left_leg = new LegBodyGroup(world,
-                                      PassiveWalkerBody::MULTIPLIER,
-                                      btVector3(0, 11, 0));
+                                           PassiveWalkerBody::MULTIPLIER,
+                                           btVector3(0, 11, 0));
     BodyGroup* right_leg = new LegBodyGroup(world,
-                                      PassiveWalkerBody::MULTIPLIER,
-                                      btVector3(0, 11, 0));
+                                            PassiveWalkerBody::MULTIPLIER,
+                                            btVector3(0, 11, 0));
     BodyGroup* torso = new TorsoBodyGroup(world,
                                           PassiveWalkerBody::MULTIPLIER,
                                           btVector3(0, 12, 0));

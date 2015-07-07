@@ -13,6 +13,8 @@ public:
 
 protected:
 	std::vector<BodyGroup*> bodyGroups;
+    std::vector<btTypedConstraint*> constraints;
+    
 	btDynamicsWorld* world;
 
 };
