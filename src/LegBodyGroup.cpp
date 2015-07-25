@@ -1,5 +1,6 @@
 #include "LegBodyGroup.h"
 #include "CapsuleBodyPart.h"
+#include "ConstraintBuilder.h"
 
 
 LegBodyGroup::LegBodyGroup(btDynamicsWorld* world,
@@ -36,9 +37,23 @@ LegBodyGroup::joinLegParts(BodyPart* upperLeg,
                          btScalar(0.185 * multiplier),
                          btScalar(0.));
     
-    btVector3 angularUpperLimit(SIMD_PI * 0.7f, SIMD_EPSILON, SIMD_EPSILON);
+    btVector3 angularLowerLimit(-SIMD_EPSILON,-SIMD_EPSILON,-SIMD_EPSILON);
+    btVector3 angularUpperLimit(SIMD_PI*0.7f, SIMD_EPSILON, SIMD_EPSILON);
     
-    return create6DoFConstraint(upperLeg, lowerLeg, upperOffset, lowerOffset, angularUpperLimit, multiplier);
+    ConstraintParams params = {
+        upperLeg,
+        lowerLeg,
+        upperOffset,
+        lowerOffset,
+        nullptr,
+        nullptr,
+        angularLowerLimit,
+        angularUpperLimit,
+        multiplier
+    };
+    
+    return ConstraintBuilder::create6DoFConstraint(params);
+    
 }
 
 

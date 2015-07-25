@@ -1,5 +1,6 @@
 #include "ArmBodyGroup.h"
 #include "CapsuleBodyPart.h"
+#include "ConstraintBuilder.h"
 
 
 
@@ -32,13 +33,26 @@ ArmBodyGroup::ArmBodyGroup(btDynamicsWorld* world,
 btGeneric6DofConstraint*
 ArmBodyGroup::joinArmParts(BodyPart* upperArm, BodyPart* lowerArm,
                            double multiplier) {
-    btVector3 upperOrigin(0, 0.18 * multiplier, 0);
-    btVector3 lowerOrigin(0, -0.14 * multiplier, 0);
+    btVector3 upperOffset(0, 0.18 * multiplier, 0);
+    btVector3 lowerOffset(0, -0.14 * multiplier, 0);
 
     // Algo que usa Bullet
+    btVector3 angularLowerLimit(-SIMD_EPSILON,-SIMD_EPSILON,-SIMD_EPSILON);
     btVector3 angularUpperLimit(SIMD_PI * 0.7f, SIMD_EPSILON, SIMD_EPSILON);
     
-    return create6DoFConstraint(upperArm, lowerArm, upperOrigin, lowerOrigin, angularUpperLimit, multiplier);
+    ConstraintParams params = {
+        upperArm,
+        lowerArm,
+        upperOffset,
+        lowerOffset,
+        nullptr,
+        nullptr,
+        angularLowerLimit,
+        angularUpperLimit,
+        multiplier
+    };
+    
+    return ConstraintBuilder::create6DoFConstraint(params);
 }
 
 BodyPart*
