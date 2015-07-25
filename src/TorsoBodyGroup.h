@@ -39,6 +39,13 @@ protected:
     const double PELVIS_R = 0.15, PELVIS_H = 0.20, PELVIS_M = 1.0;
     const double SPINE_R = 0.15, SPINE_H = 0.28, SPINE_M = 1.0;
     const double HEAD_R = 0.10, HEAD_H = 0.05, HEAD_M = 1.0;
+    
+private:
+    btGeneric6DofConstraint*
+    createHeadSpineConstraint(BodyPart* head, BodyPart* spine, double multiplier);
+    
+    btGeneric6DofConstraint*
+    createSpinePelvisConstraint(BodyPart* spine, BodyPart* pelvis, double multiplier);
 };
 
 #endif /* defined(__test__TorsoBodyGroup__) */

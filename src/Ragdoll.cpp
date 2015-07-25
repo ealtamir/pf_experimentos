@@ -221,6 +221,7 @@ btScalar(0.)));
 
         localA.getBasis().setEulerZYX(0,SIMD_HALF_PI,0);
         localA.setOrigin(btVector3(btScalar(0.), btScalar(0.15*scale_ragdoll), btScalar(0.)));
+        
         localB.getBasis().setEulerZYX(0,SIMD_HALF_PI,0);
         localB.setOrigin(btVector3(btScalar(0.), btScalar(-0.15*scale_ragdoll), btScalar(0.)));
         joint6DOF =  new btGeneric6DofConstraint (*m_bodies[BODYPART_PELVIS], *m_bodies[BODYPART_SPINE], localA, localB,useLinearReferenceFrameA);

@@ -34,13 +34,13 @@ void Experiment::initPhysics()
 
     // This is related to the number of iterations performed
     // by the collision solver algorithm.
-    info.m_numIterations = 20;
+    //info.m_numIterations = 20;
 
     // If set to 1, it doesn't solve collision between objects in pairs, so when bouncing
     // there isn't any energy added.
-    info.m_splitImpulse = 1;
+    //info.m_splitImpulse = 1;
 
-    m_dynamicsWorld->setGravity(GRAVITY);
+    m_dynamicsWorld->setGravity(btVector3(0, -10, 0));
     m_dynamicsWorld->setDebugDrawer(&debugDrawerSphere);
 
     createGround();

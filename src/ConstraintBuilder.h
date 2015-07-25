@@ -20,11 +20,11 @@ typedef struct {
     btVector3 p1_Offset;
     btVector3 p2_Offset;
     
-    btVector3 p1_eulerZYX;
-    btVector3 p2_eulerZYX;
+    btVector3* p1_eulerZYX;
+    btVector3* p2_eulerZYX;
     
-    btVector3& angulerUpperLimit;
     btVector3& angularLowerLimit;
+    btVector3& angulerUpperLimit;
     
     double multiplier;
 } ConstraintParams;
@@ -32,20 +32,8 @@ typedef struct {
 class ConstraintBuilder {
     
 public:
-    btGeneric6DofConstraint*
-    generatePartsJoint(BodyPart *p1,
-                       BodyPart *p2,
-                       const btVector3 p1Offset,
-                       const btVector3 p2Offset,
-                       double multiplier);
-    
-    btGeneric6DofConstraint*
-    create6DoFConstraint(BodyPart* p1,
-                         BodyPart* p2,
-                         const btVector3 &offset1,
-                         const btVector3 &offset2,
-                         const btVector3 &angularUpperLimit,
-                         double multiplier);
+    static btGeneric6DofConstraint*
+    create6DoFConstraint(ConstraintParams& params);
 };
 
 #endif /* defined(__test__ConstraintBuilder__) */
