@@ -10,6 +10,8 @@ public:
                  double multiplier = 1.0,
                  const btVector3 positionOffset = btVector3(0, 20, 0));
     
+    BodyPart* getJointPart();
+    
 private:
     btGeneric6DofConstraint*
     joinLegParts(BodyPart* upperLeg,

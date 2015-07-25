@@ -11,6 +11,8 @@ public:
     BodyGroup(btDynamicsWorld* world) : world(world) {};
     virtual ~BodyGroup();
 	virtual void initBodyGroup();
+    
+    virtual BodyPart* getJointPart() = 0;
 
 protected:
 	std::vector<BodyPart*> bodyParts;

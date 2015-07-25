@@ -40,3 +40,8 @@ ArmBodyGroup::joinArmParts(BodyPart* upperArm, BodyPart* lowerArm,
     
     return create6DoFConstraint(upperArm, lowerArm, upperOrigin, lowerOrigin, angularUpperLimit, multiplier);
 }
+
+BodyPart*
+ArmBodyGroup::getJointPart() {
+    return bodyParts[1];
+}

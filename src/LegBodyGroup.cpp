@@ -46,3 +46,8 @@ BodyPart*
 LegBodyGroup::generateLegPart(const double r, const double h, const double m, const btVector3 &positionOffset) {
     return new CapsuleBodyPart(btScalar(r), btScalar(h), btScalar(m), positionOffset);
 }
+
+BodyPart*
+LegBodyGroup::getJointPart() {
+    return bodyParts[1];
+}

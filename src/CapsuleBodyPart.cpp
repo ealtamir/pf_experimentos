@@ -15,4 +15,8 @@ CapsuleBodyPart::CapsuleBodyPart(btScalar radius, btScalar height, btScalar mass
 	btRigidBody::btRigidBodyConstructionInfo capsuleCI(mass, motionState, capsule, inertia);
 
 	body = new btRigidBody(capsuleCI);
+    
+    body->setDamping(LINEAR_DAMPING, ANGULAR_DAMPING);
+    body->setDeactivationTime(DEACTIVATION_TIME);
+    body->setSleepingThresholds(LINEAR_SLEEPING_THRESHOLD, ANGULAR_SLEEPING_THRESHOLD);
 }

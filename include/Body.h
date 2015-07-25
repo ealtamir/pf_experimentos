@@ -4,8 +4,10 @@
 #include <vector>
 #include <BulletDynamics/btBulletDynamicsCommon.h>
 #include "BodyGroup.h"
+#include "ConstraintBuilder.h"
 
-class Body {
+
+class Body : public ConstraintBuilder {
 
 public:
 	Body(btDynamicsWorld* world);

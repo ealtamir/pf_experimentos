@@ -8,6 +8,9 @@ class ArmBodyGroup : public BodyGroup {
 public:
 	ArmBodyGroup(btDynamicsWorld* world, double multiplier = 1.0,
 			const btVector3& positionOffset = btVector3(0, 20, 0));
+    
+    BodyPart* getJointPart();
+    
 private:
     btGeneric6DofConstraint*
     joinArmParts(BodyPart* upperArm, BodyPart* lowerArm, double multiplier);

@@ -10,6 +10,7 @@
 #define __test__TorsoBodyGroup__
 
 #include <stdio.h>
+#include <exception>
 #include "BodyGroup.h"
 
 class TorsoBodyGroup : public BodyGroup {
@@ -18,6 +19,14 @@ public:
     TorsoBodyGroup(btDynamicsWorld* world,
                    double multiplier = 1.0,
                    const btVector3 positionOffset = btVector3(0, 20, 0));
+    
+    BodyPart* getJointPart() { exit(1); }
+    
+    BodyPart* getLeftShoulderPart() { return bodyParts[1]; }
+    BodyPart* getRightShoulderPart() { return bodyParts[1]; }
+    BodyPart* getLeftHipPart() { return bodyParts[2]; }
+    BodyPart* getRightHipPart() { return bodyParts[2]; }
+    
 protected:
     btGeneric6DofConstraint*
     joinTorsoParts(BodyPart* upperPart,
