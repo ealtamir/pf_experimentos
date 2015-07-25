@@ -14,6 +14,8 @@ CapsuleBodyPart::CapsuleBodyPart(btScalar radius, btScalar height, btScalar mass
 	capsule->calculateLocalInertia(mass, inertia);
 	btRigidBody::btRigidBodyConstructionInfo capsuleCI(mass, motionState, capsule, inertia);
 
+    capsuleCI.m_additionalDamping = true;
+    
 	body = new btRigidBody(capsuleCI);
     
     body->setDamping(LINEAR_DAMPING, ANGULAR_DAMPING);

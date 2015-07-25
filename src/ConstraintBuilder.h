@@ -13,6 +13,22 @@
 #include <BulletDynamics/btBulletDynamicsCommon.h>
 #include "BodyPart.h"
 
+typedef struct {
+    BodyPart* p1;
+    BodyPart* p2;
+    
+    btVector3 p1_Offset;
+    btVector3 p2_Offset;
+    
+    btVector3 p1_eulerZYX;
+    btVector3 p2_eulerZYX;
+    
+    btVector3& angulerUpperLimit;
+    btVector3& angularLowerLimit;
+    
+    double multiplier;
+} ConstraintParams;
+
 class ConstraintBuilder {
     
 public:
