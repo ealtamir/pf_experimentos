@@ -18,6 +18,7 @@ class TorsoBodyGroup : public BodyGroup {
 public:
     TorsoBodyGroup(btDynamicsWorld* world,
                    double multiplier = 1.0,
+                   const btVector3 positionAdjust = btVector3(1, 1, 1),
                    const btVector3 positionOffset = btVector3(0, 20, 0));
     
     BodyPart* getJointPart() { exit(1); }

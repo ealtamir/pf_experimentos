@@ -26,6 +26,7 @@ protected:
     generateStandardPart(const double r,
                          const double h,
                          const double m,
+                         const btVector3& position,
                          const btVector3& positionOffset);
     
 };

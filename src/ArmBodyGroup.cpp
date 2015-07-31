@@ -6,18 +6,28 @@
 
 ArmBodyGroup::ArmBodyGroup(btDynamicsWorld* world,
                            const double multiplier,
+                           const btVector3& posAdjust,
                            const btVector3& positionOffset) : BodyGroup(world) {
     
+    btVector3 lowerArmPos(btScalar(0.7 * multiplier) * posAdjust.x(),
+                          btScalar(1.45 * multiplier) * posAdjust.y(),
+                          btScalar(0.) * posAdjust.z());
 	BodyPart* lowerArm = generateStandardPart(
         multiplier * LOWER_ARM_R,
 		multiplier * LOWER_ARM_H,
 		LOWER_ARM_M,
+        lowerArmPos,
 		positionOffset
 	);
+
+    btVector3 upperArmPos(btScalar(0.35 * multiplier) * posAdjust.x(),
+                          btScalar(1.45 * multiplier) * posAdjust.y(),
+                          btScalar(0.) * posAdjust.z());
 	BodyPart* upperArm = generateStandardPart(
 		multiplier * UPPER_ARM_R,
 		multiplier * UPPER_ARM_H,
 		UPPER_ARM_M,
+        upperArmPos,
 		positionOffset
 	);
 

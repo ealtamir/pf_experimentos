@@ -5,16 +5,27 @@
 
 LegBodyGroup::LegBodyGroup(btDynamicsWorld* world,
                            double multiplier,
+                           const btVector3 positionAdjust,
                            const btVector3 positionOffset) : BodyGroup(world){
-    BodyPart* lowerLeg = generateLegPart(multiplier * LOWER_LEG_R,
-                                         multiplier * LOWER_LEG_H,
-                                         LOWER_LEG_M,
-                                         positionOffset);
     
-    BodyPart* upperLeg = generateLegPart(multiplier * UPPER_LEG_R,
-                                         multiplier * UPPER_LEG_H,
-                                         UPPER_LEG_M,
-                                         positionOffset);
+    
+    btVector3 lowerLegPos(btScalar(0.18) * positionAdjust.x(),
+                          btScalar(0.2) * positionAdjust.y(),
+                          btScalar(0.) * positionAdjust.z());
+    BodyPart* lowerLeg = generateStandardPart(multiplier * LOWER_LEG_R,
+                                              multiplier * LOWER_LEG_H,
+                                              LOWER_LEG_M,
+                                              lowerLegPos,
+                                              positionOffset);
+
+    btVector3 upperLegPos(btScalar(0.18) * positionAdjust.x(),
+                          btScalar(0.65) * positionAdjust.y(),
+                          btScalar(0.) * positionAdjust.z());
+    BodyPart* upperLeg = generateStandardPart(multiplier * UPPER_LEG_R,
+                                              multiplier * UPPER_LEG_H,
+                                              UPPER_LEG_M,
+                                              upperLegPos,
+                                              positionOffset);
     
     bodyParts.push_back(lowerLeg);
     bodyParts.push_back(upperLeg);
@@ -56,11 +67,6 @@ LegBodyGroup::joinLegParts(BodyPart* upperLeg,
     
 }
 
-
-BodyPart*
-LegBodyGroup::generateLegPart(const double r, const double h, const double m, const btVector3 &positionOffset) {
-    return new CapsuleBodyPart(btScalar(r), btScalar(h), btScalar(m), positionOffset);
-}
 
 BodyPart*
 LegBodyGroup::getJointPart() {

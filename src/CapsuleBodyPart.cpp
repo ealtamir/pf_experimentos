@@ -3,11 +3,10 @@
 
 
 CapsuleBodyPart::CapsuleBodyPart(btScalar radius, btScalar height, btScalar mass,
-		const btVector3 origin) {
+		const btTransform transform) {
 	btVector3 inertia(0, 0, 0);
 	btQuaternion rotation(0, 0, 0, 1);
 
-	btTransform transform(rotation, origin);
 	btCollisionShape* capsule = new btCapsuleShape(radius, height);
 	btDefaultMotionState* motionState = new btDefaultMotionState(transform);
 

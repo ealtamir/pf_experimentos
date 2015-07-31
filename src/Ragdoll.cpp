@@ -36,7 +36,8 @@ RagDoll::RagDoll (btDynamicsWorld* ownerWorld, const btVector3& positionOffset, 
     m_shapes[BODYPART_RIGHT_LOWER_ARM] = new btCapsuleShape(btScalar(scale_ragdoll*0.04), btScalar(scale_ragdoll*0.25));
 
     // Setup all the rigid bodies
-    btTransform offset; offset.setIdentity();
+    btTransform offset;
+    offset.setIdentity();
     offset.setOrigin(positionOffset);
 
     btTransform transform;
@@ -53,8 +54,7 @@ RagDoll::RagDoll (btDynamicsWorld* ownerWorld, const btVector3& positionOffset, 
     m_bodies[BODYPART_HEAD] = localCreateRigidBody(btScalar(1.), offset*transform, m_shapes[BODYPART_HEAD]);
 
     transform.setIdentity();
-    transform.setOrigin(btVector3(btScalar(-0.18*scale_ragdoll), btScalar(0.65*scale_ragdoll),
-btScalar(0.)));
+    transform.setOrigin(btVector3(btScalar(-0.18*scale_ragdoll), btScalar(0.65*scale_ragdoll), btScalar(0.)));
     m_bodies[BODYPART_LEFT_UPPER_LEG] = localCreateRigidBody(btScalar(1.), offset*transform, m_shapes[BODYPART_LEFT_UPPER_LEG]);
 
     transform.setIdentity();

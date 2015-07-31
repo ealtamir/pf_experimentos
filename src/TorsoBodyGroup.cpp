@@ -11,21 +11,34 @@
 
 TorsoBodyGroup::TorsoBodyGroup(btDynamicsWorld* world,
                                double multiplier,
+                               const btVector3 positionAdjust,
                                const btVector3 positionOffset) : BodyGroup(world) {
     
+    btVector3 headPos(btScalar(0.) * positionAdjust.x(),
+                      btScalar(multiplier * 1.6) * positionAdjust.y(),
+                      btScalar(0.) * positionAdjust.z());
     BodyPart* head = generateStandardPart(multiplier * HEAD_R,
                                           multiplier * HEAD_H,
                                           HEAD_M,
+                                          headPos,
                                           positionOffset);
     
+    btVector3 spinePos(btScalar(0.) * positionAdjust.x(),
+                       btScalar(multiplier * 1.6) * positionAdjust.y(),
+                       btScalar(0.) * positionAdjust.z());
     BodyPart* spine = generateStandardPart(multiplier * SPINE_R,
                                            multiplier * SPINE_H,
                                            SPINE_M,
+                                           spinePos,
                                            positionOffset);
     
+    btVector3 pelvisPos(btScalar(0.) * positionAdjust.x(),
+                        btScalar(multiplier * 1.) * positionAdjust.y(),
+                        btScalar(0.) * positionAdjust.z());
     BodyPart* pelvis = generateStandardPart(multiplier * PELVIS_R,
                                             multiplier * SPINE_H,
                                             SPINE_M,
+                                            pelvisPos,
                                             positionOffset);
     
     bodyParts.push_back(head);

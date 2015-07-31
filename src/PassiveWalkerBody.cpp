@@ -6,21 +6,31 @@
 
 
 PassiveWalkerBody::PassiveWalkerBody(btDynamicsWorld* world) : Body::Body(world) {
+    
+    btVector3 offset(0, 2, 0);
+    btVector3 leftAdjust(-1, 1, 1);
+    btVector3 rightAdjust(1, 1, 1);
+    
     BodyGroup* left_arm = new ArmBodyGroup(world,
                                            PassiveWalkerBody::MULTIPLIER,
-                                           btVector3(0, 10, 0));
+                                           leftAdjust,
+                                           offset);
     BodyGroup* right_arm = new ArmBodyGroup(world,
                                            PassiveWalkerBody::MULTIPLIER,
-                                           btVector3(0, 10, 0));
+                                            rightAdjust,
+                                           offset);
     BodyGroup* left_leg = new LegBodyGroup(world,
                                            PassiveWalkerBody::MULTIPLIER,
-                                           btVector3(0, 11, 0));
+                                           leftAdjust,
+                                           offset);
     BodyGroup* right_leg = new LegBodyGroup(world,
                                             PassiveWalkerBody::MULTIPLIER,
-                                            btVector3(0, 11, 0));
+                                            rightAdjust,
+                                            offset);
     BodyGroup* torso = new TorsoBodyGroup(world,
                                           PassiveWalkerBody::MULTIPLIER,
-                                          btVector3(0, 12, 0));
+                                          rightAdjust,
+                                          offset);
 	bodyGroups.push_back(left_arm);
     bodyGroups.push_back(left_leg);
     bodyGroups.push_back(right_arm);

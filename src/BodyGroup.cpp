@@ -33,9 +33,18 @@ BodyPart*
 BodyGroup::generateStandardPart(const double r,
                                 const double h,
                                 const double m,
+                                const btVector3 &position,
                                 const btVector3 &positionOffset) {
+    btTransform offset;
+    offset.setIdentity();
+    offset.setOrigin(positionOffset);
+    
+    btTransform transPos;
+    transPos.setIdentity();
+    transPos.setOrigin(position);
+    
     return new CapsuleBodyPart(btScalar(r), btScalar(h),
-                               btScalar(m), positionOffset);
+                               btScalar(m), offset * transPos);
 }
 
 
