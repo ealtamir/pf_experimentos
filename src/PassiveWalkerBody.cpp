@@ -3,11 +3,12 @@
 #include "ArmBodyGroup.h"
 #include "LegBodyGroup.h"
 #include "TorsoBodyGroup.h"
+#include "ConstraintBuilder.h"
 
 
 PassiveWalkerBody::PassiveWalkerBody(btDynamicsWorld* world) : Body::Body(world) {
     
-    btVector3 offset(0, 2, 0);
+    btVector3 offset(0, 3, 0);
     btVector3 leftAdjust(-1, 1, 1);
     btVector3 rightAdjust(1, 1, 1);
     
@@ -16,9 +17,9 @@ PassiveWalkerBody::PassiveWalkerBody(btDynamicsWorld* world) : Body::Body(world)
                                            leftAdjust,
                                            offset);
     BodyGroup* right_arm = new ArmBodyGroup(world,
-                                           PassiveWalkerBody::MULTIPLIER,
+                                            PassiveWalkerBody::MULTIPLIER,
                                             rightAdjust,
-                                           offset);
+                                            offset);
     BodyGroup* left_leg = new LegBodyGroup(world,
                                            PassiveWalkerBody::MULTIPLIER,
                                            leftAdjust,
@@ -43,44 +44,148 @@ PassiveWalkerBody::PassiveWalkerBody(btDynamicsWorld* world) : Body::Body(world)
     right_leg->initBodyGroup();
     torso->initBodyGroup();
     
-//    TorsoBodyGroup* torso_bg = dynamic_cast<TorsoBodyGroup*>(torso);
+    TorsoBodyGroup* torso_bg = dynamic_cast<TorsoBodyGroup*>(torso);
     
-//    btTypedConstraint* leftShoulder =
-//        generatePartsJoint(left_arm->getJointPart(),
-//                           torso_bg->getLeftShoulderPart(),
-//                           btVector3(0, 0, 0),
-//                           btVector3(0, 0, 0),
-//                           PassiveWalkerBody::MULTIPLIER);
-//    
-//    btTypedConstraint* rightShoulder =
-//        generatePartsJoint(right_arm->getJointPart(),
-//                           torso_bg->getRightShoulderPart(),
-//                           btVector3(0, 0, 0),
-//                           btVector3(0, 0, 0),
-//                           PassiveWalkerBody::MULTIPLIER);
-//    
-//    btTypedConstraint* leftHip =
-//        generatePartsJoint(left_leg->getJointPart(),
-//                           torso_bg->getLeftHipPart(),
-//                           btVector3(0, 0, 0),
-//                           btVector3(0, 0, 0),
-//                           PassiveWalkerBody::MULTIPLIER);
-//
-//    btTypedConstraint* rightHip =
-//        generatePartsJoint(right_leg->getJointPart(),
-//                           torso_bg->getRightHipPart(),
-//                           btVector3(0, 0, 0),
-//                           btVector3(0, 0, 0),
-//                           PassiveWalkerBody::MULTIPLIER);
-//    
-//    constraints.push_back(leftShoulder);
-//    constraints.push_back(rightShoulder);
-//    constraints.push_back(leftHip);
-//    constraints.push_back(rightHip);
-//    
-//    world->addConstraint(leftShoulder);
-//    world->addConstraint(rightShoulder);
-//    world->addConstraint(leftHip);
-//    world->addConstraint(rightHip);
-//    
+    btTypedConstraint* leftShoulder =
+        createLeftShoulder(left_arm->getJointPart(),
+                           torso_bg->getLeftShoulderPart(),
+                           PassiveWalkerBody::MULTIPLIER);
+    
+    btTypedConstraint* rightShoulder =
+        createRightShoulder(right_arm->getJointPart(),
+                           torso_bg->getRightShoulderPart(),
+                           PassiveWalkerBody::MULTIPLIER);
+    
+    btTypedConstraint* leftHip =
+        createLeftHip(left_leg->getJointPart(),
+                      torso_bg->getLeftHipPart(),
+                      PassiveWalkerBody::MULTIPLIER);
+
+    btTypedConstraint* rightHip =
+        createRightHip(right_leg->getJointPart(),
+                       torso_bg->getRightHipPart(),
+                       PassiveWalkerBody::MULTIPLIER);
+    
+    constraints.push_back(leftShoulder);
+    constraints.push_back(rightShoulder);
+    constraints.push_back(leftHip);
+    constraints.push_back(rightHip);
+    
+    world->addConstraint(leftShoulder, true);
+    world->addConstraint(rightShoulder, true);
+    world->addConstraint(leftHip, true);
+    world->addConstraint(rightHip, true);
+    
+}
+
+btTypedConstraint*
+PassiveWalkerBody::createLeftShoulder(BodyPart* leftArm, BodyPart* torso, const double multiplier) {
+    btVector3 torsoOffset(btScalar(-0.2 * multiplier),
+                            btScalar(0.15 * multiplier),
+                            btScalar(0.));
+    
+    btVector3 leftArmOffset(btScalar(0.),
+                            btScalar(-0.18 * multiplier),
+                            btScalar(0.));
+    
+    btVector3 leftArmEulerZYX(SIMD_HALF_PI, 0, -SIMD_HALF_PI);
+    
+    btVector3 angularLowerLimit(-SIMD_PI * 0.8, -SIMD_EPSILON, -SIMD_PI * 0.5);
+    btVector3 angularUpperLimit(SIMD_PI * 0.8, SIMD_EPSILON, SIMD_PI * 0.5);
+    
+    ConstraintParams params = {
+        torso,
+        leftArm,
+        torsoOffset,
+        leftArmOffset,
+        nullptr,
+        &leftArmEulerZYX,
+        angularLowerLimit,
+        angularUpperLimit
+    };
+    
+    return ConstraintBuilder::create6DoFConstraint(params);
+}
+
+btTypedConstraint*
+PassiveWalkerBody::createRightShoulder(BodyPart* rightArm, BodyPart* torso, const double multiplier) {
+    btVector3 torsoOffset(btScalar(0.2 * multiplier),
+                          btScalar(0.15 * multiplier),
+                          btScalar(0.));
+    
+    btVector3 rightArmOffset(btScalar(0.),
+                             btScalar(-0.18 * multiplier),
+                             btScalar(0.));
+    
+    btVector3 rightArmEulerZYX(0, 0, SIMD_HALF_PI);
+    
+    btVector3 angularLowerLimit(-SIMD_PI * 0.8, -SIMD_EPSILON, -SIMD_PI * 0.5);
+    btVector3 angularUpperLimit(SIMD_PI * 0.8, SIMD_EPSILON, SIMD_PI * 0.5);
+    
+    ConstraintParams params = {
+        torso,
+        rightArm,
+        torsoOffset,
+        rightArmOffset,
+        nullptr,
+        &rightArmEulerZYX,
+        angularLowerLimit,
+        angularUpperLimit
+    };
+    
+    return ConstraintBuilder::create6DoFConstraint(params);
+}
+
+btTypedConstraint*
+PassiveWalkerBody::createLeftHip(BodyPart* leftHip, BodyPart* torso, const double multiplier) {
+    btVector3 torsoOffset(btScalar(-0.18 * multiplier),
+                          btScalar(-0.10 * multiplier),
+                          btScalar(0.));
+    
+    btVector3 leftHipOffset(btScalar(0.),
+                            btScalar(0.225 * multiplier),
+                            btScalar(0.));
+    
+    btVector3 angularUpperLimit(SIMD_HALF_PI * 0.8, SIMD_EPSILON, SIMD_HALF_PI * 0.6);
+    btVector3 angularLowerLimit(-SIMD_HALF_PI * 0.5, -SIMD_EPSILON, -SIMD_HALF_PI);
+    
+    ConstraintParams params = {
+        torso,
+        leftHip,
+        torsoOffset,
+        leftHipOffset,
+        nullptr,
+        nullptr,
+        angularLowerLimit,
+        angularUpperLimit
+    };
+    
+    return ConstraintBuilder::create6DoFConstraint(params);
+}
+
+btTypedConstraint*
+PassiveWalkerBody::createRightHip(BodyPart* rightHip, BodyPart* torso, const double multiplier) {
+    btVector3 torsoOffset(btScalar(0.18 * multiplier),
+                          btScalar(-0.10 * multiplier),
+                          btScalar(0.));
+    
+    btVector3 rightHipOffset(btScalar(0.),
+                            btScalar(0.225 * multiplier),
+                            btScalar(0.));
+    
+    btVector3 angularUpperLimit(SIMD_HALF_PI * 0.8, SIMD_EPSILON, SIMD_HALF_PI);
+    btVector3 angularLowerLimit(-SIMD_HALF_PI * 0.5, -SIMD_EPSILON, -SIMD_HALF_PI * 0.6);
+    
+    ConstraintParams params = {
+        torso,
+        rightHip,
+        torsoOffset,
+        rightHipOffset,
+        nullptr,
+        nullptr,
+        angularLowerLimit,
+        angularUpperLimit
+    };
+    
+    return ConstraintBuilder::create6DoFConstraint(params);
 }

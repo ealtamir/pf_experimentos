@@ -14,6 +14,20 @@ public:
 	PassiveWalkerBody(btDynamicsWorld* world);
     
     const double MULTIPLIER = 1;
+    
+protected:
+    
+    btTypedConstraint*
+    createLeftShoulder(BodyPart* leftArm, BodyPart* torso, const double multiplier);
+    
+    btTypedConstraint*
+    createRightShoulder(BodyPart* rightArm, BodyPart* torso, const double multiplier);
+    
+    btTypedConstraint*
+    createLeftHip(BodyPart* leftHip, BodyPart* torso, const double multiplier);
+
+    btTypedConstraint*
+    createRightHip(BodyPart* rightHip, BodyPart* torso, const double multiplier);
 
 };
 #endif

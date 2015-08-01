@@ -29,5 +29,12 @@ protected:
                          const btVector3& position,
                          const btVector3& positionOffset);
     
+    BodyPart*
+    generateStandardPart(const double r,
+                         const double h,
+                         const double m,
+                         const btTransform adjust,
+                         const btVector3 &positionOffset);
+    
 };
 #endif

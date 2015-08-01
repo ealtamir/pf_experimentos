@@ -7,7 +7,7 @@ class CapsuleBodyPart : public BodyPart {
 
 public:
 	CapsuleBodyPart(btScalar radius, btScalar height,
-			btScalar mass, const btTransform transform);
+			btScalar mass, const btTransform& transform);
 };
 
 #endif

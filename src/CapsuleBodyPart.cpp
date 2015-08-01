@@ -3,7 +3,7 @@
 
 
 CapsuleBodyPart::CapsuleBodyPart(btScalar radius, btScalar height, btScalar mass,
-		const btTransform transform) {
+		const btTransform& transform) {
 	btVector3 inertia(0, 0, 0);
 	btQuaternion rotation(0, 0, 0, 1);
 

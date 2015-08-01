@@ -25,7 +25,7 @@ void BodyGroup::addRigidBodiesToWorld() {
 		world->addRigidBody(part->getRigidBody());
 	}
     for (btTypedConstraint* constraint : constraints) {
-        world->addConstraint(constraint);
+        world->addConstraint(constraint, true);
     }
 }
 
@@ -45,6 +45,22 @@ BodyGroup::generateStandardPart(const double r,
     
     return new CapsuleBodyPart(btScalar(r), btScalar(h),
                                btScalar(m), offset * transPos);
+}
+
+BodyPart*
+BodyGroup::generateStandardPart(const double r,
+                                const double h,
+                                const double m,
+                                const btTransform adjust,
+                                const btVector3 &positionOffset) {
+    
+    btTransform offset;
+    offset.setIdentity();
+    offset.setOrigin(positionOffset);
+    
+    return new CapsuleBodyPart(btScalar(r), btScalar(h),
+                               btScalar(m), offset * adjust);
+    
 }
 
 

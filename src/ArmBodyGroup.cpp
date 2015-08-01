@@ -12,22 +12,30 @@ ArmBodyGroup::ArmBodyGroup(btDynamicsWorld* world,
     btVector3 lowerArmPos(btScalar(0.7 * multiplier) * posAdjust.x(),
                           btScalar(1.45 * multiplier) * posAdjust.y(),
                           btScalar(0.) * posAdjust.z());
+    btTransform lowerTrans;
+    lowerTrans.setIdentity();
+    lowerTrans.setOrigin(lowerArmPos);
+    lowerTrans.getBasis().setEulerZYX(0, 0, -SIMD_HALF_PI * posAdjust.x());
 	BodyPart* lowerArm = generateStandardPart(
         multiplier * LOWER_ARM_R,
 		multiplier * LOWER_ARM_H,
 		LOWER_ARM_M,
-        lowerArmPos,
+        lowerTrans,
 		positionOffset
 	);
 
+    btTransform upperTrans;
     btVector3 upperArmPos(btScalar(0.35 * multiplier) * posAdjust.x(),
                           btScalar(1.45 * multiplier) * posAdjust.y(),
                           btScalar(0.) * posAdjust.z());
-	BodyPart* upperArm = generateStandardPart(
+    upperTrans.setIdentity();
+    upperTrans.setOrigin(upperArmPos);
+    upperTrans.getBasis().setEulerZYX(0, 0, -SIMD_HALF_PI * posAdjust.x());
+    BodyPart* upperArm = generateStandardPart(
 		multiplier * UPPER_ARM_R,
 		multiplier * UPPER_ARM_H,
 		UPPER_ARM_M,
-        upperArmPos,
+        upperTrans,
 		positionOffset
 	);
 
@@ -46,7 +54,6 @@ ArmBodyGroup::joinArmParts(BodyPart* upperArm, BodyPart* lowerArm,
     btVector3 upperOffset(0, 0.18 * multiplier, 0);
     btVector3 lowerOffset(0, -0.14 * multiplier, 0);
 
-    // Algo que usa Bullet
     btVector3 angularLowerLimit(-SIMD_EPSILON,-SIMD_EPSILON,-SIMD_EPSILON);
     btVector3 angularUpperLimit(SIMD_PI * 0.7f, SIMD_EPSILON, SIMD_EPSILON);
     
