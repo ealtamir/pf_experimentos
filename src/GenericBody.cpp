@@ -1,4 +1,4 @@
-#include "PassiveWalkerBody.h"
+#include "GenericBody.h"
 #include "BodyGroup.h"
 #include "ArmBodyGroup.h"
 #include "LegBodyGroup.h"
@@ -6,30 +6,30 @@
 #include "ConstraintBuilder.h"
 
 
-PassiveWalkerBody::PassiveWalkerBody(btDynamicsWorld* world) : Body::Body(world) {
+GenericBody::GenericBody(btDynamicsWorld* world) : Body::Body(world) {
     
     btVector3 offset(0, 3, 0);
     btVector3 leftAdjust(-1, 1, 1);
     btVector3 rightAdjust(1, 1, 1);
     
     BodyGroup* left_arm = new ArmBodyGroup(world,
-                                           PassiveWalkerBody::MULTIPLIER,
+                                           GenericBody::MULTIPLIER,
                                            leftAdjust,
                                            offset);
     BodyGroup* right_arm = new ArmBodyGroup(world,
-                                            PassiveWalkerBody::MULTIPLIER,
+                                            GenericBody::MULTIPLIER,
                                             rightAdjust,
                                             offset);
     BodyGroup* left_leg = new LegBodyGroup(world,
-                                           PassiveWalkerBody::MULTIPLIER,
+                                           GenericBody::MULTIPLIER,
                                            leftAdjust,
                                            offset);
     BodyGroup* right_leg = new LegBodyGroup(world,
-                                            PassiveWalkerBody::MULTIPLIER,
+                                            GenericBody::MULTIPLIER,
                                             rightAdjust,
                                             offset);
     BodyGroup* torso = new TorsoBodyGroup(world,
-                                          PassiveWalkerBody::MULTIPLIER,
+                                          GenericBody::MULTIPLIER,
                                           rightAdjust,
                                           offset);
 	bodyGroups.push_back(left_arm);
@@ -49,22 +49,22 @@ PassiveWalkerBody::PassiveWalkerBody(btDynamicsWorld* world) : Body::Body(world)
     btTypedConstraint* leftShoulder =
         createLeftShoulder(left_arm->getJointPart(),
                            torso_bg->getLeftShoulderPart(),
-                           PassiveWalkerBody::MULTIPLIER);
+                           GenericBody::MULTIPLIER);
     
     btTypedConstraint* rightShoulder =
         createRightShoulder(right_arm->getJointPart(),
                            torso_bg->getRightShoulderPart(),
-                           PassiveWalkerBody::MULTIPLIER);
+                           GenericBody::MULTIPLIER);
     
     btTypedConstraint* leftHip =
         createLeftHip(left_leg->getJointPart(),
                       torso_bg->getLeftHipPart(),
-                      PassiveWalkerBody::MULTIPLIER);
+                      GenericBody::MULTIPLIER);
 
     btTypedConstraint* rightHip =
         createRightHip(right_leg->getJointPart(),
                        torso_bg->getRightHipPart(),
-                       PassiveWalkerBody::MULTIPLIER);
+                       GenericBody::MULTIPLIER);
     
     constraints.push_back(leftShoulder);
     constraints.push_back(rightShoulder);
@@ -79,7 +79,7 @@ PassiveWalkerBody::PassiveWalkerBody(btDynamicsWorld* world) : Body::Body(world)
 }
 
 btTypedConstraint*
-PassiveWalkerBody::createLeftShoulder(BodyPart* leftArm, BodyPart* torso, const double multiplier) {
+GenericBody::createLeftShoulder(BodyPart* leftArm, BodyPart* torso, const double multiplier) {
     btVector3 torsoOffset(btScalar(-0.2 * multiplier),
                             btScalar(0.15 * multiplier),
                             btScalar(0.));
@@ -108,7 +108,7 @@ PassiveWalkerBody::createLeftShoulder(BodyPart* leftArm, BodyPart* torso, const 
 }
 
 btTypedConstraint*
-PassiveWalkerBody::createRightShoulder(BodyPart* rightArm, BodyPart* torso, const double multiplier) {
+GenericBody::createRightShoulder(BodyPart* rightArm, BodyPart* torso, const double multiplier) {
     btVector3 torsoOffset(btScalar(0.2 * multiplier),
                           btScalar(0.15 * multiplier),
                           btScalar(0.));
@@ -137,7 +137,7 @@ PassiveWalkerBody::createRightShoulder(BodyPart* rightArm, BodyPart* torso, cons
 }
 
 btTypedConstraint*
-PassiveWalkerBody::createLeftHip(BodyPart* leftHip, BodyPart* torso, const double multiplier) {
+GenericBody::createLeftHip(BodyPart* leftHip, BodyPart* torso, const double multiplier) {
     btVector3 torsoOffset(btScalar(-0.18 * multiplier),
                           btScalar(-0.10 * multiplier),
                           btScalar(0.));
@@ -164,7 +164,7 @@ PassiveWalkerBody::createLeftHip(BodyPart* leftHip, BodyPart* torso, const doubl
 }
 
 btTypedConstraint*
-PassiveWalkerBody::createRightHip(BodyPart* rightHip, BodyPart* torso, const double multiplier) {
+GenericBody::createRightHip(BodyPart* rightHip, BodyPart* torso, const double multiplier) {
     btVector3 torsoOffset(btScalar(0.18 * multiplier),
                           btScalar(-0.10 * multiplier),
                           btScalar(0.));

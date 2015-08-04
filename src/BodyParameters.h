@@ -21,11 +21,11 @@ public:
     
     /******************** ACTUATORS ********************/
 
-    Actuator rightLowerLegAct, rightUpperLegAct;
-    Actuator leftLowerLegAct, leftUpperLegAct;
-    Actuator hipAct;
-    Actuator rightLowerArmAct, rightUpperArmAct;
-    Actuator leftLowerArmAct, leftUpperArmAct;
+    Actuator *rightLowerLegAct, *rightUpperLegAct;
+    Actuator *leftLowerLegAct, *leftUpperLegAct;
+    Actuator *hipAct;
+    Actuator *rightLowerArmAct, *rightUpperArmAct;
+    Actuator *leftLowerArmAct, *leftUpperArmAct;
     
     /******************** PARTS ********************/
     

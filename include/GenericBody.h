@@ -1,5 +1,5 @@
-#ifndef PASSIVEWALKERBODY_H_INCLUDED
-#define PASSIVEWALKERBODY_H_INCLUDED
+#ifndef GENERICBODY_H_INCLUDED
+#define GENERICBODY_H_INCLUDED
 
 #include "Body.h"
 #include <BulletDynamics/btBulletDynamicsCommon.h>
@@ -7,13 +7,11 @@
 
 
 
-class PassiveWalkerBody : public Body {
+class GenericBody : public Body {
 
 
 public:
-	PassiveWalkerBody(btDynamicsWorld* world);
-    
-    const double MULTIPLIER = 1;
+	GenericBody(btDynamicsWorld* world);
     
 protected:
     
