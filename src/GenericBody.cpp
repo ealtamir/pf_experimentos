@@ -6,186 +6,150 @@
 #include "ConstraintBuilder.h"
 
 
-GenericBody::GenericBody(btDynamicsWorld* world) : Body::Body(world) {
-    
-    btVector3 offset(0, 3, 0);
-    btVector3 leftAdjust(-1, 1, 1);
-    btVector3 rightAdjust(1, 1, 1);
-    
-    BodyGroup* left_arm = new ArmBodyGroup(world,
-                                           GenericBody::MULTIPLIER,
-                                           leftAdjust,
-                                           offset);
-    BodyGroup* right_arm = new ArmBodyGroup(world,
-                                            GenericBody::MULTIPLIER,
-                                            rightAdjust,
-                                            offset);
-    BodyGroup* left_leg = new LegBodyGroup(world,
-                                           GenericBody::MULTIPLIER,
-                                           leftAdjust,
-                                           offset);
-    BodyGroup* right_leg = new LegBodyGroup(world,
-                                            GenericBody::MULTIPLIER,
-                                            rightAdjust,
-                                            offset);
-    BodyGroup* torso = new TorsoBodyGroup(world,
-                                          GenericBody::MULTIPLIER,
-                                          rightAdjust,
-                                          offset);
-	bodyGroups.push_back(left_arm);
-    bodyGroups.push_back(left_leg);
-    bodyGroups.push_back(right_arm);
-    bodyGroups.push_back(right_leg);
-    bodyGroups.push_back(torso);
+GenericBody::GenericBody(btDynamicsWorld* world, GenericBodyParameters &params) : Body::Body(world) {
 
-	left_arm->initBodyGroup();
-    left_leg->initBodyGroup();
-    right_arm->initBodyGroup();
-    right_leg->initBodyGroup();
-    torso->initBodyGroup();
-    
-    TorsoBodyGroup* torso_bg = dynamic_cast<TorsoBodyGroup*>(torso);
-    
-    btTypedConstraint* leftShoulder =
-        createLeftShoulder(left_arm->getJointPart(),
-                           torso_bg->getLeftShoulderPart(),
-                           GenericBody::MULTIPLIER);
-    
-    btTypedConstraint* rightShoulder =
-        createRightShoulder(right_arm->getJointPart(),
-                           torso_bg->getRightShoulderPart(),
-                           GenericBody::MULTIPLIER);
-    
-    btTypedConstraint* leftHip =
-        createLeftHip(left_leg->getJointPart(),
-                      torso_bg->getLeftHipPart(),
-                      GenericBody::MULTIPLIER);
-
-    btTypedConstraint* rightHip =
-        createRightHip(right_leg->getJointPart(),
-                       torso_bg->getRightHipPart(),
-                       GenericBody::MULTIPLIER);
-    
-    constraints.push_back(leftShoulder);
-    constraints.push_back(rightShoulder);
-    constraints.push_back(leftHip);
-    constraints.push_back(rightHip);
-    
-    world->addConstraint(leftShoulder, true);
-    world->addConstraint(rightShoulder, true);
-    world->addConstraint(leftHip, true);
-    world->addConstraint(rightHip, true);
-    
 }
 
 btTypedConstraint*
-GenericBody::createLeftShoulder(BodyPart* leftArm, BodyPart* torso, const double multiplier) {
-    btVector3 torsoOffset(btScalar(-0.2 * multiplier),
-                            btScalar(0.15 * multiplier),
-                            btScalar(0.));
-    
-    btVector3 leftArmOffset(btScalar(0.),
-                            btScalar(-0.18 * multiplier),
-                            btScalar(0.));
-    
-    btVector3 leftArmEulerZYX(SIMD_HALF_PI, 0, -SIMD_HALF_PI);
-    
-    btVector3 angularLowerLimit(-SIMD_PI * 0.8, -SIMD_EPSILON, -SIMD_PI * 0.5);
-    btVector3 angularUpperLimit(SIMD_PI * 0.8, SIMD_EPSILON, SIMD_PI * 0.5);
-    
-    ConstraintParams params = {
+GenericBody::createLeftShoulder(BodyPart* leftArm, BodyPart* torso,
+                                GenericBodyParameters &params) {
+    ConstraintParams constraintParams = {
         torso,
         leftArm,
-        torsoOffset,
-        leftArmOffset,
+        params.leftShoulderTorsoOffset,
+        params.leftShoulderLeftArmOffset,
         nullptr,
-        &leftArmEulerZYX,
-        angularLowerLimit,
-        angularUpperLimit
+        &params.leftShoulderLeftArmEulerZYX,
+        params.leftShoulderAngularLowerLimit,
+        params.leftShoulderAngularUpperLimit
     };
     
-    return ConstraintBuilder::create6DoFConstraint(params);
+    btTypedConstraint* constraint = ConstraintBuilder::create6DoFConstraint(constraintParams);
+    constraints.push_back(constraint);
+    world->addConstraint(constraint, true);
+    return constraint;
 }
 
 btTypedConstraint*
-GenericBody::createRightShoulder(BodyPart* rightArm, BodyPart* torso, const double multiplier) {
-    btVector3 torsoOffset(btScalar(0.2 * multiplier),
-                          btScalar(0.15 * multiplier),
-                          btScalar(0.));
+GenericBody::createRightShoulder(BodyPart* rightArm, BodyPart* torso,
+                                 GenericBodyParameters &params) {
     
-    btVector3 rightArmOffset(btScalar(0.),
-                             btScalar(-0.18 * multiplier),
-                             btScalar(0.));
-    
-    btVector3 rightArmEulerZYX(0, 0, SIMD_HALF_PI);
-    
-    btVector3 angularLowerLimit(-SIMD_PI * 0.8, -SIMD_EPSILON, -SIMD_PI * 0.5);
-    btVector3 angularUpperLimit(SIMD_PI * 0.8, SIMD_EPSILON, SIMD_PI * 0.5);
-    
-    ConstraintParams params = {
+    ConstraintParams constraintParams = {
         torso,
         rightArm,
-        torsoOffset,
-        rightArmOffset,
+        params.rightShoulderTorsoOffset,
+        params.rightShoulderRightArmOffset,
         nullptr,
-        &rightArmEulerZYX,
-        angularLowerLimit,
-        angularUpperLimit
+        &params.rightShoulderRightArmEulerZYX,
+        params.rightShoulderAngularLowerLimit,
+        params.rightShoulderAngularUpperLimit
     };
     
-    return ConstraintBuilder::create6DoFConstraint(params);
+    btTypedConstraint* constraint = ConstraintBuilder::create6DoFConstraint(constraintParams);
+    constraints.push_back(constraint);
+    world->addConstraint(constraint, true);
+    return constraint;
 }
 
 btTypedConstraint*
-GenericBody::createLeftHip(BodyPart* leftHip, BodyPart* torso, const double multiplier) {
-    btVector3 torsoOffset(btScalar(-0.18 * multiplier),
-                          btScalar(-0.10 * multiplier),
-                          btScalar(0.));
-    
-    btVector3 leftHipOffset(btScalar(0.),
-                            btScalar(0.225 * multiplier),
-                            btScalar(0.));
-    
-    btVector3 angularUpperLimit(SIMD_HALF_PI * 0.8, SIMD_EPSILON, SIMD_HALF_PI * 0.6);
-    btVector3 angularLowerLimit(-SIMD_HALF_PI * 0.5, -SIMD_EPSILON, -SIMD_HALF_PI);
-    
-    ConstraintParams params = {
+GenericBody::createLeftHip(BodyPart* leftHip, BodyPart* torso,
+                           GenericBodyParameters &params) {
+
+    ConstraintParams constraintParams = {
         torso,
         leftHip,
-        torsoOffset,
-        leftHipOffset,
+        params.leftHipTorsoOffset,
+        params.leftHipOffset,
         nullptr,
         nullptr,
-        angularLowerLimit,
-        angularUpperLimit
+        params.leftHipAngularLowerLimit,
+        params.leftHipAngularUpperLimit
     };
     
-    return ConstraintBuilder::create6DoFConstraint(params);
+    btTypedConstraint* constraint = ConstraintBuilder::create6DoFConstraint(constraintParams);
+    constraints.push_back(constraint);
+    world->addConstraint(constraint, true);
+    return constraint;
 }
 
 btTypedConstraint*
-GenericBody::createRightHip(BodyPart* rightHip, BodyPart* torso, const double multiplier) {
-    btVector3 torsoOffset(btScalar(0.18 * multiplier),
-                          btScalar(-0.10 * multiplier),
-                          btScalar(0.));
-    
-    btVector3 rightHipOffset(btScalar(0.),
-                            btScalar(0.225 * multiplier),
-                            btScalar(0.));
-    
-    btVector3 angularUpperLimit(SIMD_HALF_PI * 0.8, SIMD_EPSILON, SIMD_HALF_PI);
-    btVector3 angularLowerLimit(-SIMD_HALF_PI * 0.5, -SIMD_EPSILON, -SIMD_HALF_PI * 0.6);
-    
-    ConstraintParams params = {
+GenericBody::createRightHip(BodyPart* rightHip, BodyPart* torso,
+                            GenericBodyParameters &params) {
+
+    ConstraintParams constraintParams = {
         torso,
         rightHip,
-        torsoOffset,
-        rightHipOffset,
+        params.rightHipTorsoOffset,
+        params.rightHipOffset,
         nullptr,
         nullptr,
-        angularLowerLimit,
-        angularUpperLimit
+        params.rightHipAngularLowerLimit,
+        params.rightHipAngularUpperLimit
     };
     
-    return ConstraintBuilder::create6DoFConstraint(params);
+    btTypedConstraint* constraint = ConstraintBuilder::create6DoFConstraint(constraintParams);
+    constraints.push_back(constraint);
+    world->addConstraint(constraint, true);
+    return constraint;
+}
+
+BodyGroup*
+GenericBody::createLeftArm(btDynamicsWorld* world,
+                           GenericBodyParameters &params) {
+    BodyGroup* left_arm = new ArmBodyGroup(world,
+                                           params.bodyScale,
+                                           leftOffset,
+                                           params.bodyInitialPosition);
+    bodyGroups.push_back(left_arm);
+    left_arm->initBodyGroup();
+    return left_arm;
+}
+
+BodyGroup*
+GenericBody::createRightArm(btDynamicsWorld* world,
+                            GenericBodyParameters &params) {
+    BodyGroup* right_arm = new ArmBodyGroup(world,
+                                            params.bodyScale,
+                                            rightOffset,
+                                            params.bodyInitialPosition);
+    bodyGroups.push_back(right_arm);
+    right_arm->initBodyGroup();
+    return right_arm;
+}
+
+BodyGroup*
+GenericBody::createLeftLeg(btDynamicsWorld* world,
+                           GenericBodyParameters &params) {
+    BodyGroup* left_leg = new LegBodyGroup(world,
+                                           params.bodyScale,
+                                           leftOffset,
+                                           params.bodyInitialPosition);
+    bodyGroups.push_back(left_leg);
+    left_leg->initBodyGroup();
+    return left_leg;
+}
+
+BodyGroup*
+GenericBody::createRightLeg(btDynamicsWorld* world,
+                            GenericBodyParameters &params) {
+    BodyGroup* right_leg = new LegBodyGroup(world,
+                                            params.bodyScale,
+                                            rightOffset,
+                                            params.bodyInitialPosition);
+    bodyGroups.push_back(right_leg);
+    right_leg->initBodyGroup();
+    return right_leg;
+}
+
+BodyGroup*
+GenericBody::createTorso(btDynamicsWorld* world,
+                         GenericBodyParameters &params) {
+    
+    BodyGroup* torso = new TorsoBodyGroup(world,
+                                          params.bodyScale,
+                                          rightOffset,
+                                          params.bodyInitialPosition);
+    bodyGroups.push_back(torso);
+    torso->initBodyGroup();
+    return torso;
 }

@@ -19,6 +19,9 @@ class BodyParameters {
     
 public:
     
+    const double bodyScale = BODY_SCALE;
+    const btVector3 bodyInitialPosition = btVector3(0, 1 * BODY_SCALE, 0);
+    
     /******************** ACTUATORS ********************/
 
     Actuator *rightLowerLegAct, *rightUpperLegAct;
