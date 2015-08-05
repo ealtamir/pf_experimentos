@@ -18,7 +18,7 @@ public:
     GenericActuator();
     
 protected:
-    virtual btVector3 actuatorFunc(double t);
+    btVector3 actuatorFunc(double t);
     
 };
 

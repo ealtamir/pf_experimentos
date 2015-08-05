@@ -5,71 +5,67 @@
 
 
 ArmBodyGroup::ArmBodyGroup(btDynamicsWorld* world,
-                           const double multiplier,
-                           const btVector3& posAdjust,
-                           const btVector3& positionOffset) : BodyGroup(world) {
+                           BodyParameters &params,
+                           const btVector3& posAdjust) : BodyGroup(world) {
     
-    btVector3 lowerArmPos(btScalar(0.7 * multiplier) * posAdjust.x(),
-                          btScalar(1.45 * multiplier) * posAdjust.y(),
-                          btScalar(0.) * posAdjust.z());
+    btVector3 lowerArmPos(params.L_ARM_POSITION.x() * posAdjust.x(),
+                          params.L_ARM_POSITION.y() * posAdjust.y(),
+                          params.L_ARM_POSITION.z() * posAdjust.z());
     btTransform lowerTrans;
     lowerTrans.setIdentity();
     lowerTrans.setOrigin(lowerArmPos);
-    lowerTrans.getBasis().setEulerZYX(0, 0, -SIMD_HALF_PI * posAdjust.x());
+    lowerTrans.getBasis().setEulerZYX(params.L_ARM_ORIENTATION.x(),
+                                      params.L_ARM_ORIENTATION.y(),
+                                      params.L_ARM_ORIENTATION.z() * posAdjust.x());
 	BodyPart* lowerArm = generateStandardPart(
-        multiplier * LOWER_ARM_R,
-		multiplier * LOWER_ARM_H,
-		LOWER_ARM_M,
+        params.L_ARM_RADIUS,
+		params.L_ARM_HEIGHT,
+		params.L_ARM_MASS,
         lowerTrans,
-		positionOffset
+		params.bodyInitialPosition
 	);
 
     btTransform upperTrans;
-    btVector3 upperArmPos(btScalar(0.35 * multiplier) * posAdjust.x(),
-                          btScalar(1.45 * multiplier) * posAdjust.y(),
-                          btScalar(0.) * posAdjust.z());
+    btVector3 upperArmPos(params.U_ARM_POSITION.x() * posAdjust.x(),
+                          params.U_ARM_POSITION.y() * posAdjust.y(),
+                          params.U_ARM_POSITION.z() * posAdjust.z());
     upperTrans.setIdentity();
     upperTrans.setOrigin(upperArmPos);
-    upperTrans.getBasis().setEulerZYX(0, 0, -SIMD_HALF_PI * posAdjust.x());
+    upperTrans.getBasis().setEulerZYX(params.U_ARM_ORIENTATION.x(),
+                                      params.U_ARM_ORIENTATION.y(),
+                                      params.U_ARM_ORIENTATION.z() * posAdjust.x());
     BodyPart* upperArm = generateStandardPart(
-		multiplier * UPPER_ARM_R,
-		multiplier * UPPER_ARM_H,
-		UPPER_ARM_M,
+		params.U_ARM_RADIUS,
+		params.U_ARM_HEIGHT,
+		params.U_ARM_MASS,
         upperTrans,
-		positionOffset
+		params.bodyInitialPosition
 	);
 
 	bodyParts.push_back(lowerArm);
 	bodyParts.push_back(upperArm);
     
-    btTypedConstraint* elbow = joinArmParts(upperArm, lowerArm, multiplier);
+    btTypedConstraint* elbow = joinArmParts(upperArm, lowerArm, params);
     
     constraints.push_back(elbow);
 }
 
-
 btGeneric6DofConstraint*
 ArmBodyGroup::joinArmParts(BodyPart* upperArm, BodyPart* lowerArm,
-                           double multiplier) {
-    btVector3 upperOffset(0, 0.18 * multiplier, 0);
-    btVector3 lowerOffset(0, -0.14 * multiplier, 0);
-
-    btVector3 angularLowerLimit(-SIMD_EPSILON,-SIMD_EPSILON,-SIMD_EPSILON);
-    btVector3 angularUpperLimit(SIMD_PI * 0.7f, SIMD_EPSILON, SIMD_EPSILON);
+                           BodyParameters &params) {
     
-    ConstraintParams params = {
+    ConstraintParams constraintParams = {
         upperArm,
         lowerArm,
-        upperOffset,
-        lowerOffset,
+        params.elbowUpperOffset,
+        params.elbowLowerOffset,
         nullptr,
         nullptr,
-        angularLowerLimit,
-        angularUpperLimit,
-        multiplier
+        params.elbowAngularLowerLimit,
+        params.elbowAngularUpperLimit
     };
     
-    return ConstraintBuilder::create6DoFConstraint(params);
+    return ConstraintBuilder::create6DoFConstraint(constraintParams);
 }
 
 BodyPart*

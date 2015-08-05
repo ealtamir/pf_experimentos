@@ -2,7 +2,7 @@
 #define GENERICBODY_H_INCLUDED
 
 #include "Body.h"
-#include "GenericBodyParameters.h"
+#include "BodyParameters.h"
 #include <BulletDynamics/btBulletDynamicsCommon.h>
 #include <vector>
 
@@ -12,7 +12,7 @@ class GenericBody : public Body {
 
 
 public:
-	GenericBody(btDynamicsWorld* world, GenericBodyParameters &params);
+	GenericBody(btDynamicsWorld* world, BodyParameters &params);
     
 private:
     const btVector3 leftOffset = btVector3(-1, 1, 1);
@@ -21,35 +21,35 @@ private:
 protected:
     
     BodyGroup*
-    createLeftArm(btDynamicsWorld* world, GenericBodyParameters &params);
+    createLeftArm(btDynamicsWorld* world, BodyParameters &params);
     
     BodyGroup*
-    createRightArm(btDynamicsWorld* world, GenericBodyParameters &params);
+    createRightArm(btDynamicsWorld* world, BodyParameters &params);
     
     BodyGroup*
-    createLeftLeg(btDynamicsWorld* world, GenericBodyParameters &params);
+    createLeftLeg(btDynamicsWorld* world, BodyParameters &params);
     
     BodyGroup*
-    createRightLeg(btDynamicsWorld* world, GenericBodyParameters &params);
+    createRightLeg(btDynamicsWorld* world, BodyParameters &params);
     
     BodyGroup*
-    createTorso(btDynamicsWorld* world, GenericBodyParameters &params);
+    createTorso(btDynamicsWorld* world, BodyParameters &params);
     
     btTypedConstraint*
     createLeftShoulder(BodyPart* leftArm, BodyPart* torso,
-                       GenericBodyParameters &params);
+                       BodyParameters &params);
     
     btTypedConstraint*
     createRightShoulder(BodyPart* rightArm, BodyPart* torso,
-                        GenericBodyParameters &params);
+                        BodyParameters &params);
     
     btTypedConstraint*
     createLeftHip(BodyPart* leftHip, BodyPart* torso,
-                  GenericBodyParameters &params);
+                  BodyParameters &params);
 
     btTypedConstraint*
     createRightHip(BodyPart* rightHip, BodyPart* torso,
-                   GenericBodyParameters &params);
+                   BodyParameters &params);
 
 };
 #endif

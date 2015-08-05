@@ -2,7 +2,7 @@
 #define PASSIVEWALKEREXPERIMENT_H_INCLUDED
 
 #include "Experiment.h"
-#include "PassiveWalkerBody.h"
+#include "WalkerBody.h"
 
 class PassiveWalkerExperiment : public Experiment {
 
@@ -11,7 +11,8 @@ public:
 	~PassiveWalkerExperiment();
 
 private:
-	PassiveWalkerBody* body;
+    BodyParameters* params;
+	WalkerBody* body;
 
 protected:
 	virtual void initializeBodies();

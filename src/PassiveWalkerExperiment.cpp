@@ -1,14 +1,17 @@
 #include "PassiveWalkerExperiment.h"
+#include "GenericBodyParameters.h"
 
 PassiveWalkerExperiment::PassiveWalkerExperiment() {
 }
 
 PassiveWalkerExperiment::~PassiveWalkerExperiment() {
 	delete body;
+    delete params;
 }
 
 void PassiveWalkerExperiment::initializeBodies() {
-	body = new PassiveWalkerBody(m_dynamicsWorld);
+    params = new GenericBodyParameters();
+    body = new WalkerBody(m_dynamicsWorld, *params);
 }
 
 void PassiveWalkerExperiment::initObjects() {

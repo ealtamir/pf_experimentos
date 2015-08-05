@@ -4,48 +4,49 @@
 
 
 LegBodyGroup::LegBodyGroup(btDynamicsWorld* world,
-                           double multiplier,
-                           const btVector3 positionAdjust,
-                           const btVector3 positionOffset) : BodyGroup(world){
+                           BodyParameters &params,
+                           const btVector3 positionAdjust) : BodyGroup(world){
     
     
-    btVector3 lowerLegPos(btScalar(0.18) * positionAdjust.x(),
-                          btScalar(0.2) * positionAdjust.y(),
-                          btScalar(0.) * positionAdjust.z());
-    BodyPart* lowerLeg = generateStandardPart(multiplier * LOWER_LEG_R,
-                                              multiplier * LOWER_LEG_H,
-                                              LOWER_LEG_M,
+    btVector3 lowerLegPos(params.L_LEG_POSITION.x() * positionAdjust.x(),
+                          params.L_LEG_POSITION.y() * positionAdjust.y(),
+                          params.L_LEG_POSITION.z() * positionAdjust.z());
+    BodyPart* lowerLeg = generateStandardPart(params.L_LEG_RADIUS,
+                                              params.L_LEG_HEIGHT,
+                                              params.L_LEG_MASS,
                                               lowerLegPos,
-                                              positionOffset);
+                                              params.bodyInitialPosition);
 
-    btVector3 upperLegPos(btScalar(0.18) * positionAdjust.x(),
-                          btScalar(0.65) * positionAdjust.y(),
-                          btScalar(0.) * positionAdjust.z());
-    BodyPart* upperLeg = generateStandardPart(multiplier * UPPER_LEG_R,
-                                              multiplier * UPPER_LEG_H,
-                                              UPPER_LEG_M,
+    btVector3 upperLegPos(params.U_LEG_POSITION.x() * positionAdjust.x(),
+                          params.U_LEG_POSITION.y() * positionAdjust.y(),
+                          params.U_LEG_POSITION.z() * positionAdjust.z());
+    BodyPart* upperLeg = generateStandardPart(params.U_LEG_RADIUS,
+                                              params.U_LEG_HEIGHT,
+                                              params.U_LEG_MASS,
                                               upperLegPos,
-                                              positionOffset);
+                                              params.bodyInitialPosition);
     
     btTransform footTrans;
-    btVector3 footPos(btScalar(0.18) * positionAdjust.x(),
-                      btScalar(0.2) * positionAdjust.y(),
-                      btScalar(0.) * positionAdjust.z());
+    btVector3 footPos(params.FOOT_POSITION.x() * positionAdjust.x(),
+                      params.FOOT_POSITION.y() * positionAdjust.y(),
+                      params.FOOT_POSITION.z() * positionAdjust.z());
     footTrans.setIdentity();
     footTrans.setOrigin(footPos);
-    footTrans.getBasis().setEulerZYX(SIMD_HALF_PI, 0, 0);
-    BodyPart* foot = generateStandardPart(multiplier * FOOT_R,
-                                          multiplier * FOOT_H,
-                                          FOOT_M,
+    footTrans.getBasis().setEulerZYX(params.FOOT_ORIENTATION.x(),
+                                     params.FOOT_ORIENTATION.y(),
+                                     params.FOOT_ORIENTATION.z());
+    BodyPart* foot = generateStandardPart(params.FOOT_RADIUS,
+                                          params.FOOT_HEIGHT,
+                                          params.FOOT_MASS,
                                           footTrans,
-                                          positionOffset);
+                                          params.bodyInitialPosition);
     
     bodyParts.push_back(lowerLeg);
     bodyParts.push_back(upperLeg);
     bodyParts.push_back(foot);
     
-    btTypedConstraint* knee = joinLegParts(upperLeg, lowerLeg, multiplier);
-    btTypedConstraint* ankle = createAnkle(lowerLeg, foot, multiplier);
+    btTypedConstraint* knee = joinLegParts(upperLeg, lowerLeg, params);
+    btTypedConstraint* ankle = createAnkle(lowerLeg, foot, params);
     
     constraints.push_back(knee);
     constraints.push_back(ankle);
@@ -54,64 +55,40 @@ LegBodyGroup::LegBodyGroup(btDynamicsWorld* world,
 btGeneric6DofConstraint*
 LegBodyGroup::joinLegParts(BodyPart* upperLeg,
                            BodyPart* lowerLeg,
-                           double multiplier) {
-
-    btVector3 upperOffset(btScalar(0.),
-                         btScalar(-0.225 * multiplier),
-                         btScalar(0.));
+                           BodyParameters &params) {
     
-    btVector3 lowerOffset(btScalar(0.),
-                         btScalar(0.185 * multiplier),
-                         btScalar(0.));
-    
-    btVector3 angularLowerLimit(-SIMD_EPSILON,-SIMD_EPSILON,-SIMD_EPSILON);
-    btVector3 angularUpperLimit(SIMD_PI*0.7f, SIMD_EPSILON, SIMD_EPSILON);
-    
-    ConstraintParams params = {
+    ConstraintParams constraintParams = {
         upperLeg,
         lowerLeg,
-        upperOffset,
-        lowerOffset,
+        params.kneeUpperLegOffset,
+        params.kneeLowerLegOffset,
         nullptr,
         nullptr,
-        angularLowerLimit,
-        angularUpperLimit,
-        multiplier
+        params.kneeAngularLowerLimit,
+        params.kneeAngularUpperLimit,
     };
     
-    return ConstraintBuilder::create6DoFConstraint(params);
+    return ConstraintBuilder::create6DoFConstraint(constraintParams);
     
 }
 
 btGeneric6DofConstraint*
 LegBodyGroup::createAnkle(BodyPart* lowerLeg,
                           BodyPart* ankle,
-                          double multiplier) {
+                          BodyParameters &params) {
     
-    btVector3 upperOffset(btScalar(0.),
-                          btScalar(-0.225 * multiplier),
-                          btScalar(0.));
-    
-    btVector3 lowerOffset(btScalar(0.),
-                          btScalar(0.185 * multiplier),
-                          btScalar(0.));
-    
-    btVector3 angularLowerLimit(SIMD_EPSILON * 0.5, SIMD_EPSILON, SIMD_EPSILON);
-    btVector3 angularUpperLimit(-SIMD_PI, -SIMD_EPSILON, -SIMD_EPSILON);
-    
-    ConstraintParams params = {
+    ConstraintParams constraintParams = {
         lowerLeg,
         ankle,
-        upperOffset,
-        lowerOffset,
+        params.ankleLowerLegOffset,
+        params.ankleFootOffset,
         nullptr,
         nullptr,
-        angularLowerLimit,
-        angularUpperLimit,
-        multiplier
+        params.ankleAngularLowerLimit,
+        params.ankleAngularUpperLimit
     };
     
-    return ConstraintBuilder::create6DoFConstraint(params);
+    return ConstraintBuilder::create6DoFConstraint(constraintParams);
 }
 
 BodyPart*

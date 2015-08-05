@@ -2,26 +2,21 @@
 #define ARMBODYGROUP_H_INCLUDED
 
 #include "BodyGroup.h"
+#include "BodyParameters.h"
 
 class ArmBodyGroup : public BodyGroup {
 
 public:
 	ArmBodyGroup(btDynamicsWorld* world,
-                 double multiplier = 1.0,
-                 const btVector3& posAdjust = btVector3(1, 1, 1),
-                 const btVector3& positionOffset = btVector3(0, 20, 0));
+                 BodyParameters &params,
+                 const btVector3& posAdjust = btVector3(1, 1, 1));
     
     BodyPart* getJointPart();
     
 private:
     btGeneric6DofConstraint*
-    joinArmParts(BodyPart* upperArm, BodyPart* lowerArm, double multiplier);
+    joinArmParts(BodyPart* upperArm, BodyPart* lowerArm, BodyParameters &params);
 
-
-    // radius, height and mass
-    const double LOWER_ARM_R = 0.04, LOWER_ARM_H = 0.25,LOWER_ARM_M = 1.0;
-    const double UPPER_ARM_R = 0.05, UPPER_ARM_H = 0.33,
-        UPPER_ARM_M = 1.0;
 };
 
 #endif

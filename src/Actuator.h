@@ -19,7 +19,7 @@ public:
     btVector3 eval(double t);
     
 protected:
-    virtual btVector3 actuatorFunc(double t);
+    btVector3 actuatorFunc(double t);
 };
 
 #endif /* defined(__test__Actuator__) */

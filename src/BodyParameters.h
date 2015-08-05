@@ -32,8 +32,6 @@ public:
     
     /******************** PARTS ********************/
     
-    btVector3 positionOffset = btVector3(0, -10, 0);
-    
     // Leg body group
     // lower leg
     double L_LEG_RADIUS = 0.05 * BODY_SCALE;

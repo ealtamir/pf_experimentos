@@ -10,100 +10,82 @@
 #include "ConstraintBuilder.h"
 
 TorsoBodyGroup::TorsoBodyGroup(btDynamicsWorld* world,
-                               double multiplier,
-                               const btVector3 positionAdjust,
-                               const btVector3 positionOffset) : BodyGroup(world) {
+                               BodyParameters &params,
+                               const btVector3 positionAdjust) : BodyGroup(world) {
     
-    btVector3 headPos(btScalar(0.) * positionAdjust.x(),
-                      btScalar(multiplier * 1.6) * positionAdjust.y(),
-                      btScalar(0.) * positionAdjust.z());
-    BodyPart* head = generateStandardPart(multiplier * HEAD_R,
-                                          multiplier * HEAD_H,
-                                          HEAD_M,
+    
+    btVector3 headPos(params.HEAD_POSITION.x() * positionAdjust.x(),
+                      params.HEAD_POSITION.y() * positionAdjust.y(),
+                      params.HEAD_POSITION.z() * positionAdjust.z());
+    BodyPart* head = generateStandardPart(params.HEAD_RADIUS,
+                                          params.HEAD_HEIGHT,
+                                          params.HEAD_MASS,
                                           headPos,
-                                          positionOffset);
+                                          params.bodyInitialPosition);
     
-    btVector3 spinePos(btScalar(0.) * positionAdjust.x(),
-                       btScalar(multiplier * 1.6) * positionAdjust.y(),
-                       btScalar(0.) * positionAdjust.z());
-    BodyPart* spine = generateStandardPart(multiplier * SPINE_R,
-                                           multiplier * SPINE_H,
-                                           SPINE_M,
+    btVector3 spinePos(params.SPINE_POSITION.x() * positionAdjust.x(),
+                       params.SPINE_POSITION.y() * positionAdjust.y(),
+                       params.SPINE_POSITION.z() * positionAdjust.z());
+    BodyPart* spine = generateStandardPart(params.SPINE_RADIUS,
+                                           params.SPINE_HEIGHT,
+                                           params.SPINE_HEIGHT,
                                            spinePos,
-                                           positionOffset);
+                                           params.bodyInitialPosition);
     
-    btVector3 pelvisPos(btScalar(0.) * positionAdjust.x(),
-                        btScalar(multiplier * 1.) * positionAdjust.y(),
-                        btScalar(0.) * positionAdjust.z());
-    BodyPart* pelvis = generateStandardPart(multiplier * PELVIS_R,
-                                            multiplier * SPINE_H,
-                                            SPINE_M,
+    btVector3 pelvisPos(params.PELVIS_POSITION.x() * positionAdjust.x(),
+                        params.PELVIS_POSITION.y() * positionAdjust.y(),
+                        params.PELVIS_POSITION.z() * positionAdjust.z());
+    BodyPart* pelvis = generateStandardPart(params.PELVIS_RADIUS,
+                                            params.PELVIS_HEIGHT,
+                                            params.PELVIS_MASS,
                                             pelvisPos,
-                                            positionOffset);
+                                            params.bodyInitialPosition);
     
     bodyParts.push_back(head);
     bodyParts.push_back(spine);
     bodyParts.push_back(pelvis);
     
 
-    btTypedConstraint* headSpineConstaint = createHeadSpineConstraint(head, spine,
-                                                                      multiplier);
+    btTypedConstraint* headSpineConstaint = createHeadSpineConstraint(head, spine, params);
     
 
-    btTypedConstraint* spinePelvisConstraint = createSpinePelvisConstraint(spine, pelvis,
-                                                                           multiplier);
+    btTypedConstraint* spinePelvisConstraint = createSpinePelvisConstraint(spine, pelvis, params);
     constraints.push_back(headSpineConstaint);
     constraints.push_back(spinePelvisConstraint);
 }
 
 btGeneric6DofConstraint*
-TorsoBodyGroup::createHeadSpineConstraint(BodyPart* head, BodyPart* spine, double multiplier) {
+TorsoBodyGroup::createHeadSpineConstraint(BodyPart* head, BodyPart* spine, BodyParameters &params) {
     
-    btVector3 upperSpineOffset(btScalar(0.), btScalar(0.30 * multiplier), btScalar(0.));
-    btVector3 headOffset(btScalar(0.), btScalar(-0.14 * multiplier), btScalar(0.));
-    
-    btVector3 lowerAngularLimit(-SIMD_PI*0.3f,-SIMD_EPSILON,-SIMD_PI*0.3f);
-    btVector3 upperAngularLimit(SIMD_PI*0.5f,SIMD_EPSILON,SIMD_PI*0.3f);
-    
-    ConstraintParams params = {
+    ConstraintParams constraintParams = {
         spine,
         head,
-        upperSpineOffset,
-        headOffset,
+        params.neckUpperSpineOffset,
+        params.headOffset,
         nullptr,
         nullptr,
-        lowerAngularLimit,
-        upperAngularLimit
+        params.neckLowerAngularLimit,
+        params.neckUpperAngularLimit
     };
     
-    return ConstraintBuilder::create6DoFConstraint(params);
+    return ConstraintBuilder::create6DoFConstraint(constraintParams);
 
     
 }
 
 btGeneric6DofConstraint*
-TorsoBodyGroup::createSpinePelvisConstraint(BodyPart* spine, BodyPart* pelvis, double multiplier) {
-
-    btVector3 pelvisOffset(btScalar(0.), btScalar(0.15 * multiplier), btScalar(0.));
-    btVector3 lowerSpineOffset(btScalar(0.), btScalar(-0.15 * multiplier), btScalar(0.));
+TorsoBodyGroup::createSpinePelvisConstraint(BodyPart* spine, BodyPart* pelvis, BodyParameters &params) {
     
-    btVector3 lowerAngularLimit(-SIMD_PI*0.2,-SIMD_EPSILON,-SIMD_PI*0.3);
-    btVector3 upperAngularLimit(SIMD_PI*0.2,SIMD_EPSILON,SIMD_PI*0.6);
-    
-    btVector3 p1_eulerZYX(0, SIMD_HALF_PI, 0);
-    btVector3 p2_eulerZYX(0, SIMD_HALF_PI, 0);
-    
-    ConstraintParams params = {
+    ConstraintParams constraintParams = {
         spine,
         pelvis,
-        lowerSpineOffset,
-        pelvisOffset,
-        &p1_eulerZYX,
-        &p2_eulerZYX,
-        lowerSpineOffset,
-        upperAngularLimit,
-        multiplier
+        params.lowerSpineOffset,
+        params.pelvisOffset,
+        &params.hipSpine_eulerZYX,
+        &params.hipPelvis_eulerZYX,
+        params.hipLowerAngularLimit,
+        params.hipUpperAngularLimit
     };
     
-    return ConstraintBuilder::create6DoFConstraint(params);
+    return ConstraintBuilder::create6DoFConstraint(constraintParams);
 }

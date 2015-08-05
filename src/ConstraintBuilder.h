@@ -25,8 +25,6 @@ typedef struct {
     
     btVector3& angularLowerLimit;
     btVector3& angulerUpperLimit;
-    
-    double multiplier;
 } ConstraintParams;
 
 class ConstraintBuilder {

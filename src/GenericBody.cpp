@@ -6,13 +6,13 @@
 #include "ConstraintBuilder.h"
 
 
-GenericBody::GenericBody(btDynamicsWorld* world, GenericBodyParameters &params) : Body::Body(world) {
-
+GenericBody::GenericBody(btDynamicsWorld* world, BodyParameters &params) : Body::Body(world) {
+    // Contains nothing
 }
 
 btTypedConstraint*
 GenericBody::createLeftShoulder(BodyPart* leftArm, BodyPart* torso,
-                                GenericBodyParameters &params) {
+                                BodyParameters &params) {
     ConstraintParams constraintParams = {
         torso,
         leftArm,
@@ -32,7 +32,7 @@ GenericBody::createLeftShoulder(BodyPart* leftArm, BodyPart* torso,
 
 btTypedConstraint*
 GenericBody::createRightShoulder(BodyPart* rightArm, BodyPart* torso,
-                                 GenericBodyParameters &params) {
+                                 BodyParameters &params) {
     
     ConstraintParams constraintParams = {
         torso,
@@ -53,7 +53,7 @@ GenericBody::createRightShoulder(BodyPart* rightArm, BodyPart* torso,
 
 btTypedConstraint*
 GenericBody::createLeftHip(BodyPart* leftHip, BodyPart* torso,
-                           GenericBodyParameters &params) {
+                           BodyParameters &params) {
 
     ConstraintParams constraintParams = {
         torso,
@@ -74,7 +74,7 @@ GenericBody::createLeftHip(BodyPart* leftHip, BodyPart* torso,
 
 btTypedConstraint*
 GenericBody::createRightHip(BodyPart* rightHip, BodyPart* torso,
-                            GenericBodyParameters &params) {
+                            BodyParameters &params) {
 
     ConstraintParams constraintParams = {
         torso,
@@ -95,11 +95,10 @@ GenericBody::createRightHip(BodyPart* rightHip, BodyPart* torso,
 
 BodyGroup*
 GenericBody::createLeftArm(btDynamicsWorld* world,
-                           GenericBodyParameters &params) {
+                           BodyParameters &params) {
     BodyGroup* left_arm = new ArmBodyGroup(world,
-                                           params.bodyScale,
-                                           leftOffset,
-                                           params.bodyInitialPosition);
+                                           params,
+                                           leftOffset);
     bodyGroups.push_back(left_arm);
     left_arm->initBodyGroup();
     return left_arm;
@@ -107,11 +106,10 @@ GenericBody::createLeftArm(btDynamicsWorld* world,
 
 BodyGroup*
 GenericBody::createRightArm(btDynamicsWorld* world,
-                            GenericBodyParameters &params) {
+                            BodyParameters &params) {
     BodyGroup* right_arm = new ArmBodyGroup(world,
-                                            params.bodyScale,
-                                            rightOffset,
-                                            params.bodyInitialPosition);
+                                            params,
+                                            rightOffset);
     bodyGroups.push_back(right_arm);
     right_arm->initBodyGroup();
     return right_arm;
@@ -119,11 +117,10 @@ GenericBody::createRightArm(btDynamicsWorld* world,
 
 BodyGroup*
 GenericBody::createLeftLeg(btDynamicsWorld* world,
-                           GenericBodyParameters &params) {
+                           BodyParameters &params) {
     BodyGroup* left_leg = new LegBodyGroup(world,
-                                           params.bodyScale,
-                                           leftOffset,
-                                           params.bodyInitialPosition);
+                                           params,
+                                           leftOffset);
     bodyGroups.push_back(left_leg);
     left_leg->initBodyGroup();
     return left_leg;
@@ -131,11 +128,10 @@ GenericBody::createLeftLeg(btDynamicsWorld* world,
 
 BodyGroup*
 GenericBody::createRightLeg(btDynamicsWorld* world,
-                            GenericBodyParameters &params) {
+                            BodyParameters &params) {
     BodyGroup* right_leg = new LegBodyGroup(world,
-                                            params.bodyScale,
-                                            rightOffset,
-                                            params.bodyInitialPosition);
+                                            params,
+                                            rightOffset);
     bodyGroups.push_back(right_leg);
     right_leg->initBodyGroup();
     return right_leg;
@@ -143,12 +139,11 @@ GenericBody::createRightLeg(btDynamicsWorld* world,
 
 BodyGroup*
 GenericBody::createTorso(btDynamicsWorld* world,
-                         GenericBodyParameters &params) {
+                         BodyParameters &params) {
     
     BodyGroup* torso = new TorsoBodyGroup(world,
-                                          params.bodyScale,
-                                          rightOffset,
-                                          params.bodyInitialPosition);
+                                          params,
+                                          rightOffset);
     bodyGroups.push_back(torso);
     torso->initBodyGroup();
     return torso;
