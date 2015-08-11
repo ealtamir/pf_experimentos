@@ -36,5 +36,9 @@ protected:
                          const btTransform adjust,
                          const btVector3 &positionOffset);
     
+    BodyPart*
+    generateFoot(const double m,
+                 const btTransform adjust,
+                 const btVector3 &positionOffset);
 };
 #endif

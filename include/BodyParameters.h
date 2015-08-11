@@ -51,13 +51,12 @@ public:
                                          btScalar(0.65 * BODY_SCALE),
                                          btScalar(0.));
     
-    double FOOT_RADIUS = 0.05 * BODY_SCALE;
-    double FOOT_HEIGHT = 0.15 * BODY_SCALE;
+    //foots
     double FOOT_MASS = 1 * BODY_SCALE;
-    btVector3 FOOT_ORIENTATION = btVector3(SIMD_HALF_PI, 0, 0);
+    btVector3 FOOT_ORIENTATION = btVector3(0, 0, 0);
     btVector3 FOOT_POSITION = btVector3(btScalar(0.18 * BODY_SCALE),
-                                        btScalar(0.2 * BODY_SCALE),
-                                        btScalar(0.));
+                                        btScalar(-0.1 * BODY_SCALE),
+                                        btScalar(-0.075 * BODY_SCALE));
     
     // Arm body group
     //lower arm
@@ -110,14 +109,14 @@ public:
     
     
     // ANKLE
-    btVector3 ankleFootOffset = btVector3(btScalar(0),
-                                          btScalar(0.185 * BODY_SCALE),
+    btVector3 ankleFootOffset = btVector3(btScalar(0.075 * BODY_SCALE),
+                                          btScalar(0.235 * BODY_SCALE),
                                           btScalar(0));
-    btVector3 ankleLowerLegOffset = btVector3(btScalar(0),
-                                              btScalar(-0.225 * BODY_SCALE),
-                                              btScalar(0));
-    btVector3 ankleAngularLowerLimit = btVector3(SIMD_EPSILON * 0.5, SIMD_EPSILON, SIMD_EPSILON);
-    btVector3 ankleAngularUpperLimit = btVector3(-SIMD_PI, -SIMD_EPSILON, -SIMD_EPSILON);
+    btVector3 ankleLowerLegOffset = btVector3(btScalar(0.075 * BODY_SCALE),
+                                              btScalar(-0.06 * BODY_SCALE),
+                                              btScalar(-0.075 * BODY_SCALE));
+    btVector3 ankleAngularLowerLimit = btVector3(-SIMD_EPSILON,-SIMD_EPSILON,-SIMD_EPSILON);
+    btVector3 ankleAngularUpperLimit = btVector3(SIMD_EPSILON,SIMD_EPSILON,SIMD_EPSILON);
     
     
     // KNEE
@@ -151,7 +150,7 @@ public:
                                                btScalar(0.30 * BODY_SCALE),
                                                btScalar(0.));
     btVector3 headOffset = btVector3(btScalar(0.),
-                                     btScalar(-0.14 * BODY_SCALE),
+                                     btScalar(-0.10 * BODY_SCALE),
                                      btScalar(0.));
     
     btVector3 neckLowerAngularLimit = btVector3(-SIMD_PI * 0.3f, -SIMD_EPSILON, -SIMD_PI * 0.3f);
@@ -164,6 +163,7 @@ public:
     btVector3 elbowAngularUpperLimit = btVector3(-SIMD_EPSILON, -SIMD_EPSILON, -SIMD_EPSILON);
     btVector3 elbowAngularLowerLimit = btVector3(SIMD_PI * 0.7, SIMD_EPSILON, SIMD_EPSILON);
     
+
     // LEFT SHOULDER
     btVector3 leftShoulderTorsoOffset = btVector3(btScalar(-0.2 * BODY_SCALE),
                                                   btScalar(0.15 * BODY_SCALE),
@@ -178,6 +178,7 @@ public:
     btVector3 leftShoulderAngularLowerLimit = btVector3(-SIMD_PI * 0.8, -SIMD_EPSILON, -SIMD_PI * 0.5);
     btVector3 leftShoulderAngularUpperLimit = btVector3(SIMD_PI * 0.8, SIMD_EPSILON, SIMD_PI * 0.5);
     
+
     // RIGHT SHOULDER
     btVector3 rightShoulderTorsoOffset = btVector3(btScalar(0.2 * BODY_SCALE),
                                                    btScalar(0.15 * BODY_SCALE),

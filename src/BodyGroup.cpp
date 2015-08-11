@@ -1,5 +1,6 @@
 #include "BodyGroup.h"
 #include "CapsuleBodyPart.h"
+#include "ConvexHullBodyPart.h"
 
 
 BodyGroup::~BodyGroup() {
@@ -63,6 +64,15 @@ BodyGroup::generateStandardPart(const double r,
     
 }
 
-
-
-
+BodyPart*
+BodyGroup::generateFoot(const double m,
+                        const btTransform adjust,
+                        const btVector3 &positionOffset) {
+    
+    btTransform offset;
+    offset.setIdentity();
+    offset.setOrigin(positionOffset);    
+    
+    return new ConvexHullBodyPart(nullptr, btScalar(m), offset * adjust);
+    
+}

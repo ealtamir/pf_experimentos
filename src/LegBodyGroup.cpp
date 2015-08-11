@@ -35,11 +35,9 @@ LegBodyGroup::LegBodyGroup(btDynamicsWorld* world,
     footTrans.getBasis().setEulerZYX(params.FOOT_ORIENTATION.x(),
                                      params.FOOT_ORIENTATION.y(),
                                      params.FOOT_ORIENTATION.z());
-    BodyPart* foot = generateStandardPart(params.FOOT_RADIUS,
-                                          params.FOOT_HEIGHT,
-                                          params.FOOT_MASS,
-                                          footTrans,
-                                          params.bodyInitialPosition);
+    BodyPart* foot = generateFoot(params.FOOT_MASS,
+                                  footTrans,
+                                  params.bodyInitialPosition);
     
     bodyParts.push_back(lowerLeg);
     bodyParts.push_back(upperLeg);
