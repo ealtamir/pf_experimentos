@@ -53,7 +53,7 @@ After all you should get something like this:
 
 ### FAQ ###
 
-- ** Followed all the steps, tried to compile the project and failed because errors in one specific file. **
+- **Followed all the steps, tried to compile the project and failed because errors in one specific file.**
 Try to remove all files from the compile sources list and add them again. Maybe you missed an important
 file the first time. Remember to *clean* de project before retrying compilation.
 
