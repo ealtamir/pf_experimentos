@@ -23,13 +23,13 @@ public:
     
     BodyPart* getJointPart() { exit(1); }
     
-    BodyPart* getLeftShoulderPart() { return bodyParts[1]; }
-    BodyPart* getRightShoulderPart() { return bodyParts[1]; }
-    BodyPart* getLeftHipPart() { return bodyParts[2]; }
-    BodyPart* getRightHipPart() { return bodyParts[2]; }
+    virtual BodyPart* getLeftShoulderPart() { return bodyParts[1]; }
+    virtual BodyPart* getRightShoulderPart() { return bodyParts[1]; }
+    virtual BodyPart* getLeftHipPart() { return bodyParts[2]; }
+    virtual BodyPart* getRightHipPart() { return bodyParts[2]; }
 
     
-private:
+protected:
     btGeneric6DofConstraint*
     createHeadSpineConstraint(BodyPart* head,
                               BodyPart* spine,
@@ -39,6 +39,16 @@ private:
     createSpinePelvisConstraint(BodyPart* spine,
                                 BodyPart* pelvis,
                                 BodyParameters &params);
+    
+    BodyPart*
+    createHead(BodyParameters &params, const btVector3 positionAdjust);
+    
+    BodyPart*
+    createSpine(BodyParameters &params, const btVector3 positionAdjust);
+
+    BodyPart*
+    createPelvis(BodyParameters &params, const btVector3 positionAdjust);
+    
 };
 
 #endif /* defined(__test__TorsoBodyGroup__) */

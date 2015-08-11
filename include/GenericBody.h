@@ -14,11 +14,9 @@ class GenericBody : public Body {
 public:
 	GenericBody(btDynamicsWorld* world, BodyParameters &params);
     
-private:
+protected:
     const btVector3 leftOffset = btVector3(-1, 1, 1);
     const btVector3 rightOffset = btVector3(1, 1, 1);
-    
-protected:
     
     BodyGroup*
     createLeftArm(btDynamicsWorld* world, BodyParameters &params);
@@ -32,7 +30,7 @@ protected:
     BodyGroup*
     createRightLeg(btDynamicsWorld* world, BodyParameters &params);
     
-    BodyGroup*
+    virtual BodyGroup*
     createTorso(btDynamicsWorld* world, BodyParameters &params);
     
     btTypedConstraint*

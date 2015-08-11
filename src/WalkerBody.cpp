@@ -7,28 +7,33 @@
 //
 
 #include "WalkerBody.h"
-#include "TorsoBodyGroup.h"
+#include "GenericTorsoBodyGroup.h"
 
 WalkerBody::WalkerBody(btDynamicsWorld* world, BodyParameters &params) : GenericBody(world, params) {
     
-    BodyGroup* leftArm = createLeftArm(world, params);
-    BodyGroup* rightArm = createRightArm(world, params);
+
     BodyGroup* leftLeg = createLeftLeg(world, params);
     BodyGroup* rightLeg = createRightLeg(world, params);
     BodyGroup* torso = createTorso(world, params);
     
-    TorsoBodyGroup* torsoGroup = dynamic_cast<TorsoBodyGroup*>(torso);
+    GenericTorsoBodyGroup* torsoGroup = dynamic_cast<GenericTorsoBodyGroup*>(torso);
     
-    createLeftShoulder(leftArm->getJointPart(),
-                       torsoGroup->getLeftShoulderPart(),
-                       params);
-    createRightShoulder(rightArm->getJointPart(),
-                        torsoGroup->getRightShoulderPart(),
-                        params);
+
     createLeftHip(leftLeg->getJointPart(),
                   torsoGroup->getLeftHipPart(),
                   params);
     createRightHip(rightLeg->getJointPart(),
                    torsoGroup->getRightHipPart(),
                    params);
+}
+
+BodyGroup*
+WalkerBody::createTorso(btDynamicsWorld* world, BodyParameters &params) {
+    
+    BodyGroup* torso = new GenericTorsoBodyGroup(world,
+                                          params,
+                                          rightOffset);
+    bodyGroups.push_back(torso);
+    torso->initBodyGroup();
+    return torso;
 }

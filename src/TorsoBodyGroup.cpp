@@ -9,10 +9,14 @@
 #include "TorsoBodyGroup.h"
 #include "ConstraintBuilder.h"
 
+
 TorsoBodyGroup::TorsoBodyGroup(btDynamicsWorld* world,
                                BodyParameters &params,
                                const btVector3 positionAdjust) : BodyGroup(world) {
-    
+}
+
+BodyPart*
+TorsoBodyGroup::createHead(BodyParameters &params, const btVector3 positionAdjust) {
     
     btVector3 headPos(params.HEAD_POSITION.x() * positionAdjust.x(),
                       params.HEAD_POSITION.y() * positionAdjust.y(),
@@ -23,6 +27,14 @@ TorsoBodyGroup::TorsoBodyGroup(btDynamicsWorld* world,
                                           headPos,
                                           params.bodyInitialPosition);
     
+    bodyParts.push_back(head);
+    return head;
+}
+
+BodyPart*
+TorsoBodyGroup::createSpine(BodyParameters &params, const btVector3 positionAdjust) {
+ 
+    
     btVector3 spinePos(params.SPINE_POSITION.x() * positionAdjust.x(),
                        params.SPINE_POSITION.y() * positionAdjust.y(),
                        params.SPINE_POSITION.z() * positionAdjust.z());
@@ -32,6 +44,13 @@ TorsoBodyGroup::TorsoBodyGroup(btDynamicsWorld* world,
                                            spinePos,
                                            params.bodyInitialPosition);
     
+    bodyParts.push_back(spine);
+    return spine;
+}
+
+BodyPart*
+TorsoBodyGroup::createPelvis(BodyParameters &params, const btVector3 positionAdjust) {
+
     btVector3 pelvisPos(params.PELVIS_POSITION.x() * positionAdjust.x(),
                         params.PELVIS_POSITION.y() * positionAdjust.y(),
                         params.PELVIS_POSITION.z() * positionAdjust.z());
@@ -41,17 +60,8 @@ TorsoBodyGroup::TorsoBodyGroup(btDynamicsWorld* world,
                                             pelvisPos,
                                             params.bodyInitialPosition);
     
-    bodyParts.push_back(head);
-    bodyParts.push_back(spine);
     bodyParts.push_back(pelvis);
-    
-
-    btTypedConstraint* headSpineConstaint = createHeadSpineConstraint(head, spine, params);
-    
-
-    btTypedConstraint* spinePelvisConstraint = createSpinePelvisConstraint(spine, pelvis, params);
-    constraints.push_back(headSpineConstaint);
-    constraints.push_back(spinePelvisConstraint);
+    return pelvis;
 }
 
 btGeneric6DofConstraint*
@@ -68,9 +78,10 @@ TorsoBodyGroup::createHeadSpineConstraint(BodyPart* head, BodyPart* spine, BodyP
         params.neckUpperAngularLimit
     };
     
-    return ConstraintBuilder::create6DoFConstraint(constraintParams);
+    btGeneric6DofConstraint* constraint = ConstraintBuilder::create6DoFConstraint(constraintParams);
+    constraints.push_back(constraint);
 
-    
+    return constraint;
 }
 
 btGeneric6DofConstraint*
@@ -87,5 +98,8 @@ TorsoBodyGroup::createSpinePelvisConstraint(BodyPart* spine, BodyPart* pelvis, B
         params.hipUpperAngularLimit
     };
     
-    return ConstraintBuilder::create6DoFConstraint(constraintParams);
+    btGeneric6DofConstraint* constraint = ConstraintBuilder::create6DoFConstraint(constraintParams);
+    constraints.push_back(constraint);
+    
+    return constraint;
 }

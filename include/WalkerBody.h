@@ -15,6 +15,9 @@
 class WalkerBody : public GenericBody {
 public:
     WalkerBody(btDynamicsWorld* world, BodyParameters &params);
+protected:
+    virtual BodyGroup*
+    createTorso(btDynamicsWorld* world, BodyParameters &params);
 };
 
 
