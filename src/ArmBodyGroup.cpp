@@ -22,7 +22,8 @@ ArmBodyGroup::ArmBodyGroup(btDynamicsWorld* world,
 		params.L_ARM_HEIGHT,
 		params.L_ARM_MASS,
         lowerTrans,
-		params.bodyInitialPosition
+		params.bodyInitialPosition,
+        params.rightLowerArmAct
 	);
 
     btTransform upperTrans;
@@ -39,7 +40,8 @@ ArmBodyGroup::ArmBodyGroup(btDynamicsWorld* world,
 		params.U_ARM_HEIGHT,
 		params.U_ARM_MASS,
         upperTrans,
-		params.bodyInitialPosition
+		params.bodyInitialPosition,
+        params.rightUpperArmAct
 	);
 
 	bodyParts.push_back(lowerArm);

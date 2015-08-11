@@ -1,6 +1,7 @@
 #include "LegBodyGroup.h"
 #include "CapsuleBodyPart.h"
 #include "ConstraintBuilder.h"
+#include "GenericActuator.h"
 
 
 LegBodyGroup::LegBodyGroup(btDynamicsWorld* world,
@@ -15,7 +16,8 @@ LegBodyGroup::LegBodyGroup(btDynamicsWorld* world,
                                               params.L_LEG_HEIGHT,
                                               params.L_LEG_MASS,
                                               lowerLegPos,
-                                              params.bodyInitialPosition);
+                                              params.bodyInitialPosition,
+                                              params.rightLowerLegAct);
 
     btVector3 upperLegPos(params.U_LEG_POSITION.x() * positionAdjust.x(),
                           params.U_LEG_POSITION.y() * positionAdjust.y(),
@@ -24,7 +26,8 @@ LegBodyGroup::LegBodyGroup(btDynamicsWorld* world,
                                               params.U_LEG_HEIGHT,
                                               params.U_LEG_MASS,
                                               upperLegPos,
-                                              params.bodyInitialPosition);
+                                              params.bodyInitialPosition,
+                                              params.rightLowerLegAct);
     
     btTransform footTrans;
     btVector3 footPos(params.FOOT_POSITION.x() * positionAdjust.x(),

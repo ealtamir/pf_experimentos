@@ -19,7 +19,13 @@ public:
     btVector3 eval(double t);
     
 protected:
-    btVector3 actuatorFunc(double t);
+    virtual
+    btVector3 actuatorFunc(double t) = 0;
+    
+    double A = 5 * ((double) rand() / RAND_MAX);
+    double B = 5 * ((double) rand() / RAND_MAX);
+    double w1 = 5 * ((double) rand() / RAND_MAX);
+    double w2 = 5 * ((double) rand() / RAND_MAX);
 };
 
 #endif /* defined(__test__Actuator__) */

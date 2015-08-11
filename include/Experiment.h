@@ -43,10 +43,13 @@ public:
 
 private:
     btRigidBody* createGround();
+    
 
 protected:
     bool objectsInitialized = false;
     bool stoppingConditionEnabled = true;
+    
+    double timeCount = 0;
 
     virtual void initializeBodies() = 0;
 

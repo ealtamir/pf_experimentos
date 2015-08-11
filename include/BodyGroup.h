@@ -13,6 +13,8 @@ public:
 	virtual void initBodyGroup();
     
     virtual BodyPart* getJointPart() = 0;
+    
+    void actuate(double t);
 
 protected:
 	std::vector<BodyPart*> bodyParts;
@@ -27,14 +29,16 @@ protected:
                          const double h,
                          const double m,
                          const btVector3& position,
-                         const btVector3& positionOffset);
+                         const btVector3& positionOffset,
+                         Actuator* actuator = nullptr);
     
     BodyPart*
     generateStandardPart(const double r,
                          const double h,
                          const double m,
                          const btTransform adjust,
-                         const btVector3 &positionOffset);
+                         const btVector3 &positionOffset,
+                         Actuator* actuator = nullptr);
     
     BodyPart*
     generateFoot(const double m,

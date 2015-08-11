@@ -12,12 +12,16 @@ class Body : public ConstraintBuilder {
 public:
 	Body(btDynamicsWorld* world);
 	virtual ~Body();
+    
+    void actuate(double t);
+
 
 protected:
 	std::vector<BodyGroup*> bodyGroups;
     std::vector<btTypedConstraint*> constraints;
     
 	btDynamicsWorld* world;
+    
 
 };
 

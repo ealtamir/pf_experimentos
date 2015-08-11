@@ -16,5 +16,6 @@ GenericActuator::GenericActuator() {
 btVector3
 GenericActuator::actuatorFunc(double t) {
     
-    return btVector3(0, 0, 0);
+    double f = A * sin(w1 * t) + B * cos(w2 * t);
+    return btVector3(0, f, 0);
 }

@@ -7,3 +7,9 @@
 //
 
 #include "Actuator.h"
+
+
+btVector3
+Actuator::eval(double t) {
+    return actuatorFunc(t);
+}

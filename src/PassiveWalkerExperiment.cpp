@@ -19,7 +19,8 @@ void PassiveWalkerExperiment::initObjects() {
 }
 
 void PassiveWalkerExperiment::worldStep() {
-	// TODO
+    timeCount += 1. / 60.;
+    body->actuate(timeCount);
 }
 
 bool PassiveWalkerExperiment::stopExperiment() {

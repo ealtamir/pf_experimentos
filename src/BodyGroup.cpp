@@ -30,12 +30,20 @@ void BodyGroup::addRigidBodiesToWorld() {
     }
 }
 
+void
+BodyGroup::actuate(double t) {
+    for (BodyPart* part : bodyParts) {
+        part->actuate(t);
+    }
+}
+
 BodyPart*
 BodyGroup::generateStandardPart(const double r,
                                 const double h,
                                 const double m,
                                 const btVector3 &position,
-                                const btVector3 &positionOffset) {
+                                const btVector3 &positionOffset,
+                                Actuator* actuator) {
     btTransform offset;
     offset.setIdentity();
     offset.setOrigin(positionOffset);
@@ -45,7 +53,8 @@ BodyGroup::generateStandardPart(const double r,
     transPos.setOrigin(position);
     
     return new CapsuleBodyPart(btScalar(r), btScalar(h),
-                               btScalar(m), offset * transPos);
+                               btScalar(m), offset * transPos, actuator);
+    
 }
 
 BodyPart*
@@ -53,16 +62,18 @@ BodyGroup::generateStandardPart(const double r,
                                 const double h,
                                 const double m,
                                 const btTransform adjust,
-                                const btVector3 &positionOffset) {
+                                const btVector3 &positionOffset,
+                                Actuator* actuator) {
     
     btTransform offset;
     offset.setIdentity();
     offset.setOrigin(positionOffset);
     
     return new CapsuleBodyPart(btScalar(r), btScalar(h),
-                               btScalar(m), offset * adjust);
+                               btScalar(m), offset * adjust, actuator);
     
 }
+
 
 BodyPart*
 BodyGroup::generateFoot(const double m,

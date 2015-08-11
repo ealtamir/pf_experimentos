@@ -3,6 +3,7 @@
 
 #include <BulletDynamics/btBulletDynamicsCommon.h>
 #include <string>
+#include "Actuator.h"
 
 const float LINEAR_DAMPING = 0.05;
 const float ANGULAR_DAMPING = 0.85;
@@ -16,10 +17,16 @@ public:
 	virtual ~BodyPart();
 
 	btRigidBody* getRigidBody() {return body;};
+    
+    void
+    actuate(double t);
 
 protected:
 	btRigidBody* body;
+    
 	std::string identifier;
+    
+    Actuator* actuator = nullptr;
 
 };
 

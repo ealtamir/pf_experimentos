@@ -15,14 +15,14 @@ GenericBodyParameters::GenericBodyParameters() {
     rightLowerArmAct = new GenericActuator();
     rightUpperArmAct = new GenericActuator();
     
-    leftLowerLegAct = new GenericActuator();
+    leftLowerArmAct = new GenericActuator();
     leftUpperArmAct = new GenericActuator();
     
     hipAct = new GenericActuator();
     
-    rightLowerArmAct = new GenericActuator();
-    rightUpperArmAct = new GenericActuator();
+    rightLowerLegAct = new GenericActuator();
+    rightUpperLegAct = new GenericActuator();
     
     leftLowerLegAct = new GenericActuator();
-    leftUpperArmAct = new GenericActuator();
+    leftUpperLegAct = new GenericActuator();
 }
