@@ -1,3 +1,6 @@
+#include <iostream>
+using namespace std;
+
 #include "PassiveWalkerExperiment.h"
 #include "GenericBodyParameters.h"
 
@@ -21,6 +24,8 @@ void PassiveWalkerExperiment::initObjects() {
 void PassiveWalkerExperiment::worldStep() {
     timeCount += 1. / 60.;
     body->actuate(timeCount);
+    printf("time: %f \n", timeCount);
+    
 }
 
 bool PassiveWalkerExperiment::stopExperiment() {

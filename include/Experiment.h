@@ -36,7 +36,11 @@ public:
     void enableStoppingCondition(bool status) {
         stoppingConditionEnabled = status;
     }
-
+    
+    virtual void worldStep() = 0;
+    
+    
+    
     std::string getName() {
         return "Experiment";
     }
@@ -54,8 +58,6 @@ protected:
     virtual void initializeBodies() = 0;
 
     virtual void initObjects() = 0;
-
-    virtual void worldStep() = 0;
 
     virtual bool stopExperiment() = 0;
 

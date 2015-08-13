@@ -4,6 +4,8 @@
 //#include "FallingBall.h"
 //#include "GenericJointDemo.h"
 
+int mainLoop(Experiment*);
+
 int main(int argc,char* argv[])
 {
     PassiveWalkerExperiment demoApp;
@@ -11,5 +13,16 @@ int main(int argc,char* argv[])
     demoApp.initPhysics();
     demoApp.setCameraDistance(btScalar(7.));
     demoApp.setCameraUp(btVector3(0, 10, 0));
-    return glutmain(argc, argv, 1024, 768, "Experiment",&demoApp);
+    return mainLoop(&demoApp);
+    //return glutmain(argc, argv, 1024, 768, "Experiment",&demoApp);
+}
+
+int mainLoop(Experiment* demoApp)
+{
+    demoApp->initPhysics();
+    for (; ; ) {
+        demoApp->worldStep();
+    }
+    //demoApp->stopExperiment();
+    return 0;
 }
