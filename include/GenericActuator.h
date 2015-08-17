@@ -15,7 +15,7 @@
 class GenericActuator : public Actuator {
     
 public:
-    GenericActuator();
+    GenericActuator(bool isLeft = false);
     
 protected:
     btVector3 actuatorFunc(double t);

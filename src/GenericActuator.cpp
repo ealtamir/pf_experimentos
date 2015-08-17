@@ -9,13 +9,15 @@
 #include "GenericActuator.h"
 
 
-GenericActuator::GenericActuator() {
-    
+GenericActuator::GenericActuator(bool isLeft) {
+    if (isLeft) {
+        fase = SIMD_PI;
+    }
 }
 
 btVector3
 GenericActuator::actuatorFunc(double t) {
     
-    double f = A * sin(w1 * t) + B * cos(w2 * t);
-    return btVector3(0, f, 0);
+    double f = A * sin(w1 * t + fase) + B * cos(w2 * t + fase);
+    return btVector3(f, 0, 0);
 }

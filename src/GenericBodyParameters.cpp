@@ -23,6 +23,6 @@ GenericBodyParameters::GenericBodyParameters() {
     rightLowerLegAct = new GenericActuator();
     rightUpperLegAct = new GenericActuator();
     
-    leftLowerLegAct = new GenericActuator();
-    leftUpperLegAct = new GenericActuator();
+    leftLowerLegAct = new GenericActuator(true);
+    leftUpperLegAct = new GenericActuator(true);
 }

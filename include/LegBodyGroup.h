@@ -9,7 +9,8 @@ class LegBodyGroup : public BodyGroup {
 public:
     LegBodyGroup(btDynamicsWorld* world,
                  BodyParameters &params,
-                 const btVector3 positionAdjust = btVector3(1, 1, 1));
+                 const btVector3 positionAdjust = btVector3(1, 1, 1),
+                 bool isLeft = false);
     
     BodyPart* getJointPart();
     

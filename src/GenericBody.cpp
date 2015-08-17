@@ -120,7 +120,7 @@ GenericBody::createLeftLeg(btDynamicsWorld* world,
                            BodyParameters &params) {
     BodyGroup* left_leg = new LegBodyGroup(world,
                                            params,
-                                           leftOffset);
+                                           leftOffset, true);
     bodyGroups.push_back(left_leg);
     left_leg->initBodyGroup();
     return left_leg;

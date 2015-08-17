@@ -6,18 +6,28 @@
 
 LegBodyGroup::LegBodyGroup(btDynamicsWorld* world,
                            BodyParameters &params,
-                           const btVector3 positionAdjust) : BodyGroup(world){
+                           const btVector3 positionAdjust,
+                           bool isLeft) : BodyGroup(world){
     
-    
+    Actuator* lowerLegAct;
+    Actuator* upperLegAct;
+    if (isLeft) {
+        lowerLegAct = params.leftLowerLegAct;
+        upperLegAct = params.leftUpperLegAct;
+    } else {
+        lowerLegAct = params.rightLowerLegAct;
+        upperLegAct = params.rightUpperLegAct;
+    }
     btVector3 lowerLegPos(params.L_LEG_POSITION.x() * positionAdjust.x(),
                           params.L_LEG_POSITION.y() * positionAdjust.y(),
                           params.L_LEG_POSITION.z() * positionAdjust.z());
+    
     BodyPart* lowerLeg = generateStandardPart(params.L_LEG_RADIUS,
                                               params.L_LEG_HEIGHT,
                                               params.L_LEG_MASS,
                                               lowerLegPos,
                                               params.bodyInitialPosition,
-                                              params.rightLowerLegAct);
+                                              lowerLegAct);
 
     btVector3 upperLegPos(params.U_LEG_POSITION.x() * positionAdjust.x(),
                           params.U_LEG_POSITION.y() * positionAdjust.y(),
@@ -27,7 +37,7 @@ LegBodyGroup::LegBodyGroup(btDynamicsWorld* world,
                                               params.U_LEG_MASS,
                                               upperLegPos,
                                               params.bodyInitialPosition,
-                                              params.rightLowerLegAct);
+                                              upperLegAct);
     
     btTransform footTrans;
     btVector3 footPos(params.FOOT_POSITION.x() * positionAdjust.x(),

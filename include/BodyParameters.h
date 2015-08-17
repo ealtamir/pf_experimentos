@@ -20,7 +20,7 @@ class BodyParameters {
 public:
     
     const double bodyScale = BODY_SCALE;
-    const btVector3 bodyInitialPosition = btVector3(0, 1 * BODY_SCALE, 0);
+    const btVector3 bodyInitialPosition = btVector3(0, 0.6 * BODY_SCALE, 0);
     
     /******************** ACTUATORS ********************/
 
@@ -64,8 +64,8 @@ public:
     double L_ARM_HEIGHT = 0.25;
     double L_ARM_MASS = 1;
     btVector3 L_ARM_ORIENTATION = btVector3(0, 0, -SIMD_HALF_PI);
-    btVector3 L_ARM_POSITION = btVector3(btScalar(0.7),
-                                         btScalar(1.45),
+    btVector3 L_ARM_POSITION = btVector3(btScalar(0.7 * BODY_SCALE),
+                                         btScalar(1.45 * BODY_SCALE),
                                          btScalar(0));
     
     //upper arm
@@ -203,8 +203,8 @@ public:
                                         btScalar(0.225 * BODY_SCALE),
                                         btScalar(0.));
     
-    btVector3 leftHipAngularUpperLimit = btVector3(SIMD_HALF_PI * 0.8, SIMD_EPSILON, SIMD_HALF_PI * 0.6);
-    btVector3 leftHipAngularLowerLimit = btVector3(-SIMD_HALF_PI * 0.5, -SIMD_EPSILON, -SIMD_HALF_PI);
+    btVector3 leftHipAngularUpperLimit = btVector3(SIMD_HALF_PI * 0.8, 0., 0.);
+    btVector3 leftHipAngularLowerLimit = btVector3(-SIMD_HALF_PI * 0.5, 0., 0.);
     
     
     // RIGHT HIP
@@ -216,8 +216,8 @@ public:
                                          btScalar(0.225 * BODY_SCALE),
                                          btScalar(0.));
     
-    btVector3 rightHipAngularUpperLimit = btVector3(SIMD_HALF_PI * 0.8, SIMD_EPSILON, SIMD_HALF_PI);
-    btVector3 rightHipAngularLowerLimit = btVector3(-SIMD_HALF_PI * 0.5, -SIMD_EPSILON, -SIMD_HALF_PI * 0.6);
+    btVector3 rightHipAngularUpperLimit = btVector3(SIMD_HALF_PI * 0.8, 0., 0.);
+    btVector3 rightHipAngularLowerLimit = btVector3(-SIMD_HALF_PI * 0.5, 0., 0.);
 };
 
 #endif /* defined(__test__BodyParameters__) */

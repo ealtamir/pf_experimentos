@@ -22,10 +22,12 @@ protected:
     virtual
     btVector3 actuatorFunc(double t) = 0;
     
-    double A = 5 * ((double) rand() / RAND_MAX);
-    double B = 5 * ((double) rand() / RAND_MAX);
-    double w1 = 5 * ((double) rand() / RAND_MAX);
-    double w2 = 5 * ((double) rand() / RAND_MAX);
+    double fase = 0;
+    
+    double A = 12;
+    double B = 12;
+    double w1 = 3;
+    double w2 = 3;
 };
 
 #endif /* defined(__test__Actuator__) */
