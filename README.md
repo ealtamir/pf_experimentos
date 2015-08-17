@@ -13,7 +13,7 @@
 
 3- Drag and drop the folder src to the project and select the "Create Groups" options
 
-4- Drag and drop the folder include to the project and select the "Create Groups" options
+4- Drag and drop the folder include and libGeneticLibraryInclude to the project and select the "Create Groups" options
 
 5- Move the main.cpp on src folder to the where main.cpp was on the step 3
 
