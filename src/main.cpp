@@ -67,8 +67,8 @@ int main(int argc,char* argv[])
     demoApp.initPhysics();
     demoApp.setCameraDistance(btScalar(3.));
     demoApp.setCameraUp(btVector3(0, 10, 0));
-    return mainLoop(&demoApp);
-    //return glutmain(argc, argv, 1024, 768, "Experiment",&demoApp);
+//    return mainLoop(&demoApp);
+    return glutmain(argc, argv, 1024, 768, "Experiment",&demoApp);
 }
 
 int mainLoop(Experiment* demoApp)

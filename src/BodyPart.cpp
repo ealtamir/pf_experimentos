@@ -4,7 +4,6 @@
 BodyPart::~BodyPart() {
 	delete body->getMotionState();
 	delete body;
-    delete actuator;
 }
 
 void

@@ -18,9 +18,12 @@
 class BodyParameters {
     
 public:
-    
+
     const double bodyScale = BODY_SCALE;
     const btVector3 bodyInitialPosition = btVector3(0, 0.6 * BODY_SCALE, 0);
+    const double FEMALE_BODY_MASS = 61.99;
+    const double MALE_BODY_MASS = 73;
+    const double BODY_MASS = MALE_BODY_MASS;
     
     /******************** ACTUATORS ********************/
 
@@ -31,6 +34,8 @@ public:
     Actuator *leftLowerArmAct, *leftUpperArmAct;
     
     /******************** PARTS ********************/
+    
+
     
     // Leg body group
     // lower leg
