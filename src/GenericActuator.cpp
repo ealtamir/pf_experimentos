@@ -9,10 +9,8 @@
 #include "GenericActuator.h"
 
 
-GenericActuator::GenericActuator(bool isLeft) {
-    if (isLeft) {
-        fase = SIMD_PI;
-    }
+GenericActuator::GenericActuator(bool isLeft) : Actuator(isLeft) {
+
 }
 
 btVector3

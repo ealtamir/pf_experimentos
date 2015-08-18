@@ -16,18 +16,16 @@ class Actuator {
     
     
 public:
+    Actuator(bool isLeft);
     btVector3 eval(double t);
     
 protected:
-    virtual
-    btVector3 actuatorFunc(double t) = 0;
+    virtual btVector3
+    actuatorFunc(double t) = 0;
     
     double fase = 0;
     
-    double A = 12;
-    double B = 12;
-    double w1 = 3;
-    double w2 = 3;
+
 };
 
 #endif /* defined(__test__Actuator__) */

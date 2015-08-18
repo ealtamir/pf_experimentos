@@ -20,6 +20,11 @@ public:
 protected:
     btVector3 actuatorFunc(double t);
     
+    double A = 12;
+    double B = 12;
+    double w1 = 3;
+    double w2 = 3;
+    
 };
 
 #endif /* defined(__test__GenericActuator__) */
