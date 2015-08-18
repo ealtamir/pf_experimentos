@@ -22,4 +22,5 @@ Body::actuate(double t) {
     for (BodyGroup* group : bodyGroups) {
         group->actuate(t);
     }
+    
 }

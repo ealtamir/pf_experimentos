@@ -33,5 +33,7 @@ CapsuleBodyPart::CapsuleBodyPart(btScalar r,
     body->setDamping(LINEAR_DAMPING, ANGULAR_DAMPING);
     //body->setDeactivationTime(DEACTIVATION_TIME);
     //body->setSleepingThresholds(LINEAR_SLEEPING_THRESHOLD, ANGULAR_SLEEPING_THRESHOLD);
-
+    
 }
+
+
