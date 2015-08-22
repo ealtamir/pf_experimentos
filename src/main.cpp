@@ -22,6 +22,7 @@
 
 // PF includes
 #include "Experiment.h"
+#include "PassiveWalkerExperiment.h"
 
 // Namespaces
 using namespace std;
@@ -45,14 +46,14 @@ public:
 
 // chromosome
 
-class PfChromosome : public GaMultiValueChromosome<const MiExperimento*> {
+class PfChromosome : public GaMultiValueChromosome<const Experiment*> {
 public:
-    PfChromosome(GaChromosomeDomainBlock<const MiExperimento*>* configBlock) : GaMultiValueChromosome(configBlock) {
+    PfChromosome(GaChromosomeDomainBlock<const Experiment*>* configBlock) : GaMultiValueChromosome(configBlock) {
         _values.resize(1);
     };
     
     PfChromosome(const PfChromosome& chromosome,
-                 bool setupOnly) : GaMultiValueChromosome<const MiExperimento*>(chromosome, setupOnly) {
+                 bool setupOnly) : GaMultiValueChromosome<const Experiment*>(chromosome, setupOnly) {
         if( setupOnly ) {
             _values.resize(1);
         }
@@ -123,11 +124,11 @@ public:
 // implementations
 
 GaChromosomePtr PfChromosome::MakeNewFromPrototype() const {
-    PfChromosome* g = new PfChromosome( (GaChromosomeDomainBlock<const MiExperimento*>*)_configBlock );
+    PfChromosome* g = new PfChromosome( (GaChromosomeDomainBlock<const Experiment*>*)_configBlock );
     
     g->_values.resize( 1 );
-    g->_values[0] = new MiExperimento(11);
-    const vector<const MiExperimento*>& v = g->GetCode();
+    g->_values[0] = new PassiveWalkerExperiment();
+    const vector<const Experiment*>& v = g->GetCode();
     return g;
 }
 
@@ -143,16 +144,16 @@ GaChromosomePtr MiExperimentoCrossover::operator ()(const GaChromosome* parent1,
 
 float MiExperimentoFitness::operator ()(const GaChromosome* chromosome) const {
     const PfChromosome* c = dynamic_cast<const PfChromosome*>( chromosome );
-    const vector<const MiExperimento*>& v = c->GetCode();
-    return v[0]->caca;
+    const vector<const Experiment*>& v = c->GetCode();
+    return 3; // return v[0]->getFitness(); // Impement method getFitness()
 }
 
 void MiExperimentoObserver::NewBestChromosome(const GaChromosome& newChromosome, const GaAlgorithm& algorithm) {
     const PfChromosome* c = dynamic_cast<const PfChromosome*>( &newChromosome );
-    const vector<const MiExperimento*>& v = c->GetCode();
+    const vector<const Experiment*>& v = c->GetCode();
     cout << "New chromosome found:\n";
     cout << "Fitness: " << newChromosome.GetFitness() << endl;
-    cout << "x: " << v[0]->caca << endl;
+//    cout << "x: " << v[0]->caca << endl;
 }
 
 void MiExperimentoObserver::EvolutionStateChanged(GaAlgorithmState newState, const GaAlgorithm& algorithm) {
@@ -164,10 +165,10 @@ void MiExperimentoObserver::EvolutionStateChanged(GaAlgorithmState newState, con
 
 void MiExperimentoMutation::operator ()(GaChromosome* chromosome) const {
     const PfChromosome* c = dynamic_cast<const PfChromosome*>( chromosome );
-    const vector<const MiExperimento*>& v = c->GetCode();
+    const vector<const Experiment*>& v = c->GetCode();
     if (!v.empty() && v[0] != NULL) {
-        cout << v[0]->caca;
-        v[0]->setCaca(22);
+//        cout << v[0]->caca;
+//        v[0]->setCaca(22); // v[0]->mutateExperiment(); // implement method mutateExperiment()
     } else {
         cout << "empty";
     }
@@ -181,7 +182,7 @@ int main(int argc,char* argv[]) {
 int mainLoop() {
     GaInitialize();
     
-    GaChromosomeDomainBlock<const MiExperimento*>* _ccb = new GaChromosomeDomainBlock<const MiExperimento*>( NULL, 0, new MiExperimentoCrossover(), new MiExperimentoMutation(),
+    GaChromosomeDomainBlock<const Experiment*>* _ccb = new GaChromosomeDomainBlock<const Experiment*>( NULL, 0, new MiExperimentoCrossover(), new MiExperimentoMutation(),
                                                        new MiExperimentoFitness(), GaFitnessComparatorCatalogue::Instance().GetEntryData( "GaMaxFitnessComparator" ),
                                                        new GaChromosomeParams( 0.3f, 2, false, 0.8f, 2 ) );
     
