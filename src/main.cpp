@@ -145,7 +145,8 @@ GaChromosomePtr MiExperimentoCrossover::operator ()(const GaChromosome* parent1,
 float MiExperimentoFitness::operator ()(const GaChromosome* chromosome) const {
     const PfChromosome* c = dynamic_cast<const PfChromosome*>( chromosome );
     const vector<const Experiment*>& v = c->GetCode();
-    return 3; // return v[0]->getFitness(); // Impement method getFitness()
+    return v[0]->getHeight();
+    //return 3; // return v[0]->getFitness(); // Impement method getFitness()
 }
 
 void MiExperimentoObserver::NewBestChromosome(const GaChromosome& newChromosome, const GaAlgorithm& algorithm) {
@@ -176,19 +177,20 @@ void MiExperimentoMutation::operator ()(GaChromosome* chromosome) const {
 
 
 int main(int argc,char* argv[]) {
-    PassiveWalkerExperiment* exp= new PassiveWalkerExperiment();
+    /*PassiveWalkerExperiment* exp= new PassiveWalkerExperiment();
     exp->initPhysics();
     for (int i = 0; i < 100; i++) {
         btDynamicsWorld* w = exp->getDynamicsWorld();
         w->stepSimulation(1 / 60.f);
-        //exp->getDynamicsWorld()->stepSimulation(1 / 60.f, 10);
+        
         double value = exp->getWalkerBody()->getHeight();
         std::cout << "altura? " << value << std::endl;
-        btTransform trans;
-        //fallRigidBody->getMotionState()->getWorldTransform(trans);
         
-        //std::cout << "altura? " << trans.getOrigin().getY() << std::endl;
     }
+    exp->simulate();
+    
+    printf("la height: %f",exp->getHeight());
+    */
     return mainLoop();
 }
 

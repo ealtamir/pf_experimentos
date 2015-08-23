@@ -39,6 +39,9 @@ public:
     
     virtual void worldStep() = 0;
     
+    virtual void simulate();
+    
+    virtual double getHeight() const;
     
     
     std::string getName() {
@@ -55,6 +58,11 @@ protected:
     
     double timeCount = 0;
 
+    bool simulated = false;
+    
+    double max_height = -1; // Es uno de los parametros de la posible funcion de fitness, es la altura
+
+    
     virtual void initializeBodies() = 0;
 
     virtual void initObjects() = 0;

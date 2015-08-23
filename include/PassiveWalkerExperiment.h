@@ -9,13 +9,18 @@ class PassiveWalkerExperiment : public Experiment {
 public:
 	PassiveWalkerExperiment();
 	~PassiveWalkerExperiment();
+
     virtual WalkerBody* getWalkerBody();
+    
+
     
 private:
     BodyParameters* params;
 	WalkerBody* body;
+    
 
 protected:
+        
 	virtual void initializeBodies();
 
 	virtual void initObjects();
