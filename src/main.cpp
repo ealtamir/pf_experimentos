@@ -176,6 +176,19 @@ void MiExperimentoMutation::operator ()(GaChromosome* chromosome) const {
 
 
 int main(int argc,char* argv[]) {
+    PassiveWalkerExperiment* exp= new PassiveWalkerExperiment();
+    exp->initPhysics();
+    for (int i = 0; i < 100; i++) {
+        btDynamicsWorld* w = exp->getDynamicsWorld();
+        w->stepSimulation(1 / 60.f);
+        //exp->getDynamicsWorld()->stepSimulation(1 / 60.f, 10);
+        double value = exp->getWalkerBody()->getHeight();
+        std::cout << "altura? " << value << std::endl;
+        btTransform trans;
+        //fallRigidBody->getMotionState()->getWorldTransform(trans);
+        
+        //std::cout << "altura? " << trans.getOrigin().getY() << std::endl;
+    }
     return mainLoop();
 }
 

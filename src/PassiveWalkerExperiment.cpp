@@ -30,3 +30,7 @@ void PassiveWalkerExperiment::worldStep() {
 bool PassiveWalkerExperiment::stopExperiment() {
 	return false;
 }
+
+WalkerBody* PassiveWalkerExperiment::getWalkerBody() {
+    return body;
+}

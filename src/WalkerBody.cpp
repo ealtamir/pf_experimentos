@@ -25,6 +25,7 @@ WalkerBody::WalkerBody(btDynamicsWorld* world, BodyParameters &params) : Generic
     createRightHip(rightLeg->getJointPart(),
                    torsoGroup->getRightHipPart(),
                    params);
+
 }
 
 BodyGroup*
@@ -36,4 +37,17 @@ WalkerBody::createTorso(btDynamicsWorld* world, BodyParameters &params) {
     bodyGroups.push_back(torso);
     torso->initBodyGroup();
     return torso;
+}
+
+std::vector<BodyGroup*> WalkerBody::getBodyGroups(){
+    return bodyGroups;
+}
+
+double
+WalkerBody::getHeight(){
+    GenericTorsoBodyGroup* torso = dynamic_cast<GenericTorsoBodyGroup*>(bodyGroups.back());
+    BodyPart* bp = torso->getLeftHipPart();
+    btRigidBody* rigidBody = bp->getRigidBody();
+    btTransform v = rigidBody->getCenterOfMassTransform();
+    return v.getOrigin().getY();
 }

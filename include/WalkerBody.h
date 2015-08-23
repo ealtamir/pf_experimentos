@@ -15,6 +15,9 @@
 class WalkerBody : public GenericBody {
 public:
     WalkerBody(btDynamicsWorld* world, BodyParameters &params);
+    std::vector<BodyGroup*> getBodyGroups();
+    double getHeight();
+    
 protected:
     virtual BodyGroup*
     createTorso(btDynamicsWorld* world, BodyParameters &params);
