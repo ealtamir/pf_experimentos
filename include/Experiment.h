@@ -62,6 +62,7 @@ protected:
     
     double max_height = -1; // Es uno de los parametros de la posible funcion de fitness, es la altura
 
+    double initial_height = -1; // altura inicial de la pelvis (se usa en altura)
     
     virtual void initializeBodies() = 0;
 
