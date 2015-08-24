@@ -14,6 +14,7 @@
 #include "Population.h"
 #include "PopulationOperations.h"
 #include "Chromosome.h"
+#include "ScalingOperations.h"
 
 // System libraries
 #include <stdlib.h>
@@ -121,6 +122,22 @@ public:
     
 };
 
+// scaling
+
+class MiExperimentoScaling : public GaScalingOperation {
+    
+public:
+    
+    virtual float GACALL operator ()(const GaScaledChromosome& chromosome,
+                                     const GaPopulation& population,
+                                     const GaScalingParams& parameters) const;
+    
+    virtual bool GACALL IsRankingBased() const { return false; }
+    
+    virtual bool GACALL NeedRescaling(const GaPopulation& population,
+                                      const GaScalingParams& parameters) const { return true; }
+};
+
 // implementations
 
 GaChromosomePtr PfChromosome::MakeNewFromPrototype() const {
@@ -154,14 +171,6 @@ void MiExperimentoObserver::NewBestChromosome(const GaChromosome& newChromosome,
     const vector<const Experiment*>& v = c->GetCode();
     cout << "New chromosome found:\n";
     cout << "Fitness: " << newChromosome.GetFitness() << endl;
-//    cout << "x: " << v[0]->caca << endl;
-}
-
-void MiExperimentoObserver::EvolutionStateChanged(GaAlgorithmState newState, const GaAlgorithm& algorithm) {
-    if( newState == GAS_RUNNING )
-        cout << "start\n";
-    else if( newState == GAS_CRITERIA_STOPPED )
-        cout << "end";
 }
 
 void MiExperimentoMutation::operator ()(GaChromosome* chromosome) const {
@@ -175,6 +184,19 @@ void MiExperimentoMutation::operator ()(GaChromosome* chromosome) const {
     }
 }
 
+float MiExperimentoScaling::operator ()(const GaScaledChromosome& chromosome,
+                                        const GaPopulation& population,
+                                        const GaScalingParams& parameters) const {
+    const PfChromosome* c = dynamic_cast<const PfChromosome*>( chromosome.GetChromosome().GetRawPtr() );
+    return 13;
+}
+
+void MiExperimentoObserver::EvolutionStateChanged(GaAlgorithmState newState, const GaAlgorithm& algorithm) {
+    if( newState == GAS_RUNNING )
+        cout << "start\n";
+    else if( newState == GAS_CRITERIA_STOPPED )
+        cout << "end";
+}
 
 int main(int argc,char* argv[]) {
     /*PassiveWalkerExperiment* exp= new PassiveWalkerExperiment();
@@ -197,9 +219,14 @@ int main(int argc,char* argv[]) {
 int mainLoop() {
     GaInitialize();
     
-    GaChromosomeDomainBlock<const Experiment*>* _ccb = new GaChromosomeDomainBlock<const Experiment*>( NULL, 0, new MiExperimentoCrossover(), new MiExperimentoMutation(),
-                                                       new MiExperimentoFitness(), GaFitnessComparatorCatalogue::Instance().GetEntryData( "GaMaxFitnessComparator" ),
-                                                       new GaChromosomeParams( 0.3f, 2, false, 0.8f, 2 ) );
+    GaChromosomeDomainBlock<const Experiment*>* _ccb = new GaChromosomeDomainBlock<const Experiment*>(
+                        NULL,
+                        0,
+                        new MiExperimentoCrossover(),
+                        new MiExperimentoMutation(),
+                        new MiExperimentoFitness(),
+                        GaFitnessComparatorCatalogue::Instance().GetEntryData( "GaMaxFitnessComparator" ),
+                        new GaChromosomeParams( 0.3f, 2, false, 0.8f, 2 ) );
     
     PfChromosome* _prototype = new PfChromosome( _ccb );
     
@@ -207,12 +234,19 @@ int mainLoop() {
     Population::SelectionOperations::GaSelectRandomBestParams selectParams( 8, true, 10 );
     Population::ReplacementOperations::GaReplaceElitismParams replaceParams( 8, 10 );
     GaCouplingParams couplingParamss( 8, true );
+//    GaScalingParams scalingParams();
     
-    GaPopulationConfiguration* _populationConfiguration = new GaPopulationConfiguration( populationParams, &_ccb->GetFitnessComparator(),
-                                                             GaSelectionCatalogue::Instance().GetEntryData( "GaSelectRandomBest" ), &selectParams,
-                                                             GaReplacementCatalogue::Instance().GetEntryData( "GaReplaceRandom" ), &replaceParams,
-                                                             GaCouplingCatalogue::Instance().GetEntryData( "GaSimpleCoupling" ), &couplingParamss,
-                                                             NULL, NULL);
+    GaPopulationConfiguration* _populationConfiguration = new GaPopulationConfiguration(
+                                    populationParams,
+                                    &_ccb->GetFitnessComparator(),
+                                    GaSelectionCatalogue::Instance().GetEntryData( "GaSelectRandomBest" ),
+                                    &selectParams,
+                                    GaReplacementCatalogue::Instance().GetEntryData( "GaReplaceRandom" ),
+                                    &replaceParams,
+                                    GaCouplingCatalogue::Instance().GetEntryData( "GaSimpleCoupling" ),
+                                    &couplingParamss,
+                                    new MiExperimentoScaling(),
+                                    NULL);
     
     GaPopulation* _population = new GaPopulation( _prototype, _populationConfiguration );
     
