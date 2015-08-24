@@ -1,20 +1,22 @@
 // GA libraries
 #include "Initialization.h"
+#include "Algorithm.h"
+#include "IncrementalAlgorithm.h"
+
+#include "Population.h"
+#include "Chromosome.h"
+#include "DomainChromosome.h"
+#include "MultiValueChromosome.h"
+
+#include "PopulationOperations.h"
 #include "ChromosomeOperations.h"
 #include "SelectionOperations.h"
 #include "ReplacementOperations.h"
-#include "MultiValueChromosome.h"
-#include "Population.h"
-#include "StopCriterias.h"
-#include "IncrementalAlgorithm.h"
 #include "CouplingOperations.h"
-#include "DomainChromosome.h"
 #include "MutationOperations.h"
-#include "Algorithm.h"
-#include "Population.h"
-#include "PopulationOperations.h"
-#include "Chromosome.h"
 #include "ScalingOperations.h"
+
+#include "StopCriterias.h"
 
 // System libraries
 #include <stdlib.h>
@@ -29,21 +31,6 @@
 using namespace std;
 
 int mainLoop();
-
-// experiment
-
-class MiExperimento {
-public:
-    int caca;
-    
-    MiExperimento(int _caca) {
-        caca = _caca;
-    }
-    
-    void setCaca(int _caca) const {
-        *((int*)( &caca )) = _caca;
-    }
-};
 
 // chromosome
 
@@ -136,6 +123,10 @@ public:
     
     virtual bool GACALL NeedRescaling(const GaPopulation& population,
                                       const GaScalingParams& parameters) const { return true; }
+    
+    virtual GaParameters* GACALL MakeParameters() const { return NULL; }
+    
+    virtual bool GACALL CheckParameters(const GaParameters& parameters) const { return true; }
 };
 
 // implementations
@@ -177,18 +168,20 @@ void MiExperimentoMutation::operator ()(GaChromosome* chromosome) const {
     const PfChromosome* c = dynamic_cast<const PfChromosome*>( chromosome );
     const vector<const Experiment*>& v = c->GetCode();
     if (!v.empty() && v[0] != NULL) {
-//        cout << v[0]->caca;
-//        v[0]->setCaca(22); // v[0]->mutateExperiment(); // implement method mutateExperiment()
+
     } else {
         cout << "empty";
     }
 }
 
-float MiExperimentoScaling::operator ()(const GaScaledChromosome& chromosome,
-                                        const GaPopulation& population,
-                                        const GaScalingParams& parameters) const {
+float MiExperimentoScaling::operator ()(const Chromosome::GaScaledChromosome &chromosome,
+                                        const Population::GaPopulation &population,
+                                        const Population::GaScalingParams &parameters) const {
+    
     const PfChromosome* c = dynamic_cast<const PfChromosome*>( chromosome.GetChromosome().GetRawPtr() );
-    return 13;
+    const vector<const Experiment*>& v = c->GetCode();
+//    v[0]->simulate(); cannot call this method because simulate isn't const
+    return v[0]->getHeight();
 }
 
 void MiExperimentoObserver::EvolutionStateChanged(GaAlgorithmState newState, const GaAlgorithm& algorithm) {
