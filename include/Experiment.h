@@ -43,6 +43,8 @@ public:
     
     virtual double getHeight() const;
     
+    virtual double getVelocity() const;
+    
     
     std::string getName() {
         return "Experiment";
@@ -63,6 +65,8 @@ protected:
     double max_height = -1; // Es uno de los parametros de la posible funcion de fitness, es la altura
 
     double initial_height = -1; // altura inicial de la pelvis (se usa en altura)
+    
+    double average_velocity = -1; // Es el parametro principal de la posible funcion de fitness, es la velocidad
     
     virtual void initializeBodies() = 0;
 

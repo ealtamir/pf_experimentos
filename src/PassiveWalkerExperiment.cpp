@@ -45,33 +45,38 @@ double Experiment::getHeight() const {
     return max_height;
 }
 
+double Experiment::getVelocity() const {
+    return max_height;
+}
 
 void Experiment::simulate(){
     if (!simulated) {
+        PassiveWalkerExperiment* exp = dynamic_cast<PassiveWalkerExperiment*>(this);
+        WalkerBody* walker = exp->getWalkerBody();
         double acum_height = 0;
-        for (int i = 0; i < 10; i++) {
+        double initial_x_position = 0;
+        
+        initial_height = walker->getHeight();
+        initial_x_position = walker->getPosition();
+        
+        for (int i = 0; i < DEFAULT_CHANGE_COUNTER; i++) {
             worldStep();
 
-            PassiveWalkerExperiment* exp = dynamic_cast<PassiveWalkerExperiment*>(this);
-            if(i==0){
-                initial_height = exp->getWalkerBody()->getHeight();
-            }
-            else{
-                exp->getWalkerBody()->actuate(i);
+            exp->getWalkerBody()->actuate(i);
                 
-                double value = exp->getWalkerBody()->getHeight();
-                acum_height += std::abs(value - initial_height);
+            double value = walker->getHeight();
+            acum_height += std::abs(value - initial_height);
                 std::cout << "altura? " << value << std::endl;
-            }
             
-            
-        }
+        
         
         std::cout << "altura inicial " << initial_height << std::endl;
-        max_height = 1 - acum_height/ (10*initial_height);
-    }
+        max_height = 1 - acum_height/ (DEFAULT_CHANGE_COUNTER*initial_height);
+        this->average_velocity = (initial_x_position - walker->getPosition()) / (DEFAULT_CHANGE_COUNTER*DEFAULT_EXPERIMENT_INTERVAL);
+        std::cout << "velocity " << average_velocity << std::endl;
+        }
     simulated = true;
+    }
+
 }
-
-
 

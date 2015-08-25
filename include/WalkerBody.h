@@ -17,6 +17,7 @@ public:
     WalkerBody(btDynamicsWorld* world, BodyParameters &params);
     std::vector<BodyGroup*> getBodyGroups();
     double getHeight();
+    double getPosition();
     
 protected:
     virtual BodyGroup*

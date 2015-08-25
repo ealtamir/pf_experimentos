@@ -51,3 +51,12 @@ WalkerBody::getHeight(){
     btTransform v = rigidBody->getCenterOfMassTransform();
     return v.getOrigin().getY();
 }
+
+double
+WalkerBody::getPosition(){
+    GenericTorsoBodyGroup* torso = dynamic_cast<GenericTorsoBodyGroup*>(bodyGroups.back());
+    BodyPart* bp = torso->getLeftHipPart();
+    btRigidBody* rigidBody = bp->getRigidBody();
+    btTransform v = rigidBody->getCenterOfMassTransform();
+    return v.getOrigin().getX();
+}

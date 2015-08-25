@@ -153,7 +153,7 @@ GaChromosomePtr MiExperimentoCrossover::operator ()(const GaChromosome* parent1,
 float MiExperimentoFitness::operator ()(const GaChromosome* chromosome) const {
     const PfChromosome* c = dynamic_cast<const PfChromosome*>( chromosome );
     const vector<const Experiment*>& v = c->GetCode();
-    return v[0]->getHeight();
+    return v[0]->getHeight()* v[0]->getVelocity();
     //return 3; // return v[0]->getFitness(); // Impement method getFitness()
 }
 
