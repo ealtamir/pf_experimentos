@@ -15,7 +15,6 @@ Actuator::Actuator(bool isLeft) {
     }
 }
 
-btVector3
-Actuator::eval(double t) {
+btVector3 Actuator::eval(double t) {
     return actuatorFunc(t);
 }

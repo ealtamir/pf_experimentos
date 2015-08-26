@@ -17,6 +17,11 @@ class GenericActuator : public Actuator {
 public:
     GenericActuator(bool isLeft = false);
     
+    void setA(double valueA);
+    void setB(double valueB);
+    void setw1(double valuew1);
+    void setw2(double valuew2);
+    
 protected:
     btVector3 actuatorFunc(double t);
     

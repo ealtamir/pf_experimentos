@@ -1,6 +1,8 @@
 #ifndef PASSIVEWALKEREXPERIMENT_H_INCLUDED
 #define PASSIVEWALKEREXPERIMENT_H_INCLUDED
 
+#include <vector>
+
 #include "Experiment.h"
 #include "WalkerBody.h"
 
@@ -12,6 +14,7 @@ public:
 
     virtual WalkerBody* getWalkerBody();
     
+    static float getFitness(const std::vector<double> vals);
 
     
 private:
@@ -31,5 +34,7 @@ protected:
     
     
 };
+
+static PassiveWalkerExperiment* experiment = new PassiveWalkerExperiment();
 
 #endif
