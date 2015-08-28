@@ -27,6 +27,8 @@
 #include "Experiment.h"
 #include "PassiveWalkerExperiment.h"
 
+#define VALUES_SIZE 20
+
 int mainLoop();
 
 // chromosome
@@ -34,13 +36,13 @@ int mainLoop();
 class PfChromosome : public GaMultiValueChromosome<const Experiment*> {
 public:
     PfChromosome(GaChromosomeDomainBlock<const Experiment*>* configBlock) : GaMultiValueChromosome(configBlock) {
-        _values.resize(20);
+        _values.resize(VALUES_SIZE);
     };
     
     PfChromosome(const PfChromosome& chromosome,
                  bool setupOnly) : GaMultiValueChromosome<const Experiment*>(chromosome, setupOnly) {
         if( setupOnly ) {
-            _values.resize(20);
+            _values.resize(VALUES_SIZE);
         }
     };
     
@@ -131,7 +133,7 @@ public:
 GaChromosomePtr PfChromosome::MakeNewFromPrototype() const {
     PfChromosome* g = new PfChromosome( (GaChromosomeDomainBlock<const Experiment*>*)_configBlock );
     
-    g->_values.resize(20);
+    g->_values.resize(VALUES_SIZE);
     g->_values[0] = new PassiveWalkerExperiment();
     const vector<const Experiment*>& v = g->GetCode();
     return g;
@@ -160,6 +162,9 @@ float MiExperimentoFitness::operator ()(const GaChromosome* chromosome) const {
 void MiExperimentoObserver::NewBestChromosome(const GaChromosome& newChromosome, const GaAlgorithm& algorithm) {
     const std::vector<double>& vals = dynamic_cast<const GaMVArithmeticChromosome<double>*>( &newChromosome )->GetCode();
     cout << "New chromosome found:\n";
+    for(int i = 0; i < vals.size(); i++){
+        cout << vals[i] << ",";
+    }
     cout << "Fitness: " << newChromosome.GetFitness() << endl;
 }
 
@@ -221,14 +226,14 @@ int mainLoop() {
                         GaMutationCatalogue::Instance().GetEntryData( "GaFlipMutation" ), // here we could use our own mutation "new MiExperimentoMutation()"
                         new MiExperimentoFitness(),
                         GaFitnessComparatorCatalogue::Instance().GetEntryData( "GaMaxFitnessComparator" ),
-                        new GaChromosomeParams( 0.03f, 2, false, 0.8f, 2 ) );
+                        new GaChromosomeParams( 0.08f, 2, false, 0.8f, 2 ) );
     
-    GaMVArithmeticChromosome<double> _prototype( 20, _ccb );
+    GaMVArithmeticChromosome<double> _prototype( VALUES_SIZE, _ccb );
     
-    GaPopulationParameters populationParams( 10, false, false, false, 0, 0 );
-    Population::SelectionOperations::GaSelectRandomBestParams selectParams( 8, true, 10 );
-    Population::ReplacementOperations::GaReplaceElitismParams replaceParams( 8, 10 );
-    GaCouplingParams couplingParams( 4, true );
+    GaPopulationParameters populationParams( 20, false, false, false, 0, 0 );
+    Population::SelectionOperations::GaSelectRandomBestParams selectParams( 15, false, 5 );
+    Population::ReplacementOperations::GaReplaceElitismParams replaceParams( 10, 4 );
+    GaCouplingParams couplingParams( 8, false );
     Population::ScalingOperations::GaScaleFactorParams scalingParams(1);
     
     GaPopulationConfiguration* _populationConfiguration = new GaPopulationConfiguration(
@@ -241,15 +246,15 @@ int mainLoop() {
                                     GaCouplingCatalogue::Instance().GetEntryData( "GaSimpleCoupling" ),
                                     &couplingParams,
                                     NULL,
-                                    NULL);
+                                    &scalingParams);
     
     GaPopulation* _population = new GaPopulation( &_prototype, _populationConfiguration );
     
-    GaMultithreadingAlgorithmParams algParam( 1 );
+    GaMultithreadingAlgorithmParams algParam( 10 );
     Algorithm::SimpleAlgorithms::GaIncrementalAlgorithm* _algorithm = new Algorithm::SimpleAlgorithms::GaIncrementalAlgorithm( _population, algParam );
     
     GaStopCriteria* criteria = GaStopCriteriaCatalogue::Instance().GetEntryData( "GaGenerationCriteria" );
-    Algorithm::StopCriterias::GaGenerationCriteriaParams critParam( 1000 );
+    Algorithm::StopCriterias::GaGenerationCriteriaParams critParam( 100 );
     _algorithm->SetStopCriteria( criteria, &critParam );
     
     // subscribe observer

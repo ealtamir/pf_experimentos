@@ -49,7 +49,7 @@ float PassiveWalkerExperiment::getFitness(const std::vector<double> vals) {
     experiment2->simulate();
     
     double value = experiment2->getHeight() + experiment2->getVelocity();
-//    std::cout << value << std::endl;
+    std::cout << value << std::endl;
     return value;
 }
 
