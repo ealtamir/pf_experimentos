@@ -176,7 +176,13 @@ void MiExperimentoMutation::operator ()(GaChromosome* chromosome) const {
 
 
 int main(int argc,char* argv[]) {
-    return mainLoop();
+    PassiveWalkerExperiment demoApp;
+    demoApp.enableStoppingCondition(false);
+    demoApp.initPhysics();
+    demoApp.setCameraDistance(btScalar(5.));
+    demoApp.setCameraUp(btVector3(0, 15, 0));
+    return glutmain(argc, argv, 1024, 768, "Experiment",&demoApp);
+//    return mainLoop();
 }
 
 int mainLoop() {

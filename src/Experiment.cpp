@@ -32,16 +32,15 @@ void Experiment::initPhysics()
 
     btContactSolverInfo& info = m_dynamicsWorld->getSolverInfo();
 
-    // This is related to the number of iterations performed
-    // by the collision solver algorithm.
-    //info.m_numIterations = 20;
-
-    // If set to 1, it doesn't solve collision between objects in pairs, so when bouncing
-    // there isn't any energy added.
-    //info.m_splitImpulse = 1;
+//     This is related to the number of iterations performed
+//     by the collision solver algorithm.
+    info.m_numIterations = 50;
+//
+//     If set to 1, it doesn't solve collision between objects in pairs, so when bouncing
+//     there isn't any energy added.
+    info.m_splitImpulse = 1;
 
     m_dynamicsWorld->setGravity(btVector3(0, -9.8, 0));
-    m_dynamicsWorld->setDebugDrawer(&debugDrawerSphere);
 
     createGround();
     initializeBodies();
