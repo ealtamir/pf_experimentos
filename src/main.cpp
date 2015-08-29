@@ -31,45 +31,7 @@
 
 int mainLoop();
 
-// chromosome
-
-class PfChromosome : public GaMultiValueChromosome<const Experiment*> {
-public:
-    PfChromosome(GaChromosomeDomainBlock<const Experiment*>* configBlock) : GaMultiValueChromosome(configBlock) {
-        _values.resize(VALUES_SIZE);
-    };
-    
-    PfChromosome(const PfChromosome& chromosome,
-                 bool setupOnly) : GaMultiValueChromosome<const Experiment*>(chromosome, setupOnly) {
-        if( setupOnly ) {
-            _values.resize(VALUES_SIZE);
-        }
-    };
-    
-    virtual GaChromosomePtr GACALL MakeCopy(bool setupOnly) const {
-        return new PfChromosome( *this, setupOnly );
-    }
-    
-    virtual GaChromosomePtr GACALL MakeNewFromPrototype() const;
-};
-
-// operations
-// crossover
-
-class MiExperimentoCrossover : public GaCrossoverOperation {
-    
-public:
-    
-    virtual GaChromosomePtr GACALL operator ()(const GaChromosome* parent1,
-                                               const GaChromosome* parent2) const;
-    
-    virtual GaParameters* GACALL MakeParameters() const { return NULL; }
-    
-    virtual bool GACALL CheckParameters(const GaParameters& parameters) const { return true; }
-    
-};
-
-// fitness
+// Fitness
 
 class MiExperimentoFitness : public GaFitnessOperation {
     
@@ -82,7 +44,7 @@ public:
     virtual bool GACALL CheckParameters(const GaParameters& parameters) const { return true; }
 };
 
-// observer
+// Observer
 
 class MiExperimentoObserver : public GaObserverAdapter {
     
@@ -92,107 +54,38 @@ public:
     
     virtual void GACALL EvolutionStateChanged(GaAlgorithmState newState, const GaAlgorithm& algorithm);
     
-};
-
-// mutation
-
-class MiExperimentoMutation : public GaMutationOperation {
-    
-public:
-    
-    virtual void GACALL operator ()(GaChromosome* chromosome) const;
-    
-    virtual GaParameters* GACALL MakeParameters() const { return NULL; }
-    
-    virtual bool GACALL CheckParameters(const GaParameters& parameters) const { return true; }
+    virtual void GACALL StatisticUpdate(const GaStatistics& statistics, const GaAlgorithm& algorithm);
     
 };
 
-// scaling
-
-class MiExperimentoScaling : public GaScalingOperation {
-    
-public:
-    
-    virtual float GACALL operator ()(const GaScaledChromosome& chromosome,
-                                     const GaPopulation& population,
-                                     const GaScalingParams& parameters) const;
-    
-    virtual bool GACALL IsRankingBased() const { return false; }
-    
-    virtual bool GACALL NeedRescaling(const GaPopulation& population,
-                                      const GaScalingParams& parameters) const { return true; }
-    
-    virtual GaParameters* GACALL MakeParameters() const { return NULL; }
-    
-    virtual bool GACALL CheckParameters(const GaParameters& parameters) const { return true; }
-};
-
-// implementations
-
-GaChromosomePtr PfChromosome::MakeNewFromPrototype() const {
-    PfChromosome* g = new PfChromosome( (GaChromosomeDomainBlock<const Experiment*>*)_configBlock );
-    
-    g->_values.resize(VALUES_SIZE);
-    g->_values[0] = new PassiveWalkerExperiment();
-    const vector<const Experiment*>& v = g->GetCode();
-    return g;
-}
-
-GaChromosomePtr MiExperimentoCrossover::operator ()(const GaChromosome* parent1,
-                                                    const GaChromosome* parent2) const {
-    const PfChromosome* p1 = dynamic_cast<const PfChromosome*>( parent1 );
-    const PfChromosome* p2 = dynamic_cast<const PfChromosome*>( parent2 );
-    
-    GaChromosomePtr newChromosome = p1->MakeCopy( false );
-    
-    return newChromosome;
-}
+// Fitness
 
 float MiExperimentoFitness::operator ()(const GaChromosome* chromosome) const {
     const std::vector<double>& vals = dynamic_cast<const GaMVArithmeticChromosome<double>*>( chromosome )->GetCode();
-//    const PfChromosome* c = dynamic_cast<const PfChromosome*>( chromosome );
-//    const vector<const double*>& v = c->GetCode();
     
     return PassiveWalkerExperiment::getFitness(vals);
-//    return v[0]->getHeight()* v[0]->getVelocity();
-    //return 3; // return v[0]->getFitness(); // Impement method getFitness()
 }
+
+// Observer
 
 void MiExperimentoObserver::NewBestChromosome(const GaChromosome& newChromosome, const GaAlgorithm& algorithm) {
     const std::vector<double>& vals = dynamic_cast<const GaMVArithmeticChromosome<double>*>( &newChromosome )->GetCode();
-    cout << "New chromosome found:\n";
+    cout << "New chromosome found:" << endl;
     for(int i = 0; i < vals.size(); i++){
         cout << vals[i] << ",";
     }
-    cout << "Fitness: " << newChromosome.GetFitness() << endl;
-}
-
-void MiExperimentoMutation::operator ()(GaChromosome* chromosome) const {
-    const PfChromosome* c = dynamic_cast<const PfChromosome*>( chromosome );
-    const vector<const Experiment*>& v = c->GetCode();
-    if (!v.empty() && v[0] != NULL) {
-
-    } else {
-        cout << "empty";
-    }
-}
-
-float MiExperimentoScaling::operator ()(const Chromosome::GaScaledChromosome &chromosome,
-                                        const Population::GaPopulation &population,
-                                        const Population::GaScalingParams &parameters) const {
-//    const PfChromosome* c = dynamic_cast<const PfChromosome*>( chromosome.GetChromosome().GetRawPtr() );
-//    const vector<const Experiment*>& v = c->GetCode();
-//    v[0]->simulate(); cannot call this method because simulate isn't const
-//    return v[0]->getHeight();
-    return 0;
+    cout << endl << "Fitness: " << newChromosome.GetFitness() << endl;
 }
 
 void MiExperimentoObserver::EvolutionStateChanged(GaAlgorithmState newState, const GaAlgorithm& algorithm) {
     if( newState == GAS_RUNNING )
-        cout << "start\n";
+        cout << "Start\n";
     else if( newState == GAS_CRITERIA_STOPPED )
-        cout << "end";
+        cout << "End";
+}
+
+void MiExperimentoObserver::StatisticUpdate(const Common::GaStatistics &statistics, const Algorithm::GaAlgorithm &algorithm) {
+    cout << "Generation: " << statistics.GetCurrentGeneration() << endl;
 }
 
 int main(int argc,char* argv[]) {
@@ -222,8 +115,8 @@ int mainLoop() {
     
     GaChromosomeDomainBlock<double>* _ccb = new GaChromosomeDomainBlock<double>(
                         &valueSet,
-                        GaCrossoverCatalogue::Instance().GetEntryData( "GaMultiValueCrossover" ), // here we could use our own crossover "new MiExperimentoCrossover()"
-                        GaMutationCatalogue::Instance().GetEntryData( "GaFlipMutation" ), // here we could use our own mutation "new MiExperimentoMutation()"
+                        GaCrossoverCatalogue::Instance().GetEntryData( "GaMultiValueCrossover" ),
+                        GaMutationCatalogue::Instance().GetEntryData( "GaFlipMutation" ),
                         new MiExperimentoFitness(),
                         GaFitnessComparatorCatalogue::Instance().GetEntryData( "GaMaxFitnessComparator" ),
                         new GaChromosomeParams( 0.08f, 2, false, 0.8f, 2 ) );
@@ -254,7 +147,7 @@ int mainLoop() {
     Algorithm::SimpleAlgorithms::GaIncrementalAlgorithm* _algorithm = new Algorithm::SimpleAlgorithms::GaIncrementalAlgorithm( _population, algParam );
     
     GaStopCriteria* criteria = GaStopCriteriaCatalogue::Instance().GetEntryData( "GaGenerationCriteria" );
-    Algorithm::StopCriterias::GaGenerationCriteriaParams critParam( 100 );
+    Algorithm::StopCriterias::GaGenerationCriteriaParams critParam( 5 );
     _algorithm->SetStopCriteria( criteria, &critParam );
     
     // subscribe observer
