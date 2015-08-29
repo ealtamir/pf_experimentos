@@ -119,14 +119,14 @@ int mainLoop() {
                         GaMutationCatalogue::Instance().GetEntryData( "GaFlipMutation" ),
                         new MiExperimentoFitness(),
                         GaFitnessComparatorCatalogue::Instance().GetEntryData( "GaMaxFitnessComparator" ),
-                        new GaChromosomeParams( 0.08f, 2, false, 0.8f, 2 ) );
+                        new GaChromosomeParams( 0.08f, 2, false, 0.8f, 1 ) );
     
     GaMVArithmeticChromosome<double> _prototype( VALUES_SIZE, _ccb );
     
-    GaPopulationParameters populationParams( 20, false, false, false, 0, 0 );
-    Population::SelectionOperations::GaSelectRandomBestParams selectParams( 15, false, 5 );
-    Population::ReplacementOperations::GaReplaceElitismParams replaceParams( 10, 4 );
-    GaCouplingParams couplingParams( 8, false );
+    GaPopulationParameters populationParams( 10, false, false, false, 0, 0 );
+    Population::SelectionOperations::GaSelectRandomBestParams selectParams( 5, false, 3 );
+    Population::ReplacementOperations::GaReplaceElitismParams replaceParams( 2, 1 );
+    GaCouplingParams couplingParams( 3, false );
     Population::ScalingOperations::GaScaleFactorParams scalingParams(1);
     
     GaPopulationConfiguration* _populationConfiguration = new GaPopulationConfiguration(
