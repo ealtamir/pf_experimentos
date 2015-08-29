@@ -45,6 +45,8 @@ public:
     
     virtual double getVelocity() const;
     
+    virtual double getDirection() const;
+    
     
     std::string getName() {
         return "Experiment";
@@ -67,6 +69,8 @@ protected:
     double initial_height = -1; // altura inicial de la pelvis (se usa en altura)
     
     double average_velocity = -1; // Es el parametro principal de la posible funcion de fitness, es la velocidad
+    
+    double direction = -1; // Es uno de los parametros de la posible funcion de fitness, es la dirección
     
     virtual void initializeBodies() = 0;
 

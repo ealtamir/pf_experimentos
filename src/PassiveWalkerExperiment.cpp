@@ -48,7 +48,9 @@ float PassiveWalkerExperiment::getFitness(const std::vector<double> vals) {
     // run simulation
     experiment2->simulate();
     
-    double value = experiment2->getHeight() + experiment2->getVelocity();
+    
+    double value = experiment2->getHeight() * experiment2->getVelocity() * experiment2->getDirection();
+    printf("la velocity es: %f\n",experiment2->getVelocity());
     std::cout << value << std::endl;
     return value;
 }
@@ -87,6 +89,10 @@ double Experiment::getVelocity() const {
     return average_velocity;
 }
 
+double Experiment::getDirection() const {
+    return average_velocity;
+}
+
 void Experiment::simulate(){
     max_height = 0;
     average_velocity = 0;
@@ -94,17 +100,29 @@ void Experiment::simulate(){
     WalkerBody* walker = exp->getWalkerBody();
     double acum_height = 0;
     double initial_x_position = 0;
+    double acum_direction = 0;
+    double initial_angle = 0;
         
     initial_height = walker->getHeight();
     initial_x_position = walker->getPosition();
+    initial_angle = walker->getAngleInclination();
+    
+    printf("position inicial: %f \n",initial_x_position);
         
     for (int i = 0; i < DEFAULT_CHANGE_COUNTER; i++) {
         worldStep();
             
         double value = walker->getHeight();
         max_height += value;
-        average_velocity = (initial_x_position - walker->getPosition());
+        double final_x_position = walker->getPosition();
+        average_velocity = (final_x_position - initial_x_position);
+        double angle = walker->getAngleInclination();
+        acum_direction += ( angle - initial_angle);
     }
+    
+    direction = 1 - acum_direction/(180*DEFAULT_CHANGE_COUNTER);
+    printf("inclination final: %f \n",direction);
+    printf("position final: %f \n",walker->getPosition());
 
 }
 

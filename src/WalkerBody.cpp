@@ -58,5 +58,19 @@ WalkerBody::getPosition(){
     BodyPart* bp = torso->getLeftHipPart();
     btRigidBody* rigidBody = bp->getRigidBody();
     btTransform v = rigidBody->getCenterOfMassTransform();
-    return v.getOrigin().getX();
+    return v.getOrigin().getZ();
+}
+
+double
+WalkerBody::getAngleInclination(){
+    GenericTorsoBodyGroup* torso = dynamic_cast<GenericTorsoBodyGroup*>(bodyGroups.back());
+    BodyPart* bp = torso->getLeftHipPart();
+    btRigidBody* rigidBody = bp->getRigidBody();
+    btTransform v = rigidBody->getCenterOfMassTransform();
+    double x = v.getOrigin().getX();
+    double y = v.getOrigin().getY();
+    if (x==0){
+        return 0;
+    }
+    return (acos(fmin(1.0, fmax(-1.0,y/x)))*180/M_PI); // lo del fmin y fmax es para limitar el input de acos entre 1 y -1
 }

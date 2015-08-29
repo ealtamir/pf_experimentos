@@ -10,6 +10,7 @@
 #define __test__WalkerBody__
 
 #include <stdio.h>
+#include <math.h>
 #include "GenericBody.h"
 
 class WalkerBody : public GenericBody {
@@ -18,6 +19,7 @@ public:
     std::vector<BodyGroup*> getBodyGroups();
     double getHeight();
     double getPosition();
+    double getAngleInclination();
     
 protected:
     virtual BodyGroup*
