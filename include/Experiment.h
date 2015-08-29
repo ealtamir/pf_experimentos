@@ -20,6 +20,7 @@
 
 const btScalar DEFAULT_EXPERIMENT_INTERVAL = 0.001;
 const btScalar DEFAULT_CHANGE_COUNTER = 60*1000;
+const btScalar DIRECTION_CONSTANT = 180;
 
 class Experiment : public GlutDemoApplication
 {

@@ -113,15 +113,21 @@ void Experiment::simulate(){
         worldStep();
             
         double value = walker->getHeight();
-        max_height += value;
+        acum_height += fabs(value - initial_height);
+        
         double final_x_position = walker->getPosition();
         average_velocity = (final_x_position - initial_x_position);
+        
         double angle = walker->getAngleInclination();
-        acum_direction += ( angle - initial_angle);
+        acum_direction += fabs( angle - initial_angle);
     }
     
-    direction = 1 - acum_direction/(180*DEFAULT_CHANGE_COUNTER);
+    max_height = 1 - acum_height/ (DEFAULT_CHANGE_COUNTER*initial_height);
+    
+    direction = 1 - acum_direction/(DIRECTION_CONSTANT * DEFAULT_CHANGE_COUNTER);
+    
     printf("inclination final: %f \n",direction);
+    printf("height final: %f \n",max_height);
     printf("position final: %f \n",walker->getPosition());
 
 }

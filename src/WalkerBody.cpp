@@ -72,5 +72,8 @@ WalkerBody::getAngleInclination(){
     if (x==0){
         return 0;
     }
-    return (acos(fmin(1.0, fmax(-1.0,y/x)))*180/M_PI); // lo del fmin y fmax es para limitar el input de acos entre 1 y -1
+    double lala = x/y;
+    double lala3 = (asin(fmin(1.0, fmax(-1.0,x/y)))*180/M_PI);
+    return (asin(fmin(1.0, fmax(-1.0,x/y)))*180/M_PI);
+    //return (acos(fmin(1.0, fmax(-1.0,y/x)))*180/M_PI); // lo del fmin y fmax es para limitar el input de acos entre 1 y -1 (y a veces puede haber error de cómputo)
 }
