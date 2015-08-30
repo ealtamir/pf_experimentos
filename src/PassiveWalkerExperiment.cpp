@@ -99,36 +99,42 @@ void Experiment::simulate(){
     PassiveWalkerExperiment* exp = dynamic_cast<PassiveWalkerExperiment*>(this);
     WalkerBody* walker = exp->getWalkerBody();
     double acum_height = 0;
-    double initial_x_position = 0;
+    
+    double initial_position = 0;
+    double acum_position = 0;
     double acum_direction = 0;
     double initial_angle = 0;
-        
+    
+    
     initial_height = walker->getHeight();
-    initial_x_position = walker->getPosition();
+    initial_position = walker->getPosition();
     initial_angle = walker->getAngleInclination();
     
-    printf("position inicial: %f \n",initial_x_position);
+    printf("position inicial: %f \n",initial_position);
         
     for (int i = 0; i < DEFAULT_CHANGE_COUNTER; i++) {
         worldStep();
-            
+        double t = (i+1) * DEFAULT_EXPERIMENT_INTERVAL;
         double value = walker->getHeight();
         acum_height += fabs(value - initial_height);
         
-        double final_x_position = walker->getPosition();
-        average_velocity = (final_x_position - initial_x_position);
+        double final_position = walker->getPosition();
+        
+        acum_position += fabs(final_position-(initial_position+OBJETIVE_VELOCITY*t*DEFAULT_EXPERIMENT_INTERVAL));
+        average_velocity = (final_position - initial_position);
         
         double angle = walker->getAngleInclination();
         acum_direction += fabs( angle - initial_angle);
     }
+    max_height = 1 - acum_height/ (DEFAULT_CHANGE_COUNTER * initial_height);
     
-    max_height = 1 - acum_height/ (DEFAULT_CHANGE_COUNTER*initial_height);
+    average_velocity = 1 - acum_position/(pow(DEFAULT_CHANGE_COUNTER,2) * VELOCITY_CONSTANT * OBJETIVE_VELOCITY * DEFAULT_EXPERIMENT_INTERVAL);
     
     direction = 1 - acum_direction/(DIRECTION_CONSTANT * DEFAULT_CHANGE_COUNTER);
     
+    printf("velocity final: %f \n",average_velocity);
     printf("inclination final: %f \n",direction);
     printf("height final: %f \n",max_height);
-    printf("position final: %f \n",walker->getPosition());
 
 }
 

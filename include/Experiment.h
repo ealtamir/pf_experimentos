@@ -21,6 +21,9 @@
 const btScalar DEFAULT_EXPERIMENT_INTERVAL = 0.001;
 const btScalar DEFAULT_CHANGE_COUNTER = 60*1000;
 const btScalar DIRECTION_CONSTANT = 180;
+const btScalar VELOCITY_CONSTANT = 0.51;
+const btScalar OBJETIVE_VELOCITY = 10;
+
 
 class Experiment : public GlutDemoApplication
 {
