@@ -13,6 +13,8 @@
 #include <math.h>
 #include "GenericBody.h"
 
+const btScalar BODY_PART_QTY = 6;
+
 class WalkerBody : public GenericBody {
 public:
     WalkerBody(btDynamicsWorld* world, BodyParameters &params);
@@ -20,10 +22,15 @@ public:
     double getHeight();
     double getPosition();
     double getAngleInclination();
+    void cicleQuantity();
+    int getCycleQuantity();
+    double* getAnglesLegs();
     
 protected:
     virtual BodyGroup*
     createTorso(btDynamicsWorld* world, BodyParameters &params);
+    int cicleQty = -1;
+    double last_angle = 0;
 };
 
 

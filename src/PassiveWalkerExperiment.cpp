@@ -69,6 +69,7 @@ void PassiveWalkerExperiment::worldStep() {
     btDynamicsWorld* w = getDynamicsWorld();
     w->stepSimulation(1 / 60.f);
     body->actuate(timeCount);
+    body->cicleQuantity();
 //    printf("time: %f \n", timeCount);
 }
 
@@ -104,6 +105,9 @@ void Experiment::simulate(){
     double acum_position = 0;
     double acum_direction = 0;
     double initial_angle = 0;
+    double acum_cycles = 0;
+    int cycles = -1;
+    double* last_cycles = walker->getAnglesLegs();
     
     
     initial_height = walker->getHeight();
@@ -125,6 +129,17 @@ void Experiment::simulate(){
         
         double angle = walker->getAngleInclination();
         acum_direction += fabs( angle - initial_angle);
+        int new_cycles = walker->getCycleQuantity();
+        if(new_cycles == cycles+1){
+            double *angles= walker->getAnglesLegs();
+            for(int i=0;i<BODY_PART_QTY;i++){
+                acum_cycles+=fabs(angles[i]-last_cycles[i]);
+            }
+            free(last_cycles);
+            last_cycles=angles;
+            cycles++;
+        }
+
     }
     max_height = 1 - acum_height/ (DEFAULT_CHANGE_COUNTER * initial_height);
     
@@ -132,9 +147,12 @@ void Experiment::simulate(){
     
     direction = 1 - acum_direction/(DIRECTION_CONSTANT * DEFAULT_CHANGE_COUNTER);
     
+    periodicity = 1 - acum_cycles/(CYCLE_CONSTANT * BODY_PART_QTY * walker->getCycleQuantity());
+    
     printf("velocity final: %f \n",average_velocity);
     printf("inclination final: %f \n",direction);
     printf("height final: %f \n",max_height);
+    printf("direction final: %f \n",periodicity);
 
 }
 

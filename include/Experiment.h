@@ -23,6 +23,8 @@ const btScalar DEFAULT_CHANGE_COUNTER = 60*1000;
 const btScalar DIRECTION_CONSTANT = 180;
 const btScalar VELOCITY_CONSTANT = 0.51;
 const btScalar OBJETIVE_VELOCITY = 10;
+const btScalar CYCLE_CONSTANT = 30;
+
 
 
 class Experiment : public GlutDemoApplication
@@ -75,6 +77,8 @@ protected:
     double average_velocity = -1; // Es el parametro principal de la posible funcion de fitness, es la velocidad
     
     double direction = -1; // Es uno de los parametros de la posible funcion de fitness, es la dirección
+    
+    double periodicity = -1; // Es uno de los parametros de la posible funcion de fitness, es el ciclo 
     
     virtual void initializeBodies() = 0;
 

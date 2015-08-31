@@ -106,3 +106,39 @@ BodyPart*
 LegBodyGroup::getJointPart() {
     return bodyParts[1];
 }
+
+double*
+LegBodyGroup::getAngles() {
+    
+    BodyPart* lower= bodyParts[0];
+    btRigidBody * lower_rigid = lower->getRigidBody();
+    btTransform v = lower_rigid->getCenterOfMassTransform();
+    double z = v.getOrigin().getZ();
+    double y = v.getOrigin().getY();
+    angles[0] = ((z==0)?0:(asin(fmin(1.0, fmax(-1.0,z/y)))*180/M_PI));
+    
+    BodyPart* upper= bodyParts[1];
+    btRigidBody * upper_rigid = upper->getRigidBody();
+    v = upper_rigid->getCenterOfMassTransform();
+    z = v.getOrigin().getZ();
+    y = v.getOrigin().getY();
+    angles[1] = ((z==0)?0:(asin(fmin(1.0, fmax(-1.0,z/y)))*180/M_PI));
+    
+    BodyPart* foot= bodyParts[2];
+    btRigidBody * foot_rigid = upper->getRigidBody();
+    v = foot_rigid->getCenterOfMassTransform();
+    z = v.getOrigin().getZ();
+    y = v.getOrigin().getY();
+    angles[2] = ((z==0)?0:(asin(fmin(1.0, fmax(-1.0,z/y)))*180/M_PI));
+    
+    /*for (int i=0; i<2; i++) {
+        BodyPart* bp= bodyParts[i];
+        btRigidBody * bp_rigid = bp->getRigidBody();
+        btTransform v = bp_rigid->getCenterOfMassTransform();
+        double z = v.getOrigin().getZ();
+        double y = v.getOrigin().getY();
+        angles[i] = ((z==0)?0:(asin(fmin(1.0, fmax(-1.0,z/y)))*180/M_PI));
+    }*/
+    
+    return angles;
+}
