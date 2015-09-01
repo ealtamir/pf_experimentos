@@ -20,6 +20,7 @@ class BodyParameters {
 public:
 
     const double bodyScale = BODY_SCALE;
+//    const btVector3 bodyInitialPosition = btVector3(0, 2 * BODY_SCALE, 0);
     const btVector3 bodyInitialPosition = btVector3(0, 0.6 * BODY_SCALE, 0);
     
     const double FEMALE_BODY_MASS = 61.99;
@@ -39,6 +40,12 @@ public:
     Actuator *rightLowerArmAct, *rightUpperArmAct;
     Actuator *leftLowerArmAct, *leftUpperArmAct;
     
+    /******************** ANGLES ********************/
+    
+    double LEFT_LEG_ANGLE = SIMD_PI / 4;
+    double RIGHT_LEG_ANGLE = 4 * SIMD_PI / 6;
+    double RIGHT_LOWER_LEG_ANGLE = 11 * SIMD_PI / 6;
+    
     /******************** PARTS ********************/
     
 
@@ -53,6 +60,7 @@ public:
                                          btScalar(0.2 * BODY_SCALE),
                                          btScalar(0.0));
     
+
     //upper leg
     double U_LEG_RADIUS = 0.07 * BODY_SCALE;
     double U_LEG_HEIGHT = 0.232 * BODY_HEIGHT * BODY_SCALE;
@@ -60,7 +68,9 @@ public:
     btVector3 U_LEG_ORIENTATION = btVector3(0, 0, 0);
     btVector3 U_LEG_POSITION = btVector3(btScalar(0.18 * BODY_SCALE),
                                          btScalar(0.65 * BODY_SCALE),
-                                         btScalar(0.));
+                                         btScalar(0.0));
+    
+
     
     //foots
     double FOOT_MASS = 0.0143 * BODY_MASS * BODY_SCALE;
@@ -91,12 +101,12 @@ public:
     // Torso body group
     // Pelvis
     double PELVIS_RADIUS = 0.15 * BODY_SCALE;
-    double PELVIS_HEIGHT = 0.093 * BODY_HEIGHT * BODY_SCALE;
+    double PELVIS_HEIGHT = 0.01 * BODY_HEIGHT * BODY_SCALE;
     double PELVIS_MASS = 0.1366 * BODY_MASS * BODY_SCALE;
     btVector3 PELVIS_ORIENTATION = btVector3(0, 0, 0);
     btVector3 PELVIS_POSITION = btVector3(btScalar(0),
-                                          btScalar(1 * BODY_SCALE),
-                                          btScalar(0));
+                                          btScalar(0.85 * BODY_SCALE),
+                                          btScalar(0.0));
     
     // Spine
     double SPINE_RADIUS = 0.15 * BODY_SCALE;
@@ -115,6 +125,30 @@ public:
     btVector3 HEAD_POSITION = btVector3(btScalar(0),
                                         btScalar(1.6 * BODY_SCALE),
                                         btScalar(0));
+    
+    
+    double a = (U_LEG_HEIGHT / 2) * sin(SIMD_PI / 6);
+    double b = (U_LEG_HEIGHT / 2) * cos(SIMD_PI / 6);
+    
+    btVector3 RIGHT_L_LEG_POSITION = btVector3(btScalar(0.18 * BODY_SCALE),
+                                               btScalar((0.2 + a + 0.1) * BODY_SCALE),
+                                               btScalar(-b * 2 - 0.08));
+    
+    btVector3 RIGHT_U_LEG_POSITION = btVector3(btScalar(0.18 * BODY_SCALE),
+                                               btScalar((0.65 + a) * BODY_SCALE),
+                                               btScalar(-b));
+    
+    btVector3 RIGHT_FOOT_POSITION = btVector3(btScalar(0.18 * BODY_SCALE),
+                                              btScalar((-0.1 + a + 0.1) * BODY_SCALE),
+                                              btScalar((-0.075 - b * 2 - 0.1) * BODY_SCALE));
+    
+
+    
+    
+    /******************** LEG ANGLES ********************/
+    
+    btQuaternion RIGHT_LEG_ROTATION = btQuaternion(1, 0, 0, RIGHT_LEG_ANGLE);
+    btQuaternion RIGHT_LOWER_LEG_ROTATION = btQuaternion(1, 0, 0, RIGHT_LOWER_LEG_ANGLE);
     
     /******************** CONTRAINTS ********************/
     
