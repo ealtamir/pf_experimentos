@@ -15,6 +15,8 @@ public:
     virtual BodyPart* getJointPart() = 0;
     
     void actuate(double t);
+    
+    std::vector<BodyPart*> getBodyParts() { return bodyParts; };
 
 protected:
 	std::vector<BodyPart*> bodyParts;

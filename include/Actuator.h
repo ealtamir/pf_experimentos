@@ -19,6 +19,11 @@ public:
     Actuator(bool isLeft);
     btVector3 eval(double t);
     
+    virtual void setA(double valueA) = 0;
+    virtual void setB(double valueB) = 0;
+    virtual void setw1(double valuew1) = 0;
+    virtual void setw2(double valuew2) = 0;
+    
 protected:
     virtual btVector3
     actuatorFunc(double t) = 0;

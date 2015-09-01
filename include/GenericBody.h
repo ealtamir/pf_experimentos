@@ -30,7 +30,7 @@ protected:
     BodyGroup*
     createRightLeg(btDynamicsWorld* world, BodyParameters &params);
     
-    virtual BodyGroup*
+    BodyGroup*
     createTorso(btDynamicsWorld* world, BodyParameters &params);
     
     btTypedConstraint*
