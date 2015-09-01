@@ -14,43 +14,42 @@ PassiveWalkerExperiment::~PassiveWalkerExperiment() {
 }
 
 float PassiveWalkerExperiment::getFitness(const std::vector<double> vals) {
-    PassiveWalkerExperiment *experiment2 = new PassiveWalkerExperiment();
     int i = 0;
     // left leg
-    experiment2->body->getBodyGroups()[0]->getBodyParts()[0]->setActuatorValues(vals[i*4+0],
+    experiment->body->getBodyGroups()[0]->getBodyParts()[0]->setActuatorValues(vals[i*4+0],
                                                                                vals[i*4+1],
                                                                                vals[i*4+2],
                                                                                vals[i*4+3]);
     i++;
-    experiment2->body->getBodyGroups()[0]->getBodyParts()[1]->setActuatorValues(vals[i*4+0],
+    experiment->body->getBodyGroups()[0]->getBodyParts()[1]->setActuatorValues(vals[i*4+0],
                                                                                vals[i*4+1],
                                                                                vals[i*4+2],
                                                                                vals[i*4+3]);
     i++;
     
     // right leg
-    experiment2->body->getBodyGroups()[1]->getBodyParts()[0]->setActuatorValues(vals[i*4+0],
+    experiment->body->getBodyGroups()[1]->getBodyParts()[0]->setActuatorValues(vals[i*4+0],
                                                                                vals[i*4+1],
                                                                                vals[i*4+2],
                                                                                vals[i*4+3]);
     i++;
-    experiment2->body->getBodyGroups()[1]->getBodyParts()[1]->setActuatorValues(vals[i*4+0],
+    experiment->body->getBodyGroups()[1]->getBodyParts()[1]->setActuatorValues(vals[i*4+0],
                                                                                vals[i*4+1],
                                                                                vals[i*4+2],
                                                                                vals[i*4+3]);
     i++;
     // hip
-    experiment2->body->getBodyGroups()[2]->getBodyParts()[0]->setActuatorValues(vals[i*4+0],
+    experiment->body->getBodyGroups()[2]->getBodyParts()[0]->setActuatorValues(vals[i*4+0],
                                                                                vals[i*4+1],
                                                                                vals[i*4+2],
                                                                                vals[i*4+3]);
     
     // run simulation
-    experiment2->simulate();
+    experiment->simulate();
     
     
-    double value = experiment2->getHeight() * experiment2->getVelocity() * experiment2->getDirection();
-    printf("la velocity es: %f\n",experiment2->getVelocity());
+    double value = experiment->getHeight() * experiment->getVelocity() * experiment->getDirection();
+    printf("la velocity es: %f\n",experiment->getVelocity());
     std::cout << value << std::endl;
     return value;
 }

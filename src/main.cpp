@@ -63,7 +63,9 @@ public:
 float MiExperimentoFitness::operator ()(const GaChromosome* chromosome) const {
     const std::vector<double>& vals = dynamic_cast<const GaMVArithmeticChromosome<double>*>( chromosome )->GetCode();
     
-    return PassiveWalkerExperiment::getFitness(vals);
+    float fit = PassiveWalkerExperiment::getFitness(vals);
+    cout << "Fitness calculado: " << fit << endl;
+    return fit;
 }
 
 // Observer
@@ -75,6 +77,49 @@ void MiExperimentoObserver::NewBestChromosome(const GaChromosome& newChromosome,
         cout << vals[i] << ",";
     }
     cout << endl << "Fitness: " << newChromosome.GetFitness() << endl;
+    
+//    PassiveWalkerExperiment demoApp;
+//    demoApp.enableStoppingCondition(false);
+//    demoApp.initPhysics();
+//    demoApp.setCameraDistance(btScalar(5.));
+//    demoApp.setCameraUp(btVector3(0, 15, 0));
+//    
+//    int i = 0;
+//    // left leg
+//    demoApp.body->getBodyGroups()[0]->getBodyParts()[0]->setActuatorValues(vals[i*4+0],
+//                                                                           vals[i*4+1],
+//                                                                           vals[i*4+2],
+//                                                                           vals[i*4+3]);
+//    i++;
+//    demoApp.body->getBodyGroups()[0]->getBodyParts()[1]->setActuatorValues(vals[i*4+0],
+//                                                                           vals[i*4+1],
+//                                                                           vals[i*4+2],
+//                                                                           vals[i*4+3]);
+//    i++;
+//    
+//    // right leg
+//    demoApp.body->getBodyGroups()[1]->getBodyParts()[0]->setActuatorValues(vals[i*4+0],
+//                                                                           vals[i*4+1],
+//                                                                           vals[i*4+2],
+//                                                                           vals[i*4+3]);
+//    i++;
+//    demoApp.body->getBodyGroups()[1]->getBodyParts()[1]->setActuatorValues(vals[i*4+0],
+//                                                                           vals[i*4+1],
+//                                                                           vals[i*4+2],
+//                                                                           vals[i*4+3]);
+//    i++;
+//    // hip
+//    demoApp.body->getBodyGroups()[2]->getBodyParts()[0]->setActuatorValues(vals[i*4+0],
+//                                                                           vals[i*4+1],
+//                                                                           vals[i*4+2],
+//                                                                           vals[i*4+3]);
+//    
+//    
+//    
+//    
+//    glutmain(NULL, NULL, 1024, 768, "Experiment",&demoApp);
+    
+    
 }
 
 void MiExperimentoObserver::EvolutionStateChanged(GaAlgorithmState newState, const GaAlgorithm& algorithm) {
@@ -89,13 +134,54 @@ void MiExperimentoObserver::StatisticUpdate(const Common::GaStatistics &statisti
 }
 
 int main(int argc,char* argv[]) {
+    bool visual = false;
+    
+    if(visual) {
+    
+    // Visual
     PassiveWalkerExperiment demoApp;
     demoApp.enableStoppingCondition(false);
     demoApp.initPhysics();
     demoApp.setCameraDistance(btScalar(5.));
     demoApp.setCameraUp(btVector3(0, 15, 0));
+    
+    const std::vector<double> vals = {22.6753,51.3633,33.0611,43.0724,9.53979,49.3043,43.6125,44.5845,21.3196,53.8534,13.7494,48.21,21.4231,37.8418,21.2192,66.0937,26.6465,37.3201,6.76354,43.3251};
+    
+    int i = 0;
+    // left leg
+    demoApp.body->getBodyGroups()[0]->getBodyParts()[0]->setActuatorValues(vals[i*4+0],
+                                                                                vals[i*4+1],
+                                                                                vals[i*4+2],
+                                                                                vals[i*4+3]);
+    i++;
+    demoApp.body->getBodyGroups()[0]->getBodyParts()[1]->setActuatorValues(vals[i*4+0],
+                                                                                vals[i*4+1],
+                                                                                vals[i*4+2],
+                                                                                vals[i*4+3]);
+    i++;
+    
+    // right leg
+    demoApp.body->getBodyGroups()[1]->getBodyParts()[0]->setActuatorValues(vals[i*4+0],
+                                                                                vals[i*4+1],
+                                                                                vals[i*4+2],
+                                                                                vals[i*4+3]);
+    i++;
+    demoApp.body->getBodyGroups()[1]->getBodyParts()[1]->setActuatorValues(vals[i*4+0],
+                                                                                vals[i*4+1],
+                                                                                vals[i*4+2],
+                                                                                vals[i*4+3]);
+    i++;
+    // hip
+    demoApp.body->getBodyGroups()[2]->getBodyParts()[0]->setActuatorValues(vals[i*4+0],
+                                                                                vals[i*4+1],
+                                                                                vals[i*4+2],
+                                                                                vals[i*4+3]);
+    
+    
+    
+    
     return glutmain(argc, argv, 1024, 768, "Experiment",&demoApp);
-
+    } else {
     /*PassiveWalkerExperiment* exp= new PassiveWalkerExperiment();
     exp->initPhysics();
     for (int i = 0; i < 100; i++) {
@@ -110,14 +196,17 @@ int main(int argc,char* argv[]) {
     
     printf("la height: %f",exp->getHeight());
     */
-//    return mainLoop();
+    
+    // GA
+        return mainLoop();
+    }
 }
 
 int mainLoop() {
     GaInitialize();
     
-    GaValueIntervalBounds<double> valueInt( 5, 15 );
-    GaValueIntervalBounds<double> invValueInt( 5, 15 );
+    GaValueIntervalBounds<double> valueInt( 0, 70 );
+    GaValueIntervalBounds<double> invValueInt( 0, 70 );
     GaIntervalValueSet<double> valueSet( valueInt, invValueInt, GaGlobalRandomDoubleGenerator, false);
     
     GaChromosomeDomainBlock<double>* _ccb = new GaChromosomeDomainBlock<double>(
@@ -126,14 +215,14 @@ int mainLoop() {
                         GaMutationCatalogue::Instance().GetEntryData( "GaFlipMutation" ),
                         new MiExperimentoFitness(),
                         GaFitnessComparatorCatalogue::Instance().GetEntryData( "GaMaxFitnessComparator" ),
-                        new GaChromosomeParams( 0.08f, 2, false, 0.8f, 1 ) );
+                        new GaChromosomeParams( 0.08f, 4, false, 0.8f, 5 ) );
     
     GaMVArithmeticChromosome<double> _prototype( VALUES_SIZE, _ccb );
     
     GaPopulationParameters populationParams( 10, false, false, false, 0, 0 );
-    Population::SelectionOperations::GaSelectRandomBestParams selectParams( 5, false, 3 );
-    Population::ReplacementOperations::GaReplaceElitismParams replaceParams( 2, 1 );
-    GaCouplingParams couplingParams( 3, false );
+    Population::SelectionOperations::GaSelectRandomBestParams selectParams( 5, false, 2 );
+    Population::ReplacementOperations::GaReplaceElitismParams replaceParams( 3, 1 );
+    GaCouplingParams couplingParams( 4, false );
     Population::ScalingOperations::GaScaleFactorParams scalingParams(1);
     
     GaPopulationConfiguration* _populationConfiguration = new GaPopulationConfiguration(
@@ -154,7 +243,7 @@ int mainLoop() {
     Algorithm::SimpleAlgorithms::GaIncrementalAlgorithm* _algorithm = new Algorithm::SimpleAlgorithms::GaIncrementalAlgorithm( _population, algParam );
     
     GaStopCriteria* criteria = GaStopCriteriaCatalogue::Instance().GetEntryData( "GaGenerationCriteria" );
-    Algorithm::StopCriterias::GaGenerationCriteriaParams critParam( 5 );
+    Algorithm::StopCriterias::GaGenerationCriteriaParams critParam( 1000 );
     _algorithm->SetStopCriteria( criteria, &critParam );
     
     // subscribe observer
