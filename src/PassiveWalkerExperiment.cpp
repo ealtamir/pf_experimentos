@@ -5,7 +5,6 @@
 #include "GenericBodyParameters.h"
 
 PassiveWalkerExperiment::PassiveWalkerExperiment() {
-    initPhysics();
 }
 
 PassiveWalkerExperiment::~PassiveWalkerExperiment() {
@@ -14,6 +13,8 @@ PassiveWalkerExperiment::~PassiveWalkerExperiment() {
 }
 
 float PassiveWalkerExperiment::getFitness(const std::vector<double> vals) {
+    experiment->initPhysics();
+    experiment->objectsInitialized = false;
     int i = 0;
     // left leg
     experiment->body->getBodyGroups()[0]->getBodyParts()[0]->setActuatorValues(vals[i*4+0],
