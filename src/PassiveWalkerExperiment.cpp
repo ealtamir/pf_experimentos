@@ -1,4 +1,6 @@
 #include <iostream>
+#include <fstream>
+
 #include <cmath>
 
 #include "PassiveWalkerExperiment.h"
@@ -49,7 +51,6 @@ float PassiveWalkerExperiment::getFitness(const std::vector<double> vals) {
     
     
     double value = experiment->getHeight() * experiment->getVelocity() * experiment->getDirection();
-    printf("la velocity es: %f\n",experiment->getVelocity());
     std::cout << value << std::endl;
     return value;
 }
@@ -109,15 +110,21 @@ void Experiment::simulate(){
     
     
     initial_height = walker->getHeight();
+    initial_height-= 0.65;
     initial_position = walker->getPosition();
     initial_angle = walker->getAngleInclination();
     
     printf("position inicial: %f \n",initial_position);
-        
+    
+    
+    
     for (int i = 0; i < DEFAULT_CHANGE_COUNTER; i++) {
         worldStep();
         double t = (i+1) * DEFAULT_EXPERIMENT_INTERVAL;
         double value = walker->getHeight();
+        value-= 0.50;
+        //printf("%d - %f\n",i,value);
+        
         acum_height += fabs(value - initial_height);
         
         double final_position = walker->getPosition();
@@ -147,10 +154,11 @@ void Experiment::simulate(){
     
     periodicity = 1 - acum_cycles/(CYCLE_CONSTANT * BODY_PART_QTY * walker->getCycleQuantity());
     
-    printf("velocity final: %f \n",average_velocity);
-    printf("inclination final: %f \n",direction);
+    //printf("velocity final: %f \n",average_velocity);
+    //printf("inclination final: %f \n",direction);
     printf("height final: %f \n",max_height);
-    printf("direction final: %f \n",periodicity);
+    //printf("direction final: %f \n",periodicity);
+    
 
 }
 

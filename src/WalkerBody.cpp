@@ -49,7 +49,10 @@ WalkerBody::getHeight(){
     GenericTorsoBodyGroup* torso = dynamic_cast<GenericTorsoBodyGroup*>(bodyGroups.back());
     BodyPart* bp = torso->getLeftHipPart();
     btRigidBody* rigidBody = bp->getRigidBody();
-    btTransform v = rigidBody->getCenterOfMassTransform();
+    btTransform v;
+    rigidBody->getMotionState()->getWorldTransform(v);
+    //printf("%f - %f - %f \n",v.getOrigin().getX(),v.getOrigin().getY(),v.getOrigin().getZ());
+    
     return v.getOrigin().getY();
 }
 

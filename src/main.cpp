@@ -30,6 +30,10 @@
 #define VALUES_SIZE 20
 
 int mainLoop();
+double values[VALUES_SIZE];
+double fitness = 0;
+double velocity = 0;
+double height = 0;
 
 // Fitness
 
@@ -75,6 +79,7 @@ void MiExperimentoObserver::NewBestChromosome(const GaChromosome& newChromosome,
     cout << "New chromosome found:" << endl;
     for(int i = 0; i < vals.size(); i++){
         cout << vals[i] << ",";
+        values[i]=vals[i];
     }
     cout << endl << "Fitness: " << newChromosome.GetFitness() << endl;
     
@@ -145,7 +150,7 @@ int main(int argc,char* argv[]) {
     demoApp.setCameraDistance(btScalar(5.));
     demoApp.setCameraUp(btVector3(0, 15, 0));
     
-    const std::vector<double> vals = {22.6753,51.3633,33.0611,43.0724,9.53979,49.3043,43.6125,44.5845,21.3196,53.8534,13.7494,48.21,21.4231,37.8418,21.2192,66.0937,26.6465,37.3201,6.76354,43.3251};
+    const std::vector<double> vals = {2.43174,47.9448,20.2618,46.4162,19.0388,7.25895,66.2121,65.846,49.2163,49.1454,26.7891,33.5342,25.7043,48.6363,17.0465,22.386,24.9666,35.9253,53.3309,64.3348};
     
     int i = 0;
     // left leg
@@ -198,6 +203,7 @@ int main(int argc,char* argv[]) {
     */
     
     // GA
+    
         return mainLoop();
     }
 }
@@ -254,6 +260,12 @@ int mainLoop() {
     _algorithm->WaitForThreads();
     
     GaFinalize();
+    
+    cout << "Mejor cromosoma encontrado:  ";
+    for(int i = 0; i < VALUES_SIZE; i++){
+        cout << values[i] << ",";
+        
+    }
     
     return 0;
 }
