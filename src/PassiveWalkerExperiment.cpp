@@ -91,7 +91,7 @@ double Experiment::getVelocity() const {
 }
 
 double Experiment::getDirection() const {
-    return average_velocity;
+    return direction;
 }
 
 void Experiment::simulate(){
@@ -110,23 +110,27 @@ void Experiment::simulate(){
     double* last_cycles = walker->getAnglesLegs();
     
     
-    initial_height = walker->getHeight();
-    initial_height-= 0.65;
+    
     initial_position = walker->getPosition();
     initial_angle = walker->getAngleInclination();
     
-    printf("position inicial: %f \n",initial_position);
+    initial_height = walker->getHeight();
+    initial_height-= 0.65;
+    //printf("height inicial: %f \n",initial_height);
     
+    //worldStep();
     
     
     for (int i = 0; i < DEFAULT_CHANGE_COUNTER; i++) {
         worldStep();
         double t = (i+1) * DEFAULT_EXPERIMENT_INTERVAL;
         double value = walker->getHeight();
-        value-= 0.50;
+        value-= 0.68;
         //printf("%d - %f\n",i,value);
-        
+            
         acum_height += fabs(value - initial_height);
+        
+        
         
         double final_position = walker->getPosition();
         
