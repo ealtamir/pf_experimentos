@@ -16,6 +16,8 @@
 #include "MutationOperations.h"
 #include "ScalingOperations.h"
 
+#include "ValueSets.h"
+
 #include "StopCriterias.h"
 
 // System libraries
@@ -214,9 +216,16 @@ int mainLoop() {
     GaValueIntervalBounds<double> valueInt( 0, 70 );
     GaValueIntervalBounds<double> invValueInt( 0, 70 );
     GaIntervalValueSet<double> valueSet( valueInt, invValueInt, GaGlobalRandomDoubleGenerator, false);
-    
+    GaIntervalValueSet<double> multiValueSet[20] = {
+                                                    valueSet,valueSet,valueSet,valueSet,
+                                                    valueSet,valueSet,valueSet,valueSet,
+                                                    valueSet,valueSet,valueSet,valueSet,
+                                                    valueSet,valueSet,valueSet,valueSet,
+                                                    valueSet,valueSet,valueSet,valueSet
+                                                   };
+
     GaChromosomeDomainBlock<double>* _ccb = new GaChromosomeDomainBlock<double>(
-                        &valueSet,
+                        multiValueSet,
                         GaCrossoverCatalogue::Instance().GetEntryData( "GaMultiValueCrossover" ),
                         GaMutationCatalogue::Instance().GetEntryData( "GaFlipMutation" ),
                         new MiExperimentoFitness(),

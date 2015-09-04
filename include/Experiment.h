@@ -57,16 +57,18 @@ public:
     std::string getName() {
         return "Experiment";
     }
+    
+    bool objectsInitialized = false;
+    
+    double timeCount = 0;
 
 private:
     btRigidBody* createGround();
     
 
 protected:
-    bool objectsInitialized = false;
-    bool stoppingConditionEnabled = true;
     
-    double timeCount = 0;
+    bool stoppingConditionEnabled = true;
 
     bool simulated = false;
     
