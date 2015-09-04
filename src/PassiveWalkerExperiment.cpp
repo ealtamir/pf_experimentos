@@ -3,6 +3,8 @@
 
 #include <cmath>
 
+#include <chrono>
+
 #include "PassiveWalkerExperiment.h"
 #include "GenericBodyParameters.h"
 

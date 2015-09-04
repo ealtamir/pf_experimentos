@@ -24,18 +24,18 @@
 #include <stdlib.h>
 #include <vector>
 #include <iostream>
+#include <sys/time.h>
 
 // PF includes
 #include "Experiment.h"
 #include "PassiveWalkerExperiment.h"
 
+
 #define VALUES_SIZE 20
 
 int mainLoop();
 double values[VALUES_SIZE];
-double fitness = 0;
-double velocity = 0;
-double height = 0;
+
 
 // Fitness
 
@@ -211,6 +211,11 @@ int main(int argc,char* argv[]) {
 }
 
 int mainLoop() {
+    struct timeval before;
+    gettimeofday(&before, NULL);
+    long int ms_before = before.tv_sec * 1000 + before.tv_usec / 1000;
+    
+    
     GaInitialize();
     
     GaValueIntervalBounds<double> valueInt( 0, 70 );
@@ -270,11 +275,19 @@ int mainLoop() {
     
     GaFinalize();
     
+    struct timeval after;
+    gettimeofday(&after, NULL);
+    long int ms_after = after.tv_sec * 1000 + after.tv_usec / 1000;
+    
     cout << "Mejor cromosoma encontrado:  ";
     for(int i = 0; i < VALUES_SIZE; i++){
         cout << values[i] << ",";
         
     }
+    cout << "\n Tiempo transcurrido:  ";
+    cout << ms_after-ms_before;
+    cout << " milisegundos ";
+    
     
     return 0;
 }
