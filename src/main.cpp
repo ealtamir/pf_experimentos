@@ -34,8 +34,11 @@
 #define VALUES_SIZE 20
 
 int mainLoop();
+double getTimeElapsed();
+
 double values[VALUES_SIZE];
 
+long int time_begin = 0;
 
 // Fitness
 
@@ -213,7 +216,7 @@ int main(int argc,char* argv[]) {
 int mainLoop() {
     struct timeval before;
     gettimeofday(&before, NULL);
-    long int ms_before = before.tv_sec * 1000 + before.tv_usec / 1000;
+    time_begin = before.tv_sec * 1000 + before.tv_usec / 1000;
     
     
     GaInitialize();
@@ -275,9 +278,6 @@ int mainLoop() {
     
     GaFinalize();
     
-    struct timeval after;
-    gettimeofday(&after, NULL);
-    long int ms_after = after.tv_sec * 1000 + after.tv_usec / 1000;
     
     cout << "Mejor cromosoma encontrado:  ";
     for(int i = 0; i < VALUES_SIZE; i++){
@@ -285,9 +285,17 @@ int mainLoop() {
         
     }
     cout << "\n Tiempo transcurrido:  ";
-    cout << ms_after-ms_before;
+    cout << getTimeElapsed();
     cout << " milisegundos ";
     
     
     return 0;
+}
+
+double getTimeElapsed(){
+    struct timeval after;
+    gettimeofday(&after, NULL);
+    
+    return (after.tv_sec * 1000 + after.tv_usec / 1000) - time_begin;
+
 }
