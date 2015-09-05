@@ -144,7 +144,7 @@ void MiExperimentoObserver::StatisticUpdate(const Common::GaStatistics &statisti
 }
 
 int main(int argc,char* argv[]) {
-    bool visual = false;
+    bool visual = true;
     
     if(visual) {
     
@@ -155,7 +155,7 @@ int main(int argc,char* argv[]) {
     demoApp.setCameraDistance(btScalar(5.));
     demoApp.setCameraUp(btVector3(0, 15, 0));
     
-    const std::vector<double> vals = {2.43174,47.9448,20.2618,46.4162,19.0388,7.25895,66.2121,65.846,49.2163,49.1454,26.7891,33.5342,25.7043,48.6363,17.0465,22.386,24.9666,35.9253,53.3309,64.3348};
+    const std::vector<double> vals = {40.5531,14.0428,53.8288,28.0986,39.6691,45.7801,27.4629,31.5969,47.3986,14.5117,14.9916,31.4182,66.901,48.3569,61.8617,28.9932,30.336,4.75808,5.67865,38.4799};
     
     int i = 0;
     // left leg

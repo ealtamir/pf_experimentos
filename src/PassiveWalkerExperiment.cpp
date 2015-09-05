@@ -120,7 +120,6 @@ void Experiment::simulate(){
     initial_height-= 0.65;
     //printf("height inicial: %f \n",initial_height);
     
-    //worldStep();
     
     
     for (int i = 0; i < DEFAULT_CHANGE_COUNTER; i++) {
@@ -135,9 +134,9 @@ void Experiment::simulate(){
         
         
         double final_position = walker->getPosition();
-        
-        acum_position += fabs(final_position-(initial_position+OBJETIVE_VELOCITY*t*DEFAULT_EXPERIMENT_INTERVAL));
-        average_velocity = (final_position - initial_position);
+        //printf("%d - %f\n", i, final_position);
+        acum_position += fabs(final_position-(initial_position+OBJETIVE_VELOCITY*(t+DEFAULT_EXPERIMENT_INTERVAL)));
+        //average_velocity = (final_position - initial_position);
         
         double angle = walker->getAngleInclination();
         acum_direction += fabs( angle - initial_angle);
@@ -161,7 +160,7 @@ void Experiment::simulate(){
     
     periodicity = 1 - acum_cycles/(CYCLE_CONSTANT * BODY_PART_QTY * walker->getCycleQuantity());
     
-    //printf("velocity final: %f \n",average_velocity);
+    printf("velocity final: %f \n",average_velocity);
     //printf("inclination final: %f \n",direction);
     printf("height final: %f \n",max_height);
     //printf("direction final: %f \n",periodicity);
