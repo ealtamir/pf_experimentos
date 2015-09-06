@@ -42,6 +42,7 @@ ConstraintBuilder::create6DoFConstraint(ConstraintParams& params) {
                                             p2Trans,
                                             useLinearReferenceFrameA
                                             );
+    
 
     joint6DOF->setAngularLowerLimit(params.angularLowerLimit);
     joint6DOF->setAngularUpperLimit(params.angulerUpperLimit);

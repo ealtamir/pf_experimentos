@@ -16,16 +16,21 @@ class Actuator {
     
     
 public:
+    Actuator(bool isLeft);
     btVector3 eval(double t);
     
-protected:
-    virtual
-    btVector3 actuatorFunc(double t) = 0;
+    virtual void setA(double valueA) = 0;
+    virtual void setB(double valueB) = 0;
+    virtual void setw1(double valuew1) = 0;
+    virtual void setw2(double valuew2) = 0;
     
-    double A = 5 * ((double) rand() / RAND_MAX);
-    double B = 5 * ((double) rand() / RAND_MAX);
-    double w1 = 5 * ((double) rand() / RAND_MAX);
-    double w2 = 5 * ((double) rand() / RAND_MAX);
+protected:
+    virtual btVector3
+    actuatorFunc(double t) = 0;
+    
+    double fase = 0;
+    
+
 };
 
 #endif /* defined(__test__Actuator__) */

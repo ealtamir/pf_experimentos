@@ -16,6 +16,7 @@ class GenericBodyParameters : public BodyParameters {
     
 public:
     GenericBodyParameters();
+    ~GenericBodyParameters();
 };
 
 #endif /* defined(__test__GenericBodyParameters__) */

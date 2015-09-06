@@ -23,6 +23,22 @@ GenericBodyParameters::GenericBodyParameters() {
     rightLowerLegAct = new GenericActuator();
     rightUpperLegAct = new GenericActuator();
     
-    leftLowerLegAct = new GenericActuator();
-    leftUpperLegAct = new GenericActuator();
+    leftLowerLegAct = new GenericActuator(true);
+    leftUpperLegAct = new GenericActuator(true);
+}
+
+GenericBodyParameters::~GenericBodyParameters() {
+    delete rightLowerArmAct;
+    delete rightUpperArmAct;
+    
+    delete leftLowerArmAct;
+    delete leftUpperLegAct;
+    
+    delete hipAct;
+    
+    delete rightLowerLegAct;
+    delete rightUpperLegAct;
+    
+    delete leftLowerLegAct;
+    delete leftUpperLegAct;
 }

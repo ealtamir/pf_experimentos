@@ -88,6 +88,33 @@ GenericBody::createRightHip(BodyPart* rightHip, BodyPart* torso,
     };
     
     btTypedConstraint* constraint = ConstraintBuilder::create6DoFConstraint(constraintParams);
+    
+//    btTransform torsoTrans, hipTrans;
+//    torsoTrans.setIdentity(); torsoTrans.setOrigin(params.rightHipTorsoOffset);
+//    hipTrans.setIdentity(); torsoTrans.setOrigin(params.rightHipOffset);
+//    
+//
+//    btTypedConstraint* constraint = new btConeTwistConstraint(*torso->getRigidBody(),
+//                                                              *rightHip->getRigidBody(),
+//                                                              torsoTrans,
+//                                                              hipTrans);
+//    dynamic_cast<btConeTwistConstraint*>(constraint)->setLimit(M_PI_4, M_PI_4, 0, 0.1);
+
+//    constraint->setDbgDrawSize(btScalar(5.f));
+//    
+//    btTransform localA, localB;
+//    localA.setIdentity(); localB.setIdentity();
+////    localA.getBasis().setEulerZYX(0,0,M_PI_4); localA.setOrigin(btVector3(btScalar(0.18), btScalar(-0.10), btScalar(0.)));
+////    localB.getBasis().setEulerZYX(0,0,M_PI_4); localB.setOrigin(btVector3(btScalar(0.), btScalar(0.225), btScalar(0.)));
+//
+//    localA.setIdentity(); localB.setIdentity();
+////    localA.getBasis().setEulerZYX(0,0,M_PI_4); localA.setOrigin(btVector3(btScalar(0.18), btScalar(-0.10), btScalar(0.)));
+////    localB.getBasis().setEulerZYX(0,0,M_PI_4); localB.setOrigin(btVector3(btScalar(0.0), btScalar(0.10), btScalar(0.)));
+//    btTypedConstraint* constraint = new btConeTwistConstraint(*torso->getRigidBody(), *rightHip->getRigidBody(), localA, localB);
+//    dynamic_cast<btConeTwistConstraint*>(constraint)->setLimit(M_PI_4, M_PI_4, 0);
+//    constraint->setOverrideNumSolverIterations(30);
+
+    
     constraints.push_back(constraint);
     world->addConstraint(constraint, true);
     return constraint;
@@ -120,7 +147,7 @@ GenericBody::createLeftLeg(btDynamicsWorld* world,
                            BodyParameters &params) {
     BodyGroup* left_leg = new LegBodyGroup(world,
                                            params,
-                                           leftOffset);
+                                           leftOffset, true);
     bodyGroups.push_back(left_leg);
     left_leg->initBodyGroup();
     return left_leg;

@@ -18,7 +18,7 @@ CapsuleBodyPart::CapsuleBodyPart(btScalar r,
     this->actuator = actuator;
     
     btVector3 inertia(0, 0, 0);
-    btQuaternion rotation(0, 0, 0, 1);
+//    btQuaternion rotation(0, 0, 0, 1);
     
     btCollisionShape* capsule = new btCapsuleShape(r, h);
     btDefaultMotionState* motionState = new btDefaultMotionState(trans);
@@ -31,7 +31,9 @@ CapsuleBodyPart::CapsuleBodyPart(btScalar r,
     body = new btRigidBody(capsuleCI);
     
     body->setDamping(LINEAR_DAMPING, ANGULAR_DAMPING);
-    //body->setDeactivationTime(DEACTIVATION_TIME);
-    //body->setSleepingThresholds(LINEAR_SLEEPING_THRESHOLD, ANGULAR_SLEEPING_THRESHOLD);
-
+    body->setDeactivationTime(DEACTIVATION_TIME);
+    body->setSleepingThresholds(LINEAR_SLEEPING_THRESHOLD, ANGULAR_SLEEPING_THRESHOLD);
+    
 }
+
+

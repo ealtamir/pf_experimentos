@@ -9,7 +9,12 @@
 #include "Actuator.h"
 
 
-btVector3
-Actuator::eval(double t) {
+Actuator::Actuator(bool isLeft) {
+    if (isLeft) {
+        fase = SIMD_PI;
+    }
+}
+
+btVector3 Actuator::eval(double t) {
     return actuatorFunc(t);
 }

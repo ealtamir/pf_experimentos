@@ -9,13 +9,28 @@
 #include "GenericActuator.h"
 
 
-GenericActuator::GenericActuator() {
-    
+GenericActuator::GenericActuator(bool isLeft) : Actuator(isLeft) {
+
 }
 
-btVector3
-GenericActuator::actuatorFunc(double t) {
+btVector3 GenericActuator::actuatorFunc(double t) {
     
-    double f = A * sin(w1 * t) + B * cos(w2 * t);
-    return btVector3(0, f, 0);
+    double f = A * sin(w1 * t + fase) + B * cos(w2 * t + fase);
+    return btVector3(f, 0, 0);
+}
+
+void GenericActuator::setA(double valueA) {
+    A = valueA;
+}
+
+void GenericActuator::setB(double valueB) {
+    B = valueB;
+}
+
+void GenericActuator::setw1(double valuew1) {
+    w1 = valuew1;
+}
+
+void GenericActuator::setw2(double valuew2) {
+    w2 = valuew2;
 }
