@@ -61,7 +61,8 @@ WalkerBody::getPosition(){
     GenericTorsoBodyGroup* torso = dynamic_cast<GenericTorsoBodyGroup*>(bodyGroups.back());
     BodyPart* bp = torso->getLeftHipPart();
     btRigidBody* rigidBody = bp->getRigidBody();
-    btTransform v = rigidBody->getCenterOfMassTransform();
+    btTransform v;
+    rigidBody->getMotionState()->getWorldTransform(v);
     return v.getOrigin().getZ();
 }
 
@@ -70,7 +71,9 @@ WalkerBody::getAngleInclination(){
     GenericTorsoBodyGroup* torso = dynamic_cast<GenericTorsoBodyGroup*>(bodyGroups.back());
     BodyPart* bp = torso->getLeftHipPart();
     btRigidBody* rigidBody = bp->getRigidBody();
-    btTransform v = rigidBody->getCenterOfMassTransform();
+    btTransform v;
+    rigidBody->getMotionState()->getWorldTransform(v);
+    
     double x = v.getOrigin().getX();
     double y = v.getOrigin().getY();
     if (x==0){

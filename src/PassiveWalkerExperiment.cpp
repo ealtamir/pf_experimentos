@@ -118,7 +118,7 @@ void Experiment::simulate(){
     
     initial_height = walker->getHeight();
     initial_height-= 0.65;
-    //printf("height inicial: %f \n",initial_height);
+    //printf("angle inicial: %f \n",initial_angle);
     
     
     
@@ -139,6 +139,7 @@ void Experiment::simulate(){
         //average_velocity = (final_position - initial_position);
         
         double angle = walker->getAngleInclination();
+        //printf("%d - %f\n", i, angle);
         acum_direction += fabs( angle - initial_angle);
         int new_cycles = walker->getCycleQuantity();
         if(new_cycles == cycles+1){
@@ -152,6 +153,9 @@ void Experiment::simulate(){
         }
 
     }
+    
+    printf("acum direction: %f \n", acum_direction);
+    
     max_height = 1 - acum_height/ (DEFAULT_CHANGE_COUNTER * initial_height);
     
     average_velocity = 1 - acum_position/(pow(DEFAULT_CHANGE_COUNTER,2) * VELOCITY_CONSTANT * OBJETIVE_VELOCITY * DEFAULT_EXPERIMENT_INTERVAL);
@@ -161,9 +165,9 @@ void Experiment::simulate(){
     periodicity = 1 - acum_cycles/(CYCLE_CONSTANT * BODY_PART_QTY * walker->getCycleQuantity());
     
     printf("velocity final: %f \n",average_velocity);
-    //printf("inclination final: %f \n",direction);
+    printf("direction final: %f \n",direction);
     printf("height final: %f \n",max_height);
-    //printf("direction final: %f \n",periodicity);
+    //printf("cycle final: %f \n",periodicity);
     
 
 }

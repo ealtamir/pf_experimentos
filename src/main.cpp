@@ -144,7 +144,7 @@ void MiExperimentoObserver::StatisticUpdate(const Common::GaStatistics &statisti
 }
 
 int main(int argc,char* argv[]) {
-    bool visual = true;
+    bool visual = false;
     
     if(visual) {
     
@@ -209,7 +209,7 @@ int main(int argc,char* argv[]) {
     
     // GA
     
-        return mainLoop();
+       return mainLoop();
     }
 }
 
