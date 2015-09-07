@@ -1,11 +1,14 @@
 #include <iostream>
+#include <fstream>
+
 #include <cmath>
+
+#include <chrono>
 
 #include "PassiveWalkerExperiment.h"
 #include "GenericBodyParameters.h"
 
 PassiveWalkerExperiment::PassiveWalkerExperiment() {
-    initPhysics();
 }
 
 PassiveWalkerExperiment::~PassiveWalkerExperiment() {
@@ -14,43 +17,43 @@ PassiveWalkerExperiment::~PassiveWalkerExperiment() {
 }
 
 float PassiveWalkerExperiment::getFitness(const std::vector<double> vals) {
-    PassiveWalkerExperiment *experiment2 = new PassiveWalkerExperiment();
+    experiment->initPhysics();
+    experiment->objectsInitialized = false;
     int i = 0;
     // left leg
-    experiment2->body->getBodyGroups()[0]->getBodyParts()[0]->setActuatorValues(vals[i*4+0],
+    experiment->body->getBodyGroups()[0]->getBodyParts()[0]->setActuatorValues(vals[i*4+0],
                                                                                vals[i*4+1],
                                                                                vals[i*4+2],
                                                                                vals[i*4+3]);
     i++;
-    experiment2->body->getBodyGroups()[0]->getBodyParts()[1]->setActuatorValues(vals[i*4+0],
+    experiment->body->getBodyGroups()[0]->getBodyParts()[1]->setActuatorValues(vals[i*4+0],
                                                                                vals[i*4+1],
                                                                                vals[i*4+2],
                                                                                vals[i*4+3]);
     i++;
     
     // right leg
-    experiment2->body->getBodyGroups()[1]->getBodyParts()[0]->setActuatorValues(vals[i*4+0],
+    experiment->body->getBodyGroups()[1]->getBodyParts()[0]->setActuatorValues(vals[i*4+0],
                                                                                vals[i*4+1],
                                                                                vals[i*4+2],
                                                                                vals[i*4+3]);
     i++;
-    experiment2->body->getBodyGroups()[1]->getBodyParts()[1]->setActuatorValues(vals[i*4+0],
+    experiment->body->getBodyGroups()[1]->getBodyParts()[1]->setActuatorValues(vals[i*4+0],
                                                                                vals[i*4+1],
                                                                                vals[i*4+2],
                                                                                vals[i*4+3]);
     i++;
     // hip
-    experiment2->body->getBodyGroups()[2]->getBodyParts()[0]->setActuatorValues(vals[i*4+0],
+    experiment->body->getBodyGroups()[2]->getBodyParts()[0]->setActuatorValues(vals[i*4+0],
                                                                                vals[i*4+1],
                                                                                vals[i*4+2],
                                                                                vals[i*4+3]);
     
     // run simulation
-    experiment2->simulate();
+    experiment->simulate();
     
     
-    double value = experiment2->getHeight() * experiment2->getVelocity() * experiment2->getDirection();
-    printf("la velocity es: %f\n",experiment2->getVelocity());
+    double value = experiment->getHeight() * experiment->getVelocity() * experiment->getDirection();
     std::cout << value << std::endl;
     return value;
 }
@@ -90,7 +93,7 @@ double Experiment::getVelocity() const {
 }
 
 double Experiment::getDirection() const {
-    return average_velocity;
+    return direction;
 }
 
 void Experiment::simulate(){
@@ -109,24 +112,34 @@ void Experiment::simulate(){
     double* last_cycles = walker->getAnglesLegs();
     
     
-    initial_height = walker->getHeight();
+    
     initial_position = walker->getPosition();
     initial_angle = walker->getAngleInclination();
     
-    printf("position inicial: %f \n",initial_position);
-        
+    initial_height = walker->getHeight();
+    initial_height-= 0.65;
+    //printf("angle inicial: %f \n",initial_angle);
+    
+    
+    
     for (int i = 0; i < DEFAULT_CHANGE_COUNTER; i++) {
         worldStep();
         double t = (i+1) * DEFAULT_EXPERIMENT_INTERVAL;
         double value = walker->getHeight();
+        value-= 0.68;
+        //printf("%d - %f\n",i,value);
+            
         acum_height += fabs(value - initial_height);
         
-        double final_position = walker->getPosition();
         
-        acum_position += fabs(final_position-(initial_position+OBJETIVE_VELOCITY*t*DEFAULT_EXPERIMENT_INTERVAL));
-        average_velocity = (final_position - initial_position);
+        
+        double final_position = walker->getPosition();
+        //printf("%d - %f\n", i, final_position);
+        acum_position += fabs(final_position-(initial_position+OBJETIVE_VELOCITY*(t+DEFAULT_EXPERIMENT_INTERVAL)));
+        //average_velocity = (final_position - initial_position);
         
         double angle = walker->getAngleInclination();
+        //printf("%d - %f\n", i, angle);
         acum_direction += fabs( angle - initial_angle);
         int new_cycles = walker->getCycleQuantity();
         if(new_cycles == cycles+1){
@@ -140,6 +153,9 @@ void Experiment::simulate(){
         }
 
     }
+    
+    printf("acum direction: %f \n", acum_direction);
+    
     max_height = 1 - acum_height/ (DEFAULT_CHANGE_COUNTER * initial_height);
     
     average_velocity = 1 - acum_position/(pow(DEFAULT_CHANGE_COUNTER,2) * VELOCITY_CONSTANT * OBJETIVE_VELOCITY * DEFAULT_EXPERIMENT_INTERVAL);
@@ -149,9 +165,10 @@ void Experiment::simulate(){
     periodicity = 1 - acum_cycles/(CYCLE_CONSTANT * BODY_PART_QTY * walker->getCycleQuantity());
     
     printf("velocity final: %f \n",average_velocity);
-    printf("inclination final: %f \n",direction);
+    printf("direction final: %f \n",direction);
     printf("height final: %f \n",max_height);
-    printf("direction final: %f \n",periodicity);
+    //printf("cycle final: %f \n",periodicity);
+    
 
 }
 

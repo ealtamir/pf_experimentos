@@ -106,9 +106,9 @@ public:
     btVector3 PELVIS_ORIENTATION = btVector3(0, 0, 0);
     btVector3 PELVIS_POSITION = btVector3(btScalar(0),
                                           btScalar(0.85 * BODY_SCALE),
-                                          btScalar(-0.23));
+                                          btScalar(0.0 ));
     
-    // Spine
+    // Spine 
     double SPINE_RADIUS = 0.15 * BODY_SCALE;
     double SPINE_HEIGHT = 0.127 * BODY_HEIGHT * BODY_SCALE;
     double SPINE_MASS = 0.201 * BODY_MASS * BODY_SCALE;

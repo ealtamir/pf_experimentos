@@ -15,11 +15,11 @@ public:
     virtual WalkerBody* getWalkerBody();
     
     static float getFitness(const std::vector<double> vals);
-
+    WalkerBody* body;
     
 private:
     BodyParameters* params;
-	WalkerBody* body;
+	
     
 
 protected:

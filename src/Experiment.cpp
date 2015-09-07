@@ -73,7 +73,7 @@ void Experiment::clientMoveAndDisplay()
     {
         if (!objectsInitialized) {
             initObjects();
-            //timeCount = 0;
+            timeCount = 0;
         }
         worldStep();
         m_dynamicsWorld->stepSimulation(1 / 60.);
