@@ -18,7 +18,7 @@ CapsuleBodyPart::CapsuleBodyPart(btScalar r,
     this->actuator = actuator;
     
     btVector3 inertia(0, 0, 0);
-    btQuaternion rotation(0, 0, 0, 1);
+//    btQuaternion rotation(0, 0, 0, 1);
     
     btCollisionShape* capsule = new btCapsuleShape(r, h);
     btDefaultMotionState* motionState = new btDefaultMotionState(trans);

@@ -19,7 +19,13 @@
 #include "ObjectStoppedCondition.h"
 
 const btScalar DEFAULT_EXPERIMENT_INTERVAL = 0.001;
-const btScalar DEFAULT_CHANGE_COUNTER = 10;
+const btScalar DEFAULT_CHANGE_COUNTER = 60*1000;
+const btScalar DIRECTION_CONSTANT = 180;
+const btScalar VELOCITY_CONSTANT = 0.51;
+const btScalar OBJETIVE_VELOCITY = 10;
+const btScalar CYCLE_CONSTANT = 30;
+
+
 
 class Experiment : public GlutDemoApplication
 {
@@ -39,6 +45,13 @@ public:
     
     virtual void worldStep() = 0;
     
+    virtual void simulate();
+    
+    virtual double getHeight() const;
+    
+    virtual double getVelocity() const;
+    
+    virtual double getDirection() const;
     
     
     std::string getName() {
@@ -55,6 +68,18 @@ protected:
     
     double timeCount = 0;
 
+    bool simulated = false;
+    
+    double max_height = -1; // Es uno de los parametros de la posible funcion de fitness, es la altura
+
+    double initial_height = -1; // altura inicial de la pelvis (se usa en altura)
+    
+    double average_velocity = -1; // Es el parametro principal de la posible funcion de fitness, es la velocidad
+    
+    double direction = -1; // Es uno de los parametros de la posible funcion de fitness, es la dirección
+    
+    double periodicity = -1; // Es uno de los parametros de la posible funcion de fitness, es el ciclo 
+    
     virtual void initializeBodies() = 0;
 
     virtual void initObjects() = 0;

@@ -18,8 +18,9 @@ public:
 
 	btRigidBody* getRigidBody() {return body;};
     
-    void
-    actuate(double t);
+    void actuate(double t);
+    
+    void setActuatorValues(double A, double B, double w1, double w2);
 
 protected:
 	btRigidBody* body;

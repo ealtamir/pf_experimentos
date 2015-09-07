@@ -14,7 +14,11 @@ public:
     
     BodyPart* getJointPart();
     
+    // retorna un array en donde el primero es lower y el segundo es upper y el tercero es foot
+    double* getAngles();
+    
 private:
+    double angles[3];
     btGeneric6DofConstraint*
     joinLegParts(BodyPart* upperLeg,
                  BodyPart* lowerLeg,

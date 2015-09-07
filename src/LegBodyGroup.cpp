@@ -3,6 +3,8 @@
 #include "ConstraintBuilder.h"
 #include "GenericActuator.h"
 
+#define     USE_DEFAULT     false
+
 
 LegBodyGroup::LegBodyGroup(btDynamicsWorld* world,
                            BodyParameters &params,
@@ -11,46 +13,104 @@ LegBodyGroup::LegBodyGroup(btDynamicsWorld* world,
     
     Actuator* lowerLegAct;
     Actuator* upperLegAct;
+    BodyPart* lowerLeg;
+    BodyPart* upperLeg;
+    BodyPart* foot;
+
+    btTransform trans;
+    trans.setIdentity();
     if (isLeft) {
         lowerLegAct = params.leftLowerLegAct;
         upperLegAct = params.leftUpperLegAct;
+        
     } else {
         lowerLegAct = params.rightLowerLegAct;
         upperLegAct = params.rightUpperLegAct;
     }
-    btVector3 lowerLegPos(params.L_LEG_POSITION.x() * positionAdjust.x(),
-                          params.L_LEG_POSITION.y() * positionAdjust.y(),
-                          params.L_LEG_POSITION.z() * positionAdjust.z());
     
-    BodyPart* lowerLeg = generateStandardPart(params.L_LEG_RADIUS,
-                                              params.L_LEG_HEIGHT,
-                                              params.L_LEG_MASS,
-                                              lowerLegPos,
-                                              params.bodyInitialPosition,
-                                              lowerLegAct);
+    if (isLeft || USE_DEFAULT) {
+        btVector3 lowerLegPos(params.L_LEG_POSITION.x() * positionAdjust.x(),
+                              params.L_LEG_POSITION.y() * positionAdjust.y(),
+                              params.L_LEG_POSITION.z() * positionAdjust.z());
+        
+        lowerLeg = generateStandardPart(params.L_LEG_RADIUS,
+                                        params.L_LEG_HEIGHT,
+                                        params.L_LEG_MASS,
+                                        lowerLegPos,
+                                        params.bodyInitialPosition,
+                                        lowerLegAct);
+    } else {
 
-    btVector3 upperLegPos(params.U_LEG_POSITION.x() * positionAdjust.x(),
-                          params.U_LEG_POSITION.y() * positionAdjust.y(),
-                          params.U_LEG_POSITION.z() * positionAdjust.z());
-    BodyPart* upperLeg = generateStandardPart(params.U_LEG_RADIUS,
-                                              params.U_LEG_HEIGHT,
-                                              params.U_LEG_MASS,
-                                              upperLegPos,
-                                              params.bodyInitialPosition,
-                                              upperLegAct);
+        btVector3 lowerLegPos(params.RIGHT_L_LEG_POSITION.x() * positionAdjust.x(),
+                              params.RIGHT_L_LEG_POSITION.y() * positionAdjust.y(),
+                              params.RIGHT_L_LEG_POSITION.z() * positionAdjust.z());
+        trans.setIdentity();
+        trans.setOrigin(lowerLegPos);
+        trans.setRotation(params.RIGHT_LOWER_LEG_ROTATION);
+        lowerLeg = generateStandardPart(params.L_LEG_RADIUS,
+                                        params.L_LEG_HEIGHT,
+                                        params.L_LEG_MASS,
+                                        trans,
+                                        params.bodyInitialPosition,
+                                        lowerLegAct);
+    }
     
-    btTransform footTrans;
-    btVector3 footPos(params.FOOT_POSITION.x() * positionAdjust.x(),
-                      params.FOOT_POSITION.y() * positionAdjust.y(),
-                      params.FOOT_POSITION.z() * positionAdjust.z());
-    footTrans.setIdentity();
-    footTrans.setOrigin(footPos);
-    footTrans.getBasis().setEulerZYX(params.FOOT_ORIENTATION.x(),
-                                     params.FOOT_ORIENTATION.y(),
-                                     params.FOOT_ORIENTATION.z());
-    BodyPart* foot = generateFoot(params.FOOT_MASS,
-                                  footTrans,
-                                  params.bodyInitialPosition);
+
+    if (isLeft || USE_DEFAULT) {
+        btVector3 upperLegPos(params.U_LEG_POSITION.x() * positionAdjust.x(),
+                              params.U_LEG_POSITION.y() * positionAdjust.y(),
+                              params.U_LEG_POSITION.z() * positionAdjust.z());
+        upperLeg = generateStandardPart(params.U_LEG_RADIUS,
+                                        params.U_LEG_HEIGHT,
+                                        params.U_LEG_MASS,
+                                        upperLegPos,
+                                        params.bodyInitialPosition,
+                                        upperLegAct);
+
+    } else {
+        btVector3 upperLegPos(params.RIGHT_U_LEG_POSITION.x() * positionAdjust.x(),
+                              params.RIGHT_U_LEG_POSITION.y() * positionAdjust.y(),
+                              params.RIGHT_U_LEG_POSITION.z() * positionAdjust.z());
+        
+        trans.setIdentity();
+        trans.setOrigin(upperLegPos);
+        trans.setRotation(params.RIGHT_LEG_ROTATION);
+        upperLeg = generateStandardPart(params.U_LEG_RADIUS,
+                                        params.U_LEG_HEIGHT,
+                                        params.U_LEG_MASS,
+                                        trans,
+                                        params.bodyInitialPosition,
+                                        upperLegAct);
+    }
+
+    if (isLeft || USE_DEFAULT) {
+        btTransform footTrans;
+        btVector3 footPos(params.FOOT_POSITION.x() * positionAdjust.x(),
+                          params.FOOT_POSITION.y() * positionAdjust.y(),
+                          params.FOOT_POSITION.z() * positionAdjust.z());
+        footTrans.setIdentity();
+        footTrans.setOrigin(footPos);
+        footTrans.getBasis().setEulerZYX(params.FOOT_ORIENTATION.x(),
+                                         params.FOOT_ORIENTATION.y(),
+                                         params.FOOT_ORIENTATION.z());
+        foot = generateFoot(params.FOOT_MASS,
+                            footTrans,
+                            params.bodyInitialPosition);
+    } else {
+        btTransform footTrans;
+        btVector3 footPos(params.RIGHT_FOOT_POSITION.x() * positionAdjust.x(),
+                          params.RIGHT_FOOT_POSITION.y() * positionAdjust.y(),
+                          params.RIGHT_FOOT_POSITION.z() * positionAdjust.z());
+        footTrans.setIdentity();
+        footTrans.setOrigin(footPos);
+        footTrans.getBasis().setEulerZYX(params.FOOT_ORIENTATION.x(),
+                                         params.FOOT_ORIENTATION.y(),
+                                         params.FOOT_ORIENTATION.z());
+        foot = generateFoot(params.FOOT_MASS,
+                            footTrans,
+                            params.bodyInitialPosition);
+    }
+
     
     bodyParts.push_back(lowerLeg);
     bodyParts.push_back(upperLeg);
@@ -105,4 +165,40 @@ LegBodyGroup::createAnkle(BodyPart* lowerLeg,
 BodyPart*
 LegBodyGroup::getJointPart() {
     return bodyParts[1];
+}
+
+double*
+LegBodyGroup::getAngles() {
+    
+    BodyPart* lower= bodyParts[0];
+    btRigidBody * lower_rigid = lower->getRigidBody();
+    btTransform v = lower_rigid->getCenterOfMassTransform();
+    double z = v.getOrigin().getZ();
+    double y = v.getOrigin().getY();
+    angles[0] = ((z==0)?0:(asin(fmin(1.0, fmax(-1.0,z/y)))*180/M_PI));
+    
+    BodyPart* upper= bodyParts[1];
+    btRigidBody * upper_rigid = upper->getRigidBody();
+    v = upper_rigid->getCenterOfMassTransform();
+    z = v.getOrigin().getZ();
+    y = v.getOrigin().getY();
+    angles[1] = ((z==0)?0:(asin(fmin(1.0, fmax(-1.0,z/y)))*180/M_PI));
+    
+    BodyPart* foot= bodyParts[2];
+    btRigidBody * foot_rigid = upper->getRigidBody();
+    v = foot_rigid->getCenterOfMassTransform();
+    z = v.getOrigin().getZ();
+    y = v.getOrigin().getY();
+    angles[2] = ((z==0)?0:(asin(fmin(1.0, fmax(-1.0,z/y)))*180/M_PI));
+    
+    /*for (int i=0; i<2; i++) {
+        BodyPart* bp= bodyParts[i];
+        btRigidBody * bp_rigid = bp->getRigidBody();
+        btTransform v = bp_rigid->getCenterOfMassTransform();
+        double z = v.getOrigin().getZ();
+        double y = v.getOrigin().getY();
+        angles[i] = ((z==0)?0:(asin(fmin(1.0, fmax(-1.0,z/y)))*180/M_PI));
+    }*/
+    
+    return angles;
 }
