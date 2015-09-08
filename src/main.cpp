@@ -31,7 +31,7 @@
 #include "PassiveWalkerExperiment.h"
 
 
-#define VALUES_SIZE 20
+#define VALUES_SIZE 15
 
 int mainLoop();
 double getTimeElapsed();
@@ -100,7 +100,7 @@ void MiExperimentoObserver::EvolutionStateChanged(GaAlgorithmState newState, con
 
 void MiExperimentoObserver::StatisticUpdate(const Common::GaStatistics &statistics, const Algorithm::GaAlgorithm &algorithm) {
     cout << "Generation: " << statistics.GetCurrentGeneration() << endl;
-    cout << "Number of chromosomes: " << algorithm.GetPopulation(0).GetCurrentSize() << endl;
+//    cout << "Number of chromosomes: " << algorithm.GetPopulation(0).GetCurrentSize() << endl;
 }
 
 int main(int argc,char* argv[]) {
@@ -109,46 +109,51 @@ int main(int argc,char* argv[]) {
     if(visual) {
     
         // Visual
-        PassiveWalkerExperiment demoApp;
-        demoApp.enableStoppingCondition(false);
-        demoApp.initPhysics();
-        demoApp.setCameraDistance(btScalar(5.));
-        demoApp.setCameraUp(btVector3(0, 15, 0));
+        PassiveWalkerExperiment* experiment = new PassiveWalkerExperiment();
+        experiment->enableStoppingCondition(false);
+        experiment->initPhysics();
+        experiment->setCameraDistance(btScalar(5.));
+        experiment->setCameraUp(btVector3(0, 15, 0));
     
-        const std::vector<double> vals = {18.1344,75.2887,0.461302,2.16036,42.165,24.7066,2.60708,2.25458,21.4392,16.0233,3.06373,0.542407,82.897,80.8128,0.017934,2.14528,67.6801,19.7501,2.44676,0.263374};
+        const std::vector<double> vals = {77.7548,93.6479,8.60052,9.80787,98.3977,12.8448,77.9981,32.5632,77.7815,0.201508,0.526796,0.553807,34.6279,0.933176,0.562067};
     
         int i = 0;
         // left leg
-        demoApp.body->getBodyGroups()[0]->getBodyParts()[0]->setActuatorValues(vals[i*4+0],
-                                                                                vals[i*4+1],
-                                                                                vals[i*4+2],
-                                                                                vals[i*4+3]);
-        i++;
-        demoApp.body->getBodyGroups()[0]->getBodyParts()[1]->setActuatorValues(vals[i*4+0],
-                                                                                vals[i*4+1],
-                                                                                vals[i*4+2],
-                                                                                vals[i*4+3]);
-        i++;
-    
+        experiment->body->getBodyGroups()[0]->getBodyParts()[0]->setActuatorValues(vals[i*5+0],
+                                                                                   vals[i*5+1],
+                                                                                   vals[i*5+2],
+                                                                                   vals[i*5+3],
+                                                                                   vals[i*5+4]);
         // right leg
-        demoApp.body->getBodyGroups()[1]->getBodyParts()[0]->setActuatorValues(vals[i*4+0],
-                                                                                vals[i*4+1],
-                                                                                vals[i*4+2],
-                                                                                vals[i*4+3]);
+        experiment->body->getBodyGroups()[1]->getBodyParts()[0]->setActuatorValues(vals[i*5+0],
+                                                                                   vals[i*5+1],
+                                                                                   vals[i*5+2],
+                                                                                   vals[i*5+3],
+                                                                                   vals[i*5+4] + SIMD_PI);
         i++;
-        demoApp.body->getBodyGroups()[1]->getBodyParts()[1]->setActuatorValues(vals[i*4+0],
-                                                                                vals[i*4+1],
-                                                                                vals[i*4+2],
-                                                                                vals[i*4+3]);
+        
+        // left leg
+        experiment->body->getBodyGroups()[0]->getBodyParts()[1]->setActuatorValues(vals[i*5+0],
+                                                                                   vals[i*5+1],
+                                                                                   vals[i*5+2],
+                                                                                   vals[i*5+3],
+                                                                                   vals[i*5+4]);
+        // right leg
+        experiment->body->getBodyGroups()[1]->getBodyParts()[1]->setActuatorValues(vals[i*5+0],
+                                                                                   vals[i*5+1],
+                                                                                   vals[i*5+2],
+                                                                                   vals[i*5+3],
+                                                                                   vals[i*5+4] + SIMD_PI);
         i++;
         // hip
-        demoApp.body->getBodyGroups()[2]->getBodyParts()[0]->setActuatorValues(vals[i*4+0],
-                                                                                vals[i*4+1],
-                                                                                vals[i*4+2],
-                                                                                vals[i*4+3]);
+        experiment->body->getBodyGroups()[2]->getBodyParts()[0]->setActuatorValues(vals[i*5+0],
+                                                                                   vals[i*5+1],
+                                                                                   vals[i*5+2],
+                                                                                   vals[i*5+3],
+                                                                                   vals[i*5+4]);
     
     
-        return glutmain(argc, argv, 1024, 768, "Experiment",&demoApp);
+        return glutmain(argc, argv, 1024, 768, "Experiment",experiment);
     } else {
     /*PassiveWalkerExperiment* exp= new PassiveWalkerExperiment();
     exp->initPhysics();
@@ -181,16 +186,20 @@ int mainLoop() {
     
     GaValueIntervalBounds<double> valueInt( 0, 100 );
     GaValueIntervalBounds<double> invValueInt( 0, 100 );
-    GaValueIntervalBounds<double> valueInt2( 0, 3.14 );
-    GaValueIntervalBounds<double> invValueInt2( 0, 3.14 );
+    GaValueIntervalBounds<double> valueInt2( 0.5, 10 );
+    GaValueIntervalBounds<double> invValueInt2( 0.5, 10 );
+    GaValueIntervalBounds<double> valueInt3( 0, SIMD_PI );
+    GaValueIntervalBounds<double> invValueInt3( 0, SIMD_PI );
+    GaValueIntervalBounds<double> valueInt4( 0, 1 );
+    GaValueIntervalBounds<double> invValueInt4( 0, 1 );
     GaIntervalValueSet<double> valueSet( valueInt, invValueInt, GaGlobalRandomDoubleGenerator, false);
     GaIntervalValueSet<double> valueSet2( valueInt2, invValueInt2, GaGlobalRandomDoubleGenerator, false);
+    GaIntervalValueSet<double> valueSet3( valueInt3, invValueInt3, GaGlobalRandomDoubleGenerator, false);
+    GaIntervalValueSet<double> valueSet4( valueInt4, invValueInt4, GaGlobalRandomDoubleGenerator, false);
     GaIntervalValueSet<double> *multiValueSet[VALUES_SIZE] = {
-                                                    &valueSet,&valueSet,&valueSet2,&valueSet2,
-                                                    &valueSet,&valueSet,&valueSet2,&valueSet2,
-                                                    &valueSet,&valueSet,&valueSet2,&valueSet2,
-                                                    &valueSet,&valueSet,&valueSet2,&valueSet2,
-                                                    &valueSet,&valueSet,&valueSet2,&valueSet2
+                                                    &valueSet,&valueSet,&valueSet2,&valueSet2, &valueSet3,
+                                                    &valueSet,&valueSet,&valueSet2,&valueSet2, &valueSet3,
+                                                    &valueSet4,&valueSet4,&valueSet4,&valueSet4, &valueSet3
                                                     };
     
     GaChromosomeDomainBlock<double>* _ccb = new GaChromosomeDomainBlock<double>(
@@ -230,7 +239,7 @@ int mainLoop() {
     Algorithm::SimpleAlgorithms::GaIncrementalAlgorithm* _algorithm = new Algorithm::SimpleAlgorithms::GaIncrementalAlgorithm( _population, algParam );
     
     GaStopCriteria* criteria = GaStopCriteriaCatalogue::Instance().GetEntryData( "GaGenerationCriteria" );
-    Algorithm::StopCriterias::GaGenerationCriteriaParams critParam( 2500 );
+    Algorithm::StopCriterias::GaGenerationCriteriaParams critParam( 2000 );
     _algorithm->SetStopCriteria( criteria, &critParam );
     
     // subscribe observer

@@ -20,7 +20,7 @@ public:
     
     void actuate(double t);
     
-    void setActuatorValues(double A, double B, double w1, double w2);
+    void setActuatorValues(double A, double B, double w1, double w2, double fase);
 
 protected:
 	btRigidBody* body;

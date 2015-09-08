@@ -101,7 +101,7 @@ public:
     // Torso body group
     // Pelvis
     double PELVIS_RADIUS = 0.15 * BODY_SCALE;
-    double PELVIS_HEIGHT = 0.01 * BODY_HEIGHT * BODY_SCALE;
+    double PELVIS_HEIGHT = 0.05 * BODY_HEIGHT * BODY_SCALE;
     double PELVIS_MASS = 0.1366 * BODY_MASS * BODY_SCALE;
     btVector3 PELVIS_ORIENTATION = btVector3(0, 0, 0);
     btVector3 PELVIS_POSITION = btVector3(btScalar(0),
@@ -183,8 +183,8 @@ public:
                                            btScalar(-0.15 * BODY_SCALE),
                                            btScalar(0.));
     
-    btVector3 hipLowerAngularLimit = btVector3(-SIMD_PI * 0.2, -SIMD_EPSILON, -SIMD_PI * 0.3);
-    btVector3 hipUpperAngularLimit = btVector3(SIMD_PI * 0.2, SIMD_EPSILON, SIMD_PI * 0.6);
+    btVector3 hipLowerAngularLimit = btVector3(-SIMD_PI * 0.2, -SIMD_EPSILON * 0.5, -SIMD_PI * 0.3);
+    btVector3 hipUpperAngularLimit = btVector3(SIMD_PI * 0.2, SIMD_EPSILON * 0.5, SIMD_PI * 0.6);
     
     btVector3 hipPelvis_eulerZYX = btVector3(0, SIMD_HALF_PI, 0);
     btVector3 hipSpine_eulerZYX = btVector3(0, SIMD_HALF_PI, 0);
@@ -248,7 +248,7 @@ public:
                                         btScalar(U_LEG_HEIGHT / 2),
                                         btScalar(0.));
     
-    btVector3 leftHipAngularUpperLimit = btVector3(SIMD_HALF_PI * 0.8, 0., 0.);
+    btVector3 leftHipAngularUpperLimit = btVector3(SIMD_HALF_PI * 0.5, 0., 0.);
     btVector3 leftHipAngularLowerLimit = btVector3(-SIMD_HALF_PI * 0.5, 0., 0.);
     
     
@@ -261,7 +261,7 @@ public:
                                          btScalar(U_LEG_HEIGHT / 2),
                                          btScalar(0.));
     
-    btVector3 rightHipAngularUpperLimit = btVector3(SIMD_HALF_PI * 0.8, 0., 0.);
+    btVector3 rightHipAngularUpperLimit = btVector3(SIMD_HALF_PI * 0.5, 0., 0.);
     btVector3 rightHipAngularLowerLimit = btVector3(-SIMD_HALF_PI * 0.5, 0., 0.);
 };
 
