@@ -75,9 +75,9 @@ public:
     //foots
     double FOOT_MASS = 0.0143 * BODY_MASS * BODY_SCALE;
     btVector3 FOOT_ORIENTATION = btVector3(0, 0, 0);
-    btVector3 FOOT_POSITION = btVector3(btScalar(0.18 * BODY_SCALE),
-                                        btScalar(-0.1 * BODY_SCALE),
-                                        btScalar(-0.075 * BODY_SCALE));
+    btVector3 FOOT_POSITION = btVector3(btScalar(0.075 + 0.1 * BODY_SCALE),
+                                        btScalar(-0.015),
+                                        btScalar(0.075 - 0.1 * BODY_SCALE));
     
     // Arm body group
     //lower arm
@@ -106,7 +106,7 @@ public:
     btVector3 PELVIS_ORIENTATION = btVector3(0, 0, 0);
     btVector3 PELVIS_POSITION = btVector3(btScalar(0),
                                           btScalar(0.85 * BODY_SCALE),
-                                          btScalar(0.0 ));
+                                          btScalar(-PELVIS_RADIUS));
     
     // Spine 
     double SPINE_RADIUS = 0.15 * BODY_SCALE;
@@ -138,9 +138,9 @@ public:
                                                btScalar((0.65 + a) * BODY_SCALE),
                                                btScalar(-b));
     
-    btVector3 RIGHT_FOOT_POSITION = btVector3(btScalar(0.18 * BODY_SCALE),
-                                              btScalar((-0.1 + a + 0.1) * BODY_SCALE),
-                                              btScalar((-0.075 - b * 2 - 0.1) * BODY_SCALE));
+    btVector3 RIGHT_FOOT_POSITION = btVector3(btScalar(0.075),
+                                              btScalar(-0.015 + (-0.1 + a + 0.1) * BODY_SCALE),
+                                              btScalar(0.075 + (-0.075 - b * 2 - 0.1) * BODY_SCALE));
     
 
     
@@ -154,11 +154,11 @@ public:
     
     
     // ANKLE
-    btVector3 ankleFootOffset = btVector3(btScalar(0.065),
-                                          btScalar(0.1),
-                                          btScalar(0.09));
+    btVector3 ankleFootOffset = btVector3(btScalar(0.0),
+                                          btScalar(0.03),
+                                          btScalar(0.0));
     btVector3 ankleLowerLegOffset = btVector3(btScalar(0),
-                                              btScalar(-L_LEG_HEIGHT / 2),
+                                              btScalar(-L_LEG_RADIUS-L_LEG_HEIGHT / 2),
                                               btScalar(0));
     btVector3 ankleAngularLowerLimit = btVector3(-SIMD_EPSILON,-SIMD_EPSILON,-SIMD_EPSILON);
     btVector3 ankleAngularUpperLimit = btVector3(SIMD_EPSILON,SIMD_EPSILON,SIMD_EPSILON);

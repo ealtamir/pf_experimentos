@@ -84,11 +84,12 @@ void MiExperimentoObserver::NewBestChromosome(const GaChromosome& newChromosome,
     const std::vector<double>& vals = dynamic_cast<const GaMVArithmeticChromosome<double>*>( &newChromosome )->GetCode();
     cout << "New chromosome found:" << endl;
     for(int i = 0; i < vals.size(); i++){
-        cout << vals[i] << ",";
+        cout << vals[i] << ", ";
         values[i] = vals[i];
     }
     fitness = newChromosome.GetFitness();
-    cout << endl << "Fitness: " << fitness << endl;
+    cout << endl << "Fitness: " << fitness;
+    cout << endl << "Generation: " << algorithm.GetAlgorithmStatistics().GetCurrentGeneration() << endl;
 }
 
 void MiExperimentoObserver::EvolutionStateChanged(GaAlgorithmState newState, const GaAlgorithm& algorithm) {
@@ -99,7 +100,7 @@ void MiExperimentoObserver::EvolutionStateChanged(GaAlgorithmState newState, con
 }
 
 void MiExperimentoObserver::StatisticUpdate(const Common::GaStatistics &statistics, const Algorithm::GaAlgorithm &algorithm) {
-    cout << "Generation: " << statistics.GetCurrentGeneration() << endl;
+//    cout << "Generation: " << statistics.GetCurrentGeneration() << endl;
 //    cout << "Number of chromosomes: " << algorithm.GetPopulation(0).GetCurrentSize() << endl;
 }
 
@@ -107,7 +108,6 @@ int main(int argc,char* argv[]) {
     bool visual = true;
     
     if(visual) {
-    
         // Visual
         PassiveWalkerExperiment* experiment = new PassiveWalkerExperiment();
         experiment->enableStoppingCondition(false);
@@ -115,7 +115,7 @@ int main(int argc,char* argv[]) {
         experiment->setCameraDistance(btScalar(5.));
         experiment->setCameraUp(btVector3(0, 15, 0));
     
-        const std::vector<double> vals = {77.7548,93.6479,8.60052,9.80787,98.3977,12.8448,77.9981,32.5632,77.7815,0.201508,0.526796,0.553807,34.6279,0.933176,0.562067};
+        const std::vector<double> vals = {146.032, 86.2208, 3.81322, 9.65075, 86.7628, 90.9459, 107.96, 9.82448, 5.35343, 5.68214, 0.0324722, 0.0664948, 0.0309905, 0.0995999, 0.072406};
     
         int i = 0;
         // left leg
@@ -155,23 +155,7 @@ int main(int argc,char* argv[]) {
     
         return glutmain(argc, argv, 1024, 768, "Experiment",experiment);
     } else {
-    /*PassiveWalkerExperiment* exp= new PassiveWalkerExperiment();
-    exp->initPhysics();
-    for (int i = 0; i < 100; i++) {
-        btDynamicsWorld* w = exp->getDynamicsWorld();
-        w->stepSimulation(1 / 60.f);
-        
-        double value = exp->getWalkerBody()->getHeight();
-        std::cout << "altura? " << value << std::endl;
-        
-    }
-    exp->simulate();
-    
-    printf("la height: %f",exp->getHeight());
-    */
-    
-    // GA
-    
+        // GA
        return mainLoop();
     }
 }
@@ -184,14 +168,14 @@ int mainLoop() {
     
     GaInitialize();
     
-    GaValueIntervalBounds<double> valueInt( 0, 100 );
-    GaValueIntervalBounds<double> invValueInt( 0, 100 );
+    GaValueIntervalBounds<double> valueInt( 0, 150 );
+    GaValueIntervalBounds<double> invValueInt( 0, 150 );
     GaValueIntervalBounds<double> valueInt2( 0.5, 10 );
     GaValueIntervalBounds<double> invValueInt2( 0.5, 10 );
-    GaValueIntervalBounds<double> valueInt3( 0, SIMD_PI );
-    GaValueIntervalBounds<double> invValueInt3( 0, SIMD_PI );
-    GaValueIntervalBounds<double> valueInt4( 0, 1 );
-    GaValueIntervalBounds<double> invValueInt4( 0, 1 );
+    GaValueIntervalBounds<double> valueInt3( 0, 3.14*2 );
+    GaValueIntervalBounds<double> invValueInt3( 0, 3.14*2 );
+    GaValueIntervalBounds<double> valueInt4( 0, 0.1 );
+    GaValueIntervalBounds<double> invValueInt4( 0, 0.1 );
     GaIntervalValueSet<double> valueSet( valueInt, invValueInt, GaGlobalRandomDoubleGenerator, false);
     GaIntervalValueSet<double> valueSet2( valueInt2, invValueInt2, GaGlobalRandomDoubleGenerator, false);
     GaIntervalValueSet<double> valueSet3( valueInt3, invValueInt3, GaGlobalRandomDoubleGenerator, false);
@@ -199,7 +183,7 @@ int mainLoop() {
     GaIntervalValueSet<double> *multiValueSet[VALUES_SIZE] = {
                                                     &valueSet,&valueSet,&valueSet2,&valueSet2, &valueSet3,
                                                     &valueSet,&valueSet,&valueSet2,&valueSet2, &valueSet3,
-                                                    &valueSet4,&valueSet4,&valueSet4,&valueSet4, &valueSet3
+                                                    &valueSet4,&valueSet4,&valueSet4,&valueSet4, &valueSet4
                                                     };
     
     GaChromosomeDomainBlock<double>* _ccb = new GaChromosomeDomainBlock<double>(
@@ -209,14 +193,14 @@ int mainLoop() {
                         GaMutationCatalogue::Instance().GetEntryData( "GaFlipMutation" ),
                         new MiExperimentoFitness(),
                         GaFitnessComparatorCatalogue::Instance().GetEntryData( "GaMaxFitnessComparator" ),
-                        new GaChromosomeParams( 0.08f, 4, false, 0.8f, 5 ) );
+                        new GaChromosomeParams( 0.08f, 4, true, 0.75f, 2 ) );
     
     
     
     GaMVArithmeticChromosome<double> _prototype( VALUES_SIZE, _ccb );
     
     GaPopulationParameters populationParams( 50, false, false, false, 0, 0 );
-    Population::SelectionOperations::GaSelectRandomBestParams selectParams( 15, false, 2 );
+    Population::SelectionOperations::GaSelectRandomBestParams selectParams( 15, false, 4 );
     Population::ReplacementOperations::GaReplaceElitismParams replaceParams( 6, 3 );
     GaCouplingParams couplingParams( 6, false );
     Population::ScalingOperations::GaScaleFactorParams scalingParams(1);
@@ -235,7 +219,7 @@ int mainLoop() {
     
     GaPopulation* _population = new GaPopulation( &_prototype, _populationConfiguration );
     
-    GaMultithreadingAlgorithmParams algParam( 10 );
+    GaMultithreadingAlgorithmParams algParam( 1 );
     Algorithm::SimpleAlgorithms::GaIncrementalAlgorithm* _algorithm = new Algorithm::SimpleAlgorithms::GaIncrementalAlgorithm( _population, algParam );
     
     GaStopCriteria* criteria = GaStopCriteriaCatalogue::Instance().GetEntryData( "GaGenerationCriteria" );
