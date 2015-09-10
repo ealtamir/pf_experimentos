@@ -115,7 +115,7 @@ void Experiment::simulate(){
     double acum_cycles = 0;
     int cycles = -1;
     double* last_cycles = walker->getAnglesLegs();
-    
+    //double previous_angle_x = 0, previous_angle_z = 0;
     
     
     initial_position = walker->getPosition();
@@ -132,7 +132,7 @@ void Experiment::simulate(){
         double t = (i+1) * DEFAULT_EXPERIMENT_INTERVAL;
         double value = walker->getHeight();
         value-= 0.68;
-        //printf("%d - %f\n",i,value);
+        
             
         acum_height += fabs(value - initial_height);
         
@@ -141,11 +141,13 @@ void Experiment::simulate(){
         double final_position = walker->getPosition();
         //printf("%d - %f\n", i, final_position);
         acum_position += fabs(final_position-(initial_position+OBJETIVE_VELOCITY*(t+DEFAULT_EXPERIMENT_INTERVAL)));
-        //average_velocity = (final_position - initial_position);
+        
         
         double angle = walker->getAngleInclination();
         //printf("%d - %f\n", i, angle);
-        acum_direction += fabs( angle - initial_angle);
+        acum_direction += fabs( angle );
+        
+        
         int new_cycles = walker->getCycleQuantity();
         if(new_cycles == cycles+1){
             double *angles= walker->getAnglesLegs();
@@ -161,19 +163,31 @@ void Experiment::simulate(){
     
 //    printf("acum direction: %f \n", acum_direction);
     
-    max_height = 1 - acum_height/ (DEFAULT_CHANGE_COUNTER * initial_height);
+    max_height = 1 - acum_height/ ((DEFAULT_CHANGE_COUNTER) * initial_height);
     
     average_velocity = 1 - acum_position/(pow(DEFAULT_CHANGE_COUNTER,2) * VELOCITY_CONSTANT * OBJETIVE_VELOCITY * DEFAULT_EXPERIMENT_INTERVAL);
     
-    direction = 1 - acum_direction/(DIRECTION_CONSTANT * DEFAULT_CHANGE_COUNTER);
+    //direction = 1 - acum_direction/(DIRECTION_CONSTANT * DEFAULT_CHANGE_COUNTER);
+    
+    direction = acum_direction/(DIRECTION_CONSTANT * DEFAULT_CHANGE_COUNTER);
     
     periodicity = 1 - acum_cycles/(CYCLE_CONSTANT * BODY_PART_QTY * walker->getCycleQuantity());
     
-//    printf("velocity final: %f \n",average_velocity);
-//    printf("direction final: %f \n",direction);
+   printf("velocity final: %f \n",average_velocity);
+   printf("direction final: %f \n",direction);
 //    printf("height final: %f \n",max_height);
     //printf("cycle final: %f \n",periodicity);
     
 
+}
+
+double getDirectionAngle(double previous_position_x, double previous_position_z, double actual_position_x, double actual_position_z){
+    
+    double x = actual_position_x - previous_position_x;
+    double z = actual_position_z - previous_position_z;
+    if (x==0){
+        return 0;
+    }
+    return (asin(fmin(1.0, fmax(-1.0,x/z)))*180/M_PI);
 }
 
