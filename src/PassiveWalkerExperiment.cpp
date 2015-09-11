@@ -58,7 +58,7 @@ float PassiveWalkerExperiment::getFitness(const std::vector<double> vals) {
     experiment->simulate();
     
     
-    double value = experiment->getHeight();// * experiment->getVelocity() * experiment->getDirection();
+    double value = experiment->getHeight() * experiment->getDirection();// * experiment->getVelocity();
 //    std::cout << value << std::endl;
     return value;
 }
@@ -115,7 +115,6 @@ void Experiment::simulate(){
     double acum_cycles = 0;
     int cycles = -1;
     double* last_cycles = walker->getAnglesLegs();
-    //double previous_angle_x = 0, previous_angle_z = 0;
     
     
     initial_position = walker->getPosition();
@@ -123,8 +122,6 @@ void Experiment::simulate(){
     
     initial_height = walker->getHeight();
     initial_height-= 0.65;
-    //printf("angle inicial: %f \n",initial_angle);
-    
     
     
     for (int i = 0; i < DEFAULT_CHANGE_COUNTER; i++) {
@@ -132,19 +129,21 @@ void Experiment::simulate(){
         double t = (i+1) * DEFAULT_EXPERIMENT_INTERVAL;
         double value = walker->getHeight();
         value-= 0.68;
-        
-            
         acum_height += fabs(value - initial_height);
         
         
-        
         double final_position = walker->getPosition();
-        //printf("%d - %f\n", i, final_position);
+        
+        
+        // --- cambio de la formula del informe del cuadrupedo respecto de la velocidad: la ecuacion de movimiento uniforme seria x*t, y no x*t*dt
         acum_position += fabs(final_position-(initial_position+OBJETIVE_VELOCITY*(t+DEFAULT_EXPERIMENT_INTERVAL)));
+        
+        // --- asi es como esta escrita la formula en el informe del cuadrupedo
+        
+        //acum_position += fabs(final_position-(initial_position+OBJETIVE_VELOCITY*(t*DEFAULT_EXPERIMENT_INTERVAL)));
         
         
         double angle = walker->getAngleInclination();
-        //printf("%d - %f\n", i, angle);
         acum_direction += fabs( angle );
         
         
@@ -161,11 +160,14 @@ void Experiment::simulate(){
 
     }
     
-//    printf("acum direction: %f \n", acum_direction);
     
     max_height = 1 - acum_height/ ((DEFAULT_CHANGE_COUNTER) * initial_height);
     
     average_velocity = 1 - acum_position/(pow(DEFAULT_CHANGE_COUNTER,2) * VELOCITY_CONSTANT * OBJETIVE_VELOCITY * DEFAULT_EXPERIMENT_INTERVAL);
+    
+    //ponemos bounds entre 0 y 1
+    average_velocity = fmin(1.0, fmax(0,average_velocity));
+    
     
     //direction = 1 - acum_direction/(DIRECTION_CONSTANT * DEFAULT_CHANGE_COUNTER);
     
