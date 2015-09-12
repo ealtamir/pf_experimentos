@@ -51,6 +51,11 @@ After all you should get something like this:
 ![alt tag](https://raw.githubusercontent.com/ealtamir/pf_experimentos/start-genetic-algorithm/readme1.png)
 ![alt tag](https://raw.githubusercontent.com/ealtamir/pf_experimentos/start-genetic-algorithm/readme2.png)
 
+11- Change the XCode's build location. This is needed because we use relative paths to read files
+from the project directory. In order to do this, you have to go to XCode's options (shortcut Command-,), 
+then Locations > advanced button, choose custom and enter something like: "/Users/Username/PF/proyectoDir/bin"
+for intermediates enter "/Users/Username/PF/proyectoDir/bin/Intermediates"
+
 ### FAQ ###
 
 - **Followed all the steps, tried to compile the project and failed because errors in one specific file.**
