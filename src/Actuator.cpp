@@ -10,9 +10,6 @@
 
 
 Actuator::Actuator(bool isLeft) {
-    if (isLeft) {
-        fase = SIMD_PI;
-    }
 }
 
 btVector3 Actuator::eval(double t) {

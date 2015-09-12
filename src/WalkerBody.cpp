@@ -73,14 +73,27 @@ WalkerBody::getAngleInclination(){
     btRigidBody* rigidBody = bp->getRigidBody();
     btTransform v;
     rigidBody->getMotionState()->getWorldTransform(v);
+    btVector3 actual_position = v.getOrigin();
+    double angle=actual_position.dot(previous)/(actual_position.norm()*previous.norm());
     
-    double x = v.getOrigin().getX();
-    double y = v.getOrigin().getY();
+    previous=actual_position; //estamos tomando la ""velocidad"" instantanea
+    
+    return (acos(fmin(1.0, fmax(-1.0,angle)))*180/M_PI);
+    
+    /*double actual_position_x = v.getOrigin().getX();
+    double actual_position_z = v.getOrigin().getZ();
+    
+    double x = actual_position_x - previous_position_x;
+    double z = actual_position_z - previous_position_z;
+    
+    previous_position_x = actual_position_x;
+    previous_position_z = actual_position_z;
+    
     if (x==0){
         return 0;
     }
-    return (asin(fmin(1.0, fmax(-1.0,x/y)))*180/M_PI);
-    //return (acos(fmin(1.0, fmax(-1.0,y/x)))*180/M_PI); // lo del fmin y fmax es para limitar el input de acos entre 1 y -1 (y a veces puede haber error de cómputo)
+    return (asin(fmin(1.0, fmax(-1.0,x/z)))*180/M_PI);
+    */
 }
 
 void

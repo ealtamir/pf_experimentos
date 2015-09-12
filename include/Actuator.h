@@ -23,13 +23,11 @@ public:
     virtual void setB(double valueB) = 0;
     virtual void setw1(double valuew1) = 0;
     virtual void setw2(double valuew2) = 0;
+    virtual void setFase(double valuew2) = 0;
     
 protected:
     virtual btVector3
-    actuatorFunc(double t) = 0;
-    
-    double fase = 0;
-    
+    actuatorFunc(double t) = 0;   
 
 };
 

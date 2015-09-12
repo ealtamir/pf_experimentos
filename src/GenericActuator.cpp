@@ -34,3 +34,7 @@ void GenericActuator::setw1(double valuew1) {
 void GenericActuator::setw2(double valuew2) {
     w2 = valuew2;
 }
+
+void GenericActuator::setFase(double valueFase) {
+    fase = valueFase;
+}
