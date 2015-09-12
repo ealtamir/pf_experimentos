@@ -112,11 +112,11 @@ int main(int argc,char* argv[]) {
 
     if(visual) {
         // Visual
-        PassiveWalkerExperiment demoApp;
-        demoApp.enableStoppingCondition(false);
-        demoApp.initPhysics();
-        demoApp.setCameraDistance(btScalar(5.));
-        demoApp.setCameraUp(btVector3(0, 15, 0));
+        PassiveWalkerExperiment* experiment = new PassiveWalkerExperiment();
+        experiment->enableStoppingCondition(false);
+        experiment->initPhysics();
+        experiment->setCameraDistance(btScalar(5.));
+        experiment->setCameraUp(btVector3(0, 15, 0));
     
         std::string exePath(argv[0]);
         std::vector<double> vals = loadPreviousParams(exePath);
