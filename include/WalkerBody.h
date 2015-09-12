@@ -31,6 +31,9 @@ protected:
     createTorso(btDynamicsWorld* world, BodyParameters &params);
     int cicleQty = -1;
     double last_angle = 0;
+    
+    /* Se usan para calcular la direccion del doll, para el fitness*/
+    btVector3 previous = btVector3(0,0,1);
 };
 
 

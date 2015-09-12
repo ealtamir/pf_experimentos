@@ -16,20 +16,20 @@ ConvexHullBodyPart::ConvexHullBodyPart(btVector3 points[], btScalar mass, const 
     
     
     btConvexHullShape* convexHullShape = new btConvexHullShape(0,0,sizeof(btVector3));
-    convexHullShape->addPoint(btVector3(0        ,0.03     ,0));
-    convexHullShape->addPoint(btVector3(0.075*2  ,0.03     ,0));
+    convexHullShape->addPoint(btVector3(-0.075 ,0.015     ,-0.075));
+    convexHullShape->addPoint(btVector3(0.075  ,0.015     ,-0.075));
     
-    convexHullShape->addPoint(btVector3(0        ,0.03/10  ,2*0.15/8));
-    convexHullShape->addPoint(btVector3(0.075*2  ,0.03/10  ,2*0.15/8));
+    convexHullShape->addPoint(btVector3(-0.075 ,-0.015/2  ,2*0.075/8));
+    convexHullShape->addPoint(btVector3(0.075  ,-0.015/2  ,2*0.075/8));
     
-    convexHullShape->addPoint(btVector3(0        ,0        ,2*0.15/4));
-    convexHullShape->addPoint(btVector3(0.075*2  ,0        ,2*0.15/4));
+    convexHullShape->addPoint(btVector3(-0.075 ,-0.015    ,2*0.075/4));
+    convexHullShape->addPoint(btVector3(0.075  ,-0.015    ,2*0.075/4));
     
-    convexHullShape->addPoint(btVector3(0        ,0.03/10  ,2*0.15*3/8));
-    convexHullShape->addPoint(btVector3(0.075*2  ,0.03/10  ,2*0.15*3/8));
+    convexHullShape->addPoint(btVector3(-0.075 ,-0.015/2  ,2*0.075*3/8));
+    convexHullShape->addPoint(btVector3(0.075  ,-0.015/2  ,2*0.075*3/8));
     
-    convexHullShape->addPoint(btVector3(0        ,0.03     ,2*0.15/2));
-    convexHullShape->addPoint(btVector3(0.075*2  ,0.03     ,2*0.15/2));
+    convexHullShape->addPoint(btVector3(-0.075 ,0.015     ,0.075));
+    convexHullShape->addPoint(btVector3(0.075  ,0.015     ,0.075));
     
     btDefaultMotionState* motionState = new btDefaultMotionState(transform);
     convexHullShape->calculateLocalInertia(mass, inertia);

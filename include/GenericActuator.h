@@ -21,14 +21,16 @@ public:
     void setB(double valueB);
     void setw1(double valuew1);
     void setw2(double valuew2);
+    void setFase(double valueFase);
     
 protected:
     btVector3 actuatorFunc(double t);
     
-    double A = 12;
-    double B = 12;
-    double w1 = 3;
-    double w2 = 3;
+    double A;
+    double B;
+    double w1;
+    double w2;
+    double fase;
     
 };
 

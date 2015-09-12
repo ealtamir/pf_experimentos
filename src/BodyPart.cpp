@@ -12,7 +12,7 @@ void BodyPart::actuate(double t) {
     }
 }
 
-void BodyPart::setActuatorValues(double paramA, double paramB, double paramw1, double paramw2) {
+void BodyPart::setActuatorValues(double paramA, double paramB, double paramw1, double paramw2, double paramFase) {
     if (actuator == NULL) {
         return;
     }
@@ -20,4 +20,6 @@ void BodyPart::setActuatorValues(double paramA, double paramB, double paramw1, d
     actuator->setB(paramB);
     actuator->setw1(paramw1);
     actuator->setw2(paramw2);
+    actuator->setFase(paramFase);
+
 }
