@@ -155,12 +155,12 @@ int main(int argc,char* argv[]) {
     
         return glutmain(argc, argv, 1024, 768, "Experiment",experiment);
     } else {
-       /* PassiveWalkerExperiment* exp= new PassiveWalkerExperiment();
+        /*PassiveWalkerExperiment* exp= new PassiveWalkerExperiment();
         exp->initPhysics();
         
         exp->simulate();
          
-         printf("la height: %f",exp->getHeight());
+        printf("la height: %f",exp->getHeight());
         */
         
         // GA

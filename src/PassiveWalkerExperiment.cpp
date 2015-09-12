@@ -163,10 +163,14 @@ void Experiment::simulate(){
     
     max_height = 1 - acum_height/ ((DEFAULT_CHANGE_COUNTER) * initial_height);
     
+    
     average_velocity = 1 - acum_position/(pow(DEFAULT_CHANGE_COUNTER,2) * VELOCITY_CONSTANT * OBJETIVE_VELOCITY * DEFAULT_EXPERIMENT_INTERVAL);
     
     //ponemos bounds entre 0 y 1
-    average_velocity = fmin(1.0, fmax(0,average_velocity));
+    //average_velocity = fmin(1.0, fmax(0,average_velocity));
+    
+    //por ahora la velocity del fitness va a estar entre 1 y menos infinito, porque siempre está dando negativa (y dejarla en cero va a ser muy malo para el GA)
+    average_velocity = fmin(1.0, average_velocity);
     
     
     //direction = 1 - acum_direction/(DIRECTION_CONSTANT * DEFAULT_CHANGE_COUNTER);
@@ -176,7 +180,7 @@ void Experiment::simulate(){
     periodicity = 1 - acum_cycles/(CYCLE_CONSTANT * BODY_PART_QTY * walker->getCycleQuantity());
     
    printf("velocity final: %f \n",average_velocity);
-   printf("direction final: %f \n",direction);
+//    printf("direction final: %f \n",direction);
 //    printf("height final: %f \n",max_height);
     //printf("cycle final: %f \n",periodicity);
     
