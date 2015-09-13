@@ -108,7 +108,7 @@ void MiExperimentoObserver::StatisticUpdate(const Common::GaStatistics &statisti
 int mainLoop(char* executablePath);
 
 int main(int argc,char* argv[]) {
-    bool visual = true;
+    bool visual = false;
 
     if(visual) {
         // Visual
@@ -159,6 +159,12 @@ int main(int argc,char* argv[]) {
     
         return glutmain(argc, argv, 1024, 768, "Experiment",experiment);
     } else {
+        /*PassiveWalkerExperiment* exp= new PassiveWalkerExperiment();
+        exp->initPhysics();
+        
+        exp->simulate();
+        */
+        
        return mainLoop(argv[0]);
 
     }

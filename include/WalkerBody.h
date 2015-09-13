@@ -21,6 +21,7 @@ public:
     std::vector<BodyGroup*> getBodyGroups();
     double getHeight();
     double getPosition();
+    btVector3 getVelocity();
     double getAngleInclination();
     void cicleQuantity();
     int getCycleQuantity();
