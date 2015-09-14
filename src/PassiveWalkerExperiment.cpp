@@ -165,8 +165,8 @@ void Experiment::simulate(){
     
     max_height = 1 - acum_height/ ((DEFAULT_CHANGE_COUNTER) * initial_height);
     
-    
-    average_velocity = 1/acum_position/* (pow(DEFAULT_CHANGE_COUNTER,2) * VELOCITY_CONSTANT * DEFAULT_EXPERIMENT_INTERVAL)*/;
+    acum_position= acum_position/DEFAULT_CHANGE_COUNTER;
+    average_velocity = 1 - fabs(tanh((1.1*acum_position)));
     
     //average_velocity = 1 - acum_position/(pow(DEFAULT_CHANGE_COUNTER,2) * VELOCITY_CONSTANT * DEFAULT_EXPERIMENT_INTERVAL);
     
@@ -203,5 +203,21 @@ double getDirectionAngle(double previous_position_x, double previous_position_z,
         return 0;
     }
     return (asin(fmin(1.0, fmax(-1.0,x/z)))*180/M_PI);
+}
+
+/* Funcion sigmoidal
+ */
+double Experiment::sigmoid(double x){
+    double exp_value;
+    double return_value;
+        
+    /*** Exponential calculation ***/
+    exp_value = exp((double) -x);
+        
+    /*** Final sigmoid value ***/
+    return_value = 1 / (1 + exp_value);
+        
+    return return_value;
+    
 }
 
