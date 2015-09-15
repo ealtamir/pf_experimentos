@@ -17,7 +17,7 @@
 
 
 #define     FIFO_PATHNAME           "/tmp/passive_walker_exp.fifo"
-#define     DATA_PLOTTING_ACTIVE    1
+#define     DATA_PLOTTING_ACTIVE    0
 
 
 using std::string;

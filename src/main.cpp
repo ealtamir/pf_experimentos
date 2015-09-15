@@ -105,15 +105,15 @@ void MiExperimentoObserver::EvolutionStateChanged(GaAlgorithmState newState, con
 void MiExperimentoObserver::StatisticUpdate(const Common::GaStatistics &statistics, const Algorithm::GaAlgorithm &algorithm) {
 //    cout << "Generation: " << statistics.GetCurrentGeneration() << endl;
 //    cout << "Number of chromosomes: " << algorithm.GetPopulation(0).GetCurrentSize() << endl;
-    int bestChromosomeIndex = 0;
-    GaPopulation population = algorithm.GetPopulation(statistics.GetCurrentGeneration());
-    population.GetBestChromosomes(&bestChromosomeIndex, 0, 1);
-    GaScaledChromosome chromosome = population.GetAt(bestChromosomeIndex);
-    FitnessComponents component;
-    component.totalFitness = chromosome.GetScaledFitness();
-    component.dummy = 0;
-    component.dummy2 = 0;
-    IOTools::sendDataToPlotServer(component);
+//    int bestChromosomeIndex = 0;
+//    GaPopulation population = algorithm.GetPopulation(statistics.GetCurrentGeneration());
+//    population.GetBestChromosomes(&bestChromosomeIndex, 0, 1);
+//    GaScaledChromosome chromosome = population.GetAt(bestChromosomeIndex);
+//    FitnessComponents component;
+//    component.totalFitness = chromosome.GetScaledFitness();
+//    component.dummy = 0;
+//    component.dummy2 = 0;
+//    IOTools::sendDataToPlotServer(component);
 }
 
 int mainLoop(char* executablePath);
