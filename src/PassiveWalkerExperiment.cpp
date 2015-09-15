@@ -5,10 +5,17 @@
 
 #include <chrono>
 
+#include <sys/stat.h>
+
 #include "PassiveWalkerExperiment.h"
 #include "GenericBodyParameters.h"
+#include "IOTools.h"
+
+#define FIFO_PATHNAME "/tmp/passive_walker_exp.fifo"
+
 
 PassiveWalkerExperiment::PassiveWalkerExperiment() {
+
 }
 
 PassiveWalkerExperiment::~PassiveWalkerExperiment() {
@@ -57,10 +64,19 @@ float PassiveWalkerExperiment::getFitness(const std::vector<double> vals) {
     // run simulation
     experiment->simulate();
     
+    FitnessComponents components;
     
-    double value = experiment->getHeight() * experiment->getDirection();// * experiment->getVelocity();
-//    std::cout << value << std::endl;
-    return value;
+    components.height = experiment->getHeight();
+    components.direction = experiment->getDirection();
+    components.speed = 1; //experiment->getVelocity();
+    
+    IOTools::sendDataToPlotServer(components);
+    
+    return components.height * components.direction * components.speed;
+}
+
+void PassiveWalkerExperiment::sendDataToPlotServer(int height, int direction, int speed) {
+    
 }
 
 void PassiveWalkerExperiment::initializeBodies() {

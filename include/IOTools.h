@@ -12,9 +12,36 @@
 #include <stdio.h>
 #include <string>
 #include <vector>
+#include <fstream>
+#include <mutex>
+
+
+#define     FIFO_PATHNAME           "/tmp/passive_walker_exp.fifo"
+#define     DATA_PLOTTING_ACTIVE    0
+
 
 using std::string;
 using std::vector;
+
+typedef struct {
+    double height;
+    double direction;
+    double speed;
+} FitnessComponents;
+
+class IOTools {
+    
+public:    
+    static void sendDataToPlotServer(FitnessComponents components);
+
+private:
+    static std::mutex lock;
+
+    static std::ofstream fifo;
+    
+    static void openFifo();
+    
+};
 
 string getResultsDirPath(string executablePath);
 

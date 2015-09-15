@@ -13,8 +13,51 @@
 #include <string>
 #include <fstream>
 #include <vector>
+#include <sys/stat.h>
+#include <unistd.h>
+
+
 
 using namespace std;
+
+mutex IOTools::lock;
+ofstream IOTools::fifo;
+
+
+void IOTools::sendDataToPlotServer(FitnessComponents components) {
+    if (!DATA_PLOTTING_ACTIVE) {
+        return;
+    }
+    IOTools::lock.lock();
+    if (!IOTools::fifo.is_open()) {
+        IOTools::openFifo();
+    }
+    IOTools::fifo.write(reinterpret_cast<char*>(&components), sizeof(FitnessComponents));
+    if ((IOTools::fifo.rdstate() & ofstream::failbit) != 0) {
+        printf("There was an error when sending data to plot server\n");
+        printf("Exiting...\n");
+        exit(-1);
+    }
+    IOTools::lock.unlock();
+}
+
+void IOTools::openFifo() {
+    umask(0);
+    int result = mkfifo(FIFO_PATHNAME, 0777);
+    if (result == -1) {
+        printf("There was an error when CREATING the FIFO pipe\n");
+        printf("Errno: %d\n", errno);
+        exit(-1);
+    }
+    
+    printf("Opening FIFO for writing...\n");
+    printf("Blocking until server opens FIFO for reading...\n");
+    fifo.open(FIFO_PATHNAME, std::ofstream::out | std::ofstream::trunc);
+    if (!fifo.is_open()) {
+        printf("There was an error when OPENING the FIFO.\n");
+        exit(-1);
+    }
+}
 
 string getResultsDirPath(string executablePath) {
     int match = executablePath.rfind("/bin");
