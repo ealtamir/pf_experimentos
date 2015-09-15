@@ -20,8 +20,6 @@ public:
 private:
     BodyParameters* params;
 	    
-    void sendDataToPlotServer(int height, int direction, int speed);
-
 protected:
         
 	virtual void initializeBodies();

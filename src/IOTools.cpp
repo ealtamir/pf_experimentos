@@ -6,7 +6,6 @@
 //  Copyright (c) 2015 Enzo Altamiranda G. All rights reserved.
 //
 
-#include "IOTools.h"
 #include <stdlib.h>
 #include <iostream>
 #include <iomanip>
@@ -15,7 +14,7 @@
 #include <vector>
 #include <sys/stat.h>
 #include <unistd.h>
-
+#include "IOTools.h"
 
 
 using namespace std;
@@ -33,6 +32,7 @@ void IOTools::sendDataToPlotServer(FitnessComponents components) {
         IOTools::openFifo();
     }
     IOTools::fifo.write(reinterpret_cast<char*>(&components), sizeof(FitnessComponents));
+    IOTools::fifo.flush();
     if ((IOTools::fifo.rdstate() & ofstream::failbit) != 0) {
         printf("There was an error when sending data to plot server\n");
         printf("Exiting...\n");

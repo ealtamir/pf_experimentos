@@ -75,7 +75,7 @@ float MiExperimentoFitness::operator ()(const GaChromosome* chromosome) const {
     const std::vector<double>& vals = dynamic_cast<const GaMVArithmeticChromosome<double>*>( chromosome )->GetCode();
     
     float fit = PassiveWalkerExperiment::getFitness(vals);
-    cout << "Fitness calculado: " << fit << endl;
+//    cout << "Fitness calculado: " << fit << endl;
     return fit;
 }
 
@@ -89,6 +89,8 @@ void MiExperimentoObserver::NewBestChromosome(const GaChromosome& newChromosome,
         values[i] = vals[i];
     }
     fitness = newChromosome.GetFitness();
+
+    cout << endl << "DATA PRINTED TO PLOT SERVER" << endl;
     cout << endl << "Fitness: " << fitness;
     cout << endl << "Generation: " << algorithm.GetAlgorithmStatistics().GetCurrentGeneration() << endl;
 }
@@ -103,6 +105,15 @@ void MiExperimentoObserver::EvolutionStateChanged(GaAlgorithmState newState, con
 void MiExperimentoObserver::StatisticUpdate(const Common::GaStatistics &statistics, const Algorithm::GaAlgorithm &algorithm) {
 //    cout << "Generation: " << statistics.GetCurrentGeneration() << endl;
 //    cout << "Number of chromosomes: " << algorithm.GetPopulation(0).GetCurrentSize() << endl;
+    int bestChromosomeIndex = 0;
+    GaPopulation population = algorithm.GetPopulation(statistics.GetCurrentGeneration());
+    population.GetBestChromosomes(&bestChromosomeIndex, 0, 1);
+    GaScaledChromosome chromosome = population.GetAt(bestChromosomeIndex);
+    FitnessComponents component;
+    component.totalFitness = chromosome.GetScaledFitness();
+    component.dummy = 0;
+    component.dummy2 = 0;
+    IOTools::sendDataToPlotServer(component);
 }
 
 int mainLoop(char* executablePath);

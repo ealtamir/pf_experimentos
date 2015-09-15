@@ -11,7 +11,7 @@
 #include "GenericBodyParameters.h"
 #include "IOTools.h"
 
-#define FIFO_PATHNAME "/tmp/passive_walker_exp.fifo"
+#define FIFO_PATHNAME   "/tmp/passive_walker_exp.fifo"
 
 
 PassiveWalkerExperiment::PassiveWalkerExperiment() {
@@ -64,19 +64,13 @@ float PassiveWalkerExperiment::getFitness(const std::vector<double> vals) {
     // run simulation
     experiment->simulate();
     
-    FitnessComponents components;
-    
-    components.height = experiment->getHeight();
-    components.direction = experiment->getDirection();
-    components.speed = 1; //experiment->getVelocity();
-    
-    IOTools::sendDataToPlotServer(components);
-    
-    return components.height * components.direction * components.speed;
-}
 
-void PassiveWalkerExperiment::sendDataToPlotServer(int height, int direction, int speed) {
     
+    double height = experiment->getHeight();
+    //double direction = experiment->getDirection();
+    double speed = experiment->getVelocity();
+
+    return height /* direction */* speed;
 }
 
 void PassiveWalkerExperiment::initializeBodies() {

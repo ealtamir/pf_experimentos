@@ -17,22 +17,22 @@
 
 
 #define     FIFO_PATHNAME           "/tmp/passive_walker_exp.fifo"
-#define     DATA_PLOTTING_ACTIVE    0
+#define     DATA_PLOTTING_ACTIVE    1
 
 
 using std::string;
 using std::vector;
 
 typedef struct {
-    double height;
-    double direction;
-    double speed;
+    double totalFitness;
+    double dummy;
+    double dummy2;
 } FitnessComponents;
 
 class IOTools {
     
 public:    
-    static void sendDataToPlotServer(FitnessComponents components);
+    static void sendDataToPlotServer(FitnessComponents component);
 
 private:
     static std::mutex lock;
