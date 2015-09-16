@@ -77,6 +77,7 @@ WalkerBody::getVelocity(){
     return rigidBody->getLinearVelocity();
 }
 
+
 double
 WalkerBody::getAngleInclination(){
     GenericTorsoBodyGroup* torso = dynamic_cast<GenericTorsoBodyGroup*>(bodyGroups.back());

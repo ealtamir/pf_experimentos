@@ -54,8 +54,6 @@ public:
     
     virtual double getDirection() const;
     
-    virtual double sigmoid(double) ;
-    
     
     std::string getName() {
         return "Experiment";
