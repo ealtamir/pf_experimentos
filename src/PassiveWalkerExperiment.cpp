@@ -133,7 +133,6 @@ void Experiment::simulate(){
         
         
         btVector3 final_position = walker->getVelocity();
-        double lala = final_position.norm();
         
         acum_position += fabs(final_position.norm() - velocity_obj.norm());
         

@@ -36,6 +36,7 @@
 
 int mainLoop();
 double getTimeElapsed();
+double getAngleBetween(btVector3 v1, btVector3 v2);
 
 double values[VALUES_SIZE];
 double fitness;
@@ -164,8 +165,23 @@ int main(int argc,char* argv[]) {
         
         exp->simulate();
         */
+        //esto es para probar que la función angle de bullet hace bien lo de los cuadrantes (me fijo en el plano y,z)
+        btVector3 v=btVector3(0,1,0);
+        btVector3 v1=btVector3(0,1,1); //primer cuadrante
+        btVector3 v2=btVector3(0,-1,0.5); //segundo cuadrante
+        btVector3 v3=btVector3(0,-1,-1); //tercer cuadrante
+        btVector3 v4=btVector3(0,1,-1); //cuarto cuadrante
+        printf("angle de v1: %f \n",v1.angle(v)*(180/3.1416));
+        printf("angle de v2: %f \n",v2.angle(v)*(180/3.1416));
+        printf("angle de v3: %f \n",v3.angle(v)*(180/3.1416));
+        printf("angle de v4: %f \n",v4.angle(v)*(180/3.1416));
         
-       return mainLoop(argv[0]);
+        printf("anglebetween de v1: %f \n",getAngleBetween(v1,v)*(180/3.1416));
+        printf("anglebetween de v2: %f \n",getAngleBetween(v2,v)*(180/3.1416));
+        printf("anglebetween de v3: %f \n",getAngleBetween(v3,v)*(180/3.1416));
+        printf("anglebetween de v4: %f \n",getAngleBetween(v4,v)*(180/3.1416));
+        
+       //return mainLoop(argv[0]);
 
     }
 }
@@ -268,4 +284,11 @@ double getTimeElapsed(){
     
     return (after.tv_sec * 1000 + after.tv_usec / 1000) - time_begin;
 
+}
+
+double getAngleBetween(btVector3 v1, btVector3 v2){
+    double arg1 = (v1.cross(v2)).norm();
+    double arg2 = (v1.dot(v2));
+    
+    return atan2(arg1,arg2);
 }
