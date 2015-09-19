@@ -192,7 +192,7 @@ void Experiment::simulate(){
     periodicity = 1 - acum_cycles/(CYCLE_CONSTANT * BODY_PART_QTY * walker->getCycleQuantity());
     
 //   printf("velocity final: %f \n",average_velocity);
-    printf("direction final: %f \n",direction);
+//    printf("direction final: %f \n",direction);
 //    printf("height final: %f \n",max_height);
     //printf("cycle final: %f \n",periodicity);
     

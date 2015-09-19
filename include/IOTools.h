@@ -28,6 +28,10 @@ void storeLatestResults(string resultsDirPath, double fitness, double params[], 
 
 void storeInfo(string filename, double fitness, double params[], int paramSize);
 
+void storeGenerationInfo(string filename, int generation, double fitness, const std::vector<double>& params, int paramSize);
+
+void clearFile(string filename);
+
 vector<double> loadPreviousParams(string executablePath);
 
 
