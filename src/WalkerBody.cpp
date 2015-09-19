@@ -86,27 +86,20 @@ WalkerBody::getAngleInclination(){
     btTransform v;
     rigidBody->getMotionState()->getWorldTransform(v);
     btVector3 actual_position = v.getOrigin();
-    double angle=actual_position.dot(previous)/(actual_position.norm()*previous.norm());
+    /*double angle=actual_position.dot(previous)/(actual_position.norm()*previous.norm());
     
     previous=actual_position; //estamos tomando la ""velocidad"" instantanea
     
+    
     return (acos(fmin(1.0, fmax(-1.0,angle)))*180/M_PI);
-    
-    /*double actual_position_x = v.getOrigin().getX();
-    double actual_position_z = v.getOrigin().getZ();
-    
-    double x = actual_position_x - previous_position_x;
-    double z = actual_position_z - previous_position_z;
-    
-    previous_position_x = actual_position_x;
-    previous_position_z = actual_position_z;
-    
-    if (x==0){
-        return 0;
-    }
-    return (asin(fmin(1.0, fmax(-1.0,x/z)))*180/M_PI);
     */
+    return actual_position.angle(objetive)*180/M_PI;
+    
 }
+
+
+
+
 
 void
 WalkerBody::cicleQuantity(){

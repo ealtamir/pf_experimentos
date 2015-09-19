@@ -58,7 +58,7 @@ float PassiveWalkerExperiment::getFitness(const std::vector<double> vals) {
     experiment->simulate();
     
     
-    double value = experiment->getHeight() * experiment->getDirection();// * experiment->getVelocity();
+    double value = experiment->getHeight() * experiment->getDirection() * experiment->getVelocity();
 //    std::cout << value << std::endl;
     return value;
 }
@@ -168,10 +168,9 @@ void Experiment::simulate(){
     
     max_height = 1 - acum_height/ ((DEFAULT_CHANGE_COUNTER) * initial_height);
     
-    printf("suma error acumulado velocity: %f\n",acum_position);
     
     acum_position= acum_position/DEFAULT_CHANGE_COUNTER;
-    printf("error acumulado velocity: %f\n",acum_position);
+    
     average_velocity = 1 - fabs(tanh((1.2*acum_position)));
     
     //average_velocity = 1 - acum_position/(pow(DEFAULT_CHANGE_COUNTER,2) * VELOCITY_CONSTANT * DEFAULT_EXPERIMENT_INTERVAL);
@@ -187,14 +186,14 @@ void Experiment::simulate(){
     //average_velocity = fmin(1.0, average_velocity);
     
     
-    //direction = 1 - acum_direction/(DIRECTION_CONSTANT * DEFAULT_CHANGE_COUNTER);
     
-    direction = acum_direction/(DIRECTION_CONSTANT * DEFAULT_CHANGE_COUNTER);
+    direction = 1 - fabs(tanh(DIRECTION_CONSTANT*(acum_direction/(DEFAULT_CHANGE_COUNTER))));
+    //printf("diferencias de angulo acumulada: %f\n",acum_direction);
     
     periodicity = 1 - acum_cycles/(CYCLE_CONSTANT * BODY_PART_QTY * walker->getCycleQuantity());
     
-   printf("velocity final: %f \n",average_velocity);
-//    printf("direction final: %f \n",direction);
+//   printf("velocity final: %f \n",average_velocity);
+    printf("direction final: %f \n",direction);
 //    printf("height final: %f \n",max_height);
     //printf("cycle final: %f \n",periodicity);
     
