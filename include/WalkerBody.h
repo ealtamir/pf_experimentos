@@ -12,8 +12,12 @@
 #include <stdio.h>
 #include <math.h>
 #include "GenericBody.h"
+#include "Experiment.h"
 
 const btScalar BODY_PART_QTY = 6;
+
+
+
 
 class WalkerBody : public GenericBody {
 public:
@@ -28,12 +32,15 @@ public:
     double* getAnglesLegs();
     
 protected:
+    
     virtual BodyGroup*
     createTorso(btDynamicsWorld* world, BodyParameters &params);
     int cicleQty = -1;
     double last_angle = 0;
     
     /* Se usan para calcular la direccion del doll, para el fitness*/
+    const btVector3 objetive = btVector3(0,0,-OBJETIVE_VELOCITY);
+    
     btVector3 previous = btVector3(0,0,1);
 };
 

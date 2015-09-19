@@ -20,7 +20,7 @@
 
 const btScalar DEFAULT_EXPERIMENT_INTERVAL = 0.001;
 const btScalar DEFAULT_CHANGE_COUNTER = 60*5;
-const btScalar DIRECTION_CONSTANT = 10;
+const btScalar DIRECTION_CONSTANT = 0.03;
 //const btScalar VELOCITY_CONSTANT = 0.257;
 const btScalar VELOCITY_CONSTANT = 4.6;
 const btScalar OBJETIVE_VELOCITY = 1.3;
@@ -53,8 +53,6 @@ public:
     virtual double getVelocity() const;
     
     virtual double getDirection() const;
-    
-    virtual double sigmoid(double) ;
     
     
     std::string getName() {

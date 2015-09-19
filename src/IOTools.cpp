@@ -131,3 +131,30 @@ void storeInfo(string filename, double fitness, double params[], int paramSize) 
     }
     file.close();
 }
+
+void storeGenerationInfo(string filename, int generation, double fitness, const std::vector<double>& params, int paramSize) {
+    ofstream file(filename, ofstream::app);
+    if (file.good()) {
+        file << generation << ",";
+        file << setprecision(5) << fitness << ",";
+        for (int i = 0; i < paramSize; i++) {
+            file << setprecision(5) << params[i];
+            if(i < paramSize -1) {
+                file << ",";
+            }
+        }
+        file << endl;
+    } else {
+        cout << "Results not stored." << endl;
+    }
+    file.close();
+}
+
+void clearFile(string filename) {
+    ofstream file(filename);
+    if (file.good()) {
+        file << "";
+    } else {
+        cout << "File not cleared" << endl;
+    }
+}

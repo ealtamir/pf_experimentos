@@ -36,6 +36,7 @@
 
 int mainLoop();
 double getTimeElapsed();
+double getAngleBetween(btVector3 v1, btVector3 v2);
 
 double values[VALUES_SIZE];
 double fitness;
@@ -103,17 +104,11 @@ void MiExperimentoObserver::EvolutionStateChanged(GaAlgorithmState newState, con
 }
 
 void MiExperimentoObserver::StatisticUpdate(const Common::GaStatistics &statistics, const Algorithm::GaAlgorithm &algorithm) {
-//    cout << "Generation: " << statistics.GetCurrentGeneration() << endl;
-//    cout << "Number of chromosomes: " << algorithm.GetPopulation(0).GetCurrentSize() << endl;
-//    int bestChromosomeIndex = 0;
-//    GaPopulation population = algorithm.GetPopulation(statistics.GetCurrentGeneration());
-//    population.GetBestChromosomes(&bestChromosomeIndex, 0, 1);
-//    GaScaledChromosome chromosome = population.GetAt(bestChromosomeIndex);
-//    FitnessComponents component;
-//    component.totalFitness = chromosome.GetScaledFitness();
-//    component.dummy = 0;
-//    component.dummy2 = 0;
-//    IOTools::sendDataToPlotServer(component);
+    int i;
+    algorithm.GetPopulation(statistics.GetCurrentGeneration()).GetBestChromosomes( &i, 0, 1 );
+    GaChromosomePtr bestChromo = algorithm.GetPopulation(statistics.GetCurrentGeneration()).GetAt( i ).GetChromosome();
+    const std::vector<double>& vals = dynamic_cast<const GaMVArithmeticChromosome<double>*>( &(*bestChromo) )->GetCode();
+    storeGenerationInfo("output.dat", statistics.GetCurrentGeneration(), bestChromo->GetFitness(), vals, VALUES_SIZE);
 }
 
 int mainLoop(char* executablePath);
@@ -175,9 +170,23 @@ int main(int argc,char* argv[]) {
         
         exp->simulate();
         */
-        
-       return mainLoop(argv[0]);
-
+        //esto es para probar que la función angle de bullet hace bien lo de los cuadrantes (me fijo en el plano y,z)
+//        btVector3 v=btVector3(0,1,0);
+//        btVector3 v1=btVector3(0,1,1); //primer cuadrante
+//        btVector3 v2=btVector3(0,-1,0.5); //segundo cuadrante
+//        btVector3 v3=btVector3(0,-1,-1); //tercer cuadrante
+//        btVector3 v4=btVector3(0,1,-1); //cuarto cuadrante
+//        printf("angle de v1: %f \n",v1.angle(v)*(180/3.1416));
+//        printf("angle de v2: %f \n",v2.angle(v)*(180/3.1416));
+//        printf("angle de v3: %f \n",v3.angle(v)*(180/3.1416));
+//        printf("angle de v4: %f \n",v4.angle(v)*(180/3.1416));
+//        
+//        printf("anglebetween de v1: %f \n",getAngleBetween(v1,v)*(180/3.1416));
+//        printf("anglebetween de v2: %f \n",getAngleBetween(v2,v)*(180/3.1416));
+//        printf("anglebetween de v3: %f \n",getAngleBetween(v3,v)*(180/3.1416));
+//        printf("anglebetween de v4: %f \n",getAngleBetween(v4,v)*(180/3.1416));
+        clearFile("output.dat");
+        return mainLoop("end.dat");
     }
 }
 
@@ -204,7 +213,7 @@ int mainLoop(char* executablePath) {
     GaIntervalValueSet<double> *multiValueSet[VALUES_SIZE] = {
                                                     &valueSet,&valueSet,&valueSet2,&valueSet2, &valueSet3,
                                                     &valueSet,&valueSet,&valueSet2,&valueSet2, &valueSet3,
-                                                    &valueSet4,&valueSet4,&valueSet4,&valueSet4, &valueSet4
+                                                    &valueSet,&valueSet,&valueSet2,&valueSet2, &valueSet3
                                                     };
     
     GaChromosomeDomainBlock<double>* _ccb = new GaChromosomeDomainBlock<double>(
@@ -214,17 +223,16 @@ int mainLoop(char* executablePath) {
                         GaMutationCatalogue::Instance().GetEntryData( "GaFlipMutation" ),
                         new MiExperimentoFitness(),
                         GaFitnessComparatorCatalogue::Instance().GetEntryData( "GaMaxFitnessComparator" ),
-                        new GaChromosomeParams( 0.08f, 4, true, 0.75f, 2 ) );
+                        new GaChromosomeParams( 0.10f, 2, true, 0.80f, 3 ) );
     
     
     
     GaMVArithmeticChromosome<double> _prototype( VALUES_SIZE, _ccb );
     
-    GaPopulationParameters populationParams( 50, false, false, false, 0, 0 );
-    Population::SelectionOperations::GaSelectRandomBestParams selectParams( 15, false, 4 );
-    Population::ReplacementOperations::GaReplaceElitismParams replaceParams( 6, 3 );
-    GaCouplingParams couplingParams( 6, false );
-    Population::ScalingOperations::GaScaleFactorParams scalingParams(1);
+    GaPopulationParameters populationParams( 10, false, false, false, 0, 0 );
+    Population::SelectionOperations::GaSelectRandomBestParams selectParams( 4, false, 2 );
+    Population::ReplacementOperations::GaReplaceElitismParams replaceParams( 4, 2 );
+    GaCouplingParams couplingParams( 3, false );
     
     GaPopulationConfiguration* _populationConfiguration = new GaPopulationConfiguration(
                                     populationParams,
@@ -236,7 +244,7 @@ int mainLoop(char* executablePath) {
                                     GaCouplingCatalogue::Instance().GetEntryData( "GaSimpleCoupling" ),
                                     &couplingParams,
                                     NULL,
-                                    &scalingParams);
+                                    NULL);
     
     GaPopulation* _population = new GaPopulation( &_prototype, _populationConfiguration );
     
@@ -244,7 +252,7 @@ int mainLoop(char* executablePath) {
     Algorithm::SimpleAlgorithms::GaIncrementalAlgorithm* _algorithm = new Algorithm::SimpleAlgorithms::GaIncrementalAlgorithm( _population, algParam );
     
     GaStopCriteria* criteria = GaStopCriteriaCatalogue::Instance().GetEntryData( "GaGenerationCriteria" );
-    Algorithm::StopCriterias::GaGenerationCriteriaParams critParam( 2000 );
+    Algorithm::StopCriterias::GaGenerationCriteriaParams critParam( 300 );
     _algorithm->SetStopCriteria( criteria, &critParam );
     
     // subscribe observer
@@ -279,4 +287,11 @@ double getTimeElapsed(){
     
     return (after.tv_sec * 1000 + after.tv_usec / 1000) - time_begin;
 
+}
+
+double getAngleBetween(btVector3 v1, btVector3 v2){
+    double arg1 = (v1.cross(v2)).norm();
+    double arg2 = (v1.dot(v2));
+    
+    return atan2(arg1,arg2);
 }

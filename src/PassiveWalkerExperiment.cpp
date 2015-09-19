@@ -63,14 +63,9 @@ float PassiveWalkerExperiment::getFitness(const std::vector<double> vals) {
     
     // run simulation
     experiment->simulate();
-    
-
-    
-    double height = experiment->getHeight();
-    //double direction = experiment->getDirection();
-    double speed = experiment->getVelocity();
-
-    return height /* direction */* speed;
+    double value = experiment->getHeight() * experiment->getDirection() * experiment->getVelocity();
+//    std::cout << value << std::endl;
+    return value;
 }
 
 void PassiveWalkerExperiment::initializeBodies() {
@@ -137,15 +132,17 @@ void Experiment::simulate(){
     
     for (int i = 0; i < DEFAULT_CHANGE_COUNTER; i++) {
         worldStep();
-        double t = (i+1) * DEFAULT_EXPERIMENT_INTERVAL;
         double value = walker->getHeight();
         value-= 0.68;
         acum_height += fabs(value - initial_height);
         
         
         btVector3 final_position = walker->getVelocity();
-        double lala = final_position.distance(velocity_obj);
-        acum_position += fabs(final_position.distance(velocity_obj));
+        
+        acum_position += fabs(final_position.norm() - velocity_obj.norm());
+        
+        // --- esto era lo que teníamos que mezclaba módulo de velocidad y dirección en un mismo valor
+        //acum_position += fabs(final_position.distance(velocity_obj));
         
         // --- cambio de la formula del informe del cuadrupedo respecto de la velocidad: la ecuacion de movimiento uniforme seria x*t, y no x*t*dt
         //acum_position += fabs(final_position-(initial_position+OBJETIVE_VELOCITY*(t+DEFAULT_EXPERIMENT_INTERVAL)));
@@ -175,8 +172,10 @@ void Experiment::simulate(){
     
     max_height = 1 - acum_height/ ((DEFAULT_CHANGE_COUNTER) * initial_height);
     
+    
     acum_position= acum_position/DEFAULT_CHANGE_COUNTER;
-    average_velocity = 1 - fabs(tanh((1.1*acum_position)));
+    
+    average_velocity = 1 - fabs(tanh((1.2*acum_position)));
     
     //average_velocity = 1 - acum_position/(pow(DEFAULT_CHANGE_COUNTER,2) * VELOCITY_CONSTANT * DEFAULT_EXPERIMENT_INTERVAL);
     
@@ -191,13 +190,13 @@ void Experiment::simulate(){
     //average_velocity = fmin(1.0, average_velocity);
     
     
-    //direction = 1 - acum_direction/(DIRECTION_CONSTANT * DEFAULT_CHANGE_COUNTER);
     
-    direction = acum_direction/(DIRECTION_CONSTANT * DEFAULT_CHANGE_COUNTER);
+    direction = 1 - fabs(tanh(DIRECTION_CONSTANT*(acum_direction/(DEFAULT_CHANGE_COUNTER))));
+    //printf("diferencias de angulo acumulada: %f\n",acum_direction);
     
     periodicity = 1 - acum_cycles/(CYCLE_CONSTANT * BODY_PART_QTY * walker->getCycleQuantity());
     
-   printf("velocity final: %f \n",average_velocity);
+//   printf("velocity final: %f \n",average_velocity);
 //    printf("direction final: %f \n",direction);
 //    printf("height final: %f \n",max_height);
     //printf("cycle final: %f \n",periodicity);
@@ -215,19 +214,7 @@ double getDirectionAngle(double previous_position_x, double previous_position_z,
     return (asin(fmin(1.0, fmax(-1.0,x/z)))*180/M_PI);
 }
 
-/* Funcion sigmoidal
- */
-double Experiment::sigmoid(double x){
-    double exp_value;
-    double return_value;
-        
-    /*** Exponential calculation ***/
-    exp_value = exp((double) -x);
-        
-    /*** Final sigmoid value ***/
-    return_value = 1 / (1 + exp_value);
-        
-    return return_value;
-    
-}
+
+
+
 
