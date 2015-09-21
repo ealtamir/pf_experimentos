@@ -24,7 +24,7 @@ public:
     virtual void setw1(double valuew1) = 0;
     virtual void setw2(double valuew2) = 0;
     virtual void setFase(double valuew2) = 0;
-    
+    virtual void setIndTerm(double value) = 0;
 protected:
     virtual btVector3
     actuatorFunc(double t) = 0;   

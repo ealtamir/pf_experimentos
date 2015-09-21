@@ -12,14 +12,16 @@ void BodyPart::actuate(double t) {
     }
 }
 
-void BodyPart::setActuatorValues(double paramA, double paramB, double paramw1, double paramw2, double paramFase) {
+void BodyPart::setActuatorValues(double sin_ampl, double cos_ampl, double sin_freq,
+                                 double cos_freq, double phase, double indTerm) {
     if (actuator == NULL) {
         return;
     }
-    actuator->setA(paramA);
-    actuator->setB(paramB);
-    actuator->setw1(paramw1);
-    actuator->setw2(paramw2);
-    actuator->setFase(paramFase);
+    actuator->setA(sin_ampl);
+    actuator->setB(cos_ampl);
+    actuator->setw1(sin_freq);
+    actuator->setw2(cos_freq);
+    actuator->setFase(phase);
+    actuator->setIndTerm(indTerm);
 
 }

@@ -63,7 +63,6 @@ string getResultsDirPath(string executablePath) {
     int match = executablePath.rfind("/bin");
     string resultsDirPath = executablePath.substr(0, match);
     resultsDirPath.append("/results");
-    cout << "Results dir: " << resultsDirPath << endl;
     return resultsDirPath;
 }
 
@@ -115,7 +114,7 @@ void storeNewBestFitness(string resultsDirPath, double fitness, double params[],
 
 void storeLatestResults(string resultsDirPath, double fitness, double params[], int paramSize) {
     resultsDirPath.append("/latest_result.txt");
-    cout << "storing results" << endl;
+    cout << "Storing results in: " << resultsDirPath << endl;
     storeInfo(resultsDirPath, fitness, params, paramSize);
 }
 

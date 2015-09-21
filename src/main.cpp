@@ -32,7 +32,7 @@
 #include "IOTools.h"
 
 
-#define VALUES_SIZE 15
+#define VALUES_SIZE 12
 
 int mainLoop();
 double getTimeElapsed();
@@ -44,7 +44,6 @@ double fitness;
 long int time_begin = 0;
 
 // Fitness
-
 class MiExperimentoFitness : public GaFitnessOperation {
     
 public:
@@ -57,7 +56,6 @@ public:
 };
 
 // Observer
-
 class MiExperimentoObserver : public GaObserverAdapter {
     
 public:
@@ -73,7 +71,7 @@ public:
 // Fitness
 
 float MiExperimentoFitness::operator ()(const GaChromosome* chromosome) const {
-    const std::vector<double>& vals = dynamic_cast<const GaMVArithmeticChromosome<double>*>( chromosome )->GetCode();
+    const std::vector<double>& vals = dynamic_cast<const GaMVArithmeticChromosome<double>*>(chromosome)->GetCode();
     
     float fit = PassiveWalkerExperiment::getFitness(vals);
 //    cout << "Fitness calculado: " << fit << endl;
@@ -91,7 +89,6 @@ void MiExperimentoObserver::NewBestChromosome(const GaChromosome& newChromosome,
     }
     fitness = newChromosome.GetFitness();
 
-    cout << endl << "DATA PRINTED TO PLOT SERVER" << endl;
     cout << endl << "Fitness: " << fitness;
     cout << endl << "Generation: " << algorithm.GetAlgorithmStatistics().GetCurrentGeneration() << endl;
 }
@@ -104,17 +101,21 @@ void MiExperimentoObserver::EvolutionStateChanged(GaAlgorithmState newState, con
 }
 
 void MiExperimentoObserver::StatisticUpdate(const Common::GaStatistics &statistics, const Algorithm::GaAlgorithm &algorithm) {
-    int i;
-    algorithm.GetPopulation(statistics.GetCurrentGeneration()).GetBestChromosomes( &i, 0, 1 );
-    GaChromosomePtr bestChromo = algorithm.GetPopulation(statistics.GetCurrentGeneration()).GetAt( i ).GetChromosome();
-    const std::vector<double>& vals = dynamic_cast<const GaMVArithmeticChromosome<double>*>( &(*bestChromo) )->GetCode();
-    storeGenerationInfo("output.dat", statistics.GetCurrentGeneration(), bestChromo->GetFitness(), vals, VALUES_SIZE);
+    int gen = statistics.GetCurrentGeneration();
+    if (gen % 50 == 0) {
+        cout << "Generation: " << gen << endl;
+    }
+    //int i;
+    //algorithm.GetPopulation(statistics.GetCurrentGeneration()).GetBestChromosomes( &i, 0, 1 );
+    //GaChromosomePtr bestChromo = algorithm.GetPopulation(statistics.GetCurrentGeneration()).GetAt( i ).GetChromosome();
+    //const std::vector<double>& vals = dynamic_cast<const GaMVArithmeticChromosome<double>*>( &(*bestChromo) )->GetCode();
+    //storeGenerationInfo("output.dat", statistics.GetCurrentGeneration(), bestChromo->GetFitness(), vals, VALUES_SIZE);
 }
 
 int mainLoop(char* executablePath);
 
 int main(int argc,char* argv[]) {
-    bool visual = false;
+    bool visual = true;
 
     if(visual) {
         // Visual
@@ -126,43 +127,7 @@ int main(int argc,char* argv[]) {
     
         std::string exePath(argv[0]);
         std::vector<double> vals = loadPreviousParams(exePath);
-
-        int i = 0;
-        // left leg
-        experiment->body->getBodyGroups()[0]->getBodyParts()[0]->setActuatorValues(vals[i*5+0],
-                                                                                   vals[i*5+1],
-                                                                                   vals[i*5+2],
-                                                                                   vals[i*5+3],
-                                                                                   vals[i*5+4]);
-        // right leg
-        experiment->body->getBodyGroups()[1]->getBodyParts()[0]->setActuatorValues(vals[i*5+0],
-                                                                                   vals[i*5+1],
-                                                                                   vals[i*5+2],
-                                                                                   vals[i*5+3],
-                                                                                   vals[i*5+4] + SIMD_PI);
-        i++;
-        
-        // left leg
-        experiment->body->getBodyGroups()[0]->getBodyParts()[1]->setActuatorValues(vals[i*5+0],
-                                                                                   vals[i*5+1],
-                                                                                   vals[i*5+2],
-                                                                                   vals[i*5+3],
-                                                                                   vals[i*5+4]);
-        // right leg
-        experiment->body->getBodyGroups()[1]->getBodyParts()[1]->setActuatorValues(vals[i*5+0],
-                                                                                   vals[i*5+1],
-                                                                                   vals[i*5+2],
-                                                                                   vals[i*5+3],
-                                                                                   vals[i*5+4] + SIMD_PI);
-        i++;
-        // hip
-        experiment->body->getBodyGroups()[2]->getBodyParts()[0]->setActuatorValues(vals[i*5+0],
-                                                                                   vals[i*5+1],
-                                                                                   vals[i*5+2],
-                                                                                   vals[i*5+3],
-                                                                                   vals[i*5+4]);
-    
-    
+        PassiveWalkerExperiment::setWalkerActuatorValues(vals, experiment);
         return glutmain(argc, argv, 1024, 768, "Experiment",experiment);
     } else {
         /*PassiveWalkerExperiment* exp= new PassiveWalkerExperiment();
@@ -185,8 +150,8 @@ int main(int argc,char* argv[]) {
 //        printf("anglebetween de v2: %f \n",getAngleBetween(v2,v)*(180/3.1416));
 //        printf("anglebetween de v3: %f \n",getAngleBetween(v3,v)*(180/3.1416));
 //        printf("anglebetween de v4: %f \n",getAngleBetween(v4,v)*(180/3.1416));
-        clearFile("output.dat");
-        return mainLoop("end.dat");
+        //clearFile("output.dat");
+        return mainLoop(argv[0]);
     }
 }
 
@@ -194,73 +159,122 @@ int mainLoop(char* executablePath) {
     struct timeval before;
     gettimeofday(&before, NULL);
     time_begin = before.tv_sec * 1000 + before.tv_usec / 1000;
+    int numberOfValueSets = VALUES_SIZE;
     
+    cout << "Starting GA runloop..." << endl;
     
     GaInitialize();
     
-    GaValueIntervalBounds<double> valueInt( 0, 150 );
-    GaValueIntervalBounds<double> invValueInt( 0, 150 );
-    GaValueIntervalBounds<double> valueInt2( 0.5, 10 );
-    GaValueIntervalBounds<double> invValueInt2( 0.5, 10 );
-    GaValueIntervalBounds<double> valueInt3( 0, 3.14*2 );
-    GaValueIntervalBounds<double> invValueInt3( 0, 3.14*2 );
-    GaValueIntervalBounds<double> valueInt4( 0, 0.1 );
-    GaValueIntervalBounds<double> invValueInt4( 0, 0.1 );
-    GaIntervalValueSet<double> valueSet( valueInt, invValueInt, GaGlobalRandomDoubleGenerator, false);
-    GaIntervalValueSet<double> valueSet2( valueInt2, invValueInt2, GaGlobalRandomDoubleGenerator, false);
-    GaIntervalValueSet<double> valueSet3( valueInt3, invValueInt3, GaGlobalRandomDoubleGenerator, false);
-    GaIntervalValueSet<double> valueSet4( valueInt4, invValueInt4, GaGlobalRandomDoubleGenerator, false);
-    GaIntervalValueSet<double> *multiValueSet[VALUES_SIZE] = {
-                                                    &valueSet,&valueSet,&valueSet2,&valueSet2, &valueSet3,
-                                                    &valueSet,&valueSet,&valueSet2,&valueSet2, &valueSet3,
-                                                    &valueSet,&valueSet,&valueSet2,&valueSet2, &valueSet3
-                                                    };
     
+    GaValueIntervalBounds<double> amplitude(-100, 100);
+    GaValueIntervalBounds<double> frequency(0.1, 10);
+    GaValueIntervalBounds<double> phase(0, SIMD_2_PI);
+    GaValueIntervalBounds<double> independentTerm(-100, 100);
+    
+    GaIntervalValueSet<double> amplitudeValueSet(amplitude, amplitude, GaGlobalRandomDoubleGenerator, false);
+    GaIntervalValueSet<double> frequencyValueSet(frequency, frequency, GaGlobalRandomDoubleGenerator, false);
+    GaIntervalValueSet<double> phaseValueSet(phase, phase, GaGlobalRandomDoubleGenerator, false);
+    GaIntervalValueSet<double> independentTermValueSet(independentTerm, independentTerm, GaGlobalRandomDoubleGenerator, false);
+    GaIntervalValueSet<double> *multiValueSet[VALUES_SIZE] = {
+        &amplitudeValueSet, &amplitudeValueSet, &frequencyValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet,
+        &amplitudeValueSet, &amplitudeValueSet, &frequencyValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet,
+    };
+    
+    
+    // CHROMOSOME PARAMETERS
+    double  mutationProbability = 0.10;
+    int     mutationSize = 2;
+    bool    onlyAcceptImprovingMutations = true;
+    double  crossoverProbability = 0.8;
+    int     crossoverPoints = 3;
+    GaChromosomeParams* chromosomeParams = new GaChromosomeParams(mutationProbability,
+                                        mutationSize,
+                                        onlyAcceptImprovingMutations,
+                                        crossoverProbability,
+                                        crossoverPoints);
+    
+    //CHROMOSOME CONFIGURATION BLOCK (CCB)
+    GaCrossoverOperation*   crossoverMethod = GaCrossoverCatalogue::Instance().GetEntryData("GaMultiValueCrossover");
+    GaMutationOperation*    mutationOperation = GaMutationCatalogue::Instance().GetEntryData("GaFlipMutation");
+    GaFitnessOperation*     fitnessCalculator = new MiExperimentoFitness();
+    GaFitnessComparator* 	fitnessComparator = GaFitnessComparatorCatalogue::Instance().GetEntryData("GaMaxFitnessComparator");
     GaChromosomeDomainBlock<double>* _ccb = new GaChromosomeDomainBlock<double>(
                         (GaValueSet<double>**)(&multiValueSet),
-                        VALUES_SIZE,
-                        GaCrossoverCatalogue::Instance().GetEntryData( "GaMultiValueCrossover" ),
-                        GaMutationCatalogue::Instance().GetEntryData( "GaFlipMutation" ),
-                        new MiExperimentoFitness(),
-                        GaFitnessComparatorCatalogue::Instance().GetEntryData( "GaMaxFitnessComparator" ),
-                        new GaChromosomeParams( 0.10f, 2, true, 0.80f, 3 ) );
+                        numberOfValueSets,
+                        crossoverMethod,
+                        mutationOperation,
+                        fitnessCalculator,
+                        fitnessComparator,
+                        chromosomeParams);
     
     
     
-    GaMVArithmeticChromosome<double> _prototype( VALUES_SIZE, _ccb );
+    // Used as prototype to initilize other chromosomes
+    GaMVArithmeticChromosome<double> chromosomePrototype(numberOfValueSets, _ccb);
     
-    GaPopulationParameters populationParams( 10, false, false, false, 0, 0 );
-    Population::SelectionOperations::GaSelectRandomBestParams selectParams( 4, false, 2 );
-    Population::ReplacementOperations::GaReplaceElitismParams replaceParams( 4, 2 );
-    GaCouplingParams couplingParams( 3, false );
     
-    GaPopulationConfiguration* _populationConfiguration = new GaPopulationConfiguration(
+    // POPULATION PARAMETERS
+    int 	populationSize = 10;
+    bool    resizablePopulation = false;
+    bool    sortedPopulation = false;
+    bool    scaledValueFitness = false;
+    int     bestChromosomesToTrack = 5;
+    int     worstChromosomesToTrack = 0;
+    GaPopulationParameters populationParams(populationSize,
+                                            resizablePopulation,
+                                            sortedPopulation,
+                                            scaledValueFitness,
+                                            bestChromosomesToTrack,
+                                            worstChromosomesToTrack);
+    
+    int selectionSize = 4;
+    bool duplicates = false;
+    int groupSize = 2;
+    Population::SelectionOperations::GaSelectRandomBestParams selectParams(selectionSize, false, groupSize);
+    
+    int replacementSize = 4;
+    int bestChromosomesThatRemain = 2;
+    Population::ReplacementOperations::GaReplaceElitismParams replaceParams(replacementSize,
+                                                                            bestChromosomesThatRemain);
+    
+    
+    int numberOfOffsprings = 3;
+    int checkForDuplicates = false;
+    GaCouplingParams couplingParams(numberOfOffsprings, checkForDuplicates);
+    
+    GaPopulationConfiguration* populationConfiguration = new GaPopulationConfiguration(
                                     populationParams,
                                     &_ccb->GetFitnessComparator(),
-                                    GaSelectionCatalogue::Instance().GetEntryData( "GaSelectRandomBest" ),
+                                    GaSelectionCatalogue::Instance().GetEntryData("GaSelectRandomBest"),
                                     &selectParams,
-                                    GaReplacementCatalogue::Instance().GetEntryData( "GaReplaceRandom" ),
+                                    GaReplacementCatalogue::Instance().GetEntryData("GaReplaceRandom"),
                                     &replaceParams,
-                                    GaCouplingCatalogue::Instance().GetEntryData( "GaSimpleCoupling" ),
+                                    GaCouplingCatalogue::Instance().GetEntryData("GaSimpleCoupling"),
                                     &couplingParams,
                                     NULL,
                                     NULL);
     
-    GaPopulation* _population = new GaPopulation( &_prototype, _populationConfiguration );
+    GaPopulation* population = new GaPopulation(&chromosomePrototype,
+                                                 populationConfiguration);
     
-    GaMultithreadingAlgorithmParams algParam( 1 );
-    Algorithm::SimpleAlgorithms::GaIncrementalAlgorithm* _algorithm = new Algorithm::SimpleAlgorithms::GaIncrementalAlgorithm( _population, algParam );
     
-    GaStopCriteria* criteria = GaStopCriteriaCatalogue::Instance().GetEntryData( "GaGenerationCriteria" );
-    Algorithm::StopCriterias::GaGenerationCriteriaParams critParam( 300 );
-    _algorithm->SetStopCriteria( criteria, &critParam );
+    int numberOfWorkers = 8;
+    GaMultithreadingAlgorithmParams algParam(numberOfWorkers);
+    Algorithm::SimpleAlgorithms::GaIncrementalAlgorithm* algorithm = new Algorithm::SimpleAlgorithms::GaIncrementalAlgorithm( population, algParam);
+    
+    
+    GaStopCriteria* criteria = GaStopCriteriaCatalogue::Instance().GetEntryData("GaGenerationCriteria");
+    
+    int numberOfGenerations = 1000;
+    Algorithm::StopCriterias::GaGenerationCriteriaParams critParam(numberOfGenerations);
+    algorithm->SetStopCriteria(criteria, &critParam);
     
     // subscribe observer
-    _algorithm->SubscribeObserver( new MiExperimentoObserver() );
+    algorithm->SubscribeObserver(new MiExperimentoObserver());
     
-    _algorithm->StartSolving(false);
+    algorithm->StartSolving(false);
     
-    _algorithm->WaitForThreads();
+    algorithm->WaitForThreads();
     
     GaFinalize();
     
@@ -274,9 +288,7 @@ int mainLoop(char* executablePath) {
     cout << getTimeElapsed() / 1000.0;
     cout << " segundos ";
     
-    
-    
-    updateResultFiles(std::string(executablePath), fitness, values, 20, getTimeElapsed());
+    updateResultFiles(std::string(executablePath), fitness, values, VALUES_SIZE, getTimeElapsed());
     return 0;
 }
 

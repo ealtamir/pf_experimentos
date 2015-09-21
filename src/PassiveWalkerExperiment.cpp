@@ -26,45 +26,11 @@ PassiveWalkerExperiment::~PassiveWalkerExperiment() {
 float PassiveWalkerExperiment::getFitness(const std::vector<double> vals) {
     experiment->initPhysics();
     experiment->objectsInitialized = false;
-    int i = 0;
-    // left leg
-    experiment->body->getBodyGroups()[0]->getBodyParts()[0]->setActuatorValues(vals[i*5+0],
-                                                                               vals[i*5+1],
-                                                                               vals[i*5+2],
-                                                                               vals[i*5+3],
-                                                                               vals[i*5+4]);
-    // right leg
-    experiment->body->getBodyGroups()[1]->getBodyParts()[0]->setActuatorValues(vals[i*5+0],
-                                                                               vals[i*5+1],
-                                                                               vals[i*5+2],
-                                                                               vals[i*5+3],
-                                                                               vals[i*5+4] + SIMD_PI);
-    i++;
-    
-    // left leg
-    experiment->body->getBodyGroups()[0]->getBodyParts()[1]->setActuatorValues(vals[i*5+0],
-                                                                               vals[i*5+1],
-                                                                               vals[i*5+2],
-                                                                               vals[i*5+3],
-                                                                               vals[i*5+4]);
-    // right leg
-    experiment->body->getBodyGroups()[1]->getBodyParts()[1]->setActuatorValues(vals[i*5+0],
-                                                                               vals[i*5+1],
-                                                                               vals[i*5+2],
-                                                                               vals[i*5+3],
-                                                                               vals[i*5+4] + SIMD_PI);
-    i++;
-    // hip
-    experiment->body->getBodyGroups()[2]->getBodyParts()[0]->setActuatorValues(vals[i*5+0],
-                                                                               vals[i*5+1],
-                                                                               vals[i*5+2],
-                                                                               vals[i*5+3],
-                                                                               vals[i*5+4]);
+    setWalkerActuatorValues(vals, experiment);
     
     // run simulation
     experiment->simulate();
-    double value = experiment->getHeight() * experiment->getDirection() * experiment->getVelocity();
-//    std::cout << value << std::endl;
+    double value = experiment->getHeight() * experiment->getDirection() * experiment->getVelocity();    
     return value;
 }
 
@@ -204,7 +170,8 @@ void Experiment::simulate(){
 
 }
 
-double getDirectionAngle(double previous_position_x, double previous_position_z, double actual_position_x, double actual_position_z){
+double getDirectionAngle(double previous_position_x, double previous_position_z,
+                         double actual_position_x, double actual_position_z) {
     
     double x = actual_position_x - previous_position_x;
     double z = actual_position_z - previous_position_z;
@@ -212,6 +179,33 @@ double getDirectionAngle(double previous_position_x, double previous_position_z,
         return 0;
     }
     return (asin(fmin(1.0, fmax(-1.0,x/z)))*180/M_PI);
+}
+
+void PassiveWalkerExperiment::setWalkerActuatorValues(vector<double> vals,
+                                                      PassiveWalkerExperiment* experiment) {
+    BodyPart* bodyPart;
+    
+    int LEFT_LEG = 0;
+    int RIGHT_LEG = 1;
+    
+    int LOWER_LEG = 0;
+    int UPPER_LEG = 1;
+    
+    // left lower leg
+    bodyPart = experiment->body->getBodyGroups()[LEFT_LEG]->getBodyParts()[LOWER_LEG];
+    bodyPart->setActuatorValues(vals[0], vals[1], vals[2], vals[3], vals[4], vals[5]);
+    
+    // left upper leg
+    bodyPart = experiment->body->getBodyGroups()[LEFT_LEG]->getBodyParts()[UPPER_LEG];
+    bodyPart->setActuatorValues(vals[6], vals[7], vals[8], vals[9], vals[10], vals[11]);
+    
+    // right lower leg
+    bodyPart = experiment->body->getBodyGroups()[RIGHT_LEG]->getBodyParts()[LOWER_LEG];
+    bodyPart->setActuatorValues(vals[0], vals[1], vals[2], vals[3], vals[4] + SIMD_PI, vals[5]);
+    
+    // right upper leg
+    bodyPart = experiment->body->getBodyGroups()[RIGHT_LEG]->getBodyParts()[UPPER_LEG];
+    bodyPart->setActuatorValues(vals[6], vals[7], vals[8], vals[9], vals[10] + SIMD_PI, vals[11]);
 }
 
 

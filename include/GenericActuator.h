@@ -22,15 +22,18 @@ public:
     void setw1(double valuew1);
     void setw2(double valuew2);
     void setFase(double valueFase);
+    void setIndTerm(double value);
+
     
 protected:
     btVector3 actuatorFunc(double t);
     
-    double A;
-    double B;
-    double w1;
-    double w2;
+    double sin_amplitude;
+    double cos_amplitude;
+    double sin_freq;
+    double cos_freq;
     double fase;
+    double C;
     
 };
 
