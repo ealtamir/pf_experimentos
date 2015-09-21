@@ -54,7 +54,8 @@ After all you should get something like this:
 11- Change the XCode's build location. This is needed because we use relative paths to read files
 from the project directory. In order to do this, you have to go to XCode's options (shortcut Command-,), 
 then Locations > advanced button, choose custom and enter something like: "/Users/Username/PF/proyectoDir/bin"
-for intermediates enter "/Users/Username/PF/proyectoDir/bin/Intermediates"
+for intermediates enter "/Users/Username/PF/proyectoDir/bin/Intermediates". Donde proyectoDir es el directorio del 
+repositorio de github.
 
 ### FAQ ###
 
