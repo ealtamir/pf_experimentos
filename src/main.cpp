@@ -105,17 +105,17 @@ void MiExperimentoObserver::StatisticUpdate(const Common::GaStatistics &statisti
     if (gen % 50 == 0) {
         cout << "Generation: " << gen << endl;
     }
-    //int i;
-    //algorithm.GetPopulation(statistics.GetCurrentGeneration()).GetBestChromosomes( &i, 0, 1 );
-    //GaChromosomePtr bestChromo = algorithm.GetPopulation(statistics.GetCurrentGeneration()).GetAt( i ).GetChromosome();
-    //const std::vector<double>& vals = dynamic_cast<const GaMVArithmeticChromosome<double>*>( &(*bestChromo) )->GetCode();
-    //storeGenerationInfo("output.dat", statistics.GetCurrentGeneration(), bestChromo->GetFitness(), vals, VALUES_SIZE);
+    int i;
+    algorithm.GetPopulation(statistics.GetCurrentGeneration()).GetBestChromosomes( &i, 0, 1 );
+    GaChromosomePtr bestChromo = algorithm.GetPopulation(statistics.GetCurrentGeneration()).GetAt( i ).GetChromosome();
+    const std::vector<double>& vals = dynamic_cast<const GaMVArithmeticChromosome<double>*>( &(*bestChromo) )->GetCode();
+    storeGenerationInfo("output.dat", statistics.GetCurrentGeneration(), bestChromo->GetFitness(), vals, VALUES_SIZE);
 }
 
 int mainLoop(char* executablePath);
 
 int main(int argc,char* argv[]) {
-    bool visual = true;
+    bool visual = false;
 
     if(visual) {
         // Visual
@@ -150,7 +150,7 @@ int main(int argc,char* argv[]) {
 //        printf("anglebetween de v2: %f \n",getAngleBetween(v2,v)*(180/3.1416));
 //        printf("anglebetween de v3: %f \n",getAngleBetween(v3,v)*(180/3.1416));
 //        printf("anglebetween de v4: %f \n",getAngleBetween(v4,v)*(180/3.1416));
-        //clearFile("output.dat");
+        clearFile("output.dat");
         return mainLoop(argv[0]);
     }
 }
@@ -176,7 +176,7 @@ int mainLoop(char* executablePath) {
     GaIntervalValueSet<double> phaseValueSet(phase, phase, GaGlobalRandomDoubleGenerator, false);
     GaIntervalValueSet<double> independentTermValueSet(independentTerm, independentTerm, GaGlobalRandomDoubleGenerator, false);
     GaIntervalValueSet<double> *multiValueSet[VALUES_SIZE] = {
-        &amplitudeValueSet, &g, &frequencyValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet,
+        &amplitudeValueSet, &amplitudeValueSet, &frequencyValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet,
         &amplitudeValueSet, &amplitudeValueSet, &frequencyValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet,
     };
     
@@ -214,7 +214,7 @@ int mainLoop(char* executablePath) {
     
     
     // POPULATION PARAMETERS
-    int 	populationSize = 10;
+    int 	populationSize = 100;
     bool    resizablePopulation = false;
     bool    sortedPopulation = false;
     bool    scaledValueFitness = false;
