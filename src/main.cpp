@@ -32,7 +32,8 @@
 #include "IOTools.h"
 
 
-#define VALUES_SIZE 12
+#define VALUES_SIZE     12
+#define POPULATION_SIZE 100
 
 int mainLoop();
 double getTimeElapsed();
@@ -105,11 +106,15 @@ void MiExperimentoObserver::StatisticUpdate(const Common::GaStatistics &statisti
     if (gen % 50 == 0) {
         cout << "Generation: " << gen << endl;
     }
-    int i;
-    algorithm.GetPopulation(statistics.GetCurrentGeneration()).GetBestChromosomes( &i, 0, 1 );
-    GaChromosomePtr bestChromo = algorithm.GetPopulation(statistics.GetCurrentGeneration()).GetAt( i ).GetChromosome();
-    const std::vector<double>& vals = dynamic_cast<const GaMVArithmeticChromosome<double>*>( &(*bestChromo) )->GetCode();
-    storeGenerationInfo("output.dat", statistics.GetCurrentGeneration(), bestChromo->GetFitness(), vals, VALUES_SIZE);
+//    algorithm.GetPopulation(statistics.GetCurrentGeneration()).GetBestChromosomes( &i, 0, 1 );
+//    GaChromosomePtr bestChromo = algorithm.GetPopulation(statistics.GetCurrentGeneration()).GetAt( i ).GetChromosome();
+//    const std::vector<double>& vals = dynamic_cast<const GaMVArithmeticChromosome<double>*>( &(*bestChromo) )->GetCode();
+    GaChromosomePtr bestChromo;
+    for (int i = 0; i < POPULATION_SIZE; i++) {
+        bestChromo = algorithm.GetPopulation(statistics.GetCurrentGeneration()).GetAt(i);
+        const std::vector<double>& vals = dynamic_cast<const GaMVArithmeticChromosome<double>*>( &(*bestChromo) )->GetCode();
+        storeGenerationInfo("output.dat", statistics.GetCurrentGeneration(), bestChromo->GetFitness(), vals, VALUES_SIZE);
+    }
 }
 
 int mainLoop(char* executablePath);
@@ -166,10 +171,10 @@ int mainLoop(char* executablePath) {
     GaInitialize();
     
     
-    GaValueIntervalBounds<double> amplitude(-100, 100);
-    GaValueIntervalBounds<double> frequency(0.1, 10);
+    GaValueIntervalBounds<double> amplitude(30, 80);
+    GaValueIntervalBounds<double> frequency(0.1, 0.5);
     GaValueIntervalBounds<double> phase(0, SIMD_2_PI);
-    GaValueIntervalBounds<double> independentTerm(-100, 100);
+    GaValueIntervalBounds<double> independentTerm(-50, 50);
     
     GaIntervalValueSet<double> amplitudeValueSet(amplitude, amplitude, GaGlobalRandomDoubleGenerator, false);
     GaIntervalValueSet<double> frequencyValueSet(frequency, frequency, GaGlobalRandomDoubleGenerator, false);
@@ -182,13 +187,13 @@ int mainLoop(char* executablePath) {
     
     
     // CHROMOSOME PARAMETERS
-    double  mutationProbability = 0.10;
-    int     mutationSize = 2;
-    bool    onlyAcceptImprovingMutations = true;
-    double  crossoverProbability = 0.8;
-    int     crossoverPoints = 3;
+    double  mutationProbability = 0.5;
+    int     numOfMutatedValues = VALUES_SIZE / 2;
+    bool    onlyAcceptImprovingMutations = false;
+    double  crossoverProbability = 0.3;
+    int     crossoverPoints = VALUES_SIZE / 2;
     GaChromosomeParams* chromosomeParams = new GaChromosomeParams(mutationProbability,
-                                        mutationSize,
+                                        numOfMutatedValues,
                                         onlyAcceptImprovingMutations,
                                         crossoverProbability,
                                         crossoverPoints);
@@ -214,7 +219,7 @@ int mainLoop(char* executablePath) {
     
     
     // POPULATION PARAMETERS
-    int 	populationSize = 100;
+    int 	populationSize = POPULATION_SIZE;
     bool    resizablePopulation = false;
     bool    sortedPopulation = false;
     bool    scaledValueFitness = false;
@@ -245,7 +250,7 @@ int mainLoop(char* executablePath) {
     GaPopulationConfiguration* populationConfiguration = new GaPopulationConfiguration(
                                     populationParams,
                                     &_ccb->GetFitnessComparator(),
-                                    GaSelectionCatalogue::Instance().GetEntryData("GaSelectRandomBest"),
+                                    GaSelectionCatalogue::Instance().GetEntryData("GaSelectRouletteWheel"),
                                     &selectParams,
                                     GaReplacementCatalogue::Instance().GetEntryData("GaReplaceRandom"),
                                     &replaceParams,
@@ -265,7 +270,7 @@ int mainLoop(char* executablePath) {
     
     GaStopCriteria* criteria = GaStopCriteriaCatalogue::Instance().GetEntryData("GaGenerationCriteria");
     
-    int numberOfGenerations = 1000;
+    int numberOfGenerations = 300;
     Algorithm::StopCriterias::GaGenerationCriteriaParams critParam(numberOfGenerations);
     algorithm->SetStopCriteria(criteria, &critParam);
     

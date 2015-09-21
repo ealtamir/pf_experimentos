@@ -33,3 +33,5 @@ bin
 .ycm_extra_conf.pyc
 *.xcodeproj
 .DS_Store
+output.dat
+
