@@ -12,21 +12,24 @@
 #include <stdio.h>
 #include <BulletDynamics/btBulletDynamicsCommon.h>
 
+#define PARAMS_SIZE 7
+
 class Actuator {
     
-    
 public:
+    
     Actuator(bool isLeft);
+    
     btVector3 eval(double t);
     
-    virtual void setA(double valueA) = 0;
-    virtual void setB(double valueB) = 0;
-    virtual void setw1(double valuew1) = 0;
-    virtual void setw2(double valuew2) = 0;
-    virtual void setFase(double valuew2) = 0;
-    virtual void setIndTerm(double value) = 0;
+    double parameters[PARAMS_SIZE];
+    
+    void setParameters(double *parameters);
+    
 protected:
+    
     virtual btVector3
+    
     actuatorFunc(double t) = 0;   
 
 };

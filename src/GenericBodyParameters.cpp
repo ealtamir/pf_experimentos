@@ -8,23 +8,36 @@
 
 #include "GenericBodyParameters.h"
 #include "GenericActuator.h"
-
+#include "FourierActuator.h"
 
 GenericBodyParameters::GenericBodyParameters() {
     
-    rightLowerArmAct = new GenericActuator();
-    rightUpperArmAct = new GenericActuator();
+//    rightLowerArmAct = new GenericActuator();
+//    rightUpperArmAct = new GenericActuator();
+//    
+//    leftLowerArmAct = new GenericActuator();
+//    leftUpperArmAct = new GenericActuator();
+//    
+//    hipAct = new GenericActuator();
+//    
+//    rightLowerLegAct = new GenericActuator();
+//    rightUpperLegAct = new GenericActuator();
+//    
+//    leftLowerLegAct = new GenericActuator(true);
+//    leftUpperLegAct = new GenericActuator(true);
+    rightLowerArmAct = new FourierActuator();
+    rightUpperArmAct = new FourierActuator();
     
-    leftLowerArmAct = new GenericActuator();
-    leftUpperArmAct = new GenericActuator();
+    leftLowerArmAct = new FourierActuator();
+    leftUpperArmAct = new FourierActuator();
     
-    hipAct = new GenericActuator();
+    hipAct = new FourierActuator();
     
-    rightLowerLegAct = new GenericActuator();
-    rightUpperLegAct = new GenericActuator();
+    rightLowerLegAct = new FourierActuator();
+    rightUpperLegAct = new FourierActuator();
     
-    leftLowerLegAct = new GenericActuator(true);
-    leftUpperLegAct = new GenericActuator(true);
+    leftLowerLegAct = new FourierActuator(true);
+    leftUpperLegAct = new FourierActuator(true);
 }
 
 GenericBodyParameters::~GenericBodyParameters() {

@@ -8,6 +8,14 @@
 
 #include "FourierActuator.h"
 
+#define A1 0
+#define A2 1
+#define A3 2
+#define A4 3
+#define W 4
+#define FASE 5
+#define IND_TERM 6
+
 
 FourierActuator::FourierActuator(bool isLeft) : Actuator(isLeft) {
     
@@ -15,7 +23,9 @@ FourierActuator::FourierActuator(bool isLeft) : Actuator(isLeft) {
 
 btVector3
 FourierActuator::actuatorFunc(double t) {
-    double senos = A1 * sin(w * t + fase) + A2 * sin(2 * w * t + fase);
-    double cosenos = A3 * cos(w * t + fase) + A4 * cos(2 * w * t + fase);
-    return btVector3(senos + cosenos + C, 0, 0);
+    double senos = parameters[A1] * sin(parameters[W] * t + parameters[FASE])
+                 + parameters[A2] * sin(2 * parameters[W] * t + parameters[FASE]);
+    double cosenos = parameters[A3] * cos(parameters[W] * t + parameters[FASE])
+                   + parameters[A4] * cos(2 * parameters[W] * t + parameters[FASE]);
+    return btVector3(senos + cosenos + parameters[IND_TERM], 0, 0);
 }

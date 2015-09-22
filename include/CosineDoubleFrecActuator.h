@@ -12,10 +12,10 @@
 #include <stdio.h>
 #include "Actuator.h"
 
-class FourierActuator : public Actuator {
+class CosineDoubleFrecActuator : public Actuator {
     
 public:
-    FourierActuator(bool isLeft = false);
+    CosineDoubleFrecActuator(bool isLeft = false);
     
 protected:
     virtual btVector3

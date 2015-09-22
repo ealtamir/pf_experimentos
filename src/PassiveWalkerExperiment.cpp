@@ -30,7 +30,7 @@ float PassiveWalkerExperiment::getFitness(const std::vector<double> vals) {
     
     // run simulation
     experiment->simulate();
-    double value = experiment->getHeight() * experiment->getDirection() * experiment->getVelocity();    
+    double value = experiment->getHeight();// * experiment->getDirection() * experiment->getVelocity();
     return value;
 }
 
@@ -47,7 +47,7 @@ void PassiveWalkerExperiment::worldStep() {
     timeCount += 1. / 60.;
     btDynamicsWorld* w = getDynamicsWorld();
     w->stepSimulation(1 / 60.f);
-    body->actuate(timeCount);
+//    body->actuate(timeCount);
 //    body->cicleQuantity();
 }
 
@@ -85,23 +85,14 @@ void Experiment::simulate(){
     double acum_direction = 0;
     double initial_angle = 0;
     double acum_cycles = 0;
-    int cycles = -1;
-    double* last_cycles = walker->getAnglesLegs();
-    
     
     initial_position = walker->getPosition();
     initial_angle = walker->getAngleInclination();
     
-    initial_height = walker->getHeight();
-    initial_height-= 0.65;
-    
-    
     for (int i = 0; i < DEFAULT_CHANGE_COUNTER; i++) {
         worldStep();
-        double value = walker->getHeight();
-        value-= 0.68;
-        acum_height += fabs(value - initial_height);
-        
+        if(i == 0) { initial_height = walker->getHeight(); }
+        acum_height += walker->getHeight();
         
         btVector3 final_position = walker->getVelocity();
         
@@ -137,10 +128,10 @@ void Experiment::simulate(){
     }
     
     
-    max_height = 1 - acum_height/ ((DEFAULT_CHANGE_COUNTER) * initial_height);
+    max_height = 1 - fabs (1 - acum_height/ ((DEFAULT_CHANGE_COUNTER) * initial_height));
     
     
-    acum_position= acum_position/DEFAULT_CHANGE_COUNTER;
+    acum_position = acum_position/DEFAULT_CHANGE_COUNTER;
     
     average_velocity = 1 - fabs(tanh((1.2*acum_position)));
     
@@ -183,8 +174,7 @@ double getDirectionAngle(double previous_position_x, double previous_position_z,
      
 }
 
-void PassiveWalkerExperiment::setWalkerActuatorValues(vector<double> vals,
-                                                      PassiveWalkerExperiment* experiment) {
+void PassiveWalkerExperiment::setWalkerActuatorValues(vector<double> vals, PassiveWalkerExperiment* experiment) {
     BodyPart* bodyPart;
     
     int LEFT_LEG = 0;
@@ -193,21 +183,56 @@ void PassiveWalkerExperiment::setWalkerActuatorValues(vector<double> vals,
     int LOWER_LEG = 0;
     int UPPER_LEG = 1;
     
+//    // Generic
+//    // left lower leg
+//    bodyPart = experiment->body->getBodyGroups()[LEFT_LEG]->getBodyParts()[LOWER_LEG];
+//    bodyPart->setActuatorValues(vals[0], vals[1], vals[2], vals[3], vals[4], vals[5]);
+//    
+//    // left upper leg
+//    bodyPart = experiment->body->getBodyGroups()[LEFT_LEG]->getBodyParts()[UPPER_LEG];
+//    bodyPart->setActuatorValues(vals[6], vals[7], vals[8], vals[9], vals[10], vals[11]);
+//    
+//    // right lower leg
+//    bodyPart = experiment->body->getBodyGroups()[RIGHT_LEG]->getBodyParts()[LOWER_LEG];
+//    bodyPart->setActuatorValues(vals[0], vals[1], vals[2], vals[3], vals[4] + SIMD_PI, vals[5]);
+//    
+//    // right upper leg
+//    bodyPart = experiment->body->getBodyGroups()[RIGHT_LEG]->getBodyParts()[UPPER_LEG];
+//    bodyPart->setActuatorValues(vals[6], vals[7], vals[8], vals[9], vals[10] + SIMD_PI, vals[11]);
+    
+//    // Fourier
+//    // left lower leg
+//    bodyPart = experiment->body->getBodyGroups()[LEFT_LEG]->getBodyParts()[LOWER_LEG];
+//    bodyPart->setActuatorValues(vals[0], vals[1], vals[2], vals[3], vals[4], vals[5], vals[6]);
+//    
+//    // left upper leg
+//    bodyPart = experiment->body->getBodyGroups()[LEFT_LEG]->getBodyParts()[UPPER_LEG];
+//    bodyPart->setActuatorValues(vals[7], vals[8], vals[9], vals[10], vals[11], vals[12], vals[13]);
+//    
+//    // right lower leg
+//    bodyPart = experiment->body->getBodyGroups()[RIGHT_LEG]->getBodyParts()[LOWER_LEG];
+//    bodyPart->setActuatorValues(vals[0], vals[1], vals[2], vals[3], vals[4], vals[5] + SIMD_PI, vals[6]);
+//    
+//    // right upper leg
+//    bodyPart = experiment->body->getBodyGroups()[RIGHT_LEG]->getBodyParts()[UPPER_LEG];
+//    bodyPart->setActuatorValues(vals[7], vals[8], vals[9], vals[10], vals[11], vals[12] + SIMD_PI, vals[13]);
+    
+    // Double frec cos
     // left lower leg
     bodyPart = experiment->body->getBodyGroups()[LEFT_LEG]->getBodyParts()[LOWER_LEG];
-    bodyPart->setActuatorValues(vals[0], vals[1], vals[2], vals[3], vals[4], vals[5]);
+    bodyPart->setActuatorValues(vals[0], vals[1], vals[2], vals[3], vals[4]);
     
     // left upper leg
     bodyPart = experiment->body->getBodyGroups()[LEFT_LEG]->getBodyParts()[UPPER_LEG];
-    bodyPart->setActuatorValues(vals[6], vals[7], vals[8], vals[9], vals[10], vals[11]);
+    bodyPart->setActuatorValues(vals[5], vals[6], vals[7], vals[8], vals[9]);
     
     // right lower leg
     bodyPart = experiment->body->getBodyGroups()[RIGHT_LEG]->getBodyParts()[LOWER_LEG];
-    bodyPart->setActuatorValues(vals[0], vals[1], vals[2], vals[3], vals[4] + SIMD_PI, vals[5]);
+    bodyPart->setActuatorValues(vals[0], vals[1], vals[2], vals[3] + SIMD_PI, vals[4]);
     
     // right upper leg
     bodyPart = experiment->body->getBodyGroups()[RIGHT_LEG]->getBodyParts()[UPPER_LEG];
-    bodyPart->setActuatorValues(vals[6], vals[7], vals[8], vals[9], vals[10] + SIMD_PI, vals[11]);
+    bodyPart->setActuatorValues(vals[5], vals[6], vals[7], vals[8] + SIMD_PI, vals[9]);
 }
 
 

@@ -15,3 +15,9 @@ Actuator::Actuator(bool isLeft) {
 btVector3 Actuator::eval(double t) {
     return actuatorFunc(t);
 }
+
+void Actuator::setParameters(double *params) {
+    for (int i = 0; i < PARAMS_SIZE; i++) {
+        parameters[i] = params[i];
+    }
+}

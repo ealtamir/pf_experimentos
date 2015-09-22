@@ -8,6 +8,14 @@
 
 #include "GenericActuator.h"
 
+#define SIN_AMPLITUD 0
+#define COS_AMPLITUD 1
+#define SIN_FREC 2
+#define COS_FREC 3
+#define FASE 4
+#define IND_TERM 5
+
+
 
 GenericActuator::GenericActuator(bool isLeft) : Actuator(isLeft) {
 
@@ -15,29 +23,7 @@ GenericActuator::GenericActuator(bool isLeft) : Actuator(isLeft) {
 
 btVector3 GenericActuator::actuatorFunc(double t) {
     
-    double f = sin_amplitude * sin(sin_freq * t + fase) + cos_amplitude * cos(cos_freq * t + fase) + C;
+    double f = parameters[SIN_AMPLITUD] * sin(parameters[SIN_FREC] * t + parameters[FASE])
+             + parameters[COS_AMPLITUD] * cos(parameters[COS_FREC] * t + parameters[FASE]) + parameters[IND_TERM];
     return btVector3(f, 0, 0);
-}
-
-void GenericActuator::setA(double valueA) {
-    sin_amplitude = valueA;
-}
-
-void GenericActuator::setB(double valueB) {
-    cos_amplitude = valueB;
-}
-
-void GenericActuator::setw1(double valuew1) {
-    sin_freq = valuew1;
-}
-
-void GenericActuator::setw2(double valuew2) {
-    cos_freq = valuew2;
-}
-
-void GenericActuator::setFase(double valueFase) {
-    fase = valueFase;
-}
-void GenericActuator::setIndTerm(double value) {
-    C = value;
 }

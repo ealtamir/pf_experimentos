@@ -32,7 +32,7 @@
 #include "IOTools.h"
 
 
-#define VALUES_SIZE     12
+#define VALUES_SIZE     10
 #define POPULATION_SIZE 100
 
 int mainLoop();
@@ -173,7 +173,6 @@ int mainLoop(char* executablePath) {
     
     GaInitialize();
     
-    
     GaValueIntervalBounds<double> amplitude(30, 80);
     GaValueIntervalBounds<double> frequency(0.1, 0.5);
     GaValueIntervalBounds<double> phase(0, SIMD_2_PI);
@@ -183,9 +182,21 @@ int mainLoop(char* executablePath) {
     GaIntervalValueSet<double> frequencyValueSet(frequency, frequency, GaGlobalRandomDoubleGenerator, false);
     GaIntervalValueSet<double> phaseValueSet(phase, phase, GaGlobalRandomDoubleGenerator, false);
     GaIntervalValueSet<double> independentTermValueSet(independentTerm, independentTerm, GaGlobalRandomDoubleGenerator, false);
+    
+//    // Generic actuator
+//    GaIntervalValueSet<double> *multiValueSet[VALUES_SIZE] = {
+//        &amplitudeValueSet, &amplitudeValueSet, &frequencyValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet,
+//        &amplitudeValueSet, &amplitudeValueSet, &frequencyValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet,
+//    };
+//    // Fourier actuator
+//    GaIntervalValueSet<double> *multiValueSet[VALUES_SIZE] = {
+//        &amplitudeValueSet, &amplitudeValueSet, &amplitudeValueSet, &amplitudeValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet,
+//        &amplitudeValueSet, &amplitudeValueSet, &amplitudeValueSet, &amplitudeValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet,
+//    };
+    // Double frec cos actuator
     GaIntervalValueSet<double> *multiValueSet[VALUES_SIZE] = {
-        &amplitudeValueSet, &amplitudeValueSet, &frequencyValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet,
-        &amplitudeValueSet, &amplitudeValueSet, &frequencyValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet,
+        &amplitudeValueSet, &frequencyValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet,
+        &amplitudeValueSet, &frequencyValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet
     };
     
     
@@ -226,7 +237,7 @@ int mainLoop(char* executablePath) {
     bool    resizablePopulation = false;
     bool    sortedPopulation = false;
     bool    scaledValueFitness = false;
-    int     bestChromosomesToTrack = 5;
+    int     bestChromosomesToTrack = 1;
     int     worstChromosomesToTrack = 0;
     GaPopulationParameters populationParams(populationSize,
                                             resizablePopulation,
@@ -235,18 +246,18 @@ int mainLoop(char* executablePath) {
                                             bestChromosomesToTrack,
                                             worstChromosomesToTrack);
     
-    int selectionSize = 4;
+    int selectionSize = 20;
     bool duplicates = false;
-    int groupSize = 2;
+    int groupSize = 20;
     Population::SelectionOperations::GaSelectRandomBestParams selectParams(selectionSize, false, groupSize);
     
-    int replacementSize = 4;
-    int bestChromosomesThatRemain = 2;
+    int replacementSize = 20;
+    int bestChromosomesThatRemain = 5;
     Population::ReplacementOperations::GaReplaceElitismParams replaceParams(replacementSize,
                                                                             bestChromosomesThatRemain);
     
     
-    int numberOfOffsprings = 3;
+    int numberOfOffsprings = 5;
     int checkForDuplicates = false;
     GaCouplingParams couplingParams(numberOfOffsprings, checkForDuplicates);
     
