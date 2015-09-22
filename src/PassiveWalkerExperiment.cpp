@@ -118,7 +118,8 @@ void Experiment::simulate(){
         //acum_position += fabs(final_position-(initial_position+OBJETIVE_VELOCITY*(t*DEFAULT_EXPERIMENT_INTERVAL)));
         
         
-        double angle = walker->getAngleInclination();
+        double angle = walker->getAngleInclination()-90;
+        printf("angulo: %f\n",angle);
         acum_direction += fabs( angle );
         
         
@@ -162,9 +163,9 @@ void Experiment::simulate(){
     
     periodicity = 1 - acum_cycles/(CYCLE_CONSTANT * BODY_PART_QTY * walker->getCycleQuantity());
     
-//   printf("velocity final: %f \n",average_velocity);
-//    printf("direction final: %f \n",direction);
-//    printf("height final: %f \n",max_height);
+   printf("velocity final: %f \n",average_velocity);
+    printf("direction final: %f \n",direction);
+    printf("height final: %f \n",max_height);
     //printf("cycle final: %f \n",periodicity);
     
 
@@ -179,6 +180,7 @@ double getDirectionAngle(double previous_position_x, double previous_position_z,
         return 0;
     }
     return (asin(fmin(1.0, fmax(-1.0,x/z)))*180/M_PI);
+     
 }
 
 void PassiveWalkerExperiment::setWalkerActuatorValues(vector<double> vals,

@@ -39,7 +39,8 @@ protected:
     double last_angle = 0;
     
     /* Se usan para calcular la direccion del doll, para el fitness*/
-    const btVector3 objetive = btVector3(0,0,-OBJETIVE_VELOCITY);
+    //const btVector3 objetive = btVector3(0,0,-OBJETIVE_VELOCITY);
+    const btVector3 objetive = btVector3(OBJETIVE_VELOCITY,0,0);
     
     btVector3 previous = btVector3(0,0,1);
 };

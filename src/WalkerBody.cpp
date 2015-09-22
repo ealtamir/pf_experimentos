@@ -92,7 +92,15 @@ WalkerBody::getAngleInclination(){
     
     return (acos(fmin(1.0, fmax(-1.0,angle)))*180/M_PI);
     */
-    return actual_position.angle(objetive)*180/M_PI;
+    double x1 = actual_position.getX();
+    double y1 = actual_position.getY();
+    double x2 = objetive.getX();
+    double y2 = objetive.getY();
+    double dot = y1*y2 + x1*x2; // dot product
+    double det = y1*x2 - x1*y2;     // determinant
+    return atan2(det, dot)*180/M_PI;  // atan2(y, x) or atan2(sin, cos)
+    
+    //return actual_position.angle(objetive)*180/M_PI;
     
 }
 

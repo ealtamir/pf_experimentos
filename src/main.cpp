@@ -130,16 +130,17 @@ int main(int argc,char* argv[]) {
         experiment->setCameraDistance(btScalar(5.));
         experiment->setCameraUp(btVector3(0, 15, 0));
     
-        std::string exePath(argv[0]);
+        /*std::string exePath(argv[0]);
         std::vector<double> vals = loadPreviousParams(exePath);
         PassiveWalkerExperiment::setWalkerActuatorValues(vals, experiment);
-        return glutmain(argc, argv, 1024, 768, "Experiment",experiment);
+        */
+         return glutmain(argc, argv, 1024, 768, "Experiment",experiment);
     } else {
-        /*PassiveWalkerExperiment* exp= new PassiveWalkerExperiment();
+        PassiveWalkerExperiment* exp= new PassiveWalkerExperiment();
         exp->initPhysics();
         
         exp->simulate();
-        */
+        
         //esto es para probar que la función angle de bullet hace bien lo de los cuadrantes (me fijo en el plano y,z)
 //        btVector3 v=btVector3(0,1,0);
 //        btVector3 v1=btVector3(0,1,1); //primer cuadrante
@@ -155,8 +156,10 @@ int main(int argc,char* argv[]) {
 //        printf("anglebetween de v2: %f \n",getAngleBetween(v2,v)*(180/3.1416));
 //        printf("anglebetween de v3: %f \n",getAngleBetween(v3,v)*(180/3.1416));
 //        printf("anglebetween de v4: %f \n",getAngleBetween(v4,v)*(180/3.1416));
-        clearFile("output.dat");
-        return mainLoop(argv[0]);
+
+        
+        //clearFile("output.dat");
+        //return mainLoop(argv[0]);
     }
 }
 

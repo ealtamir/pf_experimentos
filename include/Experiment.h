@@ -20,7 +20,7 @@
 
 const btScalar DEFAULT_EXPERIMENT_INTERVAL = 0.001;
 const btScalar DEFAULT_CHANGE_COUNTER = 60 * 3;
-const btScalar DIRECTION_CONSTANT = 0.03;
+const btScalar DIRECTION_CONSTANT = 0.02;
 //const btScalar VELOCITY_CONSTANT = 0.257;
 const btScalar VELOCITY_CONSTANT = 4.6;
 const btScalar OBJETIVE_VELOCITY = 1.3;
