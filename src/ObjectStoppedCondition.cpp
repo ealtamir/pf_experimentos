@@ -25,7 +25,7 @@ bool ObjectStoppedCondition::stopConditionMet()
     btScalar diff = currentPos.distance2(counter.position);
     
     if (diff < DEFAULT_EXPERIMENT_INTERVAL
-        && counter.counter >= DEFAULT_CHANGE_COUNTER) {
+        && counter.counter >= SIMULATION_STEPS) {
         return true;
     } else if (diff < 0.001) {
         counter.counter += 1;

@@ -27,7 +27,7 @@ public:
 //    void setActuatorValues(double ampl1, double ampl2, double ampl3, double ampl4,
 //                           double freq, double phase, double indTerm);
     // Double frec cos
-    void setActuatorValues(double ampl1, double freq1, double freq2, double phase, double indTerm);
+    void setActuatorValues(double ampl1, double freq1, double freq2, double fase, double indTerm);
 
 protected:
 	btRigidBody* body;

@@ -35,11 +35,11 @@ void BodyPart::actuate(double t) {
 //}
 
 // Double frec cos
-void BodyPart::setActuatorValues(double ampl1, double freq1, double freq2, double phase, double indTerm) {
+void BodyPart::setActuatorValues(double ampl1, double freq1, double freq2, double fase, double indTerm) {
     if (actuator == NULL) {
         return;
     }
-    double params[5] = {ampl1, freq1, freq2, phase, indTerm};
+    double params[5] = {ampl1, freq1, freq2, fase, indTerm};
     actuator->setParameters(params);
     
 }

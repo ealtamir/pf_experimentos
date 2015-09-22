@@ -34,6 +34,8 @@
 
 #define VALUES_SIZE     10
 #define POPULATION_SIZE 100
+#define GENERATIONS 1000
+#define VISUAL true
 
 int mainLoop();
 double getTimeElapsed();
@@ -90,7 +92,7 @@ void MiExperimentoObserver::NewBestChromosome(const GaChromosome& newChromosome,
     }
     fitness = newChromosome.GetFitness();
 
-    cout << endl << "Fitness: " << fitness;
+    cout << endl << "Fitness: " << fitness << endl;
     cout << endl << "Generation: " << algorithm.GetAlgorithmStatistics().GetCurrentGeneration() << endl;
 }
 
@@ -120,9 +122,7 @@ void MiExperimentoObserver::StatisticUpdate(const Common::GaStatistics &statisti
 int mainLoop(char* executablePath);
 
 int main(int argc,char* argv[]) {
-    bool visual = false;
-
-    if(visual) {
+    if(VISUAL) {
         // Visual
         PassiveWalkerExperiment* experiment = new PassiveWalkerExperiment();
         experiment->enableStoppingCondition(false);
@@ -130,16 +130,16 @@ int main(int argc,char* argv[]) {
         experiment->setCameraDistance(btScalar(5.));
         experiment->setCameraUp(btVector3(0, 15, 0));
     
-        /*std::string exePath(argv[0]);
+        std::string exePath(argv[0]);
         std::vector<double> vals = loadPreviousParams(exePath);
         PassiveWalkerExperiment::setWalkerActuatorValues(vals, experiment);
-        */
+        
          return glutmain(argc, argv, 1024, 768, "Experiment",experiment);
     } else {
-        PassiveWalkerExperiment* exp= new PassiveWalkerExperiment();
-        exp->initPhysics();
-        
-        exp->simulate();
+//        PassiveWalkerExperiment* exp= new PassiveWalkerExperiment();
+//        exp->initPhysics();
+//        
+//        exp->simulate();
         
         //esto es para probar que la función angle de bullet hace bien lo de los cuadrantes (me fijo en el plano y,z)
 //        btVector3 v=btVector3(0,1,0);
@@ -158,8 +158,8 @@ int main(int argc,char* argv[]) {
 //        printf("anglebetween de v4: %f \n",getAngleBetween(v4,v)*(180/3.1416));
 
         
-        //clearFile("output.dat");
-        //return mainLoop(argv[0]);
+        clearFile("output.dat");
+        return mainLoop(argv[0]);
     }
 }
 
@@ -173,10 +173,10 @@ int mainLoop(char* executablePath) {
     
     GaInitialize();
     
-    GaValueIntervalBounds<double> amplitude(30, 80);
-    GaValueIntervalBounds<double> frequency(0.1, 0.5);
+    GaValueIntervalBounds<double> amplitude(0, 140);
+    GaValueIntervalBounds<double> frequency(0.1, 0.8);
     GaValueIntervalBounds<double> phase(0, SIMD_2_PI);
-    GaValueIntervalBounds<double> independentTerm(-50, 50);
+    GaValueIntervalBounds<double> independentTerm(-10, 10);
     
     GaIntervalValueSet<double> amplitudeValueSet(amplitude, amplitude, GaGlobalRandomDoubleGenerator, false);
     GaIntervalValueSet<double> frequencyValueSet(frequency, frequency, GaGlobalRandomDoubleGenerator, false);
@@ -284,7 +284,7 @@ int mainLoop(char* executablePath) {
     
     GaStopCriteria* criteria = GaStopCriteriaCatalogue::Instance().GetEntryData("GaGenerationCriteria");
     
-    int numberOfGenerations = 300;
+    int numberOfGenerations = GENERATIONS;
     Algorithm::StopCriterias::GaGenerationCriteriaParams critParam(numberOfGenerations);
     algorithm->SetStopCriteria(criteria, &critParam);
     

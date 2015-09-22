@@ -30,8 +30,10 @@ float PassiveWalkerExperiment::getFitness(const std::vector<double> vals) {
     
     // run simulation
     experiment->simulate();
-    double value = experiment->getHeight();// * experiment->getDirection() * experiment->getVelocity();
-    return value;
+//    std::cout << "Height: " << experiment->getHeight() << std::endl;
+//    std::cout << "Direction: " << experiment->getDirection() << std::endl;
+//    std::cout << "Velocity: " << experiment->getVelocity() << std::endl;
+    return experiment->getHeight() * experiment->getDirection() * experiment->getVelocity();
 }
 
 void PassiveWalkerExperiment::initializeBodies() {
@@ -47,7 +49,7 @@ void PassiveWalkerExperiment::worldStep() {
     timeCount += 1. / 60.;
     btDynamicsWorld* w = getDynamicsWorld();
     w->stepSimulation(1 / 60.f);
-//    body->actuate(timeCount);
+    body->actuate(timeCount);
 //    body->cicleQuantity();
 }
 
@@ -78,25 +80,28 @@ void Experiment::simulate(){
     PassiveWalkerExperiment* exp = dynamic_cast<PassiveWalkerExperiment*>(this);
     WalkerBody* walker = exp->getWalkerBody();
     double acum_height = 0;
-    const btVector3& velocity_obj = btVector3(0, 0, OBJETIVE_VELOCITY);
+    const btVector3 velocity_obj = btVector3(0, 0, OBJETIVE_VELOCITY);
     
-    double initial_position = 0;
-    double acum_position = 0;
+    double initial_height = 0;
+//    double initial_position = 0;
+    double acum_velocity = 0;
     double acum_direction = 0;
     double initial_angle = 0;
-    double acum_cycles = 0;
+//    double acum_cycles = 0;
     
-    initial_position = walker->getPosition();
-    initial_angle = walker->getAngleInclination();
-    
-    for (int i = 0; i < DEFAULT_CHANGE_COUNTER; i++) {
+    for (int i = 0; i < SIMULATION_STEPS; i++) {
         worldStep();
-        if(i == 0) { initial_height = walker->getHeight(); }
-        acum_height += walker->getHeight();
+        if(i == 0) {
+            initial_height = walker->getHeight();
+//            initial_position = walker->getPosition();
+            initial_angle = walker->getAngleInclination();
+        }
+        double current_height = walker->getHeight();
+        acum_height += current_height;
         
-        btVector3 final_position = walker->getVelocity();
+        btVector3 current_velocity = walker->getVelocity();
+        acum_velocity += fabs(velocity_obj.norm() - current_velocity.norm());
         
-        acum_position += fabs(final_position.norm() - velocity_obj.norm());
         
         // --- esto era lo que teníamos que mezclaba módulo de velocidad y dirección en un mismo valor
         //acum_position += fabs(final_position.distance(velocity_obj));
@@ -109,8 +114,8 @@ void Experiment::simulate(){
         //acum_position += fabs(final_position-(initial_position+OBJETIVE_VELOCITY*(t*DEFAULT_EXPERIMENT_INTERVAL)));
         
         
-        double angle = walker->getAngleInclination()-90;
-        printf("angulo: %f\n",angle);
+        double angle = walker->getAngleInclination();
+//        printf("angulo: %f\n",angle);
         acum_direction += fabs( angle );
         
         
@@ -128,12 +133,12 @@ void Experiment::simulate(){
     }
     
     
-    max_height = 1 - fabs (1 - acum_height/ ((DEFAULT_CHANGE_COUNTER) * initial_height));
+    max_height = 1 - fabs (1 - acum_height/ ((SIMULATION_STEPS) * initial_height));
     
     
-    acum_position = acum_position/DEFAULT_CHANGE_COUNTER;
+    acum_velocity = acum_velocity/SIMULATION_STEPS;
     
-    average_velocity = 1 - fabs(tanh((1.2*acum_position)));
+    average_velocity = 1 - acum_velocity/OBJETIVE_VELOCITY;
     
     //average_velocity = 1 - acum_position/(pow(DEFAULT_CHANGE_COUNTER,2) * VELOCITY_CONSTANT * DEFAULT_EXPERIMENT_INTERVAL);
     
@@ -149,14 +154,14 @@ void Experiment::simulate(){
     
     
     
-    direction = 1 - fabs(tanh(DIRECTION_CONSTANT*(acum_direction/(DEFAULT_CHANGE_COUNTER))));
+    direction = 1 - fabs(tanh(0.0174532925*(initial_angle - (acum_direction/(SIMULATION_STEPS)))));
     //printf("diferencias de angulo acumulada: %f\n",acum_direction);
     
-    periodicity = 1 - acum_cycles/(CYCLE_CONSTANT * BODY_PART_QTY * walker->getCycleQuantity());
+//    periodicity = 1 - acum_cycles/(CYCLE_CONSTANT * BODY_PART_QTY * walker->getCycleQuantity());
     
-   printf("velocity final: %f \n",average_velocity);
-    printf("direction final: %f \n",direction);
-    printf("height final: %f \n",max_height);
+//   printf("velocity final: %f \n",average_velocity);
+//    printf("direction final: %f \n",direction);
+//    printf("height final: %f \n",max_height);
     //printf("cycle final: %f \n",periodicity);
     
 
