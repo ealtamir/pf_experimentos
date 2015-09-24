@@ -128,7 +128,7 @@ void Experiment::simulate(){
         }
         
         btVector3 current_velocity = walker->getVelocity();
-        acum_velocity += current_velocity.getZ();
+        acum_velocity += fabs(current_velocity.getZ());
         
         double angle = walker->getAngleInclination();
         acum_direction += angle;
@@ -148,7 +148,10 @@ void Experiment::simulate(){
         right_foot_height = 0.1;
     }
     
-    average_velocity = 1 - (acum_velocity/SIMULATION_STEPS) / OBJETIVE_VELOCITY;
+    average_velocity = (acum_velocity/SIMULATION_STEPS) / OBJETIVE_VELOCITY;
+    if (average_velocity > OBJETIVE_VELOCITY) {
+        average_velocity = 0.1;
+    }
     
     direction = 1 - (initial_angle - (acum_direction/SIMULATION_STEPS))/180;
 }
