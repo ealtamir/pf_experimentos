@@ -22,7 +22,7 @@ const btScalar DEFAULT_EXPERIMENT_INTERVAL = 0.001;
 const btScalar SIMULATION_STEPS = 60 * 5; // if it's 60 the simulation is 1 second
 const btScalar DIRECTION_CONSTANT = 0.02;
 const btScalar VELOCITY_CONSTANT = 4.6;
-const btScalar OBJETIVE_VELOCITY = 1.3;
+const btScalar OBJETIVE_VELOCITY = 1;
 const btScalar CYCLE_CONSTANT = 30;
 const double HALF_PI_IN_DEGREES = 90;
 
@@ -39,10 +39,6 @@ public:
     virtual void clientMoveAndDisplay();
 
     virtual void displayCallback();
-
-    void enableStoppingCondition(bool status) {
-        stoppingConditionEnabled = status;
-    }
     
     virtual void worldStep() = 0;
     
@@ -54,6 +50,11 @@ public:
     
     virtual double getDirection() const;
     
+    virtual double getLeftFootHeight() const;
+    
+    virtual double getRightFootHeight() const;
+    
+    virtual double getCorrectFootHipPosition() const;
     
     std::string getName() {
         return "Experiment";
@@ -68,18 +69,20 @@ private:
     
 
 protected:
-    
-    bool stoppingConditionEnabled = true;
 
     bool simulated = false;
     
-    double max_height = -1; // Es uno de los parametros de la posible funcion de fitness, es la altura
+    double max_height = -1;
     
-    double average_velocity = -1; // Es el parametro principal de la posible funcion de fitness, es la velocidad
+    double average_velocity = -1;
     
-    double direction = -1; // Es uno de los parametros de la posible funcion de fitness, es la dirección
+    double direction = -1;
     
-    double periodicity = -1; // Es uno de los parametros de la posible funcion de fitness, es el ciclo 
+    double left_foot_height = -1;
+    
+    double right_foot_height = -1;
+    
+    double correct_foot_hip_position = -1;
     
     virtual void initializeBodies() = 0;
 

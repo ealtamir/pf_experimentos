@@ -9,6 +9,7 @@
 #include "GenericBodyParameters.h"
 #include "GenericActuator.h"
 #include "FourierActuator.h"
+#include "CosineDoubleFrecActuator.h"
 
 GenericBodyParameters::GenericBodyParameters() {
     
@@ -25,33 +26,33 @@ GenericBodyParameters::GenericBodyParameters() {
 //    
 //    leftLowerLegAct = new GenericActuator(true);
 //    leftUpperLegAct = new GenericActuator(true);
-    rightLowerArmAct = new FourierActuator();
-    rightUpperArmAct = new FourierActuator();
+//    rightLowerArmAct = new FourierActuator();
+//    rightUpperArmAct = new FourierActuator();
+//    
+//    leftLowerArmAct = new FourierActuator();
+//    leftUpperArmAct = new FourierActuator();
+//    
+//    hipAct = new FourierActuator();
+//    
+//    rightLowerLegAct = new FourierActuator();
+//    rightUpperLegAct = new FourierActuator();
+//    
+//    leftLowerLegAct = new FourierActuator(true);
+//    leftUpperLegAct = new FourierActuator(true);
+    rightLowerArmAct = new CosineDoubleFrecActuator();
+    rightUpperArmAct = new CosineDoubleFrecActuator();
     
-    leftLowerArmAct = new FourierActuator();
-    leftUpperArmAct = new FourierActuator();
+    leftLowerArmAct = new CosineDoubleFrecActuator();
+    leftUpperArmAct = new CosineDoubleFrecActuator();
     
-    hipAct = new FourierActuator();
+    hipAct = new CosineDoubleFrecActuator();
     
-    rightLowerLegAct = new FourierActuator();
-    rightUpperLegAct = new FourierActuator();
+    rightLowerLegAct = new CosineDoubleFrecActuator();
+    rightUpperLegAct = new CosineDoubleFrecActuator();
     
-    leftLowerLegAct = new FourierActuator(true);
-    leftUpperLegAct = new FourierActuator(true);
+    leftLowerLegAct = new CosineDoubleFrecActuator(true);
+    leftUpperLegAct = new CosineDoubleFrecActuator(true);
 }
 
 GenericBodyParameters::~GenericBodyParameters() {
-    delete rightLowerArmAct;
-    delete rightUpperArmAct;
-    
-    delete leftLowerArmAct;
-    delete leftUpperLegAct;
-    
-    delete hipAct;
-    
-    delete rightLowerLegAct;
-    delete rightUpperLegAct;
-    
-    delete leftLowerLegAct;
-    delete leftUpperLegAct;
 }

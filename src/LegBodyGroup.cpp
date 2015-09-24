@@ -184,7 +184,6 @@ LegBodyGroup::getAngles() {
     y = v.getOrigin().getY();
     angles[1] = ((z==0)?0:(asin(fmin(1.0, fmax(-1.0,z/y)))*180/M_PI));
     
-    BodyPart* foot= bodyParts[2];
     btRigidBody * foot_rigid = upper->getRigidBody();
     v = foot_rigid->getCenterOfMassTransform();
     z = v.getOrigin().getZ();

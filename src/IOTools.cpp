@@ -84,7 +84,6 @@ vector<double> loadPreviousParams(string executablePath) {
     vector<double> params;
     string resultsDirPath = getResultsDirPath(executablePath);
     ifstream latestResults(resultsDirPath.append("/latest_result.txt"));
-    double value;
     string line;
     getline(latestResults, line);
     while (getline(latestResults, line)) {

@@ -24,7 +24,9 @@ public:
     WalkerBody(btDynamicsWorld* world, BodyParameters &params);
     std::vector<BodyGroup*> getBodyGroups();
     double getHeight();
-    double getPosition();
+    double getLeftFootHeight();
+    double getRightFootHeight();
+    btVector3 getPosition();
     btVector3 getVelocity();
     double getAngleInclination();
     void cicleQuantity();
@@ -37,10 +39,6 @@ protected:
     createTorso(btDynamicsWorld* world, BodyParameters &params);
     int cicleQty = -1;
     double last_angle = 0;
-    
-    /* Se usan para calcular la direccion del doll, para el fitness*/
-    //const btVector3 objetive = btVector3(0,0,-OBJETIVE_VELOCITY);
-    const btVector3 objetive = btVector3(OBJETIVE_VELOCITY,0,0);
     
     btVector3 previous = btVector3(0,0,1);
 };

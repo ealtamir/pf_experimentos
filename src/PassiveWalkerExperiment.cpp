@@ -28,12 +28,15 @@ float PassiveWalkerExperiment::getFitness(const std::vector<double> vals) {
     experiment->objectsInitialized = false;
     setWalkerActuatorValues(vals, experiment);
     
-    // run simulation
     experiment->simulate();
 //    std::cout << "Height: " << experiment->getHeight() << std::endl;
 //    std::cout << "Direction: " << experiment->getDirection() << std::endl;
 //    std::cout << "Velocity: " << experiment->getVelocity() << std::endl;
-    return experiment->getHeight() * experiment->getDirection() * experiment->getVelocity();
+//    std::cout << "Left foot height: " << experiment->getLeftFootHeight() << std::endl;
+//    std::cout << "Right foot height: " << experiment->getRightFootHeight() << std::endl;
+//    std::cout << "Foot correctness: " << experiment->getCorrectFootHipPosition() << std::endl;
+
+    return experiment->getHeight() * experiment->getDirection() * experiment->getVelocity() * experiment->getLeftFootHeight() * experiment->getRightFootHeight() * experiment->getCorrectFootHipPosition();
 }
 
 void PassiveWalkerExperiment::initializeBodies() {
@@ -50,7 +53,6 @@ void PassiveWalkerExperiment::worldStep() {
     btDynamicsWorld* w = getDynamicsWorld();
     w->stepSimulation(1 / 60.f);
     body->actuate(timeCount);
-//    body->cicleQuantity();
 }
 
 bool PassiveWalkerExperiment::stopExperiment() {
@@ -74,97 +76,81 @@ double Experiment::getDirection() const {
     return direction;
 }
 
+double Experiment::getLeftFootHeight() const {
+    return left_foot_height;
+}
+
+double Experiment::getRightFootHeight() const {
+    return right_foot_height;
+}
+
+double Experiment::getCorrectFootHipPosition() const {
+    return correct_foot_hip_position;
+}
+
 void Experiment::simulate(){
     max_height = 0;
+    left_foot_height = 0;
+    right_foot_height = 0;
     average_velocity = 0;
+    correct_foot_hip_position = 1;
     PassiveWalkerExperiment* exp = dynamic_cast<PassiveWalkerExperiment*>(this);
     WalkerBody* walker = exp->getWalkerBody();
-    double acum_height = 0;
-    const btVector3 velocity_obj = btVector3(0, 0, OBJETIVE_VELOCITY);
     
     double initial_height = 0;
-//    double initial_position = 0;
+    double acum_height = 0;
+    double acum_left_foot_height = 0;
+    double acum_right_foot_height = 0;
     double acum_velocity = 0;
-    double acum_direction = 0;
+    
     double initial_angle = 0;
-//    double acum_cycles = 0;
+    double acum_direction = 0;
     
     for (int i = 0; i < SIMULATION_STEPS; i++) {
         worldStep();
         if(i == 0) {
             initial_height = walker->getHeight();
-//            initial_position = walker->getPosition();
             initial_angle = walker->getAngleInclination();
         }
         double current_height = walker->getHeight();
         acum_height += current_height;
         
+        double current_left_foot_height = walker->getLeftFootHeight();
+        double current_right_foot_height = walker->getRightFootHeight();
+        acum_left_foot_height += current_left_foot_height;
+        acum_right_foot_height += current_right_foot_height;
+        
+        if(current_left_foot_height >= current_height){
+            correct_foot_hip_position -= 0.5 * 1/SIMULATION_STEPS;
+        }
+        if(current_right_foot_height >= current_height){
+            correct_foot_hip_position -= 0.5 * 1/SIMULATION_STEPS;
+        }
+        
         btVector3 current_velocity = walker->getVelocity();
-        acum_velocity += fabs(velocity_obj.norm() - current_velocity.norm());
-        
-        
-        // --- esto era lo que teníamos que mezclaba módulo de velocidad y dirección en un mismo valor
-        //acum_position += fabs(final_position.distance(velocity_obj));
-        
-        // --- cambio de la formula del informe del cuadrupedo respecto de la velocidad: la ecuacion de movimiento uniforme seria x*t, y no x*t*dt
-        //acum_position += fabs(final_position-(initial_position+OBJETIVE_VELOCITY*(t+DEFAULT_EXPERIMENT_INTERVAL)));
-        
-        // --- asi es como esta escrita la formula en el informe del cuadrupedo
-        
-        //acum_position += fabs(final_position-(initial_position+OBJETIVE_VELOCITY*(t*DEFAULT_EXPERIMENT_INTERVAL)));
-        
+        acum_velocity += current_velocity.getZ();
         
         double angle = walker->getAngleInclination();
-//        printf("angulo: %f\n",angle);
-        acum_direction += fabs( angle );
-        
-        
-     /* int new_cycles = walker->getCycleQuantity();
-        if(new_cycles == cycles+1){
-            double *angles= walker->getAnglesLegs();
-            for(int i=0;i<BODY_PART_QTY;i++){
-                acum_cycles+=fabs(angles[i]-last_cycles[i]);
-            }
-            free(last_cycles);
-            last_cycles=angles;
-            cycles++;
-        }
-         */
+        acum_direction += angle;
     }
     
+    max_height = 1 - fabs (1 - acum_height / ((SIMULATION_STEPS) * initial_height));
     
-    max_height = 1 - fabs (1 - acum_height/ ((SIMULATION_STEPS) * initial_height));
+    if ((initial_height * 0.8 - (acum_left_foot_height / SIMULATION_STEPS)) > 0) {
+        left_foot_height = 1;
+    } else {
+        left_foot_height = 0.1;
+    }
     
+    if ((initial_height * 0.8 - (acum_right_foot_height / SIMULATION_STEPS)) > 0) {
+        right_foot_height = 1;
+    } else {
+        right_foot_height = 0.1;
+    }
     
-    acum_velocity = acum_velocity/SIMULATION_STEPS;
+    average_velocity = 1 - (acum_velocity/SIMULATION_STEPS) / OBJETIVE_VELOCITY;
     
-    average_velocity = 1 - acum_velocity/OBJETIVE_VELOCITY;
-    
-    //average_velocity = 1 - acum_position/(pow(DEFAULT_CHANGE_COUNTER,2) * VELOCITY_CONSTANT * DEFAULT_EXPERIMENT_INTERVAL);
-    
-    
-    //average_velocity = 1 - acum_position/(pow(DEFAULT_CHANGE_COUNTER,2) * VELOCITY_CONSTANT * OBJETIVE_VELOCITY * DEFAULT_EXPERIMENT_INTERVAL);
-    
-    //ponemos bounds entre 0 y 1
-    //average_velocity = fmin(1.0, fmax(0,average_velocity));
-    
-    //por ahora la velocity del fitness va a estar entre 1 y menos infinito, porque siempre está dando negativa (y dejarla en cero va a ser muy malo para el GA)
-    
-    //average_velocity = fmin(1.0, average_velocity);
-    
-    
-    
-    direction = 1 - fabs(tanh(0.0174532925*(initial_angle - (acum_direction/(SIMULATION_STEPS)))));
-    //printf("diferencias de angulo acumulada: %f\n",acum_direction);
-    
-//    periodicity = 1 - acum_cycles/(CYCLE_CONSTANT * BODY_PART_QTY * walker->getCycleQuantity());
-    
-//   printf("velocity final: %f \n",average_velocity);
-//    printf("direction final: %f \n",direction);
-//    printf("height final: %f \n",max_height);
-    //printf("cycle final: %f \n",periodicity);
-    
-
+    direction = 1 - (initial_angle - (acum_direction/SIMULATION_STEPS))/180;
 }
 
 double getDirectionAngle(double previous_position_x, double previous_position_z,
@@ -172,7 +158,7 @@ double getDirectionAngle(double previous_position_x, double previous_position_z,
     
     double x = actual_position_x - previous_position_x;
     double z = actual_position_z - previous_position_z;
-    if (x==0){
+    if (x == 0){
         return 0;
     }
     return (asin(fmin(1.0, fmax(-1.0,x/z)))*180/M_PI);

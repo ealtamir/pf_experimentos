@@ -57,13 +57,37 @@ WalkerBody::getHeight(){
 }
 
 double
+WalkerBody::getLeftFootHeight(){
+    LegBodyGroup* left_leg = dynamic_cast<LegBodyGroup*>(bodyGroups[0]);
+    BodyPart* bp_left_leg = left_leg->getBodyParts()[2];
+
+    btRigidBody* rigid_body_left_leg = bp_left_leg->getRigidBody();
+    btTransform v;
+    rigid_body_left_leg->getMotionState()->getWorldTransform(v);
+
+    return v.getOrigin().getY();
+}
+
+double
+WalkerBody::getRightFootHeight(){
+    LegBodyGroup* right_leg = dynamic_cast<LegBodyGroup*>(bodyGroups[1]);
+    BodyPart* bp_right_leg = right_leg->getBodyParts()[2];
+    
+    btRigidBody* rigid_body_right_leg = bp_right_leg->getRigidBody();
+    btTransform v;
+    rigid_body_right_leg->getMotionState()->getWorldTransform(v);
+    
+    return v.getOrigin().getY();
+}
+
+btVector3
 WalkerBody::getPosition(){
     GenericTorsoBodyGroup* torso = dynamic_cast<GenericTorsoBodyGroup*>(bodyGroups.back());
     BodyPart* bp = torso->getLeftHipPart();
     btRigidBody* rigidBody = bp->getRigidBody();
     btTransform v;
     rigidBody->getMotionState()->getWorldTransform(v);
-    return v.getOrigin().getZ();
+    return v.getOrigin();
 }
 
 btVector3
@@ -77,6 +101,24 @@ WalkerBody::getVelocity(){
     return rigidBody->getLinearVelocity();
 }
 
+// Converts a quaternion to an euler angle
+void QuaternionToEuler(const btQuaternion &TQuat, btVector3 &TEuler)
+{
+    btScalar W = TQuat.getW();
+    btScalar X = TQuat.getX();
+    btScalar Y = TQuat.getY();
+    btScalar Z = TQuat.getZ();
+    float WSquared = W * W;
+    float XSquared = X * X;
+    float YSquared = Y * Y;
+    float ZSquared = Z * Z;
+    
+    TEuler.setX(atan2f(2.0f * (Y * Z + X * W), -XSquared - YSquared + ZSquared + WSquared));
+    TEuler.setY(asinf(-2.0f * (X * Z - Y * W)));
+    TEuler.setZ(atan2f(2.0f * (X * Y + Z * W), XSquared - YSquared - ZSquared + WSquared));
+    TEuler *= 57.2957795;
+}
+
 double
 WalkerBody::getAngleInclination(){
     GenericTorsoBodyGroup* torso = dynamic_cast<GenericTorsoBodyGroup*>(bodyGroups.back());
@@ -85,31 +127,16 @@ WalkerBody::getAngleInclination(){
     btTransform v;
     rigidBody->getMotionState()->getWorldTransform(v);
     btVector3 actual_position = v.getOrigin();
-    /*double angle=actual_position.dot(previous)/(actual_position.norm()*previous.norm());
-    
-    previous=actual_position; //estamos tomando la ""velocidad"" instantanea
-    
-    
-    return (acos(fmin(1.0, fmax(-1.0,angle)))*180/M_PI);
-    */
-    double x1 = actual_position.getX();
-    double y1 = actual_position.getY();
-    double x2 = objetive.getX();
-    double y2 = objetive.getY();
-    double dot = y1*y2 + x1*x2; // dot product
-    double det = y1*x2 - x1*y2;     // determinant
-    return atan2(det, dot)*180/M_PI;  // atan2(y, x) or atan2(sin, cos)
-    
-    //return actual_position.angle(objetive)*180/M_PI;
-    
+
+    double deltaX = -actual_position.getX();
+    double deltaZ = -actual_position.getZ()-0.15;
+    double resp = atan2(deltaZ, deltaX) * 180 / SIMD_PI;
+    return resp;
 }
 
 void
 WalkerBody::cicleQuantity(){
-    
-    LegBodyGroup* leg_1 = dynamic_cast<LegBodyGroup*>(bodyGroups[0]);
     LegBodyGroup* leg_2 = dynamic_cast<LegBodyGroup*>(bodyGroups[1]);
-    double* angles_1 = leg_1->getAngles();
     double* angles_2 = leg_2->getAngles();
     
     //tomo el upper de la pierna 2 para definir los ciclos

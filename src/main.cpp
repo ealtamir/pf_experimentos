@@ -34,8 +34,8 @@
 
 #define VALUES_SIZE     10
 #define POPULATION_SIZE 100
-#define GENERATIONS 1000
-#define VISUAL true
+#define GENERATIONS 300
+#define VISUAL false
 
 int mainLoop();
 double getTimeElapsed();
@@ -119,50 +119,6 @@ void MiExperimentoObserver::StatisticUpdate(const Common::GaStatistics &statisti
     }
 }
 
-int mainLoop(char* executablePath);
-
-int main(int argc,char* argv[]) {
-    if(VISUAL) {
-        // Visual
-        PassiveWalkerExperiment* experiment = new PassiveWalkerExperiment();
-        experiment->enableStoppingCondition(false);
-        experiment->initPhysics();
-        experiment->setCameraDistance(btScalar(5.));
-        experiment->setCameraUp(btVector3(0, 15, 0));
-    
-        std::string exePath(argv[0]);
-        std::vector<double> vals = loadPreviousParams(exePath);
-        PassiveWalkerExperiment::setWalkerActuatorValues(vals, experiment);
-        
-         return glutmain(argc, argv, 1024, 768, "Experiment",experiment);
-    } else {
-//        PassiveWalkerExperiment* exp= new PassiveWalkerExperiment();
-//        exp->initPhysics();
-//        
-//        exp->simulate();
-        
-        //esto es para probar que la función angle de bullet hace bien lo de los cuadrantes (me fijo en el plano y,z)
-//        btVector3 v=btVector3(0,1,0);
-//        btVector3 v1=btVector3(0,1,1); //primer cuadrante
-//        btVector3 v2=btVector3(0,-1,0.5); //segundo cuadrante
-//        btVector3 v3=btVector3(0,-1,-1); //tercer cuadrante
-//        btVector3 v4=btVector3(0,1,-1); //cuarto cuadrante
-//        printf("angle de v1: %f \n",v1.angle(v)*(180/3.1416));
-//        printf("angle de v2: %f \n",v2.angle(v)*(180/3.1416));
-//        printf("angle de v3: %f \n",v3.angle(v)*(180/3.1416));
-//        printf("angle de v4: %f \n",v4.angle(v)*(180/3.1416));
-//        
-//        printf("anglebetween de v1: %f \n",getAngleBetween(v1,v)*(180/3.1416));
-//        printf("anglebetween de v2: %f \n",getAngleBetween(v2,v)*(180/3.1416));
-//        printf("anglebetween de v3: %f \n",getAngleBetween(v3,v)*(180/3.1416));
-//        printf("anglebetween de v4: %f \n",getAngleBetween(v4,v)*(180/3.1416));
-
-        
-        clearFile("output.dat");
-        return mainLoop(argv[0]);
-    }
-}
-
 int mainLoop(char* executablePath) {
     struct timeval before;
     gettimeofday(&before, NULL);
@@ -173,10 +129,10 @@ int mainLoop(char* executablePath) {
     
     GaInitialize();
     
-    GaValueIntervalBounds<double> amplitude(0, 140);
-    GaValueIntervalBounds<double> frequency(0.1, 0.8);
+    GaValueIntervalBounds<double> amplitude(-200, 200);
+    GaValueIntervalBounds<double> frequency(0.1, 2);
     GaValueIntervalBounds<double> phase(0, SIMD_2_PI);
-    GaValueIntervalBounds<double> independentTerm(-10, 10);
+    GaValueIntervalBounds<double> independentTerm(-5, 5);
     
     GaIntervalValueSet<double> amplitudeValueSet(amplitude, amplitude, GaGlobalRandomDoubleGenerator, false);
     GaIntervalValueSet<double> frequencyValueSet(frequency, frequency, GaGlobalRandomDoubleGenerator, false);
@@ -252,12 +208,12 @@ int mainLoop(char* executablePath) {
     Population::SelectionOperations::GaSelectRandomBestParams selectParams(selectionSize, false, groupSize);
     
     int replacementSize = 20;
-    int bestChromosomesThatRemain = 5;
+    int bestChromosomesThatRemain = 1;
     Population::ReplacementOperations::GaReplaceElitismParams replaceParams(replacementSize,
                                                                             bestChromosomesThatRemain);
     
     
-    int numberOfOffsprings = 5;
+    int numberOfOffsprings = 11;
     int checkForDuplicates = false;
     GaCouplingParams couplingParams(numberOfOffsprings, checkForDuplicates);
     
@@ -277,7 +233,7 @@ int mainLoop(char* executablePath) {
                                                  populationConfiguration);
     
     
-    int numberOfWorkers = 8;
+    int numberOfWorkers = 1;
     GaMultithreadingAlgorithmParams algParam(numberOfWorkers);
     Algorithm::SimpleAlgorithms::GaIncrementalAlgorithm* algorithm = new Algorithm::SimpleAlgorithms::GaIncrementalAlgorithm( population, algParam);
     
@@ -290,9 +246,7 @@ int mainLoop(char* executablePath) {
     
     // subscribe observer
     algorithm->SubscribeObserver(new MiExperimentoObserver());
-    
     algorithm->StartSolving(false);
-    
     algorithm->WaitForThreads();
     
     GaFinalize();
@@ -317,12 +271,22 @@ double getTimeElapsed(){
     gettimeofday(&after, NULL);
     
     return (after.tv_sec * 1000 + after.tv_usec / 1000) - time_begin;
-
 }
 
-double getAngleBetween(btVector3 v1, btVector3 v2){
-    double arg1 = (v1.cross(v2)).norm();
-    double arg2 = (v1.dot(v2));
-    
-    return atan2(arg1,arg2);
+int main(int argc,char* argv[]) {
+    if(VISUAL) {
+        PassiveWalkerExperiment* experiment = new PassiveWalkerExperiment();
+        experiment->initPhysics();
+        experiment->setCameraDistance(btScalar(5.));
+        experiment->setCameraUp(btVector3(0, 15, 0));
+        
+        std::string exePath(argv[0]);
+        std::vector<double> vals = loadPreviousParams(exePath);
+        PassiveWalkerExperiment::setWalkerActuatorValues(vals, experiment);
+        PassiveWalkerExperiment::getFitness(vals);
+        return glutmain(argc, argv, 800, 600, "Experiment",experiment);
+    } else {
+        clearFile("output.dat");
+        return mainLoop(argv[0]);
+    }
 }
