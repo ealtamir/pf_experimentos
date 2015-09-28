@@ -12,8 +12,8 @@
 Actuator::Actuator(bool isLeft) {
 }
 
-btVector3 Actuator::eval(double t) {
-    return actuatorFunc(t);
+btVector3 Actuator::eval(double t, int stage) {
+    return actuatorFunc(t, stage);
 }
 
 void Actuator::setParameters(double *params) {

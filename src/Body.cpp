@@ -18,9 +18,9 @@ Body::~Body() {
 }
 
 void
-Body::actuate(double t) {
+Body::actuate(double t, int stage) {
     for (BodyGroup* group : bodyGroups) {
-        group->actuate(t);
+        group->actuate(t, stage);
     }
     
 }
