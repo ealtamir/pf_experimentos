@@ -127,10 +127,10 @@ void Experiment::simulate(){
         acum_right_foot_height += current_right_foot_height;
         
         if(current_left_foot_height >= current_height){
-            correct_foot_hip_position -= 0.5 * 1/SIMULATION_STEPS;
+            correct_foot_hip_position = 0.1;
         }
         if(current_right_foot_height >= current_height){
-            correct_foot_hip_position -= 0.5 * 1/SIMULATION_STEPS;
+            correct_foot_hip_position = 0.1;
         }
         
         btVector3 current_velocity = walker->getVelocity();

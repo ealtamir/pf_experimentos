@@ -34,7 +34,7 @@
 
 #define VALUES_SIZE 20
 #define POPULATION_SIZE 100
-#define GENERATIONS 100
+#define GENERATIONS 1000
 #define VISUAL false
 
 double getTimeElapsed();
@@ -128,8 +128,8 @@ std::vector<double> mainLoop(char* executablePath) {
     
     GaInitialize();
     
-    GaValueIntervalBounds<double> amplitude(-140, 140);
-    GaValueIntervalBounds<double> frequency(0.1, 10);
+    GaValueIntervalBounds<double> amplitude(-200, 200);
+    GaValueIntervalBounds<double> frequency(0.01, 10);
     GaValueIntervalBounds<double> phase(-SIMD_PI, SIMD_PI);
     GaValueIntervalBounds<double> independentTerm(-5, 5);
     
