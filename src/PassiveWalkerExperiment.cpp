@@ -26,6 +26,8 @@ PassiveWalkerExperiment::~PassiveWalkerExperiment() {
 float PassiveWalkerExperiment::getFitness(const std::vector<double> vals) {
     experiment->initPhysics();
     experiment->objectsInitialized = false;
+    experiment->timeCount = 0;
+    experiment->initObjects();
     setWalkerActuatorValues(vals, experiment);
     
     experiment->simulate();
@@ -48,10 +50,14 @@ void PassiveWalkerExperiment::initObjects() {
 	objectsInitialized = true;
 }
 
-void PassiveWalkerExperiment::worldStep(int stage) {
+void PassiveWalkerExperiment::worldStep() {
     timeCount += 1. / 60.;
     btDynamicsWorld* w = getDynamicsWorld();
     w->stepSimulation(1 / 60.f);
+    int stage = 0;
+    if (timeCount > 0.15) {
+        stage = 1;
+    }
     body->actuate(timeCount, stage);
 }
 
@@ -107,11 +113,7 @@ void Experiment::simulate(){
     double acum_direction = 0;
     
     for (int i = 0; i < SIMULATION_STEPS; i++) {
-        if(SIMULATION_STEPS < 60) {
-            worldStep(0);
-        } else {
-            worldStep(1);
-        }
+        worldStep();
         if(i == 0) {
             initial_height = walker->getHeight();
             initial_angle = walker->getAngleInclination();
@@ -229,12 +231,12 @@ void PassiveWalkerExperiment::setWalkerActuatorValues(vector<double> vals, Passi
     // right lower leg
     bodyPart = experiment->body->getBodyGroups()[RIGHT_LEG]->getBodyParts()[LOWER_LEG];
     bodyPart->setActuatorValues(vals[0], vals[1], vals[2], vals[3] + SIMD_PI, vals[4],
-                                vals[10], vals[11], vals[12], vals[13], vals[14]);
+                                vals[10], vals[11], vals[12], vals[13] + SIMD_PI, vals[14]);
     
     // right upper leg
     bodyPart = experiment->body->getBodyGroups()[RIGHT_LEG]->getBodyParts()[UPPER_LEG];
     bodyPart->setActuatorValues(vals[5], vals[6], vals[7], vals[8] + SIMD_PI, vals[9],
-                                vals[15], vals[16], vals[17], vals[18], vals[19]);
+                                vals[15], vals[16], vals[17], vals[18] + SIMD_PI, vals[19]);
 }
 
 

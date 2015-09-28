@@ -34,7 +34,7 @@
 
 #define VALUES_SIZE 20
 #define POPULATION_SIZE 100
-#define GENERATIONS 1000
+#define GENERATIONS 100
 #define VISUAL false
 
 double getTimeElapsed();
@@ -287,7 +287,7 @@ int main(int argc,char* argv[]) {
         std::string exePath(argv[0]);
         std::vector<double> vals = loadPreviousParams(exePath);
         PassiveWalkerExperiment::setWalkerActuatorValues(vals, experiment);
-        PassiveWalkerExperiment::getFitness(vals);
+        cout << PassiveWalkerExperiment::getFitness(vals);
         return glutmain(argc, argv, 800, 600, "Experiment",experiment);
     } else {
         clearFile("output.dat");
