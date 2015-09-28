@@ -33,7 +33,7 @@
 
 
 #define VALUES_SIZE     10
-#define POPULATION_SIZE 20
+#define POPULATION_SIZE 100
 #define GENERATIONS 1000
 #define VISUAL false
 
