@@ -14,6 +14,7 @@ public:
 	virtual ~Body();
     
     void actuate(double t);
+    std::vector<BodyGroup*> getBodyGroups();
 
 
 protected:
@@ -21,8 +22,6 @@ protected:
     std::vector<btTypedConstraint*> constraints;
     
 	btDynamicsWorld* world;
-    
-
 };
 
 #endif

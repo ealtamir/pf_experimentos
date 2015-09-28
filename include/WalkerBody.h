@@ -22,7 +22,6 @@ const btScalar BODY_PART_QTY = 6;
 class WalkerBody : public GenericBody {
 public:
     WalkerBody(btDynamicsWorld* world, BodyParameters &params);
-    std::vector<BodyGroup*> getBodyGroups();
     double getHeight();
     double getLeftFootHeight();
     double getRightFootHeight();

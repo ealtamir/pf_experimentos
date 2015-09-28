@@ -9,19 +9,29 @@
 class PassiveWalkerExperiment : public Experiment {
 
 public:
-	PassiveWalkerExperiment();
-	~PassiveWalkerExperiment();
-
-    virtual WalkerBody* getWalkerBody();
+    ~PassiveWalkerExperiment();
     
     static float getFitness(const std::vector<double> vals);
-    WalkerBody* body;
     
     static void setWalkerActuatorValues(std::vector<double> vals,
-                                        PassiveWalkerExperiment* experiment);
+                                        Body* walkerExperiment);
+    virtual void simulate();
+    
+    static PassiveWalkerExperiment* getInstance();
+
     
 private:
-    BodyParameters* params;
+    PassiveWalkerExperiment();
+    
+    static PassiveWalkerExperiment* walkerInstance;
+    
+    BodyParameters* params{};
+    
+    double getHeightCoefficient(double h, double min_h, double optimal_h);
+    
+    double getVelocityCoefficient(btVector3& current_velocity, double desiredZspeed);
+    
+    double getAngleCoefficient(btVector3& normalizedVel);
 	    
 protected:
         
@@ -33,9 +43,5 @@ protected:
 
 	virtual bool stopExperiment();
     
-    
 };
-
-static PassiveWalkerExperiment* experiment = new PassiveWalkerExperiment();
-
 #endif

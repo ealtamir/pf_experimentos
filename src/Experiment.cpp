@@ -5,6 +5,7 @@
 #include <BulletCollision/Gimpact/btGImpactCollisionAlgorithm.h>
 #include "test_constants.h"
 #include <BulletCollision/CollisionShapes/btMultiSphereShape.h>
+#include "BodyPart.h"
 
 GLDebugDrawer debugDrawerSphere;
 
@@ -14,6 +15,34 @@ Experiment::Experiment() {
 
 Experiment::~Experiment() {
 
+}
+
+void Experiment::setBodyActuatorValues(std::vector<double> vals) {
+    
+    BodyPart* bodyPart;
+    
+    int LEFT_LEG = 0;
+    int RIGHT_LEG = 1;
+    
+    int LOWER_LEG = 0;
+    int UPPER_LEG = 1;
+    
+    // Double frec cos
+    // left lower leg
+    bodyPart = body->getBodyGroups()[LEFT_LEG]->getBodyParts()[LOWER_LEG];
+    bodyPart->setActuatorValues(vals[0], vals[1], vals[2], vals[3], vals[4]);
+    
+    // left upper leg
+    bodyPart = body->getBodyGroups()[LEFT_LEG]->getBodyParts()[UPPER_LEG];
+    bodyPart->setActuatorValues(vals[5], vals[6], vals[7], vals[8], vals[9]);
+    
+    // right lower leg
+    bodyPart = body->getBodyGroups()[RIGHT_LEG]->getBodyParts()[LOWER_LEG];
+    bodyPart->setActuatorValues(vals[0], vals[1], vals[2], vals[3] + SIMD_PI, vals[4]);
+    
+    // right upper leg
+    bodyPart = body->getBodyGroups()[RIGHT_LEG]->getBodyParts()[UPPER_LEG];
+    bodyPart->setActuatorValues(vals[5], vals[6], vals[7], vals[8] + SIMD_PI, vals[9]);
 }
 
 void Experiment::initPhysics()
@@ -74,7 +103,7 @@ void Experiment::clientMoveAndDisplay()
         if (!objectsInitialized) {
             initObjects();
             timeCount = 0;
-        }
+        } 
         worldStep();
         m_dynamicsWorld->stepSimulation(1 / 60.);
         //optional but useful: debug drawing

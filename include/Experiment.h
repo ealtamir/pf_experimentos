@@ -12,14 +12,17 @@
 #include <stdio.h>
 #include <time.h>
 #include <string>
+#include <vector>
+
 
 #include <BulletDynamics/btBulletDynamicsCommon.h>
 #include "GlutDemoApplication.h"
+#include "Body.h"
 
 #include "ObjectStoppedCondition.h"
 
 const btScalar DEFAULT_EXPERIMENT_INTERVAL = 0.001;
-const btScalar SIMULATION_STEPS = 60 * 5; // if it's 60 the simulation is 1 second
+const btScalar SIMULATION_STEPS = 60 * 10; // if it's 60 the simulation is 1 second
 const btScalar DIRECTION_CONSTANT = 0.02;
 const btScalar VELOCITY_CONSTANT = 4.6;
 const btScalar OBJETIVE_VELOCITY = 1;
@@ -42,7 +45,7 @@ public:
     
     virtual void worldStep() = 0;
     
-    virtual void simulate();
+    virtual void simulate() = 0;
     
     virtual double getHeight() const;
     
@@ -60,16 +63,21 @@ public:
         return "Experiment";
     }
     
+    Body* getWalkerBody() {return body;}
+    
+    Body* body;
+        
     bool objectsInitialized = false;
     
     double timeCount = 0;
+    
+    virtual void setBodyActuatorValues(std::vector<double> vals);
 
 private:
     btRigidBody* createGround();
     
 
 protected:
-
     bool simulated = false;
     
     double max_height = -1;

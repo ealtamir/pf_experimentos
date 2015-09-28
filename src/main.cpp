@@ -32,10 +32,10 @@
 #include "IOTools.h"
 
 
-#define VALUES_SIZE     10
-#define POPULATION_SIZE 100
-#define GENERATIONS 1000
-#define VISUAL true
+#define VALUES_SIZE         10
+#define POPULATION_SIZE     20
+#define GENERATIONS         500
+#define VISUAL              true
 
 int mainLoop();
 double getTimeElapsed();
@@ -233,7 +233,7 @@ int mainLoop(char* executablePath) {
                                                  populationConfiguration);
     
     
-    int numberOfWorkers = 1;
+    int numberOfWorkers = 8;
     GaMultithreadingAlgorithmParams algParam(numberOfWorkers);
     Algorithm::SimpleAlgorithms::GaIncrementalAlgorithm* algorithm = new Algorithm::SimpleAlgorithms::GaIncrementalAlgorithm( population, algParam);
     
@@ -275,15 +275,13 @@ double getTimeElapsed(){
 
 int main(int argc,char* argv[]) {
     if(VISUAL) {
-        PassiveWalkerExperiment* experiment = new PassiveWalkerExperiment();
+        PassiveWalkerExperiment* experiment = PassiveWalkerExperiment::getInstance();
         experiment->initPhysics();
         experiment->setCameraDistance(btScalar(5.));
         experiment->setCameraUp(btVector3(0, 15, 0));
-        
         std::string exePath(argv[0]);
         std::vector<double> vals = loadPreviousParams(exePath);
-        PassiveWalkerExperiment::setWalkerActuatorValues(vals, experiment);
-        PassiveWalkerExperiment::getFitness(vals);
+        experiment->setBodyActuatorValues(vals);
         return glutmain(argc, argv, 800, 600, "Experiment",experiment);
     } else {
         clearFile("output.dat");

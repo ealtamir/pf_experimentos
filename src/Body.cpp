@@ -24,3 +24,8 @@ Body::actuate(double t) {
     }
     
 }
+
+
+std::vector<BodyGroup*> Body::getBodyGroups(){
+    return bodyGroups;
+}

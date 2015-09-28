@@ -40,19 +40,14 @@ WalkerBody::createTorso(btDynamicsWorld* world, BodyParameters &params) {
     return torso;
 }
 
-std::vector<BodyGroup*> WalkerBody::getBodyGroups(){
-    return bodyGroups;
-}
 
 double
 WalkerBody::getHeight(){
     GenericTorsoBodyGroup* torso = dynamic_cast<GenericTorsoBodyGroup*>(bodyGroups.back());
-    BodyPart* bp = torso->getLeftHipPart();
+    BodyPart* bp = torso->getBodyParts()[0];
     btRigidBody* rigidBody = bp->getRigidBody();
     btTransform v;
-    rigidBody->getMotionState()->getWorldTransform(v);
-    //printf("%f - %f - %f \n",v.getOrigin().getX(),v.getOrigin().getY(),v.getOrigin().getZ());
-    
+    rigidBody->getMotionState()->getWorldTransform(v);    
     return v.getOrigin().getY();
 }
 
