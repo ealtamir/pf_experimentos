@@ -277,6 +277,7 @@ double getTimeElapsed(){
 int main(int argc,char* argv[]) {
     if(VISUAL) {
         PassiveWalkerExperiment* experiment = new PassiveWalkerExperiment();
+        experiment->objectsInitialized = false;
         experiment->initPhysics();
         experiment->setCameraDistance(btScalar(5.));
         experiment->setCameraUp(btVector3(0, 15, 0));
