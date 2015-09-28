@@ -13,7 +13,7 @@ public:
 	Body(btDynamicsWorld* world);
 	virtual ~Body();
     
-    void actuate(double t);
+    void actuate(double t, int stage);
     std::vector<BodyGroup*> getBodyGroups();
 
 

@@ -32,7 +32,7 @@
 #include "IOTools.h"
 
 
-#define VALUES_SIZE         10
+#define VALUES_SIZE         12
 #define POPULATION_SIZE     20
 #define GENERATIONS         500
 #define VISUAL              true
@@ -140,20 +140,20 @@ int mainLoop(char* executablePath) {
     GaIntervalValueSet<double> independentTermValueSet(independentTerm, independentTerm, GaGlobalRandomDoubleGenerator, false);
     
 //    // Generic actuator
-//    GaIntervalValueSet<double> *multiValueSet[VALUES_SIZE] = {
-//        &amplitudeValueSet, &amplitudeValueSet, &frequencyValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet,
-//        &amplitudeValueSet, &amplitudeValueSet, &frequencyValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet,
-//    };
+    GaIntervalValueSet<double> *multiValueSet[VALUES_SIZE] = {
+        &amplitudeValueSet, &amplitudeValueSet, &frequencyValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet,
+        &amplitudeValueSet, &amplitudeValueSet, &frequencyValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet,
+    };
 //    // Fourier actuator
 //    GaIntervalValueSet<double> *multiValueSet[VALUES_SIZE] = {
 //        &amplitudeValueSet, &amplitudeValueSet, &amplitudeValueSet, &amplitudeValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet,
 //        &amplitudeValueSet, &amplitudeValueSet, &amplitudeValueSet, &amplitudeValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet,
 //    };
     // Double frec cos actuator
-    GaIntervalValueSet<double> *multiValueSet[VALUES_SIZE] = {
-        &amplitudeValueSet, &frequencyValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet,
-        &amplitudeValueSet, &frequencyValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet
-    };
+//    GaIntervalValueSet<double> *multiValueSet[VALUES_SIZE] = {
+//        &amplitudeValueSet, &frequencyValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet,
+//        &amplitudeValueSet, &frequencyValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet
+//    };
     
     
     // CHROMOSOME PARAMETERS

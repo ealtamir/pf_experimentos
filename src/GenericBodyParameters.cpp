@@ -13,19 +13,19 @@
 
 GenericBodyParameters::GenericBodyParameters() {
     
-//    rightLowerArmAct = new GenericActuator();
-//    rightUpperArmAct = new GenericActuator();
-//    
-//    leftLowerArmAct = new GenericActuator();
-//    leftUpperArmAct = new GenericActuator();
-//    
-//    hipAct = new GenericActuator();
-//    
-//    rightLowerLegAct = new GenericActuator();
-//    rightUpperLegAct = new GenericActuator();
-//    
-//    leftLowerLegAct = new GenericActuator(true);
-//    leftUpperLegAct = new GenericActuator(true);
+    rightLowerArmAct = new GenericActuator();
+    rightUpperArmAct = new GenericActuator();
+    
+    leftLowerArmAct = new GenericActuator();
+    leftUpperArmAct = new GenericActuator();
+    
+    hipAct = new GenericActuator();
+    
+    rightLowerLegAct = new GenericActuator();
+    rightUpperLegAct = new GenericActuator();
+    
+    leftLowerLegAct = new GenericActuator(true);
+    leftUpperLegAct = new GenericActuator(true);
 //    rightLowerArmAct = new FourierActuator();
 //    rightUpperArmAct = new FourierActuator();
 //    
@@ -39,19 +39,19 @@ GenericBodyParameters::GenericBodyParameters() {
 //    
 //    leftLowerLegAct = new FourierActuator(true);
 //    leftUpperLegAct = new FourierActuator(true);
-    rightLowerArmAct = new CosineDoubleFrecActuator();
-    rightUpperArmAct = new CosineDoubleFrecActuator();
-    
-    leftLowerArmAct = new CosineDoubleFrecActuator();
-    leftUpperArmAct = new CosineDoubleFrecActuator();
-    
-    hipAct = new CosineDoubleFrecActuator();
-    
-    rightLowerLegAct = new CosineDoubleFrecActuator();
-    rightUpperLegAct = new CosineDoubleFrecActuator();
-    
-    leftLowerLegAct = new CosineDoubleFrecActuator(true);
-    leftUpperLegAct = new CosineDoubleFrecActuator(true);
+//    rightLowerArmAct = new CosineDoubleFrecActuator();
+//    rightUpperArmAct = new CosineDoubleFrecActuator();
+//    
+//    leftLowerArmAct = new CosineDoubleFrecActuator();
+//    leftUpperArmAct = new CosineDoubleFrecActuator();
+//    
+//    hipAct = new CosineDoubleFrecActuator();
+//    
+//    rightLowerLegAct = new CosineDoubleFrecActuator();
+//    rightUpperLegAct = new CosineDoubleFrecActuator();
+//    
+//    leftLowerLegAct = new CosineDoubleFrecActuator(true);
+//    leftUpperLegAct = new CosineDoubleFrecActuator(true);
 }
 
 GenericBodyParameters::~GenericBodyParameters() {

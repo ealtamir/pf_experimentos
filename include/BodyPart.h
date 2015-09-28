@@ -21,16 +21,16 @@ public:
     void actuate(double t, int stage);
     
 //    // Generic
-//    void setActuatorValues(double sin_ampl, double cos_ampl, double sin_freq,
-//                           double cos_freq, double phase, double indTerm);
+    void setActuatorValues(double sin_ampl, double cos_ampl, double sin_freq,
+                           double cos_freq, double phase, double indTerm);
 //    // Fourier
 //    void setActuatorValues(double ampl1, double ampl2, double ampl3, double ampl4,
 //                           double freq, double phase, double indTerm);
     // Double frec cos
-    void setActuatorValues(double stage_0_ampl1, double stage_0_freq1, double stage_0_freq2,
-                           double stage_0_fase, double stage_0_indTerm,
-                           double stage_1_ampl1, double stage_1_freq1, double stage_1_freq2,
-                           double stage_1_fase, double stage_1_indTerm);
+//    void setActuatorValues(double stage_0_ampl1, double stage_0_freq1, double stage_0_freq2,
+//                           double stage_0_fase, double stage_0_indTerm,
+//                           double stage_1_ampl1, double stage_1_freq1, double stage_1_freq2,
+//                           double stage_1_fase, double stage_1_indTerm);
 
 protected:
 	btRigidBody* body;
