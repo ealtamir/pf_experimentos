@@ -34,7 +34,7 @@
 
 #define VALUES_SIZE 20
 #define POPULATION_SIZE 100
-#define GENERATIONS 1000
+#define GENERATIONS 100
 #define VISUAL false
 
 double getTimeElapsed();

@@ -31,14 +31,14 @@ float PassiveWalkerExperiment::getFitness(const std::vector<double> vals) {
     setWalkerActuatorValues(vals, experiment);
     
     experiment->simulate();
-//    std::cout << "Height: " << experiment->getHeight() << std::endl;
-//    std::cout << "Direction: " << experiment->getDirection() << std::endl;
-//    std::cout << "Velocity: " << experiment->getVelocity() << std::endl;
+    std::cout << "Height: " << experiment->getHeight() << std::endl;
+    std::cout << "Direction: " << experiment->getDirection() << std::endl;
+    std::cout << "Velocity: " << experiment->getVelocity() << std::endl;
 //    std::cout << "Left foot height: " << experiment->getLeftFootHeight() << std::endl;
 //    std::cout << "Right foot height: " << experiment->getRightFootHeight() << std::endl;
-//    std::cout << "Foot correctness: " << experiment->getCorrectFootHipPosition() << std::endl;
+    std::cout << "Foot correctness: " << experiment->getCorrectFootHipPosition() << std::endl;
 
-    return experiment->getHeight() * experiment->getDirection() * experiment->getVelocity() * experiment->getLeftFootHeight() * experiment->getRightFootHeight() * experiment->getCorrectFootHipPosition();
+    return experiment->getHeight() * experiment->getDirection() * experiment->getVelocity() /* experiment->getLeftFootHeight() * experiment->getRightFootHeight() */* experiment->getCorrectFootHipPosition();
 }
 
 void PassiveWalkerExperiment::initializeBodies() {
@@ -55,7 +55,7 @@ void PassiveWalkerExperiment::worldStep() {
     btDynamicsWorld* w = getDynamicsWorld();
     w->stepSimulation(1 / 60.f);
     int stage = 0;
-    if (timeCount > 0.15) {
+    if (timeCount > 0.75) {
         stage = 1;
     }
     body->actuate(timeCount, stage);
@@ -127,10 +127,10 @@ void Experiment::simulate(){
         acum_right_foot_height += current_right_foot_height;
         
         if(current_left_foot_height >= current_height){
-            correct_foot_hip_position = 0.1;
+            correct_foot_hip_position = 0.01;
         }
         if(current_right_foot_height >= current_height){
-            correct_foot_hip_position = 0.1;
+            correct_foot_hip_position = 0.01;
         }
         
         btVector3 current_velocity = walker->getVelocity();
@@ -145,18 +145,18 @@ void Experiment::simulate(){
     if ((initial_height * 0.8 - (acum_left_foot_height / SIMULATION_STEPS)) > 0) {
         left_foot_height = 1;
     } else {
-        left_foot_height = 0.1;
+        left_foot_height = 0.01;
     }
     
     if ((initial_height * 0.8 - (acum_right_foot_height / SIMULATION_STEPS)) > 0) {
         right_foot_height = 1;
     } else {
-        right_foot_height = 0.1;
+        right_foot_height = 0.01;
     }
     
     average_velocity = (acum_velocity/SIMULATION_STEPS) / OBJETIVE_VELOCITY;
     if (average_velocity > OBJETIVE_VELOCITY) {
-        average_velocity = 0.1;
+        average_velocity = 0.01;
     }
     
     direction = 1 - (initial_angle - (acum_direction/SIMULATION_STEPS))/180;
