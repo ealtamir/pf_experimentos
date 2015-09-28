@@ -48,11 +48,11 @@ void PassiveWalkerExperiment::initObjects() {
 	objectsInitialized = true;
 }
 
-void PassiveWalkerExperiment::worldStep() {
+void PassiveWalkerExperiment::worldStep(int stage) {
     timeCount += 1. / 60.;
     btDynamicsWorld* w = getDynamicsWorld();
     w->stepSimulation(1 / 60.f);
-    body->actuate(timeCount);
+    body->actuate(timeCount, stage);
 }
 
 bool PassiveWalkerExperiment::stopExperiment() {
@@ -107,7 +107,11 @@ void Experiment::simulate(){
     double acum_direction = 0;
     
     for (int i = 0; i < SIMULATION_STEPS; i++) {
-        worldStep();
+        if(SIMULATION_STEPS < 60) {
+            worldStep(0);
+        } else {
+            worldStep(1);
+        }
         if(i == 0) {
             initial_height = walker->getHeight();
             initial_angle = walker->getAngleInclination();
@@ -214,19 +218,23 @@ void PassiveWalkerExperiment::setWalkerActuatorValues(vector<double> vals, Passi
     // Double frec cos
     // left lower leg
     bodyPart = experiment->body->getBodyGroups()[LEFT_LEG]->getBodyParts()[LOWER_LEG];
-    bodyPart->setActuatorValues(vals[0], vals[1], vals[2], vals[3], vals[4]);
+    bodyPart->setActuatorValues(vals[0], vals[1], vals[2], vals[3], vals[4],
+                                vals[10], vals[11], vals[12], vals[13], vals[14]);
     
     // left upper leg
     bodyPart = experiment->body->getBodyGroups()[LEFT_LEG]->getBodyParts()[UPPER_LEG];
-    bodyPart->setActuatorValues(vals[5], vals[6], vals[7], vals[8], vals[9]);
+    bodyPart->setActuatorValues(vals[5], vals[6], vals[7], vals[8], vals[9],
+                                vals[15], vals[16], vals[17], vals[18], vals[19]);
     
     // right lower leg
     bodyPart = experiment->body->getBodyGroups()[RIGHT_LEG]->getBodyParts()[LOWER_LEG];
-    bodyPart->setActuatorValues(vals[0], vals[1], vals[2], vals[3] + SIMD_PI, vals[4]);
+    bodyPart->setActuatorValues(vals[0], vals[1], vals[2], vals[3] + SIMD_PI, vals[4],
+                                vals[10], vals[11], vals[12], vals[13], vals[14]);
     
     // right upper leg
     bodyPart = experiment->body->getBodyGroups()[RIGHT_LEG]->getBodyParts()[UPPER_LEG];
-    bodyPart->setActuatorValues(vals[5], vals[6], vals[7], vals[8] + SIMD_PI, vals[9]);
+    bodyPart->setActuatorValues(vals[5], vals[6], vals[7], vals[8] + SIMD_PI, vals[9],
+                                vals[15], vals[16], vals[17], vals[18], vals[19]);
 }
 
 

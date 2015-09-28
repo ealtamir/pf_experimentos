@@ -11,7 +11,7 @@ public:
     
 protected:
     virtual btVector3
-    actuatorFunc(double t);
+    actuatorFunc(double t, int stage);
 };
 
 #endif /* defined(__proyecto_pf__CosineDoubleFrecActuator__) */

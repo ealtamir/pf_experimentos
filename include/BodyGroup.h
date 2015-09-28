@@ -14,7 +14,7 @@ public:
     
     virtual BodyPart* getJointPart() = 0;
     
-    void actuate(double t);
+    void actuate(double t, int stage);
     
     std::vector<BodyPart*> getBodyParts() { return bodyParts; };
 

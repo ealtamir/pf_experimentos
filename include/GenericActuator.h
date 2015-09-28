@@ -19,7 +19,7 @@ public:
 
     
 protected:
-    btVector3 actuatorFunc(double t);
+    btVector3 actuatorFunc(double t, int stage);
     
 };
 

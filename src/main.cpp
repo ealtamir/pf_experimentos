@@ -32,7 +32,7 @@
 #include "IOTools.h"
 
 
-#define VALUES_SIZE     10
+#define VALUES_SIZE 20
 #define POPULATION_SIZE 100
 #define GENERATIONS 1000
 #define VISUAL false
@@ -150,6 +150,8 @@ std::vector<double> mainLoop(char* executablePath) {
 //    };
     // Double frec cos actuator
     GaIntervalValueSet<double> *multiValueSet[VALUES_SIZE] = {
+        &amplitudeValueSet, &frequencyValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet,
+        &amplitudeValueSet, &frequencyValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet,
         &amplitudeValueSet, &frequencyValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet,
         &amplitudeValueSet, &frequencyValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet
     };

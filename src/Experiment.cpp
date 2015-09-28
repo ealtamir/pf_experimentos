@@ -75,7 +75,11 @@ void Experiment::clientMoveAndDisplay()
             initObjects();
             timeCount = 0;
         }
-        worldStep();
+        if(timeCount <= 1) {
+            worldStep(0);
+        } else {
+            worldStep(1);
+        }
         m_dynamicsWorld->stepSimulation(1 / 60.);
         //optional but useful: debug drawing
         m_dynamicsWorld->debugDrawWorld();
@@ -95,7 +99,11 @@ void Experiment::displayCallback()
     if (m_dynamicsWorld)
     {
         m_dynamicsWorld->debugDrawWorld();
-        worldStep();
+        if(timeCount <= 1) {
+            worldStep(0);
+        } else {
+            worldStep(1);
+        }
     }
 
     renderme();

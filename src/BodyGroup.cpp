@@ -31,9 +31,9 @@ void BodyGroup::addRigidBodiesToWorld() {
 }
 
 void
-BodyGroup::actuate(double t) {
+BodyGroup::actuate(double t, int stage) {
     for (BodyPart* part : bodyParts) {
-        part->actuate(t);
+        part->actuate(t, stage);
     }
 }
 

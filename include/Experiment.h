@@ -35,7 +35,7 @@ public:
 
     virtual void displayCallback();
     
-    virtual void worldStep() = 0;
+    virtual void worldStep(int stage) = 0;
     
     virtual void simulate();
     

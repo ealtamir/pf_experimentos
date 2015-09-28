@@ -18,7 +18,7 @@ public:
 
 	btRigidBody* getRigidBody() {return body;};
     
-    void actuate(double t);
+    void actuate(double t, int stage);
     
 //    // Generic
 //    void setActuatorValues(double sin_ampl, double cos_ampl, double sin_freq,
@@ -27,7 +27,10 @@ public:
 //    void setActuatorValues(double ampl1, double ampl2, double ampl3, double ampl4,
 //                           double freq, double phase, double indTerm);
     // Double frec cos
-    void setActuatorValues(double ampl1, double freq1, double freq2, double fase, double indTerm);
+    void setActuatorValues(double stage_0_ampl1, double stage_0_freq1, double stage_0_freq2,
+                           double stage_0_fase, double stage_0_indTerm,
+                           double stage_1_ampl1, double stage_1_freq1, double stage_1_freq2,
+                           double stage_1_fase, double stage_1_indTerm);
 
 protected:
 	btRigidBody* body;

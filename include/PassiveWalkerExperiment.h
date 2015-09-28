@@ -29,7 +29,7 @@ protected:
 
 	virtual void initObjects();
 
-	virtual void worldStep();
+	virtual void worldStep(int stage);
 
 	virtual bool stopExperiment();
     

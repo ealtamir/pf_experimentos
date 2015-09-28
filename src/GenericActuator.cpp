@@ -21,7 +21,7 @@ GenericActuator::GenericActuator(bool isLeft) : Actuator(isLeft) {
 
 }
 
-btVector3 GenericActuator::actuatorFunc(double t) {
+btVector3 GenericActuator::actuatorFunc(double t, int stage) {
     
     double f = parameters[SIN_AMPLITUD] * sin(parameters[SIN_FREC] * t + parameters[FASE])
              + parameters[COS_AMPLITUD] * cos(parameters[COS_FREC] * t + parameters[FASE]) + parameters[IND_TERM];

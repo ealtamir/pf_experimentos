@@ -6,9 +6,9 @@ BodyPart::~BodyPart() {
 	delete body;
 }
 
-void BodyPart::actuate(double t) {
+void BodyPart::actuate(double t, int stage) {
     if (actuator != nullptr) {
-        body->applyTorque(actuator->eval(t));
+        body->applyTorque(actuator->eval(t, stage));
     }
 }
 
@@ -35,11 +35,15 @@ void BodyPart::actuate(double t) {
 //}
 
 // Double frec cos
-void BodyPart::setActuatorValues(double ampl1, double freq1, double freq2, double fase, double indTerm) {
+void BodyPart::setActuatorValues(double stage_0_ampl1, double stage_0_freq1, double stage_0_freq2,
+                                 double stage_0_fase, double stage_0_indTerm,
+                                 double stage_1_ampl1, double stage_1_freq1, double stage_1_freq2,
+                                 double stage_1_fase, double stage_1_indTerm) {
     if (actuator == NULL) {
         return;
     }
-    double params[5] = {ampl1, freq1, freq2, fase, indTerm};
+    double params[10] = {stage_0_ampl1, stage_0_freq1, stage_0_freq2, stage_0_fase, stage_0_indTerm,
+                         stage_1_ampl1, stage_1_freq1, stage_1_freq2, stage_1_fase, stage_1_indTerm};
     actuator->setParameters(params);
     
 }
