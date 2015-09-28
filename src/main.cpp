@@ -33,11 +33,10 @@
 
 
 #define VALUES_SIZE     10
-#define POPULATION_SIZE 100
+#define POPULATION_SIZE 20
 #define GENERATIONS 1000
-#define VISUAL true
+#define VISUAL false
 
-int mainLoop();
 double getTimeElapsed();
 double getAngleBetween(btVector3 v1, btVector3 v2);
 
@@ -119,7 +118,7 @@ void MiExperimentoObserver::StatisticUpdate(const Common::GaStatistics &statisti
     }
 }
 
-int mainLoop(char* executablePath) {
+std::vector<double> mainLoop(char* executablePath) {
     struct timeval before;
     gettimeofday(&before, NULL);
     time_begin = before.tv_sec * 1000 + before.tv_usec / 1000;
@@ -129,9 +128,9 @@ int mainLoop(char* executablePath) {
     
     GaInitialize();
     
-    GaValueIntervalBounds<double> amplitude(-200, 200);
-    GaValueIntervalBounds<double> frequency(0.1, 2);
-    GaValueIntervalBounds<double> phase(0, SIMD_2_PI);
+    GaValueIntervalBounds<double> amplitude(-140, 140);
+    GaValueIntervalBounds<double> frequency(0.1, 10);
+    GaValueIntervalBounds<double> phase(-SIMD_PI, SIMD_PI);
     GaValueIntervalBounds<double> independentTerm(-5, 5);
     
     GaIntervalValueSet<double> amplitudeValueSet(amplitude, amplitude, GaGlobalRandomDoubleGenerator, false);
@@ -157,10 +156,10 @@ int mainLoop(char* executablePath) {
     
     
     // CHROMOSOME PARAMETERS
-    double  mutationProbability = 0.5;
-    int     numOfMutatedValues = VALUES_SIZE / 2;
+    double  mutationProbability = 0.6;
+    int     numOfMutatedValues = VALUES_SIZE / 4;
     bool    onlyAcceptImprovingMutations = false;
-    double  crossoverProbability = 0.3;
+    double  crossoverProbability = 0.6;
     int     crossoverPoints = VALUES_SIZE / 2;
     GaChromosomeParams* chromosomeParams = new GaChromosomeParams(mutationProbability,
                                         numOfMutatedValues,
@@ -202,32 +201,32 @@ int mainLoop(char* executablePath) {
                                             bestChromosomesToTrack,
                                             worstChromosomesToTrack);
     
-    int selectionSize = 20;
+    int selectionSize = 8;
     bool duplicates = false;
-    int groupSize = 20;
+    int groupSize = 16;
     Population::SelectionOperations::GaSelectRandomBestParams selectParams(selectionSize, false, groupSize);
     
-    int replacementSize = 20;
-    int bestChromosomesThatRemain = 1;
+    int replacementSize = 8;
+    int bestChromosomesThatRemain = 2;
     Population::ReplacementOperations::GaReplaceElitismParams replaceParams(replacementSize,
                                                                             bestChromosomesThatRemain);
     
     
-    int numberOfOffsprings = 11;
-    int checkForDuplicates = false;
+    int numberOfOffsprings = 8;
+    int checkForDuplicates = true;
     GaCouplingParams couplingParams(numberOfOffsprings, checkForDuplicates);
     
     GaPopulationConfiguration* populationConfiguration = new GaPopulationConfiguration(
-                                    populationParams,
-                                    &_ccb->GetFitnessComparator(),
-                                    GaSelectionCatalogue::Instance().GetEntryData("GaSelectRouletteWheel"),
-                                    &selectParams,
-                                    GaReplacementCatalogue::Instance().GetEntryData("GaReplaceRandom"),
-                                    &replaceParams,
-                                    GaCouplingCatalogue::Instance().GetEntryData("GaSimpleCoupling"),
-                                    &couplingParams,
-                                    NULL,
-                                    NULL);
+                                populationParams,
+                                &_ccb->GetFitnessComparator(),
+                                GaSelectionCatalogue::Instance().GetEntryData("GaSelectRouletteWheel"),
+                                &selectParams,
+                                GaReplacementCatalogue::Instance().GetEntryData("GaReplaceRandom"),
+                                &replaceParams,
+                                GaCouplingCatalogue::Instance().GetEntryData("GaSimpleCoupling"),
+                                &couplingParams,
+                                NULL,
+                                NULL);
     
     GaPopulation* population = new GaPopulation(&chromosomePrototype,
                                                  populationConfiguration);
@@ -262,7 +261,9 @@ int mainLoop(char* executablePath) {
     cout << " segundos ";
     
     updateResultFiles(std::string(executablePath), fitness, values, VALUES_SIZE, getTimeElapsed());
-    return 0;
+    std::vector<double> resp;
+    resp.assign(values, values + VALUES_SIZE);
+    return resp;
 }
 
 
@@ -287,6 +288,15 @@ int main(int argc,char* argv[]) {
         return glutmain(argc, argv, 800, 600, "Experiment",experiment);
     } else {
         clearFile("output.dat");
-        return mainLoop(argv[0]);
+        std::vector<double> values = mainLoop(argv[0]);
+        
+        PassiveWalkerExperiment* experiment = new PassiveWalkerExperiment();
+        experiment->objectsInitialized = false;
+        experiment->initPhysics();
+        experiment->setCameraDistance(btScalar(5.));
+        experiment->setCameraUp(btVector3(0, 15, 0));
+        PassiveWalkerExperiment::setWalkerActuatorValues(values, experiment);
+        cout << PassiveWalkerExperiment::getFitness(values);
+        return glutmain(argc, argv, 800, 600, "Experiment",experiment);
     }
 }
