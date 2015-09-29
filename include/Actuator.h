@@ -12,7 +12,7 @@
 #include <stdio.h>
 #include <BulletDynamics/btBulletDynamicsCommon.h>
 
-#define PARAMS_SIZE 7
+#define PARAMS_SIZE 30
 
 class Actuator {
     

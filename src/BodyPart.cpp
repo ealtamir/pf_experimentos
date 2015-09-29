@@ -13,15 +13,15 @@ void BodyPart::actuate(double t) {
 }
 
 //// Generic
-//void BodyPart::setActuatorValues(double sin_ampl, double cos_ampl, double sin_freq,
-//                                 double cos_freq, double phase, double indTerm) {
-//    if (actuator == NULL) {
-//        return;
-//    }
-//    double params[6] = {sin_ampl, cos_ampl, sin_freq, cos_freq, phase, indTerm};
-//    actuator->setParameters(params);
-//
-//}
+void BodyPart::setActuatorValues(double sin_ampl, double cos_ampl, double sin_freq,
+                                 double cos_freq, double phase, double indTerm) {
+    if (actuator == NULL) {
+        return;
+    }
+    double params[6] = {sin_ampl, cos_ampl, sin_freq, cos_freq, phase, indTerm};
+    actuator->setParameters(params);
+
+}
 
 //// Fourier
 //void BodyPart::setActuatorValues(double ampl1, double ampl2, double ampl3, double ampl4,
@@ -35,11 +35,11 @@ void BodyPart::actuate(double t) {
 //}
 
 // Double frec cos
-void BodyPart::setActuatorValues(double ampl1, double freq1, double freq2, double fase, double indTerm) {
-    if (actuator == NULL) {
-        return;
-    }
-    double params[5] = {ampl1, freq1, freq2, fase, indTerm};
-    actuator->setParameters(params);
-    
-}
+//void BodyPart::setActuatorValues(double ampl1, double freq1, double freq2, double fase, double indTerm) {
+//    if (actuator == NULL) {
+//        return;
+//    }
+//    double params[5] = {ampl1, freq1, freq2, fase, indTerm};
+//    actuator->setParameters(params);
+//    
+//}

@@ -32,9 +32,9 @@
 #include "IOTools.h"
 
 
-#define VALUES_SIZE         10
+#define VALUES_SIZE         12
 #define POPULATION_SIZE     20
-#define GENERATIONS         1000
+#define GENERATIONS         300
 #define VISUAL              true
 
 int mainLoop();
@@ -129,8 +129,8 @@ int mainLoop(char* executablePath) {
     
     GaInitialize();
     
-    GaValueIntervalBounds<double> amplitude(-200, 200);
-    GaValueIntervalBounds<double> frequency(0.1, 3);
+    GaValueIntervalBounds<double> amplitude(-100, 100);
+    GaValueIntervalBounds<double> frequency(0.1, 100);
     GaValueIntervalBounds<double> phase(0, SIMD_2_PI);
     GaValueIntervalBounds<double> independentTerm(-100, 100);
     
@@ -140,20 +140,20 @@ int mainLoop(char* executablePath) {
     GaIntervalValueSet<double> independentTermValueSet(independentTerm, independentTerm, GaGlobalRandomDoubleGenerator, false);
     
 //    // Generic actuator
-//    GaIntervalValueSet<double> *multiValueSet[VALUES_SIZE] = {
-//        &amplitudeValueSet, &amplitudeValueSet, &frequencyValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet,
-//        &amplitudeValueSet, &amplitudeValueSet, &frequencyValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet,
-//    };
+    GaIntervalValueSet<double> *multiValueSet[VALUES_SIZE] = {
+        &amplitudeValueSet, &amplitudeValueSet, &frequencyValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet,
+        &amplitudeValueSet, &amplitudeValueSet, &frequencyValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet
+    };
 //    // Fourier actuator
 //    GaIntervalValueSet<double> *multiValueSet[VALUES_SIZE] = {
 //        &amplitudeValueSet, &amplitudeValueSet, &amplitudeValueSet, &amplitudeValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet,
 //        &amplitudeValueSet, &amplitudeValueSet, &amplitudeValueSet, &amplitudeValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet,
 //    };
     // Double frec cos actuator
-    GaIntervalValueSet<double> *multiValueSet[VALUES_SIZE] = {
-        &amplitudeValueSet, &frequencyValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet,
-        &amplitudeValueSet, &frequencyValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet
-    };
+//    GaIntervalValueSet<double> *multiValueSet[VALUES_SIZE] = {
+//        &amplitudeValueSet, &frequencyValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet,
+//        &amplitudeValueSet, &frequencyValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet
+//    };
     
     
     // CHROMOSOME PARAMETERS
@@ -281,6 +281,9 @@ int main(int argc,char* argv[]) {
         experiment->setCameraUp(btVector3(0, 15, 0));
         std::string exePath(argv[0]);
         std::vector<double> vals = loadPreviousParams(exePath);
+        for (int i = 0; i < vals.size(); i++) {
+            std::cout << "Values: " << vals[i] << std::endl;
+        }
         experiment->setBodyActuatorValues(vals);
         return glutmain(argc, argv, 800, 600, "Experiment",experiment);
     } else {
