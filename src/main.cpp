@@ -34,7 +34,7 @@
 
 #define VALUES_SIZE         10
 #define POPULATION_SIZE     20
-#define GENERATIONS         500
+#define GENERATIONS         1000
 #define VISUAL              true
 
 int mainLoop();
@@ -130,9 +130,9 @@ int mainLoop(char* executablePath) {
     GaInitialize();
     
     GaValueIntervalBounds<double> amplitude(-200, 200);
-    GaValueIntervalBounds<double> frequency(0.1, 2);
+    GaValueIntervalBounds<double> frequency(0.1, 3);
     GaValueIntervalBounds<double> phase(0, SIMD_2_PI);
-    GaValueIntervalBounds<double> independentTerm(-5, 5);
+    GaValueIntervalBounds<double> independentTerm(-100, 100);
     
     GaIntervalValueSet<double> amplitudeValueSet(amplitude, amplitude, GaGlobalRandomDoubleGenerator, false);
     GaIntervalValueSet<double> frequencyValueSet(frequency, frequency, GaGlobalRandomDoubleGenerator, false);
