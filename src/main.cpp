@@ -35,7 +35,7 @@
 #define VALUES_SIZE         12
 #define POPULATION_SIZE     20
 #define GENERATIONS         300
-#define VISUAL              true
+#define VISUAL              false
 
 int mainLoop();
 double getTimeElapsed();
