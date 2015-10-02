@@ -6,10 +6,11 @@
 class CapsuleBodyPart : public BodyPart {
 
 public:
-	CapsuleBodyPart(btScalar radius, btScalar height,
-			btScalar mass, const btTransform& transform);
     
-    CapsuleBodyPart(btScalar r, btScalar h, btScalar m, const btTransform &trans, Actuator* actuator);
+	CapsuleBodyPart(btScalar radius, btScalar height,
+			btScalar mass, const btTransform& transform, btVector3 centerOfMass);
+    
+    CapsuleBodyPart(btScalar r, btScalar h, btScalar m, const btTransform &trans, Actuator* actuator, btVector3 centerOfMass);
 };
 
 #endif

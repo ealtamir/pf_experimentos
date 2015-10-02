@@ -5,22 +5,31 @@
 CapsuleBodyPart::CapsuleBodyPart(btScalar radius,
                                  btScalar height,
                                  btScalar mass,
-                                 const btTransform& transform) {
+                                 const btTransform& transform, btVector3 centerofMass) {
 
-    CapsuleBodyPart(radius, height, mass, transform, nullptr);
+    CapsuleBodyPart(radius, height, mass, transform, nullptr, centerofMass);
 }
 
 CapsuleBodyPart::CapsuleBodyPart(btScalar r,
                                  btScalar h,
                                  btScalar m,
                                  const btTransform &trans,
-                                 Actuator* actuator) {
+                                 Actuator* actuator, btVector3 centerofMass) {
     this->actuator = actuator;
     
     btVector3 inertia(0, 0, 0);
 //    btQuaternion rotation(0, 0, 0, 1);
     
     btCollisionShape* capsule = new btCapsuleShape(r, h);
+    
+    btCompoundShape* compound = new btCompoundShape();
+    btTransform localTrans;
+    localTrans.setIdentity();
+    //localTrans effectively shifts the center of mass with respect to the chassis
+    localTrans.setOrigin(btVector3(0,0,1));
+    compound->addChildShape(localTrans,capsule);
+    
+    
     btDefaultMotionState* motionState = new btDefaultMotionState(trans);
     
     capsule->calculateLocalInertia(m, inertia);
