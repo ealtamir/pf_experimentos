@@ -2,10 +2,12 @@
 
 data = csvread('output.dat');
 
-generations = 1000;
+generations = 300;
 populationSize = 20;
 fitneses = data(:,2);
 boxplotMatrix = zeros(populationSize, generations);
+'Max Fitness'
+max(fitneses)
 
 for i = 1:generations
     for j = 1:populationSize

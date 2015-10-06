@@ -1,0 +1,4 @@
+GA parameters
+
+#define POPULATION_SIZE     20
+#define GENERATIONS         300

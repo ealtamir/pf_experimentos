@@ -35,7 +35,7 @@
 #define VALUES_SIZE         12
 #define POPULATION_SIZE     20
 #define GENERATIONS         300
-#define VISUAL              false
+#define VISUAL              true
 
 int mainLoop();
 double getTimeElapsed();
@@ -129,10 +129,10 @@ int mainLoop(char* executablePath) {
     
     GaInitialize();
     
-    GaValueIntervalBounds<double> amplitude(-100, 100);
-    GaValueIntervalBounds<double> frequency(0.1, 100);
+    GaValueIntervalBounds<double> amplitude(-200, 200);
+    GaValueIntervalBounds<double> frequency(0.1, 3);
     GaValueIntervalBounds<double> phase(0, SIMD_2_PI);
-    GaValueIntervalBounds<double> independentTerm(-100, 100);
+    GaValueIntervalBounds<double> independentTerm(-10, 10);
     
     GaIntervalValueSet<double> amplitudeValueSet(amplitude, amplitude, GaGlobalRandomDoubleGenerator, false);
     GaIntervalValueSet<double> frequencyValueSet(frequency, frequency, GaGlobalRandomDoubleGenerator, false);
@@ -160,7 +160,7 @@ int mainLoop(char* executablePath) {
     double  mutationProbability = 0.5;
     int     numOfMutatedValues = VALUES_SIZE / 2;
     bool    onlyAcceptImprovingMutations = false;
-    double  crossoverProbability = 0.3;
+    double  crossoverProbability = 0.8;
     int     crossoverPoints = VALUES_SIZE / 2;
     GaChromosomeParams* chromosomeParams = new GaChromosomeParams(mutationProbability,
                                         numOfMutatedValues,
@@ -193,8 +193,8 @@ int mainLoop(char* executablePath) {
     bool    resizablePopulation = false;
     bool    sortedPopulation = false;
     bool    scaledValueFitness = false;
-    int     bestChromosomesToTrack = 1;
-    int     worstChromosomesToTrack = 0;
+    int     bestChromosomesToTrack = 5;
+    int     worstChromosomesToTrack = 5;
     GaPopulationParameters populationParams(populationSize,
                                             resizablePopulation,
                                             sortedPopulation,
@@ -202,19 +202,19 @@ int mainLoop(char* executablePath) {
                                             bestChromosomesToTrack,
                                             worstChromosomesToTrack);
     
-    int selectionSize = 20;
+    int selectionSize = 10;
     bool duplicates = false;
     int groupSize = 20;
     Population::SelectionOperations::GaSelectRandomBestParams selectParams(selectionSize, false, groupSize);
     
-    int replacementSize = 20;
+    int replacementSize = 10;
     int bestChromosomesThatRemain = 1;
     Population::ReplacementOperations::GaReplaceElitismParams replaceParams(replacementSize,
                                                                             bestChromosomesThatRemain);
     
     
     int numberOfOffsprings = 11;
-    int checkForDuplicates = false;
+    int checkForDuplicates = true;
     GaCouplingParams couplingParams(numberOfOffsprings, checkForDuplicates);
     
     GaPopulationConfiguration* populationConfiguration = new GaPopulationConfiguration(
@@ -281,6 +281,8 @@ int main(int argc,char* argv[]) {
         experiment->setCameraUp(btVector3(0, 15, 0));
         std::string exePath(argv[0]);
         std::vector<double> vals = loadPreviousParams(exePath);
+//        static const double arr[] = { -2.8732,7.7399, 2.2418,1.5073, 5.9216, -8.8007,-4.6224,-4.3957,1.2737, 1.4454, 0.98118,9.4561 };
+//        std::vector<double> vals(arr, arr + sizeof(arr) / sizeof(arr[0]));
         for (int i = 0; i < vals.size(); i++) {
             std::cout << "Values: " << vals[i] << std::endl;
         }
