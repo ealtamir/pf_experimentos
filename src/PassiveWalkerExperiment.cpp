@@ -130,7 +130,7 @@ double PassiveWalkerExperiment::getVelocityCoefficient(btVector3& current_veloci
     yCoef = 1 / exp(fabs(y));
     zCoef = 1 / exp(fabs(z - desiredZspeed));
     
-    return xCoef * yCoef * zCoef;
+    return zCoef;
     
 }
 
