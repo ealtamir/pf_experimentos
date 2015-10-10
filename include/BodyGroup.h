@@ -32,7 +32,8 @@ protected:
                          const double m,
                          const btVector3& position,
                          const btVector3& positionOffset,
-                         Actuator* actuator = nullptr);
+                         btVector3 centerOfMass,
+                         Actuator* actuator = nullptr );
     
     BodyPart*
     generateStandardPart(const double r,
@@ -40,6 +41,7 @@ protected:
                          const double m,
                          const btTransform adjust,
                          const btVector3 &positionOffset,
+                         btVector3 centerOfMass,
                          Actuator* actuator = nullptr);
     
     BodyPart*

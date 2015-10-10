@@ -11,18 +11,25 @@ ArmBodyGroup::ArmBodyGroup(btDynamicsWorld* world,
     btVector3 lowerArmPos(params.L_ARM_POSITION.x() * posAdjust.x(),
                           params.L_ARM_POSITION.y() * posAdjust.y(),
                           params.L_ARM_POSITION.z() * posAdjust.z());
+    
     btTransform lowerTrans;
     lowerTrans.setIdentity();
     lowerTrans.setOrigin(lowerArmPos);
     lowerTrans.getBasis().setEulerZYX(params.L_ARM_ORIENTATION.x(),
                                       params.L_ARM_ORIENTATION.y(),
                                       params.L_ARM_ORIENTATION.z() * posAdjust.x());
-	BodyPart* lowerArm = generateStandardPart(
+    btVector3 lowerArmCenterOfMass(0,
+                          params.L_ARM_HEIGHT/2+params.L_ARM_RADIUS,
+                          0);
+//    btVector3 lowerArmCenterOfMass(0,0,0);
+
+    BodyPart* lowerArm = generateStandardPart(
         params.L_ARM_RADIUS,
 		params.L_ARM_HEIGHT,
 		params.L_ARM_MASS,
         lowerTrans,
 		params.bodyInitialPosition,
+        lowerArmCenterOfMass,
         params.rightLowerArmAct
 	);
 
@@ -35,12 +42,19 @@ ArmBodyGroup::ArmBodyGroup(btDynamicsWorld* world,
     upperTrans.getBasis().setEulerZYX(params.U_ARM_ORIENTATION.x(),
                                       params.U_ARM_ORIENTATION.y(),
                                       params.U_ARM_ORIENTATION.z() * posAdjust.x());
+    btVector3 upperArmCenterOfMass(0,
+                                  params.U_ARM_HEIGHT/2+params.U_ARM_RADIUS,
+                                   0);
+    
+//    btVector3 upperArmCenterOfMass(0,0,0);
+    
     BodyPart* upperArm = generateStandardPart(
 		params.U_ARM_RADIUS,
 		params.U_ARM_HEIGHT,
 		params.U_ARM_MASS,
         upperTrans,
 		params.bodyInitialPosition,
+        upperArmCenterOfMass,
         params.rightUpperArmAct
 	);
 

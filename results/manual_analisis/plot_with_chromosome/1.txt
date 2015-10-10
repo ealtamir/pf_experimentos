@@ -1,0 +1,42 @@
+GA parameters
+
+#define POPULATION_SIZE     20
+#define GENERATIONS         300
+
+// BOUNDS PARAMETERS
+GaValueIntervalBounds<double> amplitude(-30, 30);
+GaValueIntervalBounds<double> frequency(0.1, 3);
+GaValueIntervalBounds<double> phase(0, SIMD_2_PI);
+GaValueIntervalBounds<double> independentTerm(-10, 10);
+
+// CHROMOSOME PARAMETERS
+double  mutationProbability = 0.5;
+int     numOfMutatedValues = VALUES_SIZE / 2;
+bool    onlyAcceptImprovingMutations = false;
+double  crossoverProbability = 0.3;
+int     crossoverPoints = VALUES_SIZE / 2;
+
+
+// POPULATION PARAMETERS
+int   populationSize = POPULATION_SIZE;
+bool    resizablePopulation = false;
+bool    sortedPopulation = false;
+bool    scaledValueFitness = false;
+int     bestChromosomesToTrack = 1;
+int     worstChromosomesToTrack = 0;
+
+// SELECTION PARAMETERS
+int selectionSize = 20;
+bool duplicates = false;
+int groupSize = 20;
+
+// REPLACE PARAMETERS
+int replacementSize = 20;
+int bestChromosomesThatRemain = 1;
+
+// OFFSPRINGS PARAMETERS
+int numberOfOffsprings = 11;
+int checkForDuplicates = false;
+    
+
+13  0.27112 -2.8732, 7.7399, 2.2418, 1.5073, 5.9216, -8.8007, -4.6224, -4.3957, 1.2737, 1.4454, 0.98118, 9.4561

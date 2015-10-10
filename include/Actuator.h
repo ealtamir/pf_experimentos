@@ -12,7 +12,7 @@
 #include <stdio.h>
 #include <BulletDynamics/btBulletDynamicsCommon.h>
 
-#define PARAMS_SIZE 10
+#define PARAMS_SIZE 30
 
 class Actuator {
     
@@ -20,7 +20,7 @@ public:
     
     Actuator(bool isLeft);
     
-    btVector3 eval(double t, int stage);
+    btVector3 eval(double t);
     
     double parameters[PARAMS_SIZE];
     
@@ -30,7 +30,7 @@ protected:
     
     virtual btVector3
     
-    actuatorFunc(double t, int stage) = 0;
+    actuatorFunc(double t) = 0;   
 
 };
 

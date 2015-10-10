@@ -43,6 +43,7 @@ BodyGroup::generateStandardPart(const double r,
                                 const double m,
                                 const btVector3 &position,
                                 const btVector3 &positionOffset,
+                                btVector3 centerOfMass,
                                 Actuator* actuator) {
     btTransform offset;
     offset.setIdentity();
@@ -53,7 +54,7 @@ BodyGroup::generateStandardPart(const double r,
     transPos.setOrigin(position);
     
     return new CapsuleBodyPart(btScalar(r), btScalar(h),
-                               btScalar(m), offset * transPos, actuator);
+                               btScalar(m), offset * transPos, actuator, centerOfMass);
     
 }
 
@@ -63,6 +64,7 @@ BodyGroup::generateStandardPart(const double r,
                                 const double m,
                                 const btTransform adjust,
                                 const btVector3 &positionOffset,
+                                btVector3 centerOfMass,
                                 Actuator* actuator) {
     
     btTransform offset;
@@ -70,7 +72,7 @@ BodyGroup::generateStandardPart(const double r,
     offset.setOrigin(positionOffset);
     
     return new CapsuleBodyPart(btScalar(r), btScalar(h),
-                               btScalar(m), offset * adjust, actuator);
+                               btScalar(m), offset * adjust, actuator, centerOfMass);
     
 }
 
