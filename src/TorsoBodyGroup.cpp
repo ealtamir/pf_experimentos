@@ -28,8 +28,8 @@ TorsoBodyGroup::createHead(BodyParameters &params, const btVector3 positionAdjus
                                           params.HEAD_HEIGHT,
                                           params.HEAD_MASS,
                                           headPos,
-                                          centerOfMass,
-                                          params.bodyInitialPosition);
+                                          params.bodyInitialPosition,
+                                          centerOfMass);
     
     bodyParts.push_back(head);
     return head;
@@ -49,8 +49,8 @@ TorsoBodyGroup::createSpine(BodyParameters &params, const btVector3 positionAdju
                                            params.SPINE_HEIGHT,
                                            params.SPINE_HEIGHT,
                                            spinePos,
-                                           centerOfMass,
-                                           params.bodyInitialPosition);
+                                           params.bodyInitialPosition,
+                                           centerOfMass);
     
     bodyParts.push_back(spine);
     return spine;
