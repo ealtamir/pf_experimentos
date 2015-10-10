@@ -22,12 +22,12 @@ CapsuleBodyPart::CapsuleBodyPart(btScalar r,
     
     btCollisionShape* capsule = new btCapsuleShape(r, h);
     
-    btCompoundShape* compound = new btCompoundShape();
-    btTransform localTrans;
-    localTrans.setIdentity();
-    //localTrans effectively shifts the center of mass with respect to the chassis
-    localTrans.setOrigin(btVector3(0,0,1));
-    compound->addChildShape(localTrans,capsule);
+        btCompoundShape* compound = new btCompoundShape();
+        btTransform localTrans;
+        localTrans.setIdentity();
+        //localTrans effectively shifts the center of mass with respect to the chassis
+        localTrans.setOrigin(centerofMass);
+        compound->addChildShape(localTrans,capsule);
     
     
     btDefaultMotionState* motionState = new btDefaultMotionState(trans);
