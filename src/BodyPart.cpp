@@ -5,9 +5,9 @@ BodyPart::~BodyPart() {
 	delete body;
 }
 
-void BodyPart::actuate(double t) {
+void BodyPart::actuate(double t, int stage) {
     if (actuator != nullptr) {
-        body->applyTorque(actuator->eval(t));
+        body->applyTorque(actuator->eval(t, stage));
     }
 }
 

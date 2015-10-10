@@ -18,7 +18,7 @@ public:
 
 	btRigidBody* getRigidBody() {return body;};
     
-    void actuate(double t);
+    void actuate(double t, int stage);
     
 //    // Generic
     void setActuatorValues(double sin_ampl, double cos_ampl, double sin_freq,

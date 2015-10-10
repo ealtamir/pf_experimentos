@@ -20,7 +20,7 @@ public:
     
     Actuator(bool isLeft);
     
-    btVector3 eval(double t);
+    btVector3 eval(double t, int stage);
     
     double parameters[PARAMS_SIZE];
     
@@ -28,9 +28,7 @@ public:
     
 protected:
     
-    virtual btVector3
-    
-    actuatorFunc(double t) = 0;   
+    virtual btVector3 actuatorFunc(double t, int stage) = 0;
 
 };
 
