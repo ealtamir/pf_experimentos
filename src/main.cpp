@@ -18,7 +18,7 @@
 
 #include "ValueSets.h"
 
-#include "StopCriterias.h"
+#include "StopCriterias.h" 
 
 // System libraries
 #include <stdlib.h>

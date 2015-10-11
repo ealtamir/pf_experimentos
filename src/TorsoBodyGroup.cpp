@@ -28,8 +28,8 @@ TorsoBodyGroup::createHead(BodyParameters &params, const btVector3 positionAdjus
                                           params.HEAD_HEIGHT,
                                           params.HEAD_MASS,
                                           headPos,
-                                          centerOfMass,
-                                          params.bodyInitialPosition);
+                                          params.bodyInitialPosition,
+                                          centerOfMass);
     
     bodyParts.push_back(head);
     return head;
@@ -49,8 +49,8 @@ TorsoBodyGroup::createSpine(BodyParameters &params, const btVector3 positionAdju
                                            params.SPINE_HEIGHT,
                                            params.SPINE_HEIGHT,
                                            spinePos,
-                                           centerOfMass,
-                                           params.bodyInitialPosition);
+                                           params.bodyInitialPosition,
+                                           centerOfMass);
     
     bodyParts.push_back(spine);
     return spine;
@@ -63,14 +63,13 @@ TorsoBodyGroup::createPelvis(BodyParameters &params, const btVector3 positionAdj
                         params.PELVIS_POSITION.y() * positionAdjust.y(),
                         params.PELVIS_POSITION.z() * positionAdjust.z());
     
-    btVector3 centerOfMass(0,0,0);
+    btVector3 centerOfMass(0, params.PELVIS_HEIGHT/2+params.PELVIS_RADIUS, 0);
     
     BodyPart* pelvis = generateStandardPart(params.PELVIS_RADIUS,
                                             params.PELVIS_HEIGHT,
                                             params.PELVIS_MASS,
                                             pelvisPos,
-                                            centerOfMass,
-                                            params.bodyInitialPosition);
+                                            params.bodyInitialPosition,                                            centerOfMass);
     
     bodyParts.push_back(pelvis);
     return pelvis;

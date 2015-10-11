@@ -108,36 +108,21 @@ double PassiveWalkerExperiment::getHeightCoefficient(double h,
                                                      double min_h,
                                                      double optimal_h) {
     
-    double max_h = optimal_h * 2;
-    if (h <= min_h || h >= max_h) {
-        return 0;
-    }
-    if (h <= optimal_h) {
-        return (h - min_h) / (optimal_h - min_h);
-    } else {
-        return (h - max_h) / (optimal_h - max_h);
-    }
+    double diff = optimal_h - h;
+    return 1 / exp(diff * diff);
 }
 
 double PassiveWalkerExperiment::getVelocityCoefficient(btVector3& current_velocity, double desiredZspeed) {
-    double x = current_velocity.getX();
-    double y = current_velocity.getY();
-    double z = current_velocity.getZ();
-    
-    double xCoef, yCoef, zCoef;
-    
-    xCoef = 1 / exp(fabs(x));
-    yCoef = 1 / exp(fabs(y));
-    zCoef = 1 / exp(fabs(z - desiredZspeed));
-    
-    return zCoef;
+    double diff = current_velocity.norm() - desiredZspeed;
+    return 1 / exp(diff * diff);
     
 }
 
 double PassiveWalkerExperiment::getAngleCoefficient(btVector3& normalizedVel) {
     btVector3 desiredDir(0, 0, -1);
     double cosineVal = normalizedVel.dot(desiredDir);
-    return (cosineVal + 1) / 2;
+    double diff = cosineVal - 1;
+    return 1 / exp(diff * diff);
 }
 
 
@@ -190,40 +175,11 @@ void PassiveWalkerExperiment::simulate() {
             current_velocity.normalize();
             acum_direction += getAngleCoefficient(current_velocity);
         }
-        
-        // Feet fitness
-//        current_left_foot_height = walker->getLeftFootHeight();
-//        current_right_foot_height = walker->getRightFootHeight();
-//        acum_left_foot_height += current_left_foot_height;
-//        acum_right_foot_height += current_right_foot_height;
-//        
-//        if(current_left_foot_height >= current_height){
-//            correct_foot_hip_position -= 0.5 * 1/SIMULATION_STEPS;
-//        }
-//        if(current_right_foot_height >= current_height){
-//            correct_foot_hip_position -= 0.5 * 1/SIMULATION_STEPS;
-//        }
+
     }
     
     max_height = acum_height / SIMULATION_STEPS;
-    
-//    if ((initial_height * 0.8 - (acum_left_foot_height / SIMULATION_STEPS)) > 0) {
-//        left_foot_height = 1;
-//    } else {
-//        left_foot_height = 0.1;
-//    }
-//    
-//    if ((initial_height * 0.8 - (acum_right_foot_height / SIMULATION_STEPS)) > 0) {
-//        right_foot_height = 1;
-//    } else {
-//        right_foot_height = 0.1;
-//    }
-    
     average_velocity = acum_velocity / SIMULATION_STEPS;
-//    if (average_velocity > OBJETIVE_VELOCITY) {
-//        average_velocity = 0.1;
-//    }
-    
     direction = acum_direction / SIMULATION_STEPS;
 }
 
