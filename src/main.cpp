@@ -205,8 +205,8 @@ int mainLoop(char* executablePath) {
     
     int selectionSize = 10;
     bool duplicates = false;
-    int groupSize = 20;
-    Population::SelectionOperations::GaSelectRandomBestParams selectParams(selectionSize, false, groupSize);
+    
+    Population::SelectionOperations::GaSelectDuplicatesParams selectParams(duplicates, selectionSize);
     
     int replacementSize = 10;
     int bestChromosomesThatRemain = 1;
@@ -223,7 +223,7 @@ int mainLoop(char* executablePath) {
                                     &_ccb->GetFitnessComparator(),
                                     GaSelectionCatalogue::Instance().GetEntryData("GaSelectRouletteWheel"),
                                     &selectParams,
-                                    GaReplacementCatalogue::Instance().GetEntryData("GaReplaceRandom"),
+                                    GaReplacementCatalogue::Instance().GetEntryData("GaReplaceWorst"),
                                     &replaceParams,
                                     GaCouplingCatalogue::Instance().GetEntryData("GaSimpleCoupling"),
                                     &couplingParams,
@@ -236,7 +236,7 @@ int mainLoop(char* executablePath) {
     
     int numberOfWorkers = 8;
     GaMultithreadingAlgorithmParams algParam(numberOfWorkers);
-    Algorithm::SimpleAlgorithms::GaIncrementalAlgorithm* algorithm = new Algorithm::SimpleAlgorithms::GaIncrementalAlgorithm( population, algParam);
+    Algorithm::SimpleAlgorithms::GaIncrementalAlgorithm* algorithm = new Algorithm::SimpleAlgorithms::GaIncrementalAlgorithm( population, algParam );
     
     
     GaStopCriteria* criteria = GaStopCriteriaCatalogue::Instance().GetEntryData("GaGenerationCriteria");

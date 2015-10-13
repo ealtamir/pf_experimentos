@@ -23,3 +23,5 @@ upper = upper_A * sin(upper_sin_frec * x + upper_fase) + upper_B * cos(upper_cos
 lower = lower_A * sin(lower_sin_frec * x + lower_fase) + lower_B * cos(lower_cos_frec * x + lower_fase) + lower_ind_term;
 
 plot(x,upper,x,lower)
+title('Plot generic function')
+legend('upper leg','lower leg')
