@@ -34,8 +34,9 @@
 
 #define VALUES_SIZE         12
 #define POPULATION_SIZE     20
-#define GENERATIONS         300
+#define GENERATIONS         100
 #define VISUAL              true
+
 
 int mainLoop();
 double getTimeElapsed();
@@ -157,11 +158,11 @@ int mainLoop(char* executablePath) {
     
     
     // CHROMOSOME PARAMETERS
-    double  mutationProbability = 0.5;
+    double  mutationProbability = 0.1;
     int     numOfMutatedValues = VALUES_SIZE / 2;
     bool    onlyAcceptImprovingMutations = false;
     double  crossoverProbability = 0.8;
-    int     crossoverPoints = VALUES_SIZE / 2;
+    int     crossoverPoints = 1;
     GaChromosomeParams* chromosomeParams = new GaChromosomeParams(mutationProbability,
                                         numOfMutatedValues,
                                         onlyAcceptImprovingMutations,

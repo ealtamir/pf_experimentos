@@ -71,7 +71,7 @@ void PassiveWalkerExperiment::worldStep() {
     timeCount += 1. / 60.;
     btDynamicsWorld* w = getDynamicsWorld();
     w->stepSimulation(1 / 60.f);
-    //body->actuate(timeCount, 0);
+    body->actuate(timeCount, 0);
 }
 
 bool PassiveWalkerExperiment::stopExperiment() {
@@ -109,12 +109,12 @@ double PassiveWalkerExperiment::getHeightCoefficient(double h,
                                                      double optimal_h) {
     
     double diff = optimal_h - h;
-    return 1 / exp(diff * diff);
+    return 1 / exp(diff * diff * 20);
 }
 
 double PassiveWalkerExperiment::getVelocityCoefficient(btVector3& current_velocity, double desiredZspeed) {
     double diff = current_velocity.norm() - desiredZspeed;
-    return 1 / exp(diff * diff);
+    return 1 / exp(diff * diff * 20);
     
 }
 
@@ -122,7 +122,7 @@ double PassiveWalkerExperiment::getAngleCoefficient(btVector3& normalizedVel) {
     btVector3 desiredDir(0, 0, -1);
     double cosineVal = normalizedVel.dot(desiredDir);
     double diff = cosineVal - 1;
-    return 1 / exp(diff * diff);
+    return 1 / exp(diff * diff * 20);
 }
 
 
