@@ -220,7 +220,7 @@ namespace Chromosome
 					return;
 
 				typename vector<TYPE>::iterator it = _values.begin() + start;
-				for( int i = 0; i < size; i++, it++ )
+				for( int i = start; i < size; i++, it++ )
 					*it = ( (GaChromosomeDomainBlock<TYPE>*)this->_configBlock )->GetValueSet( i )->GenerateRandom();
 			}
 
