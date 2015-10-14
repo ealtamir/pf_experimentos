@@ -33,8 +33,8 @@
 
 
 #define VALUES_SIZE         12
-#define POPULATION_SIZE     20
-#define GENERATIONS         100
+#define POPULATION_SIZE     30
+#define GENERATIONS         1000
 #define VISUAL              true
 
 
@@ -158,11 +158,11 @@ int mainLoop(char* executablePath) {
     
     
     // CHROMOSOME PARAMETERS
-    double  mutationProbability = 0.9;
-    int     numOfMutatedValues = 4;
+    double  mutationProbability = 0.4;
+    int     numOfMutatedValues = 2;
     bool    onlyAcceptImprovingMutations = false;
     double  crossoverProbability = 0.8;
-    int     crossoverPoints = 1;
+    int     crossoverPoints = 3;
     GaChromosomeParams* chromosomeParams = new GaChromosomeParams(mutationProbability,
                                         numOfMutatedValues,
                                         onlyAcceptImprovingMutations,
@@ -194,8 +194,8 @@ int mainLoop(char* executablePath) {
     bool    resizablePopulation = false;
     bool    sortedPopulation = false;
     bool    scaledValueFitness = false;
-    int     bestChromosomesToTrack = 5;
-    int     worstChromosomesToTrack = 5;
+    int     bestChromosomesToTrack = 3;
+    int     worstChromosomesToTrack = 3;
     GaPopulationParameters populationParams(populationSize,
                                             resizablePopulation,
                                             sortedPopulation,
@@ -203,12 +203,12 @@ int mainLoop(char* executablePath) {
                                             bestChromosomesToTrack,
                                             worstChromosomesToTrack);
     
-    int selectionSize = 10;
+    int selectionSize = 20;
     bool duplicates = false;
     
     Population::SelectionOperations::GaSelectDuplicatesParams selectParams(duplicates, selectionSize);
     
-    int replacementSize = 10;
+    int replacementSize = 20;
     int bestChromosomesThatRemain = 1;
     Population::ReplacementOperations::GaReplaceElitismParams replaceParams(replacementSize,
                                                                             bestChromosomesThatRemain);
@@ -281,9 +281,9 @@ int main(int argc,char* argv[]) {
         experiment->setCameraDistance(btScalar(5.));
         experiment->setCameraUp(btVector3(0, 15, 0));
         std::string exePath(argv[0]);
-        std::vector<double> vals = loadPreviousParams(exePath);
-//        static const double arr[] = { -2.8732,7.7399, 2.2418,1.5073, 5.9216, -8.8007,-4.6224,-4.3957,1.2737, 1.4454, 0.98118,9.4561 };
-//        std::vector<double> vals(arr, arr + sizeof(arr) / sizeof(arr[0]));
+//        std::vector<double> vals = loadPreviousParams(exePath);
+        static const double arr[] = { -20.8932, 9.77636, 0.91726, 0.180875, 1.95841, -6.66473, -7.68414, 105.134, 0.517725, 0.491385, 1.70121, -3.30518 };
+        std::vector<double> vals(arr, arr + sizeof(arr) / sizeof(arr[0]));
         for (int i = 0; i < vals.size(); i++) {
             std::cout << "Values: " << vals[i] << std::endl;
         }

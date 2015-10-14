@@ -16,7 +16,7 @@ lower_cos_frec = chromosome(11);
 lower_fase = chromosome(12);
 lower_ind_term = chromosome(13);
 
-x = [1:0.001:10];             
+x = [1:0.001:30];             
 
 upper = upper_A * sin(upper_sin_frec * x + upper_fase) + upper_B * cos(upper_cos_frec * x + upper_fase) + upper_ind_term;
 
