@@ -281,9 +281,9 @@ int main(int argc,char* argv[]) {
         experiment->setCameraDistance(btScalar(5.));
         experiment->setCameraUp(btVector3(0, 15, 0));
         std::string exePath(argv[0]);
-//        std::vector<double> vals = loadPreviousParams(exePath);
-        static const double arr[] = { -20.8932, 9.77636, 0.91726, 0.180875, 1.95841, -6.66473, -7.68414, 105.134, 0.517725, 0.491385, 1.70121, -3.30518 };
-        std::vector<double> vals(arr, arr + sizeof(arr) / sizeof(arr[0]));
+        std::vector<double> vals = loadPreviousParams(exePath);
+//        static const double arr[] = { -20.8932, 9.77636, 0.91726, 0.180875, 1.95841, -6.66473, -7.68414, 105.134, 0.517725, 0.491385, 1.70121, -3.30518 };
+//        std::vector<double> vals(arr, arr + sizeof(arr) / sizeof(arr[0]));
         for (int i = 0; i < vals.size(); i++) {
             std::cout << "Values: " << vals[i] << std::endl;
         }
