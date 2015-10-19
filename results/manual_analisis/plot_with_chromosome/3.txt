@@ -1,0 +1,69 @@
+GA parameters
+
+#define VALUES_SIZE         12
+#define POPULATION_SIZE     55
+#define GENERATIONS         1000
+
+    // CHROMOSOME PARAMETERS
+    double  mutationProbability = 0.4;
+    int     numOfMutatedValues = 2;
+    bool    onlyAcceptImprovingMutations = false;
+    double  crossoverProbability = 0.8;
+    int     crossoverPoints = 3;
+    GaChromosomeParams* chromosomeParams = new GaChromosomeParams(mutationProbability,
+                                        numOfMutatedValues,
+                                        onlyAcceptImprovingMutations,
+                                        crossoverProbability,
+                                        crossoverPoints);
+    
+    //CHROMOSOME CONFIGURATION BLOCK (CCB)
+    GaCrossoverOperation*   crossoverMethod = GaCrossoverCatalogue::Instance().GetEntryData("GaMultiValueCrossover");
+    GaMutationOperation*    mutationOperation = GaMutationCatalogue::Instance().GetEntryData("GaFlipMutation");
+    GaFitnessOperation*     fitnessCalculator = new MiExperimentoFitness();
+    GaFitnessComparator* 	fitnessComparator = GaFitnessComparatorCatalogue::Instance().GetEntryData("GaMaxFitnessComparator");
+    GaChromosomeDomainBlock<double>* _ccb = new GaChromosomeDomainBlock<double>(
+                        (GaValueSet<double>**)(&multiValueSet),
+                        numberOfValueSets,
+                        crossoverMethod,
+                        mutationOperation,
+                        fitnessCalculator,
+                        fitnessComparator,
+                        chromosomeParams);
+    
+    
+    
+    // Used as prototype to initilize other chromosomes
+    GaMVArithmeticChromosome<double> chromosomePrototype(numberOfValueSets, _ccb);
+    
+    
+    // POPULATION PARAMETERS
+    int 	populationSize = POPULATION_SIZE;
+    bool    resizablePopulation = false;
+    bool    sortedPopulation = false;
+    bool    scaledValueFitness = false;
+    int     bestChromosomesToTrack = 3;
+    int     worstChromosomesToTrack = 3;
+    GaPopulationParameters populationParams(populationSize,
+                                            resizablePopulation,
+                                            sortedPopulation,
+                                            scaledValueFitness,
+                                            bestChromosomesToTrack,
+                                            worstChromosomesToTrack);
+    
+// SELECTION PARAMETERS
+    int selectionSize = 25;
+    bool duplicates = false;
+    
+    Population::SelectionOperations::GaSelectDuplicatesParams selectParams(duplicates, selectionSize);
+
+// REPLACE PARAMETERS    
+    int replacementSize = 15;
+    int bestChromosomesThatRemain = 1;
+    Population::ReplacementOperations::GaReplaceElitismParams replaceParams(replacementSize,
+                                                                            bestChromosomesThatRemain);
+    
+ // OFFSTRINGS PARAMETERS   
+    int numberOfOffsprings = 11;
+    int checkForDuplicates = true;
+    GaCouplingParams couplingParams(numberOfOffsprings, checkForDuplicates);
+

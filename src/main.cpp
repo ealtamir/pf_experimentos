@@ -33,7 +33,7 @@
 
 
 #define VALUES_SIZE         12
-#define POPULATION_SIZE     30
+#define POPULATION_SIZE     55
 #define GENERATIONS         1000
 #define VISUAL              true
 
@@ -203,12 +203,12 @@ int mainLoop(char* executablePath) {
                                             bestChromosomesToTrack,
                                             worstChromosomesToTrack);
     
-    int selectionSize = 20;
+    int selectionSize = 25;
     bool duplicates = false;
     
     Population::SelectionOperations::GaSelectDuplicatesParams selectParams(duplicates, selectionSize);
     
-    int replacementSize = 20;
+    int replacementSize = 15;
     int bestChromosomesThatRemain = 1;
     Population::ReplacementOperations::GaReplaceElitismParams replaceParams(replacementSize,
                                                                             bestChromosomesThatRemain);
