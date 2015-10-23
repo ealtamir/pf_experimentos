@@ -35,7 +35,7 @@
 #define VALUES_SIZE         12
 #define POPULATION_SIZE     55
 #define GENERATIONS         1000
-#define VISUAL              true
+#define VISUAL              false
 
 
 int mainLoop();
@@ -214,7 +214,7 @@ int mainLoop(char* executablePath) {
                                                                             bestChromosomesThatRemain);
     
     
-    int numberOfOffsprings = 11;
+    int numberOfOffsprings = 2;
     int checkForDuplicates = true;
     GaCouplingParams couplingParams(numberOfOffsprings, checkForDuplicates);
     
