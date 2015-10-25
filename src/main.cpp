@@ -35,7 +35,7 @@
 #define VALUES_SIZE         12
 #define POPULATION_SIZE     55
 #define GENERATIONS         1000
-#define VISUAL              false
+#define VISUAL              true
 
 
 int mainLoop();
@@ -158,7 +158,7 @@ int mainLoop(char* executablePath) {
     
     
     // CHROMOSOME PARAMETERS
-    double  mutationProbability = 0.4;
+    double  mutationProbability = 0.2;
     int     numOfMutatedValues = 2;
     bool    onlyAcceptImprovingMutations = false;
     double  crossoverProbability = 0.8;

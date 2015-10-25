@@ -54,7 +54,9 @@ public:
     // lower leg
     double L_LEG_RADIUS = 0.05 * BODY_SCALE;
     double L_LEG_HEIGHT = 0.247 * BODY_HEIGHT * BODY_SCALE;
-    double L_LEG_MASS = 0.0475 * BODY_MASS * BODY_SCALE;
+    //double L_LEG_MASS = 0.0475 * BODY_MASS * BODY_SCALE;
+    double L_LEG_MASS = 0.0433 * BODY_MASS * BODY_SCALE;
+    
     btVector3 L_LEG_ORIENTATION = btVector3(0, 0, 0);
     btVector3 L_LEG_POSITION = btVector3(btScalar(0.18 * BODY_SCALE),
                                          btScalar(0.2 * BODY_SCALE),
@@ -64,7 +66,9 @@ public:
     //upper leg
     double U_LEG_RADIUS = 0.07 * BODY_SCALE;
     double U_LEG_HEIGHT = 0.232 * BODY_HEIGHT * BODY_SCALE;
-    double U_LEG_MASS = 0.105 * BODY_SCALE;
+    //double U_LEG_MASS = 0.105 * BODY_SCALE;
+    double U_LEG_MASS = 0.1416 * BODY_SCALE;
+    
     btVector3 U_LEG_ORIENTATION = btVector3(0, 0, 0);
     btVector3 U_LEG_POSITION = btVector3(btScalar(0.18 * BODY_SCALE),
                                          btScalar(0.65 * BODY_SCALE),
@@ -73,7 +77,9 @@ public:
 
     
     //foots
-    double FOOT_MASS = 0.0143 * BODY_MASS * BODY_SCALE;
+    //double FOOT_MASS = 0.0143 * BODY_MASS * BODY_SCALE;
+    double FOOT_MASS = 0.0137 * BODY_MASS * BODY_SCALE;
+    
     btVector3 FOOT_ORIENTATION = btVector3(0, 0, 0);
     btVector3 FOOT_POSITION = btVector3(btScalar(0.075 + 0.1 * BODY_SCALE),
                                         btScalar(-0.015),
@@ -102,7 +108,8 @@ public:
     // Pelvis
     double PELVIS_RADIUS = 0.15 * BODY_SCALE;
     double PELVIS_HEIGHT = 0.05 * BODY_HEIGHT * BODY_SCALE;
-    double PELVIS_MASS = 0.1366 * BODY_MASS * BODY_SCALE;
+    //double PELVIS_MASS = 0.1366 * BODY_MASS * BODY_SCALE;
+    double PELVIS_MASS = 0.107742 * BODY_MASS * BODY_SCALE;
     btVector3 PELVIS_ORIENTATION = btVector3(0, 0, 0);
     btVector3 PELVIS_POSITION = btVector3(btScalar(0),
                                           btScalar(0.85 * BODY_SCALE),
