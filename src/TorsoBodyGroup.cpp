@@ -63,7 +63,8 @@ TorsoBodyGroup::createPelvis(BodyParameters &params, const btVector3 positionAdj
                         params.PELVIS_POSITION.y() * positionAdjust.y(),
                         params.PELVIS_POSITION.z() * positionAdjust.z());
     
-    btVector3 centerOfMass(0, params.PELVIS_HEIGHT/2+params.PELVIS_RADIUS, 0);
+    //btVector3 centerOfMass(0, params.PELVIS_HEIGHT/2+params.PELVIS_RADIUS, 0);
+    btVector3 centerOfMass(0, 0, 0);
     
     BodyPart* pelvis = generateStandardPart(params.PELVIS_RADIUS,
                                             params.PELVIS_HEIGHT,

@@ -31,11 +31,12 @@
 #include "PassiveWalkerExperiment.h"
 #include "IOTools.h"
 
+#include "BasicDemo.h"
 
 #define VALUES_SIZE         12
 #define POPULATION_SIZE     55
 #define GENERATIONS         1000
-#define VISUAL              false
+#define VISUAL              true
 
 
 int mainLoop();
@@ -276,19 +277,24 @@ double getTimeElapsed(){
 
 int main(int argc,char* argv[]) {
     if(VISUAL) {
+        /*BasicDemo* bd = new BasicDemo();
+        bd->initPhysics();*/
         PassiveWalkerExperiment* experiment = PassiveWalkerExperiment::getInstance();
         experiment->initPhysics();
         experiment->setCameraDistance(btScalar(5.));
         experiment->setCameraUp(btVector3(0, 15, 0));
         std::string exePath(argv[0]);
         std::vector<double> vals = loadPreviousParams(exePath);
+        
 //        static const double arr[] = { -20.8932, 9.77636, 0.91726, 0.180875, 1.95841, -6.66473, -7.68414, 105.134, 0.517725, 0.491385, 1.70121, -3.30518 };
 //        std::vector<double> vals(arr, arr + sizeof(arr) / sizeof(arr[0]));
+        
         for (int i = 0; i < vals.size(); i++) {
             std::cout << "Values: " << vals[i] << std::endl;
         }
         experiment->setBodyActuatorValues(vals);
         return glutmain(argc, argv, 800, 600, "Experiment",experiment);
+        //return glutmain(argc, argv, 800, 600, "BasicDemo",bd);
     } else {
         clearFile("output.dat");
         return mainLoop(argv[0]);

@@ -31,7 +31,7 @@ LegBodyGroup::LegBodyGroup(btDynamicsWorld* world,
     btVector3 lowerLegCenterOfMass(0,
                                    params.L_LEG_HEIGHT+params.L_LEG_RADIUS,
                                    0);
-//    btVector3 lowerLegCenterOfMass(0,0,0);
+   // btVector3 lowerLegCenterOfMass(0,0,0);
 
     if (isLeft || USE_DEFAULT) {
         btVector3 lowerLegPos(params.L_LEG_POSITION.x() * positionAdjust.x(),
@@ -67,7 +67,7 @@ LegBodyGroup::LegBodyGroup(btDynamicsWorld* world,
                                    (params.U_LEG_HEIGHT+params.U_LEG_RADIUS),
                                    0);
     
-//    btVector3 upperLegCenterOfMass(0,0,0);
+    //btVector3 upperLegCenterOfMass(0,0,0);
     
     if (isLeft || USE_DEFAULT) {
         btVector3 upperLegPos(params.U_LEG_POSITION.x() * positionAdjust.x(),
@@ -181,6 +181,7 @@ BodyPart*
 LegBodyGroup::getJointPart() {
     return bodyParts[1];
 }
+
 
 double*
 LegBodyGroup::getAngles() {
