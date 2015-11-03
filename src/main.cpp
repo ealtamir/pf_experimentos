@@ -159,7 +159,7 @@ int mainLoop(char* executablePath) {
     
     
     // CHROMOSOME PARAMETERS
-    double  mutationProbability = 0.4;
+    double  mutationProbability = 0.2;
     int     numOfMutatedValues = 2;
     bool    onlyAcceptImprovingMutations = false;
     double  crossoverProbability = 0.8;
