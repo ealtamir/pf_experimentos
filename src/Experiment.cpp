@@ -104,7 +104,7 @@ void Experiment::initPhysics()
     info.m_splitImpulse = 1;
 
 
-    m_dynamicsWorld->setGravity(btVector3(0, -9.8, 0));
+    m_dynamicsWorld->setGravity(btVector3(0, -10, 0));
 
     createGround();
     initializeBodies();

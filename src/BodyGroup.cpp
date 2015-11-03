@@ -40,9 +40,10 @@ BodyGroup::actuate(double t, int stage) {
         //bp->actuate(t, stage);
     }
     */
-    for (BodyPart* part : bodyParts) {
-        part->actuate(t, stage);
-    }
+//    for (BodyPart* part : bodyParts) {
+//        part->actuate(t, stage);
+//    }
+    bodyParts[0]->actuate(t, stage);
     
 }
 
