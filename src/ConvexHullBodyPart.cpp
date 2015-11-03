@@ -19,14 +19,11 @@ ConvexHullBodyPart::ConvexHullBodyPart(btVector3 points[], btScalar mass, const 
     convexHullShape->addPoint(btVector3(-0.075 ,0.015     ,-0.075));
     convexHullShape->addPoint(btVector3(0.075  ,0.015     ,-0.075));
     
-    convexHullShape->addPoint(btVector3(-0.075 ,-0.015/2  ,2*0.075/8));
-    convexHullShape->addPoint(btVector3(0.075  ,-0.015/2  ,2*0.075/8));
+    convexHullShape->addPoint(btVector3(-0.075 ,0.0  ,-0.075));
+    convexHullShape->addPoint(btVector3(0.075  ,0.0  ,-0.075));
     
-    convexHullShape->addPoint(btVector3(-0.075 ,-0.015    ,2*0.075/4));
-    convexHullShape->addPoint(btVector3(0.075  ,-0.015    ,2*0.075/4));
-    
-    convexHullShape->addPoint(btVector3(-0.075 ,-0.015/2  ,2*0.075*3/8));
-    convexHullShape->addPoint(btVector3(0.075  ,-0.015/2  ,2*0.075*3/8));
+    convexHullShape->addPoint(btVector3(-0.075 ,0.0  ,0.075));
+    convexHullShape->addPoint(btVector3(0.075  ,0.0  ,0.075));
     
     convexHullShape->addPoint(btVector3(-0.075 ,0.015     ,0.075));
     convexHullShape->addPoint(btVector3(0.075  ,0.015     ,0.075));

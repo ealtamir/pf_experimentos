@@ -16,9 +16,9 @@ public:
     void actuate(double t, int stage);
     std::vector<BodyGroup*> getBodyGroups();
 
+    std::vector<BodyGroup*> bodyGroups;
 
 protected:
-	std::vector<BodyGroup*> bodyGroups;
     std::vector<btTypedConstraint*> constraints;
     
 	btDynamicsWorld* world;

@@ -39,6 +39,8 @@
 #define VISUAL              true
 
 
+
+
 int mainLoop();
 double getTimeElapsed();
 double getAngleBetween(btVector3 v1, btVector3 v2);
@@ -131,10 +133,10 @@ int mainLoop(char* executablePath) {
     
     GaInitialize();
     
-    GaValueIntervalBounds<double> amplitude(-150, 150);
-    GaValueIntervalBounds<double> frequency(0.1, 3);
-    GaValueIntervalBounds<double> phase(0, SIMD_2_PI);
-    GaValueIntervalBounds<double> independentTerm(-1, 1);
+    GaValueIntervalBounds<double> amplitude(-300, 300);
+    GaValueIntervalBounds<double> frequency(0.1, 5);
+    GaValueIntervalBounds<double> phase(0, SIMD_PI);
+    GaValueIntervalBounds<double> independentTerm(-5, 5);
     
     GaIntervalValueSet<double> amplitudeValueSet(amplitude, amplitude, GaGlobalRandomDoubleGenerator, false);
     GaIntervalValueSet<double> frequencyValueSet(frequency, frequency, GaGlobalRandomDoubleGenerator, false);
