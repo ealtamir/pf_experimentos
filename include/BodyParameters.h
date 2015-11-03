@@ -113,7 +113,7 @@ public:
     btVector3 PELVIS_ORIENTATION = btVector3(0, 0, 0);
     btVector3 PELVIS_POSITION = btVector3(btScalar(0),
                                           btScalar(0.85 * BODY_SCALE),
-                                          btScalar(-PELVIS_RADIUS));
+                                          btScalar(0));
     
     // Spine 
     double SPINE_RADIUS = 0.15 * BODY_SCALE;
@@ -138,16 +138,16 @@ public:
     double b = (U_LEG_HEIGHT / 2) * cos(SIMD_PI / 6);
     
     btVector3 RIGHT_L_LEG_POSITION = btVector3(btScalar(0.18 * BODY_SCALE),
-                                               btScalar((0.2 + a + 0.1) * BODY_SCALE),
-                                               btScalar(-b * 2 - 0.08));
+                                               btScalar(0.2 * BODY_SCALE),
+                                               btScalar(0.0));
     
     btVector3 RIGHT_U_LEG_POSITION = btVector3(btScalar(0.18 * BODY_SCALE),
-                                               btScalar((0.65 + a) * BODY_SCALE),
-                                               btScalar(-b));
+                                               btScalar(0.65 * BODY_SCALE),
+                                               btScalar(0.0));
     
-    btVector3 RIGHT_FOOT_POSITION = btVector3(btScalar(0.075),
-                                              btScalar(-0.015 + (-0.1 + a + 0.1) * BODY_SCALE),
-                                              btScalar(0.075 + (-0.075 - b * 2 - 0.1) * BODY_SCALE));
+    btVector3 RIGHT_FOOT_POSITION = btVector3(btScalar(0.075 + 0.1 * BODY_SCALE),
+                                              btScalar(-0.015),
+                                              btScalar(0.075 - 0.1 * BODY_SCALE));
     
 
     

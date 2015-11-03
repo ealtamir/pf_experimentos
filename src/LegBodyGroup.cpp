@@ -52,7 +52,7 @@ LegBodyGroup::LegBodyGroup(btDynamicsWorld* world,
                               params.RIGHT_L_LEG_POSITION.z() * positionAdjust.z());
         trans.setIdentity();
         trans.setOrigin(lowerLegPos);
-        trans.setRotation(params.RIGHT_LOWER_LEG_ROTATION);
+//        trans.setRotation(params.RIGHT_LOWER_LEG_ROTATION);
         lowerLeg = generateStandardPart(params.L_LEG_RADIUS,
                                         params.L_LEG_HEIGHT,
                                         params.L_LEG_MASS,
@@ -88,7 +88,7 @@ LegBodyGroup::LegBodyGroup(btDynamicsWorld* world,
         
         trans.setIdentity();
         trans.setOrigin(upperLegPos);
-        trans.setRotation(params.RIGHT_LEG_ROTATION);
+//        trans.setRotation(params.RIGHT_LEG_ROTATION);
         upperLeg = generateStandardPart(params.U_LEG_RADIUS,
                                         params.U_LEG_HEIGHT,
                                         params.U_LEG_MASS,
@@ -118,9 +118,9 @@ LegBodyGroup::LegBodyGroup(btDynamicsWorld* world,
                           params.RIGHT_FOOT_POSITION.z() * positionAdjust.z());
         footTrans.setIdentity();
         footTrans.setOrigin(footPos);
-        footTrans.getBasis().setEulerZYX(params.FOOT_ORIENTATION.x(),
-                                         params.FOOT_ORIENTATION.y(),
-                                         params.FOOT_ORIENTATION.z());
+//        footTrans.getBasis().setEulerZYX(params.FOOT_ORIENTATION.x(),
+//                                         params.FOOT_ORIENTATION.y(),
+//                                         params.FOOT_ORIENTATION.z());
         foot = generateFoot(params.FOOT_MASS,
                             footTrans,
                             params.bodyInitialPosition);

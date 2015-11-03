@@ -35,7 +35,7 @@
 
 #define VALUES_SIZE         12
 #define POPULATION_SIZE     55
-#define GENERATIONS         1000
+#define GENERATIONS         300
 #define VISUAL              true
 
 
@@ -131,10 +131,10 @@ int mainLoop(char* executablePath) {
     
     GaInitialize();
     
-    GaValueIntervalBounds<double> amplitude(-200, 200);
+    GaValueIntervalBounds<double> amplitude(-150, 150);
     GaValueIntervalBounds<double> frequency(0.1, 3);
     GaValueIntervalBounds<double> phase(0, SIMD_2_PI);
-    GaValueIntervalBounds<double> independentTerm(-10, 10);
+    GaValueIntervalBounds<double> independentTerm(-1, 1);
     
     GaIntervalValueSet<double> amplitudeValueSet(amplitude, amplitude, GaGlobalRandomDoubleGenerator, false);
     GaIntervalValueSet<double> frequencyValueSet(frequency, frequency, GaGlobalRandomDoubleGenerator, false);
@@ -159,7 +159,7 @@ int mainLoop(char* executablePath) {
     
     
     // CHROMOSOME PARAMETERS
-    double  mutationProbability = 0.2;
+    double  mutationProbability = 0.3;
     int     numOfMutatedValues = 2;
     bool    onlyAcceptImprovingMutations = false;
     double  crossoverProbability = 0.8;
