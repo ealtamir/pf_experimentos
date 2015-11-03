@@ -279,8 +279,8 @@ double getTimeElapsed(){
 
 int main(int argc,char* argv[]) {
     if(VISUAL) {
-        /*BasicDemo* bd = new BasicDemo();
-        bd->initPhysics();*/
+        BasicDemo* bd = new BasicDemo();
+        bd->initPhysics();
         PassiveWalkerExperiment* experiment = PassiveWalkerExperiment::getInstance();
         experiment->initPhysics();
         experiment->setCameraDistance(btScalar(5.));
@@ -295,8 +295,8 @@ int main(int argc,char* argv[]) {
             std::cout << "Values: " << vals[i] << std::endl;
         }
         experiment->setBodyActuatorValues(vals);
-        return glutmain(argc, argv, 800, 600, "Experiment",experiment);
-        //return glutmain(argc, argv, 800, 600, "BasicDemo",bd);
+//        return glutmain(argc, argv, 800, 600, "Experiment",experiment);
+        return glutmain(argc, argv, 800, 600, "BasicDemo",bd);
     } else {
         clearFile("output.dat");
         return mainLoop(argv[0]);

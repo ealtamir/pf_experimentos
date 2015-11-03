@@ -15,7 +15,7 @@ const btScalar BALL_FRICTION = btScalar(1);
 const btVector3 BALL_VELOCITY = btVector3(0, -.5, 0);
 const btVector3 BALL_ORIGIN = btVector3(0, 4, 0);
 
-const btVector3 GRAVITY = btVector3(0, 0, 0);
+const btVector3 GRAVITY = btVector3(0, -10, 0);
 
 const btScalar GROUND_FRICTION = btScalar(1);
 const btScalar GROUND_RESTITUTION = btScalar(1);
