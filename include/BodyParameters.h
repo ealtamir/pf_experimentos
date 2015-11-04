@@ -59,7 +59,7 @@ public:
     
     btVector3 L_LEG_ORIENTATION = btVector3(0, 0, 0);
     btVector3 L_LEG_POSITION = btVector3(btScalar(0.18 * BODY_SCALE),
-                                         btScalar(0.015 + L_LEG_RADIUS + L_LEG_HEIGHT/2),
+                                         btScalar(-0.3),
                                          btScalar(0.0));
     
 
@@ -71,7 +71,7 @@ public:
     
     btVector3 U_LEG_ORIENTATION = btVector3(0, 0, 0);
     btVector3 U_LEG_POSITION = btVector3(btScalar(0.18 * BODY_SCALE),
-                                         btScalar(0.015 + L_LEG_RADIUS *2 + L_LEG_HEIGHT + U_LEG_RADIUS+ U_LEG_HEIGHT/2),
+                                         btScalar(0.015 + L_LEG_RADIUS *2 + L_LEG_HEIGHT/2),
                                          btScalar(0.0));
     
 
@@ -138,11 +138,11 @@ public:
     double b = (U_LEG_HEIGHT / 2) * cos(SIMD_PI / 6);
     
     btVector3 RIGHT_L_LEG_POSITION = btVector3(btScalar(0.18 * BODY_SCALE),
-                                               btScalar(0.015 + L_LEG_RADIUS + L_LEG_HEIGHT/2),
+                                               btScalar(-0.3),
                                                btScalar(0.0));
     
     btVector3 RIGHT_U_LEG_POSITION = btVector3(btScalar(0.18 * BODY_SCALE),
-                                               btScalar(0.015 + L_LEG_RADIUS *2 + L_LEG_HEIGHT + U_LEG_RADIUS+ U_LEG_HEIGHT/2),
+                                               btScalar(0.015 + L_LEG_RADIUS *2 + L_LEG_HEIGHT/2 ),
                                                btScalar(0.0));
     
     btVector3 RIGHT_FOOT_POSITION = btVector3(btScalar(0.075 + 0.1 * BODY_SCALE),

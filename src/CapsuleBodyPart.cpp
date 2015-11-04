@@ -1,8 +1,11 @@
 #include "CapsuleBodyPart.h"
 #include <BulletDynamics/btBulletDynamicsCommon.h>
 
-btCompoundShape* shiftTransformCenterOfmass(btCompoundShape* boxCompound,btScalar mass,btTransform& shift)
-;
+#define SHIFT_TRANSFORM 1
+#define CHANGE_COMPOUND_INPLACE 1
+#define USE_RECURSIVE_COMPOUND 0
+
+btCompoundShape* shiftTransform2(btCompoundShape* boxCompound,btScalar mass,btTransform& shift);
 
 CapsuleBodyPart::CapsuleBodyPart(btScalar radius,
                                  btScalar height,
@@ -19,44 +22,33 @@ CapsuleBodyPart::CapsuleBodyPart(btScalar r,
                                  Actuator* actuator, btVector3 centerofMass) {
     this->actuator = actuator;
     
-    btVector3 inertia(0, 0, 0);
-//    btQuaternion rotation(0, 0, 0, 1);
     
     btCollisionShape* capsule = new btCapsuleShape(r, h);
+    btCompoundShape* compound = new btCompoundShape();
     
-     btCompoundShape* compound = new btCompoundShape();
-        btTransform localTrans;
-        localTrans.setIdentity();
-        //localTrans effectively shifts the center of mass with respect to the chassis
-        localTrans.setOrigin(centerofMass);
-        compound->addChildShape(localTrans,capsule);
+    btTransform localTrans;
+    btVector3 inertia(0, 0, 0);
     
-    
+    localTrans.setIdentity();
+    localTrans.setOrigin(centerofMass);
+    compound->addChildShape(localTrans,capsule);
     
     btTransform shift;
     shift.setIdentity();
-    btCompoundShape* newBoxCompound = shiftTransformCenterOfmass(compound,m,shift);
+    btCompoundShape* newBoxCompound = shiftTransform2(compound, m, shift);
+    
     newBoxCompound->calculateLocalInertia(m,inertia);
-    //btDefaultMotionState* motionState = new btDefaultMotionState(trans*shift);
-    //btRigidBody::btRigidBodyConstructionInfo rbInfo(m,motionState,newBoxCompound,inertia);
-    
-    btDefaultMotionState* motionState = new btDefaultMotionState(trans);
-    
-    //capsule->calculateLocalInertia(m, inertia);
+    btDefaultMotionState* motionState = new btDefaultMotionState(trans*shift);
     btRigidBody::btRigidBodyConstructionInfo capsuleCI(m, motionState, newBoxCompound, inertia);
     
     capsuleCI.m_additionalDamping = true;
     
     body = new btRigidBody(capsuleCI);
-    
-    body->setDamping(LINEAR_DAMPING, ANGULAR_DAMPING);
-    body->setDeactivationTime(DEACTIVATION_TIME);
-    body->setSleepingThresholds(LINEAR_SLEEPING_THRESHOLD, ANGULAR_SLEEPING_THRESHOLD);
-    
 }
 
-btCompoundShape* shiftTransformCenterOfmass(btCompoundShape* boxCompound,btScalar mass,btTransform& shift)
+btCompoundShape* shiftTransform2(btCompoundShape* boxCompound,btScalar mass,btTransform& shift)
 {
+    btCompoundShape* newBoxCompound = 0;
     btTransform principal;
     btVector3 principalInertia;
     btScalar* masses = new btScalar[boxCompound->getNumChildShapes()];
@@ -66,10 +58,41 @@ btCompoundShape* shiftTransformCenterOfmass(btCompoundShape* boxCompound,btScala
         masses[j]=mass/boxCompound->getNumChildShapes();
     }
     
+    
     boxCompound->calculatePrincipalAxisTransform(masses,principal,principalInertia);
     
+    
+    ///create a new compound with world transform/center of mass properly aligned with the principal axis
+    
+    ///non-recursive compound shapes perform better
+    
+#ifdef USE_RECURSIVE_COMPOUND
+    
+    btCompoundShape* newCompound = new btCompoundShape();
+    newCompound->addChildShape(principal.inverse(),boxCompound);
+    newBoxCompound = newCompound;
+    //m_collisionShapes.push_back(newCompound);
+    
+    //btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
+    //btRigidBody::btRigidBodyConstructionInfo rbInfo(mass,myMotionState,newCompound,principalInertia);
+    
+#else
+#ifdef CHANGE_COMPOUND_INPLACE
+    newBoxCompound = boxCompound;
+    for (int i=0;i<boxCompound->getNumChildShapes();i++)
+    {
+        btTransform newChildTransform = principal.inverse()*boxCompound->getChildTransform(i);
+        ///updateChildTransform is really slow, because it re-calculates the AABB each time. todo: add option to disable this update
+        boxCompound->updateChildTransform(i,newChildTransform);
+    }
+    bool isDynamic = (mass != 0.f);
+    btVector3 localInertia(0,0,0);
+    if (isDynamic)
+        boxCompound->calculateLocalInertia(mass,localInertia);
+    
+#else
     ///creation is faster using a new compound to store the shifted children
-    btCompoundShape* newBoxCompound = new btCompoundShape();
+    newBoxCompound = new btCompoundShape();
     for (int i=0;i<boxCompound->getNumChildShapes();i++)
     {
         btTransform newChildTransform = principal.inverse()*boxCompound->getChildTransform(i);
@@ -78,8 +101,14 @@ btCompoundShape* shiftTransformCenterOfmass(btCompoundShape* boxCompound,btScala
     }
     
     
+    
+#endif
+    
+#endif//USE_RECURSIVE_COMPOUND
+    
     shift = principal;
     return newBoxCompound;
+    
 }
 
 

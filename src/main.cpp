@@ -36,7 +36,7 @@
 #define VALUES_SIZE         12
 #define POPULATION_SIZE     55
 #define GENERATIONS         300
-#define VISUAL              true
+#define VISUAL              false
 
 
 
@@ -133,7 +133,7 @@ int mainLoop(char* executablePath) {
     
     GaInitialize();
     
-    GaValueIntervalBounds<double> amplitude(-300, 300);
+    GaValueIntervalBounds<double> amplitude(-500, 500);
     GaValueIntervalBounds<double> frequency(0.1, 5);
     GaValueIntervalBounds<double> phase(0, SIMD_PI);
     GaValueIntervalBounds<double> independentTerm(-5, 5);
@@ -279,8 +279,8 @@ double getTimeElapsed(){
 
 int main(int argc,char* argv[]) {
     if(VISUAL) {
-        BasicDemo* bd = new BasicDemo();
-        bd->initPhysics();
+//        BasicDemo* bd = new BasicDemo();
+//        bd->initPhysics();
         PassiveWalkerExperiment* experiment = PassiveWalkerExperiment::getInstance();
         experiment->initPhysics();
         experiment->setCameraDistance(btScalar(5.));
@@ -295,8 +295,8 @@ int main(int argc,char* argv[]) {
             std::cout << "Values: " << vals[i] << std::endl;
         }
         experiment->setBodyActuatorValues(vals);
-//        return glutmain(argc, argv, 800, 600, "Experiment",experiment);
-        return glutmain(argc, argv, 800, 600, "BasicDemo",bd);
+        return glutmain(argc, argv, 800, 600, "Experiment",experiment);
+//        return glutmain(argc, argv, 800, 600, "BasicDemo",bd);
     } else {
         clearFile("output.dat");
         return mainLoop(argv[0]);
