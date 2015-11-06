@@ -60,8 +60,8 @@ LegBodyGroup::LegBodyGroup(btDynamicsWorld* world,
                                         lowerLegAct);
     }
     
-    btVector3 upperLegCenterOfMass(-1,
-                                   0,
+    btVector3 upperLegCenterOfMass(0,
+                                   -params.U_LEG_HEIGHT/2,
                                    0);
     
     if (isLeft || USE_DEFAULT) {

@@ -22,45 +22,20 @@ CapsuleBodyPart::CapsuleBodyPart(btScalar r,
                                  Actuator* actuator, btVector3 centerofMass) {
     this->actuator = actuator;
     
-    if(centerofMass.x() == -1) {
-        btCollisionShape* capsule = new btCapsuleShape(r, h);
-        btCompoundShape* compound = new btCompoundShape();
-        
-        btTransform localTrans;
-        
-        btVector3 auxCenterOfMass(0,0,0);
-        btVector3 aux(0,1,0);
-        
-        localTrans.setIdentity();
-        localTrans.setOrigin(auxCenterOfMass);
-        compound->addChildShape(localTrans, capsule);
-        
-        btTransform shift;
-        shift.setIdentity();
-//        shift.setOrigin(btVector3(0,3,0));
-        compound->calculateLocalInertia(m, aux);
-        btDefaultMotionState* motionState = new btDefaultMotionState(trans*shift);
-        btRigidBody::btRigidBodyConstructionInfo capsuleCI(m, motionState, compound, auxCenterOfMass);
-        
-        body = new btRigidBody(capsuleCI);
-    } else {
-        btCollisionShape* capsule = new btCapsuleShape(r, h);
-        btCompoundShape* compound = new btCompoundShape();
+    btCollisionShape* capsule = new btCapsuleShape(r, h);
+    btCompoundShape* compound = new btCompoundShape();
     
-        btTransform localTrans;
+    btTransform localTrans;
     
-        localTrans.setIdentity();
-        localTrans.setOrigin(centerofMass);
-        compound->addChildShape(localTrans, capsule);
+    localTrans.setIdentity();
+    localTrans.setOrigin(centerofMass);
+    compound->addChildShape(localTrans, capsule);
     
-        btTransform shift;
-        shift.setIdentity();
-        compound->calculateLocalInertia(m, centerofMass);
-        btDefaultMotionState* motionState = new btDefaultMotionState(trans);
-        btRigidBody::btRigidBodyConstructionInfo capsuleCI(m, motionState, compound, centerofMass);
+    compound->calculateLocalInertia(m, centerofMass);
+    btDefaultMotionState* motionState = new btDefaultMotionState(trans);
+    btRigidBody::btRigidBodyConstructionInfo capsuleCI(m, motionState, compound, centerofMass);
     
-        body = new btRigidBody(capsuleCI);
-    }
+    body = new btRigidBody(capsuleCI);
 }
 
 btCompoundShape* shiftTransform2(btCompoundShape* boxCompound,btScalar mass,btTransform& shift)
