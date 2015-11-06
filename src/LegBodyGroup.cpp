@@ -29,7 +29,7 @@ LegBodyGroup::LegBodyGroup(btDynamicsWorld* world,
     }
     
     btVector3 lowerLegCenterOfMass(0,
-                                   params.L_LEG_HEIGHT/2,
+                                   -params.L_LEG_HEIGHT/2,
                                    0);
    // btVector3 lowerLegCenterOfMass(0,0,0);
 

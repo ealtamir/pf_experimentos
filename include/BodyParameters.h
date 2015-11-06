@@ -78,7 +78,7 @@ public:
     
     //foots
     //double FOOT_MASS = 0.0143 * BODY_MASS * BODY_SCALE;
-    double FOOT_MASS = 0.001 * 0.0137 * BODY_MASS * BODY_SCALE;
+    double FOOT_MASS = 0.0137 * BODY_MASS * BODY_SCALE;
     
     btVector3 FOOT_ORIENTATION = btVector3(0, 0, 0);
     btVector3 FOOT_POSITION = btVector3(btScalar(0.075 + 0.1 * BODY_SCALE),

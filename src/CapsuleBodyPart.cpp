@@ -27,23 +27,30 @@ CapsuleBodyPart::CapsuleBodyPart(btScalar r,
     btCompoundShape* compound = new btCompoundShape();
     
     btTransform localTrans;
-    btVector3 inertia(0, 0, 0);
+//    btVector3 inertia(0, 0, 0);
     
     localTrans.setIdentity();
     localTrans.setOrigin(centerofMass);
-    compound->addChildShape(localTrans,capsule);
+    compound->addChildShape(localTrans, capsule);
     
     btTransform shift;
     shift.setIdentity();
-    btCompoundShape* newBoxCompound = shiftTransform2(compound, m, shift);
-    
-    newBoxCompound->calculateLocalInertia(m,inertia);
+    compound->calculateLocalInertia(m, centerofMass);
     btDefaultMotionState* motionState = new btDefaultMotionState(trans*shift);
-    btRigidBody::btRigidBodyConstructionInfo capsuleCI(m, motionState, newBoxCompound, inertia);
-    
-    capsuleCI.m_additionalDamping = true;
+    btRigidBody::btRigidBodyConstructionInfo capsuleCI(m, motionState, compound, centerofMass);
     
     body = new btRigidBody(capsuleCI);
+//    btTransform shift;
+//    shift.setIdentity();
+//    btCompoundShape* newBoxCompound = shiftTransform2(compound, m, shift);
+    
+//    newBoxCompound->calculateLocalInertia(m,inertia);
+//    btDefaultMotionState* motionState = new btDefaultMotionState(trans*shift);
+//    btRigidBody::btRigidBodyConstructionInfo capsuleCI(m, motionState, newBoxCompound, inertia);
+    
+//    capsuleCI.m_additionalDamping = true;
+    
+//    body = new btRigidBody(capsuleCI);
 }
 
 btCompoundShape* shiftTransform2(btCompoundShape* boxCompound,btScalar mass,btTransform& shift)
