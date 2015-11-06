@@ -29,7 +29,7 @@ LegBodyGroup::LegBodyGroup(btDynamicsWorld* world,
     }
     
     btVector3 lowerLegCenterOfMass(0,
-                                   params.L_LEG_HEIGHT,
+                                   params.L_LEG_HEIGHT/2,
                                    0);
    // btVector3 lowerLegCenterOfMass(0,0,0);
 
@@ -64,7 +64,7 @@ LegBodyGroup::LegBodyGroup(btDynamicsWorld* world,
     
     //cambio el centro de masa, que supongo esta en el (0,0,0) a la parte de arriba
     btVector3 upperLegCenterOfMass(0,
-                                   params.U_LEG_HEIGHT,
+                                   0,
                                    0);
     
     //btVector3 upperLegCenterOfMass(0,0,0);
@@ -128,13 +128,13 @@ LegBodyGroup::LegBodyGroup(btDynamicsWorld* world,
 
     
     bodyParts.push_back(lowerLeg);
-    bodyParts.push_back(upperLeg);
+//    bodyParts.push_back(upperLeg);
     bodyParts.push_back(foot);
     
-    btTypedConstraint* knee = joinLegParts(upperLeg, lowerLeg, params);
+//    btTypedConstraint* knee = joinLegParts(upperLeg, lowerLeg, params);
     btTypedConstraint* ankle = createAnkle(lowerLeg, foot, params);
     
-    constraints.push_back(knee);
+//    constraints.push_back(knee);
     constraints.push_back(ankle);
 }
 

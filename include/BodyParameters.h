@@ -59,7 +59,7 @@ public:
     
     btVector3 L_LEG_ORIENTATION = btVector3(0, 0, 0);
     btVector3 L_LEG_POSITION = btVector3(btScalar(0.18 * BODY_SCALE),
-                                         btScalar(-0.3),
+                                         btScalar(0.1+0.3-L_LEG_HEIGHT/2),
                                          btScalar(0.0));
     
 
@@ -78,11 +78,11 @@ public:
     
     //foots
     //double FOOT_MASS = 0.0143 * BODY_MASS * BODY_SCALE;
-    double FOOT_MASS = 0.0137 * BODY_MASS * BODY_SCALE;
+    double FOOT_MASS = 0.001 * 0.0137 * BODY_MASS * BODY_SCALE;
     
     btVector3 FOOT_ORIENTATION = btVector3(0, 0, 0);
     btVector3 FOOT_POSITION = btVector3(btScalar(0.075 + 0.1 * BODY_SCALE),
-                                        btScalar(0.0),
+                                        btScalar(0.1),
                                         btScalar(0.075 - 0.1 * BODY_SCALE));
     
     // Arm body group
