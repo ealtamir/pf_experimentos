@@ -68,6 +68,7 @@ LegBodyGroup::LegBodyGroup(btDynamicsWorld* world,
         btVector3 upperLegPos(params.U_LEG_POSITION.x() * positionAdjust.x(),
                               params.U_LEG_POSITION.y() * positionAdjust.y(),
                               params.U_LEG_POSITION.z() * positionAdjust.z());
+        
         upperLeg = generateStandardPart(params.U_LEG_RADIUS,
                                         params.U_LEG_HEIGHT,
                                         params.U_LEG_MASS,

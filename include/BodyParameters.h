@@ -54,9 +54,9 @@ public:
     //double U_LEG_MASS = 0.105 * BODY_SCALE;
     double U_LEG_MASS = 0.1416 * BODY_SCALE;
     
-    btVector3 U_LEG_ORIENTATION = btVector3(0, 0, 0);
+    btVector3 U_LEG_ORIENTATION = btVector3(180, 0, 0);
     btVector3 U_LEG_POSITION = btVector3(btScalar(0.18 * BODY_SCALE),
-                                         btScalar(0.015 + L_LEG_RADIUS *2 + L_LEG_HEIGHT + U_LEG_RADIUS + U_LEG_HEIGHT),
+                                         btScalar(0.0075 + 2 * L_LEG_RADIUS + L_LEG_HEIGHT + 2 * U_LEG_RADIUS + 2 * U_LEG_HEIGHT + 0.075),
                                          btScalar(0.0));
     
     // Leg body group
@@ -167,13 +167,13 @@ public:
     
     
     // KNEE
-    btVector3 kneeUpperLegOffset = btVector3(btScalar(0),
-                                             btScalar(-U_LEG_HEIGHT / 2 - U_LEG_RADIUS),
-                                             btScalar(0));
     btVector3 kneeLowerLegOffset = btVector3(btScalar(0),
-                                             btScalar(L_LEG_HEIGHT / 2 + L_LEG_RADIUS ),
+                                             btScalar(0),
                                              btScalar(0));
-    btVector3 kneeAngularLowerLimit = btVector3(-SIMD_EPSILON, -SIMD_EPSILON, -SIMD_EPSILON);
+    btVector3 kneeUpperLegOffset = btVector3(btScalar(0),
+                                             btScalar(-L_LEG_RADIUS -U_LEG_RADIUS - U_LEG_HEIGHT),
+                                             btScalar(0));
+        btVector3 kneeAngularLowerLimit = btVector3(-SIMD_EPSILON, -SIMD_EPSILON, -SIMD_EPSILON);
     btVector3 kneeAngularUpperLimit = btVector3(SIMD_PI * 0.3, SIMD_EPSILON, SIMD_EPSILON);
     
     
