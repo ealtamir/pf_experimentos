@@ -32,8 +32,8 @@ void Experiment::setBodyActuatorValues(std::vector<double> vals) {
         bodyPart->setActuatorValues(vals[0], vals[1], vals[2], vals[3], vals[4], vals[5]);
     
         // left upper leg
-        bodyPart = body->getBodyGroups()[LEFT_LEG]->getBodyParts()[UPPER_LEG];
-        bodyPart->setActuatorValues(vals[6], vals[7], vals[8], vals[9], vals[10], vals[11]);
+//        bodyPart = body->getBodyGroups()[LEFT_LEG]->getBodyParts()[UPPER_LEG];
+//        bodyPart->setActuatorValues(vals[6], vals[7], vals[8], vals[9], vals[10], vals[11]);
     
         // right lower leg
 //        bodyPart = body->getBodyGroups()[RIGHT_LEG]->getBodyParts()[LOWER_LEG];

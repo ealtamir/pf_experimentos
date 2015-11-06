@@ -48,7 +48,16 @@ public:
     
     /******************** PARTS ********************/
     
-
+    //upper leg
+    double U_LEG_RADIUS = 0.07 * BODY_SCALE;
+    double U_LEG_HEIGHT = 0.232 * BODY_HEIGHT * BODY_SCALE;
+    //double U_LEG_MASS = 0.105 * BODY_SCALE;
+    double U_LEG_MASS = 0.1416 * BODY_SCALE;
+    
+    btVector3 U_LEG_ORIENTATION = btVector3(0, 0, 0);
+    btVector3 U_LEG_POSITION = btVector3(btScalar(0.18 * BODY_SCALE),
+                                         btScalar(0.015 + L_LEG_RADIUS *2 + L_LEG_HEIGHT + U_LEG_RADIUS + U_LEG_HEIGHT),
+                                         btScalar(0.0));
     
     // Leg body group
     // lower leg
@@ -58,31 +67,17 @@ public:
     double L_LEG_MASS = 0.0433 * BODY_MASS * BODY_SCALE;
     
     btVector3 L_LEG_ORIENTATION = btVector3(0, 0, 0);
-    btVector3 L_LEG_POSITION = btVector3(btScalar(0.18 * BODY_SCALE),
-                                         btScalar(0.3 + L_LEG_HEIGHT/2),
+    btVector3 L_LEG_POSITION = btVector3(btScalar((0.15 + 0.025) * BODY_SCALE),
+                                         btScalar(0.0075 + L_LEG_RADIUS + L_LEG_HEIGHT),
                                          btScalar(0.0));
-    
-
-    //upper leg
-    double U_LEG_RADIUS = 0.07 * BODY_SCALE;
-    double U_LEG_HEIGHT = 0.232 * BODY_HEIGHT * BODY_SCALE;
-    //double U_LEG_MASS = 0.105 * BODY_SCALE;
-    double U_LEG_MASS = 0.1416 * BODY_SCALE;
-    
-    btVector3 U_LEG_ORIENTATION = btVector3(0, 0, 0);
-    btVector3 U_LEG_POSITION = btVector3(btScalar(0.18 * BODY_SCALE),
-                                         btScalar(0.015 + L_LEG_RADIUS *2 + L_LEG_HEIGHT/2),
-                                         btScalar(0.0));
-    
-
     
     //foots
     //double FOOT_MASS = 0.0143 * BODY_MASS * BODY_SCALE;
     double FOOT_MASS = 0.0137 * BODY_MASS * BODY_SCALE;
     
     btVector3 FOOT_ORIENTATION = btVector3(0, 0, 0);
-    btVector3 FOOT_POSITION = btVector3(btScalar(0.075 + 0.1 * BODY_SCALE),
-                                        btScalar(0.0),
+    btVector3 FOOT_POSITION = btVector3(btScalar((0.15+0.025) * BODY_SCALE),
+                                        btScalar(-0.06),
                                         btScalar(0.075 - 0.1 * BODY_SCALE));
     
     // Arm body group
@@ -165,7 +160,7 @@ public:
                                           btScalar(0.0),
                                           btScalar(0.0));
     btVector3 ankleLowerLegOffset = btVector3(btScalar(0),
-                                              btScalar(-2*L_LEG_RADIUS - 2*L_LEG_HEIGHT / 2),
+                                              btScalar(-2*L_LEG_RADIUS - L_LEG_HEIGHT),
                                               btScalar(0));
     btVector3 ankleAngularLowerLimit = btVector3(-SIMD_EPSILON,-SIMD_EPSILON,-SIMD_EPSILON);
     btVector3 ankleAngularUpperLimit = btVector3(SIMD_EPSILON,SIMD_EPSILON,SIMD_EPSILON);

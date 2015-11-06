@@ -31,7 +31,6 @@ LegBodyGroup::LegBodyGroup(btDynamicsWorld* world,
     btVector3 lowerLegCenterOfMass(0,
                                    -params.L_LEG_HEIGHT/2,
                                    0);
-   // btVector3 lowerLegCenterOfMass(0,0,0);
 
     if (isLeft || USE_DEFAULT) {
         btVector3 lowerLegPos(params.L_LEG_POSITION.x() * positionAdjust.x(),
@@ -52,7 +51,6 @@ LegBodyGroup::LegBodyGroup(btDynamicsWorld* world,
                               params.RIGHT_L_LEG_POSITION.z() * positionAdjust.z());
         trans.setIdentity();
         trans.setOrigin(lowerLegPos);
-//        trans.setRotation(params.RIGHT_LOWER_LEG_ROTATION);
         lowerLeg = generateStandardPart(params.L_LEG_RADIUS,
                                         params.L_LEG_HEIGHT,
                                         params.L_LEG_MASS,
@@ -62,12 +60,9 @@ LegBodyGroup::LegBodyGroup(btDynamicsWorld* world,
                                         lowerLegAct);
     }
     
-    //cambio el centro de masa, que supongo esta en el (0,0,0) a la parte de arriba
     btVector3 upperLegCenterOfMass(0,
-                                   0,
+                                   -params.U_LEG_HEIGHT/2,
                                    0);
-    
-    //btVector3 upperLegCenterOfMass(0,0,0);
     
     if (isLeft || USE_DEFAULT) {
         btVector3 upperLegPos(params.U_LEG_POSITION.x() * positionAdjust.x(),
@@ -88,7 +83,6 @@ LegBodyGroup::LegBodyGroup(btDynamicsWorld* world,
         
         trans.setIdentity();
         trans.setOrigin(upperLegPos);
-//        trans.setRotation(params.RIGHT_LEG_ROTATION);
         upperLeg = generateStandardPart(params.U_LEG_RADIUS,
                                         params.U_LEG_HEIGHT,
                                         params.U_LEG_MASS,
@@ -118,9 +112,6 @@ LegBodyGroup::LegBodyGroup(btDynamicsWorld* world,
                           params.RIGHT_FOOT_POSITION.z() * positionAdjust.z());
         footTrans.setIdentity();
         footTrans.setOrigin(footPos);
-//        footTrans.getBasis().setEulerZYX(params.FOOT_ORIENTATION.x(),
-//                                         params.FOOT_ORIENTATION.y(),
-//                                         params.FOOT_ORIENTATION.z());
         foot = generateFoot(params.FOOT_MASS,
                             footTrans,
                             params.bodyInitialPosition);
@@ -128,13 +119,13 @@ LegBodyGroup::LegBodyGroup(btDynamicsWorld* world,
 
     
     bodyParts.push_back(lowerLeg);
-//    bodyParts.push_back(upperLeg);
+    bodyParts.push_back(upperLeg);
     bodyParts.push_back(foot);
     
-//    btTypedConstraint* knee = joinLegParts(upperLeg, lowerLeg, params);
+    btTypedConstraint* knee = joinLegParts(upperLeg, lowerLeg, params);
     btTypedConstraint* ankle = createAnkle(lowerLeg, foot, params);
     
-//    constraints.push_back(knee);
+    constraints.push_back(knee);
     constraints.push_back(ankle);
 }
 
