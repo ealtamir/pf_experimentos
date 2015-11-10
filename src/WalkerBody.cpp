@@ -52,3 +52,20 @@ void WalkerBody::initializeIntervalBounds() {
     
     independentTermValueSet = new Chromosome::Representation::GaIntervalValueSet<double>(*independentTerm, *independentTerm, GaGlobalRandomDoubleGenerator, false);
 }
+
+BodyPart* WalkerBody::getLowerLeftLeg() {
+    return bodyGroups[0]->getBodyParts()[0];
+}
+
+BodyPart* WalkerBody::getUpperLeftLeg() {
+    return bodyGroups[0]->getBodyParts()[1];
+}
+
+BodyPart* WalkerBody::getLowerRightLeg() {
+    return bodyGroups[1]->getBodyParts()[0];
+}
+
+BodyPart* WalkerBody::getUpperRightLeg() {
+    return bodyGroups[1]->getBodyParts()[0];
+}
+

@@ -15,9 +15,9 @@ public:
 	virtual ~Body();
     
     void actuate(double t, int stage);
+
     std::vector<BodyGroup*> getBodyGroups();
 
-    std::vector<BodyGroup*> bodyGroups;
     
     double getHeight();
     double getLeftFootHeight();
@@ -36,6 +36,8 @@ protected:
     btVector3 previous = btVector3(0,0,1);
     
     std::vector<btTypedConstraint*> constraints;
+    
+    std::vector<BodyGroup*> bodyGroups;
     
 	btDynamicsWorld* world;
     

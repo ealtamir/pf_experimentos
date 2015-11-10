@@ -7,6 +7,7 @@
 //
 
 #include "GenericActuator.h"
+#include <vector>
 
 #define SIN_AMPLITUD 0
 #define COS_AMPLITUD 1
@@ -27,4 +28,13 @@ btVector3 GenericActuator::actuatorFunc(double t, int stage) {
         + parameters[COS_AMPLITUD] * cos(parameters[COS_FREC] * t
         + parameters[FASE]) + parameters[IND_TERM];
     return btVector3(f, 0, 0);
+}
+
+void GenericActuator::setActuatorValues(double vals[]) {
+    parameters[SIN_AMPLITUD] = vals[SIN_AMPLITUD];
+    parameters[COS_AMPLITUD] = vals[COS_AMPLITUD];
+    parameters[SIN_FREC] = vals[SIN_FREC];
+    parameters[COS_FREC] = vals[COS_FREC];
+    parameters[FASE] = vals[FASE];
+    parameters[IND_TERM] = vals[IND_TERM];
 }

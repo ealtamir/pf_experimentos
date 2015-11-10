@@ -265,6 +265,7 @@ int main(int argc,char* argv[]) {
 //        BasicDemo* bd = new BasicDemo();
 //        bd->initPhysics();
         PassiveWalkerExperiment* experiment = PassiveWalkerExperiment::getInstance();
+        WalkerBody* body = experiment->getWalkerBody();
         experiment->initPhysics();
         experiment->setCameraDistance(btScalar(5.));
         experiment->setCameraUp(btVector3(0, 15, 0));
@@ -277,7 +278,7 @@ int main(int argc,char* argv[]) {
         for (int i = 0; i < vals.size(); i++) {
             std::cout << "Values: " << vals[i] << std::endl;
         }
-        experiment->setBodyActuatorValues(vals);
+        body->setActuatorValues(vals);
         return glutmain(argc, argv, 800, 600, "Experiment",experiment);
 //        return glutmain(argc, argv, 800, 600, "BasicDemo",bd);
     } else {

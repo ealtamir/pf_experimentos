@@ -26,6 +26,8 @@ public:
     
     void setParameters(double *parameters);
     
+    virtual void setActuatorValues(double vals[]) = 0;
+    
 protected:
     
     virtual btVector3 actuatorFunc(double t, int stage) = 0;
