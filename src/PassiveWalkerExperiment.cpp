@@ -13,6 +13,7 @@
 #include "FourierBodyParameters.h"
 #include "IOTools.h"
 
+
 #define FIFO_PATHNAME   "/tmp/passive_walker_exp.fifo"
 
 #define DESIRED_ZSPEED  1
@@ -20,7 +21,7 @@
 #define FITNESS_EXPONENT_CONSTANT 5
 
 
-std::mutex lock;
+std::mutex fitnessLock;
 
 PassiveWalkerExperiment* PassiveWalkerExperiment::walkerInstance;
 
@@ -42,12 +43,12 @@ PassiveWalkerExperiment::~PassiveWalkerExperiment() {
 float PassiveWalkerExperiment::getFitness(const std::vector<double> vals) {
     
     double fitness = 0;
-    lock.lock();
+    fitnessLock.lock();
     PassiveWalkerExperiment* experiment = PassiveWalkerExperiment::getInstance();
     experiment->setBodyActuatorValues(vals);
     experiment->simulate();
     fitness = experiment->getHeight() * experiment->getDirection() * experiment->getVelocity();
-    lock.unlock();
+    fitnessLock.unlock();
 //    std::cout << "Height: " << experiment->getHeight() << std::endl;
 //    std::cout << "Direction: " << experiment->getDirection() << std::endl;
 //    std::cout << "Velocity: " << experiment->getVelocity() << std::endl;

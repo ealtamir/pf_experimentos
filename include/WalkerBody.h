@@ -13,6 +13,10 @@
 #include <math.h>
 #include "Body.h"
 #include "Experiment.h"
+#include "Chromosome.h"
+#include "ValueSets.h"
+
+
 
 const btScalar BODY_PART_QTY = 6;
 
@@ -22,6 +26,10 @@ const btScalar BODY_PART_QTY = 6;
 class WalkerBody : public Body {
 public:
     WalkerBody(btDynamicsWorld* world, BodyParameters &params);
+    
+private:
+    
+    Chromosome::Representation::GaIntervalValueSet<double>** multiValueSet;
 
 };
 
