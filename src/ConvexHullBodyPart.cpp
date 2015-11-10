@@ -35,7 +35,7 @@ ConvexHullBodyPart::ConvexHullBodyPart(btVector3 points[], btScalar mass, const 
     capsuleCI.m_additionalDamping = true;
     
     body = new btRigidBody(capsuleCI);
-    body->setFriction(1);
+    body->setFriction(0.7);
     
     body->setDamping(LINEAR_DAMPING, ANGULAR_DAMPING);
     body->setDeactivationTime(DEACTIVATION_TIME);

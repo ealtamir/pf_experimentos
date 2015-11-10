@@ -35,7 +35,7 @@
 
 #define VALUES_SIZE         14
 #define POPULATION_SIZE     55
-#define GENERATIONS         300
+#define GENERATIONS         50
 #define VISUAL              true
 
 int mainLoop();
@@ -158,7 +158,7 @@ int mainLoop(char* executablePath) {
     
     
     // CHROMOSOME PARAMETERS
-    double  mutationProbability = 0.3;
+    double  mutationProbability = 0.4;
     int     numOfMutatedValues = 2;
     bool    onlyAcceptImprovingMutations = false;
     double  crossoverProbability = 0.8;
@@ -203,13 +203,13 @@ int mainLoop(char* executablePath) {
                                             bestChromosomesToTrack,
                                             worstChromosomesToTrack);
     
-    int selectionSize = 25;
+    int selectionSize = 55;
     bool duplicates = false;
     
     Population::SelectionOperations::GaSelectDuplicatesParams selectParams(duplicates, selectionSize);
     
-    int replacementSize = 15;
-    int bestChromosomesThatRemain = 1;
+    int replacementSize = 45;
+    int bestChromosomesThatRemain = 3;
     Population::ReplacementOperations::GaReplaceElitismParams replaceParams(replacementSize,
                                                                             bestChromosomesThatRemain);
     
