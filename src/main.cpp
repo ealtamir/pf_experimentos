@@ -130,8 +130,8 @@ int mainLoop(char* executablePath) {
     
     GaInitialize();
     
-    GaValueIntervalBounds<double> amplitude(-150, 150);
-    GaValueIntervalBounds<double> frequency(0.1, 20);
+    GaValueIntervalBounds<double> amplitude(-200, 200);
+    GaValueIntervalBounds<double> frequency(0.01, 10);
     GaValueIntervalBounds<double> phase(0, SIMD_PI);
     GaValueIntervalBounds<double> independentTerm(-5, 5);
     

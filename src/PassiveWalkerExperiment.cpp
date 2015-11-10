@@ -74,9 +74,6 @@ void PassiveWalkerExperiment::worldStep() {
     btDynamicsWorld* w = getDynamicsWorld();
     w->stepSimulation(1 / 60.f);
     body->actuate(timeCount, 0);
-//    if(timeCount < 0.5)
-//        body->bodyGroups[0]->getBodyParts()[1]->actuate(timeCount, 0);
-//        body->bodyGroups[2]->getBodyParts()[1]->actuate(timeCount, 0);
 }
 
 bool PassiveWalkerExperiment::stopExperiment() {
