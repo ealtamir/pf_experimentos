@@ -11,7 +11,10 @@ class GenericBody : public WalkerBody {
 
 
 public:
+    const int numberOfParams = 14;
+    
 	GenericBody(btDynamicsWorld* world, BodyParameters &params);
 
+    void initializeMultiValueSet();
 };
 #endif

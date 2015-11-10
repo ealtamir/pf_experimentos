@@ -17,7 +17,7 @@
 
 #include <BulletDynamics/btBulletDynamicsCommon.h>
 #include "GlutDemoApplication.h"
-#include "Body.h"
+#include "WalkerBody.h"
 
 #include "ObjectStoppedCondition.h"
 
@@ -63,10 +63,9 @@ public:
         return "Experiment";
     }
     
-    Body* getWalkerBody() {return body;}
+    WalkerBody* getWalkerBody() {return body;}
     
-    Body* body;
-        
+    
     bool objectsInitialized = false;
     
     double timeCount = 0;
@@ -76,8 +75,9 @@ public:
 private:
     btRigidBody* createGround();
     
-
 protected:
+    WalkerBody* body;
+    
     bool simulated = false;
     
     double max_height = -1;

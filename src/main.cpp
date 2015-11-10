@@ -33,7 +33,7 @@
 
 #include "BasicDemo.h"
 
-#define VALUES_SIZE         14
+#define VALUES_SIZE         12
 #define POPULATION_SIZE     55
 #define GENERATIONS         300
 #define VISUAL              true
@@ -127,24 +127,10 @@ int mainLoop(char* executablePath) {
     int numberOfValueSets = VALUES_SIZE;
     
     cout << "Starting GA runloop..." << endl;
-    
+    WalkerBody* body = PassiveWalkerExperiment::getInstance()->getWalkerBody();
     GaInitialize();
-    
-    GaValueIntervalBounds<double> amplitude(-80, 80);
-    GaValueIntervalBounds<double> frequency(0.01, 5);
-    GaValueIntervalBounds<double> phase(0, SIMD_PI);
-    GaValueIntervalBounds<double> independentTerm(-5, 5);
-    
-    GaIntervalValueSet<double> amplitudeValueSet(amplitude, amplitude, GaGlobalRandomDoubleGenerator, false);
-    GaIntervalValueSet<double> frequencyValueSet(frequency, frequency, GaGlobalRandomDoubleGenerator, false);
-    GaIntervalValueSet<double> phaseValueSet(phase, phase, GaGlobalRandomDoubleGenerator, false);
-    GaIntervalValueSet<double> independentTermValueSet(independentTerm, independentTerm, GaGlobalRandomDoubleGenerator, false);
-    
-    // Generic actuator
-    GaIntervalValueSet<double> *multiValueSet[VALUES_SIZE] = {
-        &amplitudeValueSet, &amplitudeValueSet, &frequencyValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet,
-        &amplitudeValueSet, &amplitudeValueSet, &frequencyValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet
-    };
+
+    GaIntervalValueSet<double>** multiValueSet = body->getMultiValueSet();
 //    // Fourier actuator
 //    GaIntervalValueSet<double> *multiValueSet[VALUES_SIZE] = {
 //        &amplitudeValueSet, &amplitudeValueSet, &amplitudeValueSet, &amplitudeValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet,

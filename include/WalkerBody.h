@@ -12,25 +12,42 @@
 #include <stdio.h>
 #include <math.h>
 #include "Body.h"
-#include "Experiment.h"
 #include "Chromosome.h"
 #include "ValueSets.h"
-
+ 
 
 
 const btScalar BODY_PART_QTY = 6;
-
-
 
 
 class WalkerBody : public Body {
 public:
     WalkerBody(btDynamicsWorld* world, BodyParameters &params);
     
-private:
+    Chromosome::Representation::GaIntervalValueSet<double>** getMultiValueSet();
     
-    Chromosome::Representation::GaIntervalValueSet<double>** multiValueSet;
+protected:
+    
+    virtual void initializeMultiValueSet() = 0;
+    
+    
+    void initializeIntervalBounds();
+    
+    
+    Chromosome::Representation::GaIntervalValueSet<double>** multiValueSet = nullptr;
+    
+    Chromosome::Representation::GaValueIntervalBounds<double>* amplitude;
+    Chromosome::Representation::GaValueIntervalBounds<double>* frequency;
+    Chromosome::Representation::GaValueIntervalBounds<double>* phase;
+    Chromosome::Representation::GaValueIntervalBounds<double>* independentTerm;
+    
+    Chromosome::Representation::GaIntervalValueSet<double>* amplitudeValueSet;
+    Chromosome::Representation::GaIntervalValueSet<double>* frequencyValueSet;
+    Chromosome::Representation::GaIntervalValueSet<double>* phaseValueSet;
+    Chromosome::Representation::GaIntervalValueSet<double>* independentTermValueSet;
 
+    
+    
 };
 
 
