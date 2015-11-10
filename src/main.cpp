@@ -33,7 +33,7 @@
 
 #include "BasicDemo.h"
 
-#define VALUES_SIZE         12
+#define VALUES_SIZE         14
 #define POPULATION_SIZE     55
 #define GENERATIONS         100
 #define VISUAL              true
@@ -130,8 +130,8 @@ int mainLoop(char* executablePath) {
     
     GaInitialize();
     
-    GaValueIntervalBounds<double> amplitude(-100, 100);
-    GaValueIntervalBounds<double> frequency(0.01, 10);
+    GaValueIntervalBounds<double> amplitude(-130, 130);
+    GaValueIntervalBounds<double> frequency(0.01, 5);
     GaValueIntervalBounds<double> phase(0, SIMD_PI);
     GaValueIntervalBounds<double> independentTerm(-5, 5);
     
@@ -141,15 +141,15 @@ int mainLoop(char* executablePath) {
     GaIntervalValueSet<double> independentTermValueSet(independentTerm, independentTerm, GaGlobalRandomDoubleGenerator, false);
     
 //    // Generic actuator
-    GaIntervalValueSet<double> *multiValueSet[VALUES_SIZE] = {
-        &amplitudeValueSet, &amplitudeValueSet, &frequencyValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet,
-        &amplitudeValueSet, &amplitudeValueSet, &frequencyValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet
-    };
-//    // Fourier actuator
 //    GaIntervalValueSet<double> *multiValueSet[VALUES_SIZE] = {
-//        &amplitudeValueSet, &amplitudeValueSet, &amplitudeValueSet, &amplitudeValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet,
-//        &amplitudeValueSet, &amplitudeValueSet, &amplitudeValueSet, &amplitudeValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet,
+//        &amplitudeValueSet, &amplitudeValueSet, &frequencyValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet,
+//        &amplitudeValueSet, &amplitudeValueSet, &frequencyValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet
 //    };
+//    // Fourier actuator
+    GaIntervalValueSet<double> *multiValueSet[VALUES_SIZE] = {
+        &amplitudeValueSet, &amplitudeValueSet, &amplitudeValueSet, &amplitudeValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet,
+        &amplitudeValueSet, &amplitudeValueSet, &amplitudeValueSet, &amplitudeValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet,
+    };
     // Double frec cos actuator
 //    GaIntervalValueSet<double> *multiValueSet[VALUES_SIZE] = {
 //        &amplitudeValueSet, &frequencyValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet,

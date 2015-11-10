@@ -10,6 +10,7 @@
 
 #include "PassiveWalkerExperiment.h"
 #include "GenericBodyParameters.h"
+#include "FourierBodyParameters.h"
 #include "IOTools.h"
 
 #define FIFO_PATHNAME   "/tmp/passive_walker_exp.fifo"
@@ -61,7 +62,8 @@ float PassiveWalkerExperiment::getFitness(const std::vector<double> vals) {
 }
 
 void PassiveWalkerExperiment::initializeBodies() {
-    params = new GenericBodyParameters();
+//    params = new GenericBodyParameters();
+    params = new FourierBodyParameters();
     body = new WalkerBody(m_dynamicsWorld, *params);
 }
 

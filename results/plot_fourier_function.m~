@@ -18,8 +18,6 @@ lower_W = chromosome(13);
 lower_fase = chromosome(14);
 lower_ind_term = chromosome(15);
 
-x = [1:0.001:10];
-
 
 upper_sines = upper_A1 * sin(upper_W * x + upper_fase) + upper_A2 * sin(2 * upper_W * x + upper_fase);
 
@@ -27,25 +25,29 @@ upper_cosines = upper_A3 * cos(upper_W * x + upper_fase) + upper_A4 * cos(2 * up
 
 lower_sines = lower_A1 * sin(lower_W * x + lower_fase) + lower_A2 * sin(2 * lower_W * x + lower_fase);
 
-lower_cosines = lower_A3 * cos(lower_W * x + lower_fase) + lower_A4 * cos(2 * lower_W * x + lower_fase) + lower_ind_term;             
+lower_cosines = lower_A3 * cos(lower_W * x + lower_fase) + lower_A4 * cos(2 * lower_W * x + lower_fase) + lower_ind_term;
+
+
+x = [1:0.001:10];             
 
 upper_y = upper_sines + upper_cosines;
 
 lower_y = lower_sines + lower_cosines;
 
+upper_sines = upper_A1 * sin(upper_W * x + upper_fase) + upper_A2 * sin(2 * upper_W * x + upper_fase);
+
+upper_cosines = upper_A3 * cos(upper_W * x + upper_fase) + upper_A4 * cos(2 * upper_W * x + upper_fase) + upper_ind_term;
+
+lower_sines = lower_A1 * sin(lower_W * x + lower_fase) + lower_A2 * sin(2 * lower_W * x + lower_fase);
+
+lower_cosines = lower_A3 * cos(lower_W * x + lower_fase) + lower_A4 * cos(2 * lower_W * x + lower_fase) + lower_ind_term;
 
 
-upper_sines_r = upper_A1 * sin(upper_W * x + upper_fase + pi) + upper_A2 * sin(2 * upper_W * x + upper_fase + pi);
+x = [1:0.001:10];             
 
-upper_cosines_r = upper_A3 * cos(upper_W * x + upper_fase + pi) + upper_A4 * cos(2 * upper_W * x + upper_fase + pi) + upper_ind_term;
+upper_y = upper_sines + upper_cosines;
 
-lower_sines_r = lower_A1 * sin(lower_W * x + lower_fase + pi) + lower_A2 * sin(2 * lower_W * x + lower_fase + pi);
-
-lower_cosines_r = lower_A3 * cos(lower_W * x + lower_fase + pi) + lower_A4 * cos(2 * lower_W * x + lower_fase + pi) + lower_ind_term;           
-
-upper_y_r = upper_sines_r + upper_cosines_r;
-
-lower_y_r = lower_sines_r + lower_cosines_r;
+lower_y = lower_sines + lower_cosines;
 
 subplot(2,1,1)
 plot(x,upper_y,x,upper_y_r)

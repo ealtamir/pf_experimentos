@@ -26,39 +26,39 @@ void Experiment::setBodyActuatorValues(std::vector<double> vals) {
     
     int LOWER_LEG = 0;
     int UPPER_LEG = 1;
-        // Generic
-        // left lower leg
-        bodyPart = body->getBodyGroups()[LEFT_LEG]->getBodyParts()[LOWER_LEG];
-        bodyPart->setActuatorValues(vals[0], vals[1], vals[2], vals[3], vals[4], vals[5]);
-    
-        // left upper leg
-        bodyPart = body->getBodyGroups()[LEFT_LEG]->getBodyParts()[UPPER_LEG];
-        bodyPart->setActuatorValues(vals[6], vals[7], vals[8], vals[9], vals[10], vals[11]);
-    
-        // right lower leg
-        bodyPart = body->getBodyGroups()[RIGHT_LEG]->getBodyParts()[LOWER_LEG];
-        bodyPart->setActuatorValues(vals[0], vals[1], vals[2], vals[3], vals[4] + SIMD_PI, vals[5]);
-    
-        // right upper leg
-        bodyPart = body->getBodyGroups()[RIGHT_LEG]->getBodyParts()[UPPER_LEG];
-        bodyPart->setActuatorValues(vals[6], vals[7], vals[8], vals[9], vals[10] + SIMD_PI, vals[11]);
+//        // Generic
+//        // left lower leg
+//        bodyPart = body->getBodyGroups()[LEFT_LEG]->getBodyParts()[LOWER_LEG];
+//        bodyPart->setActuatorValues(vals[0], vals[1], vals[2], vals[3], vals[4], vals[5]);
+//    
+//        // left upper leg
+//        bodyPart = body->getBodyGroups()[LEFT_LEG]->getBodyParts()[UPPER_LEG];
+//        bodyPart->setActuatorValues(vals[6], vals[7], vals[8], vals[9], vals[10], vals[11]);
+//    
+//        // right lower leg
+//        bodyPart = body->getBodyGroups()[RIGHT_LEG]->getBodyParts()[LOWER_LEG];
+//        bodyPart->setActuatorValues(vals[0], vals[1], vals[2], vals[3], vals[4] + SIMD_PI, vals[5]);
+//    
+//        // right upper leg
+//        bodyPart = body->getBodyGroups()[RIGHT_LEG]->getBodyParts()[UPPER_LEG];
+//        bodyPart->setActuatorValues(vals[6], vals[7], vals[8], vals[9], vals[10] + SIMD_PI, vals[11]);
     
     //    // Fourier
     //    // left lower leg
-    //    bodyPart = experiment->body->getBodyGroups()[LEFT_LEG]->getBodyParts()[LOWER_LEG];
-    //    bodyPart->setActuatorValues(vals[0], vals[1], vals[2], vals[3], vals[4], vals[5], vals[6]);
-    //
-    //    // left upper leg
-    //    bodyPart = experiment->body->getBodyGroups()[LEFT_LEG]->getBodyParts()[UPPER_LEG];
-    //    bodyPart->setActuatorValues(vals[7], vals[8], vals[9], vals[10], vals[11], vals[12], vals[13]);
-    //
-    //    // right lower leg
-    //    bodyPart = experiment->body->getBodyGroups()[RIGHT_LEG]->getBodyParts()[LOWER_LEG];
-    //    bodyPart->setActuatorValues(vals[0], vals[1], vals[2], vals[3], vals[4], vals[5] + SIMD_PI, vals[6]);
-    //
-    //    // right upper leg
-    //    bodyPart = experiment->body->getBodyGroups()[RIGHT_LEG]->getBodyParts()[UPPER_LEG];
-    //    bodyPart->setActuatorValues(vals[7], vals[8], vals[9], vals[10], vals[11], vals[12] + SIMD_PI, vals[13]);
+        bodyPart = body->getBodyGroups()[LEFT_LEG]->getBodyParts()[LOWER_LEG];
+        bodyPart->setActuatorValues(vals[0], vals[1], vals[2], vals[3], vals[4], vals[5], vals[6]);
+    
+        // left upper leg
+        bodyPart = body->getBodyGroups()[LEFT_LEG]->getBodyParts()[UPPER_LEG];
+        bodyPart->setActuatorValues(vals[7], vals[8], vals[9], vals[10], vals[11], vals[12], vals[13]);
+    
+        // right lower leg
+        bodyPart = body->getBodyGroups()[RIGHT_LEG]->getBodyParts()[LOWER_LEG];
+        bodyPart->setActuatorValues(vals[0], vals[1], vals[2], vals[3], vals[4], vals[5] + SIMD_PI, vals[6]);
+    
+        // right upper leg
+        bodyPart = body->getBodyGroups()[RIGHT_LEG]->getBodyParts()[UPPER_LEG];
+        bodyPart->setActuatorValues(vals[7], vals[8], vals[9], vals[10], vals[11], vals[12] + SIMD_PI, vals[13]);
     
     
 //    // Double frec cos
