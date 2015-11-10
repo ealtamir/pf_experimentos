@@ -175,7 +175,7 @@ public:
                                              btScalar(-L_LEG_RADIUS -U_LEG_RADIUS - U_LEG_HEIGHT),
                                              btScalar(0));
         btVector3 kneeAngularLowerLimit = btVector3(-SIMD_EPSILON, -SIMD_EPSILON, -SIMD_EPSILON);
-    btVector3 kneeAngularUpperLimit = btVector3(SIMD_PI * 0.3, SIMD_EPSILON, SIMD_EPSILON);
+    btVector3 kneeAngularUpperLimit = btVector3(SIMD_PI * 0.02, SIMD_EPSILON, SIMD_EPSILON);
     
     
     // SPINE-PELVIS
@@ -251,8 +251,8 @@ public:
                                         btScalar(0.),
                                         btScalar(0.));
     
-    btVector3 leftHipAngularUpperLimit = btVector3(SIMD_HALF_PI * 0.7, 0., 0.);
-    btVector3 leftHipAngularLowerLimit = btVector3(-SIMD_HALF_PI * 0.7, 0., 0.);
+    btVector3 leftHipAngularUpperLimit = btVector3(SIMD_HALF_PI * 0.02, 0., 0.);
+    btVector3 leftHipAngularLowerLimit = btVector3(-SIMD_HALF_PI * 0.02, 0., 0.);
     
     
     // RIGHT HIP
@@ -264,8 +264,8 @@ public:
                                          btScalar(0.),
                                          btScalar(0.));
     
-    btVector3 rightHipAngularUpperLimit = btVector3(SIMD_HALF_PI * 0.7, 0., 0.);
-    btVector3 rightHipAngularLowerLimit = btVector3(-SIMD_HALF_PI * 0.7, 0., 0.);
+    btVector3 rightHipAngularUpperLimit = btVector3(SIMD_HALF_PI * 0.02, 0., 0.);
+    btVector3 rightHipAngularLowerLimit = btVector3(-SIMD_HALF_PI * 0.02, 0., 0.);
 };
 
 #endif /* defined(__test__BodyParameters__) */
