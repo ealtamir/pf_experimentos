@@ -36,12 +36,12 @@ void Experiment::setBodyActuatorValues(std::vector<double> vals) {
         bodyPart->setActuatorValues(vals[6], vals[7], vals[8], vals[9], vals[10], vals[11]);
     
         // right lower leg
-//        bodyPart = body->getBodyGroups()[RIGHT_LEG]->getBodyParts()[LOWER_LEG];
-//        bodyPart->setActuatorValues(vals[0], vals[1], vals[2], vals[3], vals[4] + SIMD_PI, vals[5]);
-//    
-//        // right upper leg
-//        bodyPart = body->getBodyGroups()[RIGHT_LEG]->getBodyParts()[UPPER_LEG];
-//        bodyPart->setActuatorValues(vals[6], vals[7], vals[8], vals[9], vals[10] + SIMD_PI, vals[11]);
+        bodyPart = body->getBodyGroups()[RIGHT_LEG]->getBodyParts()[LOWER_LEG];
+        bodyPart->setActuatorValues(vals[0], vals[1], vals[2], vals[3], vals[4] + SIMD_PI, vals[5]);
+    
+        // right upper leg
+        bodyPart = body->getBodyGroups()[RIGHT_LEG]->getBodyParts()[UPPER_LEG];
+        bodyPart->setActuatorValues(vals[6], vals[7], vals[8], vals[9], vals[10] + SIMD_PI, vals[11]);
     
     //    // Fourier
     //    // left lower leg
@@ -104,7 +104,7 @@ void Experiment::initPhysics()
     info.m_splitImpulse = 1;
 
 
-    m_dynamicsWorld->setGravity(btVector3(0, 0, 0));
+    m_dynamicsWorld->setGravity(btVector3(0, -10, 0));
 
     createGround();
     initializeBodies();

@@ -14,18 +14,17 @@ WalkerBody::WalkerBody(btDynamicsWorld* world, BodyParameters &params) : Generic
     
 
     BodyGroup* leftLeg = createLeftLeg(world, params);
-//    BodyGroup* rightLeg = createRightLeg(world, params);
+    BodyGroup* rightLeg = createRightLeg(world, params);
     BodyGroup* torso = createTorso(world, params);
     
     GenericTorsoBodyGroup* torsoGroup = dynamic_cast<GenericTorsoBodyGroup*>(torso);
-    
 
     createLeftHip(leftLeg->getJointPart(),
                   torsoGroup->getLeftHipPart(),
                   params);
-//    createRightHip(rightLeg->getJointPart(),
-//                   torsoGroup->getRightHipPart(),
-//                   params);
+    createRightHip(rightLeg->getJointPart(),
+                   torsoGroup->getRightHipPart(),
+                   params);
 
 }
 

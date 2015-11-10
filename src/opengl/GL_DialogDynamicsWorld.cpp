@@ -38,7 +38,7 @@ GL_DialogDynamicsWorld::GL_DialogDynamicsWorld()
 	m_dispatcher = new btCollisionDispatcher(m_collisionConfiguration);
 	m_dynamicsWorld = new btDiscreteDynamicsWorld(m_dispatcher,m_broadphase,m_constraintSolver,m_collisionConfiguration);
 	m_dynamicsWorld ->getSolverInfo().m_splitImpulse = true;
-	m_dynamicsWorld->setGravity(btVector3(0,0,0));
+	m_dynamicsWorld->setGravity(btVector3(0,-10,0));
 //	m_dynamicsWorld->setGravity(btVector3(0,0,0));
 
 	m_simplexSolver = new btVoronoiSimplexSolver();

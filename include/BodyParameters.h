@@ -48,16 +48,7 @@ public:
     
     /******************** PARTS ********************/
     
-    //upper leg
-    double U_LEG_RADIUS = 0.07 * BODY_SCALE;
-    double U_LEG_HEIGHT = 0.232 * BODY_HEIGHT * BODY_SCALE;
-    //double U_LEG_MASS = 0.105 * BODY_SCALE;
-    double U_LEG_MASS = 0.1416 * BODY_SCALE;
     
-    btVector3 U_LEG_ORIENTATION = btVector3(180, 0, 0);
-    btVector3 U_LEG_POSITION = btVector3(btScalar(0.18 * BODY_SCALE),
-                                         btScalar(0.0075 + 2 * L_LEG_RADIUS + L_LEG_HEIGHT + 2 * U_LEG_RADIUS + 2 * U_LEG_HEIGHT + 0.075),
-                                         btScalar(0.0));
     
     // Leg body group
     // lower leg
@@ -69,6 +60,17 @@ public:
     btVector3 L_LEG_ORIENTATION = btVector3(0, 0, 0);
     btVector3 L_LEG_POSITION = btVector3(btScalar((0.15 + 0.025) * BODY_SCALE),
                                          btScalar(0.0075 + L_LEG_RADIUS + L_LEG_HEIGHT),
+                                         btScalar(0.0));
+    
+    //upper leg
+    double U_LEG_RADIUS = 0.07 * BODY_SCALE;
+    double U_LEG_HEIGHT = 0.232 * BODY_HEIGHT * BODY_SCALE;
+    //double U_LEG_MASS = 0.105 * BODY_SCALE;
+    double U_LEG_MASS = 0.1416 * BODY_SCALE;
+    
+    btVector3 U_LEG_ORIENTATION = btVector3(180, 0, 0);
+    btVector3 U_LEG_POSITION = btVector3(btScalar(0.18 * BODY_SCALE),
+                                         btScalar(0.0075 + 2 * L_LEG_RADIUS + L_LEG_HEIGHT + U_LEG_RADIUS + U_LEG_HEIGHT),
                                          btScalar(0.0));
     
     //foots
@@ -132,18 +134,17 @@ public:
     double a = (U_LEG_HEIGHT / 2) * sin(SIMD_PI / 6);
     double b = (U_LEG_HEIGHT / 2) * cos(SIMD_PI / 6);
     
-    btVector3 RIGHT_L_LEG_POSITION = btVector3(btScalar(0.18 * BODY_SCALE),
-                                               btScalar(-0.3),
+    btVector3 RIGHT_L_LEG_POSITION = btVector3(btScalar((0.15 + 0.025) * BODY_SCALE),
+                                               btScalar(0.0075 + L_LEG_RADIUS + L_LEG_HEIGHT),
                                                btScalar(0.0));
     
     btVector3 RIGHT_U_LEG_POSITION = btVector3(btScalar(0.18 * BODY_SCALE),
-                                               btScalar(0.015 + L_LEG_RADIUS *2 + L_LEG_HEIGHT/2 ),
+                                               btScalar(0.0075 + 2 * L_LEG_RADIUS + L_LEG_HEIGHT + U_LEG_RADIUS + U_LEG_HEIGHT),
                                                btScalar(0.0));
     
-    btVector3 RIGHT_FOOT_POSITION = btVector3(btScalar(0.075 + 0.1 * BODY_SCALE),
-                                              btScalar(0.0),
+    btVector3 RIGHT_FOOT_POSITION = btVector3(btScalar((0.15+0.025) * BODY_SCALE),
+                                              btScalar(-0.06),
                                               btScalar(0.075 - 0.1 * BODY_SCALE));
-    
 
     
     
@@ -247,7 +248,7 @@ public:
                                              btScalar(0.));
     
     btVector3 leftHipOffset = btVector3(btScalar(0.),
-                                        btScalar(U_LEG_HEIGHT / 2),
+                                        btScalar(0.),
                                         btScalar(0.));
     
     btVector3 leftHipAngularUpperLimit = btVector3(SIMD_HALF_PI * 0.5, 0., 0.);
@@ -260,7 +261,7 @@ public:
                                               btScalar(0.));
     
     btVector3 rightHipOffset = btVector3(btScalar(0.),
-                                         btScalar(U_LEG_HEIGHT / 2),
+                                         btScalar(0.),
                                          btScalar(0.));
     
     btVector3 rightHipAngularUpperLimit = btVector3(SIMD_HALF_PI * 0.5, 0., 0.);

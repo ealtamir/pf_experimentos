@@ -49,12 +49,11 @@ LegBodyGroup::LegBodyGroup(btDynamicsWorld* world,
         btVector3 lowerLegPos(params.RIGHT_L_LEG_POSITION.x() * positionAdjust.x(),
                               params.RIGHT_L_LEG_POSITION.y() * positionAdjust.y(),
                               params.RIGHT_L_LEG_POSITION.z() * positionAdjust.z());
-        trans.setIdentity();
-        trans.setOrigin(lowerLegPos);
+
         lowerLeg = generateStandardPart(params.L_LEG_RADIUS,
                                         params.L_LEG_HEIGHT,
                                         params.L_LEG_MASS,
-                                        trans,
+                                        lowerLegPos,
                                         params.bodyInitialPosition,
                                         lowerLegCenterOfMass,
                                         lowerLegAct);
@@ -82,12 +81,10 @@ LegBodyGroup::LegBodyGroup(btDynamicsWorld* world,
                               params.RIGHT_U_LEG_POSITION.y() * positionAdjust.y(),
                               params.RIGHT_U_LEG_POSITION.z() * positionAdjust.z());
         
-        trans.setIdentity();
-        trans.setOrigin(upperLegPos);
         upperLeg = generateStandardPart(params.U_LEG_RADIUS,
                                         params.U_LEG_HEIGHT,
                                         params.U_LEG_MASS,
-                                        trans,
+                                        upperLegPos,
                                         params.bodyInitialPosition,
                                         upperLegCenterOfMass,
                                         upperLegAct);
