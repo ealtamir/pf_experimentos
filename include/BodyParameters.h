@@ -21,7 +21,7 @@ public:
 
     const double bodyScale = BODY_SCALE;
 //    const btVector3 bodyInitialPosition = btVector3(0, 2 * BODY_SCALE, 0);
-    const btVector3 bodyInitialPosition = btVector3(0, 0.7 * BODY_SCALE, 0);
+    const btVector3 bodyInitialPosition = btVector3(0, 0.5 * BODY_SCALE, 0);
     
     const double FEMALE_BODY_MASS = 61.99;
     const double MALE_BODY_MASS = 73;
@@ -68,7 +68,7 @@ public:
     //double U_LEG_MASS = 0.105 * BODY_SCALE;
     double U_LEG_MASS = 0.1416 * BODY_SCALE;
     
-    btVector3 U_LEG_ORIENTATION = btVector3(180, 0, 0);
+    btVector3 U_LEG_ORIENTATION = btVector3(0, 0, 0);
     btVector3 U_LEG_POSITION = btVector3(btScalar(0.18 * BODY_SCALE),
                                          btScalar(0.0075 + 2 * L_LEG_RADIUS + L_LEG_HEIGHT + U_LEG_RADIUS + U_LEG_HEIGHT),
                                          btScalar(0.0));
@@ -106,7 +106,7 @@ public:
     double PELVIS_RADIUS = 0.15 * BODY_SCALE;
     double PELVIS_HEIGHT = 0.05 * BODY_HEIGHT * BODY_SCALE;
     //double PELVIS_MASS = 0.1366 * BODY_MASS * BODY_SCALE;
-    double PELVIS_MASS = 0;//0.107742 * BODY_MASS * BODY_SCALE;
+    double PELVIS_MASS = 0.107742 * BODY_MASS * BODY_SCALE;
     btVector3 PELVIS_ORIENTATION = btVector3(0, 0, 0);
     btVector3 PELVIS_POSITION = btVector3(btScalar(0),
                                           btScalar(0.015 + L_LEG_RADIUS * 2 + L_LEG_HEIGHT + U_LEG_RADIUS + U_LEG_HEIGHT + PELVIS_HEIGHT/2),

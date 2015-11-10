@@ -47,7 +47,7 @@ void GenericBody::setActuatorValues(const std::vector<double>& vals) {
     actuator = dynamic_cast<GenericActuator*>(leftUpperLeg->getActuator());
     actuator->setActuatorValues(values);
     
-    BodyPart* rightLowerLeg = getUpperLeftLeg();
+    BodyPart* rightLowerLeg = getUpperRightLeg();
     actuator = dynamic_cast<GenericActuator*>(rightLowerLeg->getActuator());
     actuator->setActuatorValues(&values[6]);
     

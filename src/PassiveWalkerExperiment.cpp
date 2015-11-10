@@ -45,8 +45,9 @@ float PassiveWalkerExperiment::getFitness(const std::vector<double> vals) {
     double fitness = 0;
     fitnessLock.lock();
     PassiveWalkerExperiment* experiment = PassiveWalkerExperiment::getInstance();
-    WalkerBody* body = experiment->getWalkerBody();
-    body->setActuatorValues(vals);
+//    WalkerBody* body = experiment->getWalkerBody();
+    experiment->setBodyActuatorValues(vals);
+//    body->setActuatorValues(vals);
     experiment->simulate();
     fitness = experiment->getHeight() * experiment->getDirection() * experiment->getVelocity();
     fitnessLock.unlock();

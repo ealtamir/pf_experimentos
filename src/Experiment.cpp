@@ -142,7 +142,7 @@ void Experiment::clientMoveAndDisplay()
         worldStep();
         m_dynamicsWorld->stepSimulation(1 / 60.);
         //optional but useful: debug drawing
-        m_dynamicsWorld->debugDrawWorld();
+//        m_dynamicsWorld->debugDrawWorld();
     }
 
     renderme();

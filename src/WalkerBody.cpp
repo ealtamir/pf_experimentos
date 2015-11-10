@@ -26,7 +26,6 @@ WalkerBody::WalkerBody(btDynamicsWorld* world, BodyParameters &params) : Body(wo
     createRightHip(rightLeg->getJointPart(),
                    torsoGroup->getRightHipPart(),
                    params);
-
 }
 
 Chromosome::Representation::GaIntervalValueSet<double>**

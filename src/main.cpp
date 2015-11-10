@@ -131,6 +131,7 @@ int mainLoop(char* executablePath) {
     GaInitialize();
 
     GaIntervalValueSet<double>** multiValueSet = body->getMultiValueSet();
+    
 //    // Fourier actuator
 //    GaIntervalValueSet<double> *multiValueSet[VALUES_SIZE] = {
 //        &amplitudeValueSet, &amplitudeValueSet, &amplitudeValueSet, &amplitudeValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet,
@@ -278,7 +279,7 @@ int main(int argc,char* argv[]) {
         for (int i = 0; i < vals.size(); i++) {
             std::cout << "Values: " << vals[i] << std::endl;
         }
-        body->setActuatorValues(vals);
+        experiment->setBodyActuatorValues(vals);
         return glutmain(argc, argv, 800, 600, "Experiment",experiment);
 //        return glutmain(argc, argv, 800, 600, "BasicDemo",bd);
     } else {
