@@ -33,10 +33,10 @@
 
 #include "BasicDemo.h"
 
-#define VALUES_SIZE         14
+#define VALUES_SIZE         12
 #define POPULATION_SIZE     55
 #define GENERATIONS         50
-#define VISUAL              true
+#define VISUAL              true 
 
 int mainLoop();
 double getTimeElapsed();
@@ -141,15 +141,15 @@ int mainLoop(char* executablePath) {
     GaIntervalValueSet<double> independentTermValueSet(independentTerm, independentTerm, GaGlobalRandomDoubleGenerator, false);
     
 //    // Generic actuator
-//    GaIntervalValueSet<double> *multiValueSet[VALUES_SIZE] = {
-//        &amplitudeValueSet, &amplitudeValueSet, &frequencyValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet,
-//        &amplitudeValueSet, &amplitudeValueSet, &frequencyValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet
-//    };
-//    // Fourier actuator
     GaIntervalValueSet<double> *multiValueSet[VALUES_SIZE] = {
-        &amplitudeValueSet, &amplitudeValueSet, &amplitudeValueSet, &amplitudeValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet,
-        &amplitudeValueSet, &amplitudeValueSet, &amplitudeValueSet, &amplitudeValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet,
+        &amplitudeValueSet, &amplitudeValueSet, &frequencyValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet,
+        &amplitudeValueSet, &amplitudeValueSet, &frequencyValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet
     };
+//    // Fourier actuator
+//    GaIntervalValueSet<double> *multiValueSet[VALUES_SIZE] = {
+//        &amplitudeValueSet, &amplitudeValueSet, &amplitudeValueSet, &amplitudeValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet,
+//        &amplitudeValueSet, &amplitudeValueSet, &amplitudeValueSet, &amplitudeValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet,
+//    };
     // Double frec cos actuator
 //    GaIntervalValueSet<double> *multiValueSet[VALUES_SIZE] = {
 //        &amplitudeValueSet, &frequencyValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet,

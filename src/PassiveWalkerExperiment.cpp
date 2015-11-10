@@ -62,8 +62,8 @@ float PassiveWalkerExperiment::getFitness(const std::vector<double> vals) {
 }
 
 void PassiveWalkerExperiment::initializeBodies() {
-//    params = new GenericBodyParameters();
-    params = new FourierBodyParameters();
+    params = new GenericBodyParameters();
+//    params = new FourierBodyParameters();
     body = new WalkerBody(m_dynamicsWorld, *params);
 }
 
@@ -72,10 +72,10 @@ void PassiveWalkerExperiment::initObjects() {
 }
 
 void PassiveWalkerExperiment::worldStep() {
-    timeCount += 1. / 60.;
     btDynamicsWorld* w = getDynamicsWorld();
     w->stepSimulation(1 / 60.f);
-//    body->actuate(timeCo unt, 0);
+    body->actuate(timeCount, 0);
+    timeCount += 1. / 60.;
 }
 
 bool PassiveWalkerExperiment::stopExperiment() {
@@ -143,19 +143,11 @@ void PassiveWalkerExperiment::simulate() {
     double acum_height = 0;
     double current_height = 0;
     double min_height = 0.649991;
-    double acum_left_foot_height = 0;
-    double acum_right_foot_height = 0;
     double acum_velocity = 0;
-    
-    double current_left_foot_height = 0;
-    double current_right_foot_height = 0;
-
     
     double initial_angle = 0;
     double acum_direction = 0;
-    
-    double angle = 0;
-    
+        
     worldStep();
     initial_height = walker->getHeight();
     initial_angle = walker->getAngleInclination();
