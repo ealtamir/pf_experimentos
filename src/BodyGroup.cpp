@@ -32,19 +32,9 @@ void BodyGroup::addRigidBodiesToWorld() {
 
 void
 BodyGroup::actuate(double t, int stage) {
-    /*if(bodyParts.size()>1){
-        BodyPart* bp=bodyParts[0];
-        bp->actuate(t, stage);
-        
-        //bp=bodyParts[1];
-        //bp->actuate(t, stage);
-    }
-    */
     for (BodyPart* part : bodyParts) {
         part->actuate(t, stage);
     }
-//    bodyParts[0]->actuate(t, stage);
-    
 }
 
 BodyPart*
