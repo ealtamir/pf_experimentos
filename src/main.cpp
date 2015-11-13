@@ -35,7 +35,7 @@
 
 #define VALUES_SIZE         12
 #define POPULATION_SIZE     55
-#define GENERATIONS         1000
+#define GENERATIONS         3000
 #define VISUAL              true
 
 int mainLoop();
@@ -130,20 +130,22 @@ int mainLoop(char* executablePath) {
     
     GaInitialize();
     
-    GaValueIntervalBounds<double> amplitude(-30, 30);
+    GaValueIntervalBounds<double> amplitudeLower(0.01, 20);
+    GaValueIntervalBounds<double> amplitudeUpper(40, 80);
     GaValueIntervalBounds<double> frequency(0.01, 5);
     GaValueIntervalBounds<double> phase(-SIMD_PI, SIMD_PI);
     GaValueIntervalBounds<double> independentTerm(-5, 5);
     
-    GaIntervalValueSet<double> amplitudeValueSet(amplitude, amplitude, GaGlobalRandomDoubleGenerator, false);
+    GaIntervalValueSet<double> amplitudeLowerValueSet(amplitudeLower, amplitudeLower, GaGlobalRandomDoubleGenerator, false);
+    GaIntervalValueSet<double> amplitudeUpperValueSet(amplitudeUpper, amplitudeUpper, GaGlobalRandomDoubleGenerator, false);
     GaIntervalValueSet<double> frequencyValueSet(frequency, frequency, GaGlobalRandomDoubleGenerator, false);
     GaIntervalValueSet<double> phaseValueSet(phase, phase, GaGlobalRandomDoubleGenerator, false);
     GaIntervalValueSet<double> independentTermValueSet(independentTerm, independentTerm, GaGlobalRandomDoubleGenerator, false);
     
 //    // Generic actuator
     GaIntervalValueSet<double> *multiValueSet[VALUES_SIZE] = {
-        &amplitudeValueSet, &amplitudeValueSet, &frequencyValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet,
-        &amplitudeValueSet, &amplitudeValueSet, &frequencyValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet
+        &amplitudeLowerValueSet, &amplitudeLowerValueSet, &frequencyValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet,
+        &amplitudeUpperValueSet, &amplitudeUpperValueSet, &frequencyValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet
     };
 //    // Fourier actuator
 //    GaIntervalValueSet<double> *multiValueSet[VALUES_SIZE] = {
@@ -158,7 +160,7 @@ int mainLoop(char* executablePath) {
     
     
     // CHROMOSOME PARAMETERS
-    double  mutationProbability = 0.4;
+    double  mutationProbability = 0.3;
     int     numOfMutatedValues = 2;
     bool    onlyAcceptImprovingMutations = false;
     double  crossoverProbability = 0.8;

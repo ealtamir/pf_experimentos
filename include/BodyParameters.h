@@ -251,7 +251,7 @@ public:
                                         btScalar(0.),
                                         btScalar(0.));
     
-    btVector3 leftHipAngularUpperLimit = btVector3(SIMD_HALF_PI * 0.25, 0., 0.);
+    btVector3 leftHipAngularUpperLimit = btVector3(SIMD_HALF_PI * 0.5, 0., 0.);
     btVector3 leftHipAngularLowerLimit = btVector3(-SIMD_HALF_PI, 0., 0.);
     
     
@@ -264,7 +264,7 @@ public:
                                          btScalar(0.),
                                          btScalar(0.));
     
-    btVector3 rightHipAngularUpperLimit = btVector3(SIMD_HALF_PI * 0.25, 0., 0.);
+    btVector3 rightHipAngularUpperLimit = btVector3(SIMD_HALF_PI * 0.5, 0., 0.);
     btVector3 rightHipAngularLowerLimit = btVector3(-SIMD_HALF_PI, 0., 0.);
 };
 
