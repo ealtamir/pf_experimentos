@@ -21,7 +21,8 @@ public:
 
     const double bodyScale = BODY_SCALE;
 //    const btVector3 bodyInitialPosition = btVector3(0, 2 * BODY_SCALE, 0);
-    const btVector3 bodyInitialPosition = btVector3(0, 0.5 * BODY_SCALE, 0);
+//    const btVector3 bodyInitialPosition = btVector3(0, 0.5 * BODY_SCALE, 0);
+    const btVector3 bodyInitialPosition = btVector3(0, 0.601 * BODY_SCALE, 0);
     
     const double FEMALE_BODY_MASS = 61.99;
     const double MALE_BODY_MASS = 73;
@@ -172,10 +173,11 @@ public:
                                              btScalar(0),
                                              btScalar(0));
     btVector3 kneeUpperLegOffset = btVector3(btScalar(0),
-                                             btScalar(-L_LEG_RADIUS -U_LEG_RADIUS - U_LEG_HEIGHT),
+                                             btScalar(-U_LEG_RADIUS - U_LEG_HEIGHT),
+//                                             btScalar(0),
                                              btScalar(0));
-        btVector3 kneeAngularLowerLimit = btVector3(-SIMD_EPSILON, -SIMD_EPSILON, -SIMD_EPSILON);
-    btVector3 kneeAngularUpperLimit = btVector3(SIMD_PI * 0.6, SIMD_EPSILON, SIMD_EPSILON);
+        btVector3 kneeAngularLowerLimit = btVector3(-SIMD_EPSILON * 0.8, -SIMD_EPSILON * 0, -SIMD_EPSILON * 0);
+    btVector3 kneeAngularUpperLimit = btVector3(SIMD_PI * 0.6, SIMD_EPSILON * 0, SIMD_EPSILON * 0);
     
     
     // SPINE-PELVIS

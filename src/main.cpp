@@ -36,7 +36,7 @@
 #define VALUES_SIZE         12
 #define POPULATION_SIZE     55
 #define GENERATIONS         300
-#define VISUAL              true
+#define VISUAL              false
 
 int mainLoop();
 double getTimeElapsed();
@@ -124,13 +124,13 @@ int mainLoop(char* executablePath) {
     struct timeval before;
     gettimeofday(&before, NULL);
     time_begin = before.tv_sec * 1000 + before.tv_usec / 1000;
-    int numberOfValueSets = VALUES_SIZE;
     
     cout << "Starting GA runloop..." << endl;
     WalkerBody* body = PassiveWalkerExperiment::getInstance()->getWalkerBody();
     GaInitialize();
 
     GaIntervalValueSet<double>** multiValueSet = body->getMultiValueSet();
+    int numberOfValueSets = body->numberOfParams;
     
 //    // Fourier actuator
 //    GaIntervalValueSet<double> *multiValueSet[VALUES_SIZE] = {
@@ -162,7 +162,7 @@ int mainLoop(char* executablePath) {
     GaFitnessOperation*     fitnessCalculator = new MiExperimentoFitness();
     GaFitnessComparator* 	fitnessComparator = GaFitnessComparatorCatalogue::Instance().GetEntryData("GaMaxFitnessComparator");
     GaChromosomeDomainBlock<double>* _ccb = new GaChromosomeDomainBlock<double>(
-                        (GaValueSet<double>**)(&multiValueSet),
+                        (GaValueSet<double>**)(multiValueSet),
                         numberOfValueSets,
                         crossoverMethod,
                         mutationOperation,
@@ -266,8 +266,7 @@ int main(int argc,char* argv[]) {
 //        BasicDemo* bd = new BasicDemo();
 //        bd->initPhysics();
         PassiveWalkerExperiment* experiment = PassiveWalkerExperiment::getInstance();
-        WalkerBody* body = experiment->getWalkerBody();
-        experiment->initPhysics();
+        WalkerBody* body = experiment->selectedBody;
         experiment->setCameraDistance(btScalar(5.));
         experiment->setCameraUp(btVector3(0, 15, 0));
         std::string exePath(argv[0]);
@@ -279,7 +278,9 @@ int main(int argc,char* argv[]) {
         for (int i = 0; i < vals.size(); i++) {
             std::cout << "Values: " << vals[i] << std::endl;
         }
-        experiment->setBodyActuatorValues(vals);
+//        const std::vector<double> arr = {10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10};
+//        const std::vector<double> arr = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
+        body->setActuatorValues(vals);
         return glutmain(argc, argv, 800, 600, "Experiment",experiment);
 //        return glutmain(argc, argv, 800, 600, "BasicDemo",bd);
     } else {

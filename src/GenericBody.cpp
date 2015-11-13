@@ -8,30 +8,30 @@
 
 
 GenericBody::GenericBody(btDynamicsWorld* world, BodyParameters& params) : WalkerBody(world, params) {
-    
+    numberOfParams = 12;
 }
 
 
 void GenericBody::initializeMultiValueSet() {
     multiValueSet = new Chromosome::Representation::GaIntervalValueSet<double>*[numberOfParams];
     
-    multiValueSet[0] = amplitudeValueSet;
-    multiValueSet[1] = amplitudeValueSet;
-    multiValueSet[2] = frequencyValueSet;
-    multiValueSet[3] = frequencyValueSet;
-    multiValueSet[4] = phaseValueSet;
-    multiValueSet[5] = independentTermValueSet;
+    multiValueSet[0] = &*amplitudeValueSet;
+    multiValueSet[1] = &*amplitudeValueSet;
+    multiValueSet[2] = &*frequencyValueSet;
+    multiValueSet[3] = &*frequencyValueSet;
+    multiValueSet[4] = &*phaseValueSet;
+    multiValueSet[5] = &*independentTermValueSet;
     
-    multiValueSet[6] = amplitudeValueSet;
-    multiValueSet[7] = amplitudeValueSet;
-    multiValueSet[8] = frequencyValueSet;
-    multiValueSet[9] = frequencyValueSet;
-    multiValueSet[10] = phaseValueSet;
-    multiValueSet[11] = independentTermValueSet;
+    multiValueSet[6] = &*amplitudeValueSet;
+    multiValueSet[7] = &*amplitudeValueSet;
+    multiValueSet[8] = &*frequencyValueSet;
+    multiValueSet[9] = &*frequencyValueSet;
+    multiValueSet[10] = &*phaseValueSet;
+    multiValueSet[11] = &*independentTermValueSet;
     
 }
 
-void GenericBody::setActuatorValues(const std::vector<double>& vals) {
+void GenericBody::setActuatorValues(std::vector<double> vals) {
     
     GenericActuator* actuator;
     double values[30] = {
@@ -45,11 +45,14 @@ void GenericBody::setActuatorValues(const std::vector<double>& vals) {
     
     BodyPart* leftUpperLeg = getUpperLeftLeg();
     actuator = dynamic_cast<GenericActuator*>(leftUpperLeg->getActuator());
-    actuator->setActuatorValues(values);
-    
-    BodyPart* rightLowerLeg = getUpperRightLeg();
-    actuator = dynamic_cast<GenericActuator*>(rightLowerLeg->getActuator());
     actuator->setActuatorValues(&values[6]);
+
+    values[4] += SIMD_PI;
+    values[10] += SIMD_PI;
+    
+    BodyPart* rightLowerLeg = getLowerRightLeg();
+    actuator = dynamic_cast<GenericActuator*>(rightLowerLeg->getActuator());
+    actuator->setActuatorValues(values);
     
     BodyPart* rightUpperLeg = getUpperRightLeg();
     actuator = dynamic_cast<GenericActuator*>(rightUpperLeg->getActuator());

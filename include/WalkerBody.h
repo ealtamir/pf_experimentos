@@ -26,14 +26,16 @@ public:
     
     Chromosome::Representation::GaIntervalValueSet<double>** getMultiValueSet();
     
-    virtual void setActuatorValues(const std::vector<double>& vals) = 0;
-    
-protected:
+    virtual void setActuatorValues(std::vector<double> vals) = 0;
     
     BodyPart* getLowerLeftLeg();
     BodyPart* getUpperLeftLeg();
     BodyPart* getLowerRightLeg();
     BodyPart* getUpperRightLeg();
+    
+    int numberOfParams;
+    
+protected:
     
     virtual void initializeMultiValueSet() = 0;
     

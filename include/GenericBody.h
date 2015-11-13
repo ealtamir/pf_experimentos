@@ -11,12 +11,10 @@ class GenericBody : public WalkerBody {
 
 
 public:
-    const int numberOfParams = 12;
-    
 	GenericBody(btDynamicsWorld* world, BodyParameters &params);
 
     void initializeMultiValueSet();
     
-    virtual void setActuatorValues(const std::vector<double>& vals);
+    virtual void setActuatorValues(std::vector<double> vals);
 };
 #endif

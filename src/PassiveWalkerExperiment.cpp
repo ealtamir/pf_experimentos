@@ -36,7 +36,7 @@ PassiveWalkerExperiment* PassiveWalkerExperiment::getInstance() {
 PassiveWalkerExperiment::PassiveWalkerExperiment() {}
 
 PassiveWalkerExperiment::~PassiveWalkerExperiment() {
-	delete body;
+	delete selectedBody;
     delete params;
 }
 
@@ -66,7 +66,7 @@ float PassiveWalkerExperiment::getFitness(const std::vector<double> vals) {
 
 void PassiveWalkerExperiment::initializeBodies() {
     params = new GenericBodyParameters();
-    body = new GenericBody(m_dynamicsWorld, *params);
+    selectedBody = new GenericBody(m_dynamicsWorld, *params);
 }
 
 void PassiveWalkerExperiment::initObjects() {
@@ -75,7 +75,18 @@ void PassiveWalkerExperiment::initObjects() {
 
 void PassiveWalkerExperiment::worldStep() {
     timeCount += 1. / 60.;
-    body->actuate(timeCount, 0);
+    m_dynamicsWorld->stepSimulation(1 / 120., 60, 1 / 60.);
+//    if (timeCount > 10 * (1 / 60.))
+//    btVector3 com;
+//    btRigidBody* leftLeg = body->getUpperLeftLeg()->getRigidBody();
+//    btRigidBody* rightLeg = body->getUpperRightLeg()->getRigidBody();
+//    com = leftLeg->getCenterOfMassPosition();
+//    printf("Left Leg: (%f, %f, %f)\n", com.x(), com.y(), com.z());
+//    com = rightLeg->getCenterOfMassPosition();
+//    printf("Right Leg: (%f, %f, %f)\n", com.x(), com.y(), com.z());
+
+    selectedBody->actuate(timeCount, 0);
+
 }
 
 bool PassiveWalkerExperiment::stopExperiment() {

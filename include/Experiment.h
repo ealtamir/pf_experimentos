@@ -63,7 +63,9 @@ public:
         return "Experiment";
     }
     
-    WalkerBody* getWalkerBody() {return body;}
+    WalkerBody* getWalkerBody() {return selectedBody;}
+    
+    WalkerBody* selectedBody;
     
     
     bool objectsInitialized = false;
@@ -76,7 +78,6 @@ private:
     btRigidBody* createGround();
     
 protected:
-    WalkerBody* body;
     
     bool simulated = false;
     

@@ -22,13 +22,13 @@ public:
     
     btVector3 eval(double t, int stage);
     
-    double parameters[PARAMS_SIZE];
     
     void setParameters(double *parameters);
     
     virtual void setActuatorValues(double vals[]) = 0;
     
 protected:
+    double parameters[PARAMS_SIZE];
     
     virtual btVector3 actuatorFunc(double t, int stage) = 0;
 

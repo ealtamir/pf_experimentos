@@ -23,11 +23,11 @@ public:
     Actuator* getActuator() { return actuator; }
     
 //    // Generic
-//    void setActuatorValues(double sin_ampl, double cos_ampl, double sin_freq,
-//                           double cos_freq, double phase, double indTerm);
+    void setActuatorValues(double sin_ampl, double cos_ampl, double sin_freq,
+                           double cos_freq, double phase, double indTerm);
     // Fourier
-    void setActuatorValues(double ampl1, double ampl2, double ampl3, double ampl4,
-                           double freq, double phase, double indTerm);
+//    void setActuatorValues(double ampl1, double ampl2, double ampl3, double ampl4,
+//                           double freq, double phase, double indTerm);
     // Double frec cos
 //    void setActuatorValues(double ampl1, double freq1, double freq2, double fase, double indTerm);
 

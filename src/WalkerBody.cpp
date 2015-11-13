@@ -9,6 +9,8 @@
 #include "WalkerBody.h"
 #include "GenericTorsoBodyGroup.h"
 #include "LegBodyGroup.h"
+#include "Initialization.h"
+
 
 WalkerBody::WalkerBody(btDynamicsWorld* world, BodyParameters &params) : Body(world) {
     
@@ -38,18 +40,18 @@ WalkerBody::getMultiValueSet() {
 
 void WalkerBody::initializeIntervalBounds() {
 
-    amplitude = new Chromosome::Representation::GaValueIntervalBounds<double>(-80, 80);
-    frequency = new Chromosome::Representation::GaValueIntervalBounds<double>(0.01, 5);
-    phase = new Chromosome::Representation::GaValueIntervalBounds<double>(0, SIMD_PI);
-    independentTerm = new Chromosome::Representation::GaValueIntervalBounds<double>(-5, 5);
+    Chromosome::Representation::GaValueIntervalBounds<double> amplitude(-80, 80);
+    Chromosome::Representation::GaValueIntervalBounds<double> frequency(0.01, 5);
+    Chromosome::Representation::GaValueIntervalBounds<double> phase(0, SIMD_PI);
+    Chromosome::Representation::GaValueIntervalBounds<double> independentTerm(-5, 5);
     
-    amplitudeValueSet = new Chromosome::Representation::GaIntervalValueSet<double>(*amplitude, *amplitude, GaGlobalRandomDoubleGenerator, false);
+    amplitudeValueSet = new Chromosome::Representation::GaIntervalValueSet<double>(amplitude, amplitude, GaGlobalRandomDoubleGenerator, false);
     
-    frequencyValueSet = new Chromosome::Representation::GaIntervalValueSet<double>(*frequency, *frequency, GaGlobalRandomDoubleGenerator, false);
+    frequencyValueSet = new Chromosome::Representation::GaIntervalValueSet<double>(frequency, frequency, GaGlobalRandomDoubleGenerator, false);
     
-    phaseValueSet = new Chromosome::Representation::GaIntervalValueSet<double>(*phase, *phase, GaGlobalRandomDoubleGenerator, false);
+    phaseValueSet = new Chromosome::Representation::GaIntervalValueSet<double>(phase, phase, GaGlobalRandomDoubleGenerator, false);
     
-    independentTermValueSet = new Chromosome::Representation::GaIntervalValueSet<double>(*independentTerm, *independentTerm, GaGlobalRandomDoubleGenerator, false);
+    independentTermValueSet = new Chromosome::Representation::GaIntervalValueSet<double>(independentTerm, independentTerm, GaGlobalRandomDoubleGenerator, false);
 }
 
 BodyPart* WalkerBody::getLowerLeftLeg() {

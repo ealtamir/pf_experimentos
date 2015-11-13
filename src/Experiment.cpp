@@ -28,37 +28,37 @@ void Experiment::setBodyActuatorValues(std::vector<double> vals) {
     int UPPER_LEG = 1;
 //        // Generic
 //        // left lower leg
-//        bodyPart = body->getBodyGroups()[LEFT_LEG]->getBodyParts()[LOWER_LEG];
-//        bodyPart->setActuatorValues(vals[0], vals[1], vals[2], vals[3], vals[4], vals[5]);
-//    
-//        // left upper leg
-//        bodyPart = body->getBodyGroups()[LEFT_LEG]->getBodyParts()[UPPER_LEG];
-//        bodyPart->setActuatorValues(vals[6], vals[7], vals[8], vals[9], vals[10], vals[11]);
-//    
-//        // right lower leg
-//        bodyPart = body->getBodyGroups()[RIGHT_LEG]->getBodyParts()[LOWER_LEG];
-//        bodyPart->setActuatorValues(vals[0], vals[1], vals[2], vals[3], vals[4] + SIMD_PI, vals[5]);
-//    
-//        // right upper leg
-//        bodyPart = body->getBodyGroups()[RIGHT_LEG]->getBodyParts()[UPPER_LEG];
-//        bodyPart->setActuatorValues(vals[6], vals[7], vals[8], vals[9], vals[10] + SIMD_PI, vals[11]);
+        bodyPart = selectedBody->getBodyGroups()[LEFT_LEG]->getBodyParts()[LOWER_LEG];
+        bodyPart->setActuatorValues(vals[0], vals[1], vals[2], vals[3], vals[4], vals[5]);
+    
+        // left upper leg
+        bodyPart = selectedBody->getBodyGroups()[LEFT_LEG]->getBodyParts()[UPPER_LEG];
+        bodyPart->setActuatorValues(vals[6], vals[7], vals[8], vals[9], vals[10], vals[11]);
+    
+        // right lower leg
+        bodyPart = selectedBody->getBodyGroups()[RIGHT_LEG]->getBodyParts()[LOWER_LEG];
+        bodyPart->setActuatorValues(vals[0], vals[1], vals[2], vals[3], vals[4] + SIMD_PI, vals[5]);
+    
+        // right upper leg
+        bodyPart = selectedBody->getBodyGroups()[RIGHT_LEG]->getBodyParts()[UPPER_LEG];
+        bodyPart->setActuatorValues(vals[6], vals[7], vals[8], vals[9], vals[10] + SIMD_PI, vals[11]);
     
     //    // Fourier
     //    // left lower leg
-        bodyPart = body->getBodyGroups()[LEFT_LEG]->getBodyParts()[LOWER_LEG];
-        bodyPart->setActuatorValues(vals[0], vals[1], vals[2], vals[3], vals[4], vals[5], vals[6]);
-    
-        // left upper leg
-        bodyPart = body->getBodyGroups()[LEFT_LEG]->getBodyParts()[UPPER_LEG];
-        bodyPart->setActuatorValues(vals[7], vals[8], vals[9], vals[10], vals[11], vals[12], vals[13]);
-    
-        // right lower leg
-        bodyPart = body->getBodyGroups()[RIGHT_LEG]->getBodyParts()[LOWER_LEG];
-        bodyPart->setActuatorValues(vals[0], vals[1], vals[2], vals[3], vals[4], vals[5] + SIMD_PI, vals[6]);
-    
-        // right upper leg
-        bodyPart = body->getBodyGroups()[RIGHT_LEG]->getBodyParts()[UPPER_LEG];
-        bodyPart->setActuatorValues(vals[7], vals[8], vals[9], vals[10], vals[11], vals[12] + SIMD_PI, vals[13]);
+//        bodyPart = body->getBodyGroups()[LEFT_LEG]->getBodyParts()[LOWER_LEG];
+//        bodyPart->setActuatorValues(vals[0], vals[1], vals[2], vals[3], vals[4], vals[5], vals[6]);
+//    
+//        // left upper leg
+//        bodyPart = body->getBodyGroups()[LEFT_LEG]->getBodyParts()[UPPER_LEG];
+//        bodyPart->setActuatorValues(vals[7], vals[8], vals[9], vals[10], vals[11], vals[12], vals[13]);
+//    
+//        // right lower leg
+//        bodyPart = body->getBodyGroups()[RIGHT_LEG]->getBodyParts()[LOWER_LEG];
+//        bodyPart->setActuatorValues(vals[0], vals[1], vals[2], vals[3], vals[4], vals[5] + SIMD_PI, vals[6]);
+//    
+//        // right upper leg
+//        bodyPart = body->getBodyGroups()[RIGHT_LEG]->getBodyParts()[UPPER_LEG];
+//        bodyPart->setActuatorValues(vals[7], vals[8], vals[9], vals[10], vals[11], vals[12] + SIMD_PI, vals[13]);
     
     
 //    // Double frec cos
@@ -97,7 +97,7 @@ void Experiment::initPhysics()
 
 //     This is related to the number of iterations performed
 //     by the collision solver algorithm.
-    info.m_numIterations = 50;
+    info.m_numIterations = 60;
 //
 //     If set to 1, it doesn't solve collision between objects in pairs, so when bouncing
 //     there isn't any energy added.
@@ -136,11 +136,11 @@ void Experiment::clientMoveAndDisplay()
     if (m_dynamicsWorld)
     {
         if (!objectsInitialized) {
-            initObjects();
             timeCount = 0;
-        } 
+            initObjects();
+        }
         worldStep();
-        m_dynamicsWorld->stepSimulation(1 / 60.);
+
         //optional but useful: debug drawing
 //        m_dynamicsWorld->debugDrawWorld();
     }
