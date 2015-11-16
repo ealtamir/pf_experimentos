@@ -97,7 +97,7 @@ void Experiment::initPhysics()
 
 //     This is related to the number of iterations performed
 //     by the collision solver algorithm.
-    info.m_numIterations = 60;
+    info.m_numIterations = 50;
 //
 //     If set to 1, it doesn't solve collision between objects in pairs, so when bouncing
 //     there isn't any energy added.
@@ -136,13 +136,13 @@ void Experiment::clientMoveAndDisplay()
     if (m_dynamicsWorld)
     {
         if (!objectsInitialized) {
-            timeCount = 0;
             initObjects();
-        }
+            timeCount = 0;
+        } 
         worldStep();
-
+//        m_dynamicsWorld->stepSimulation(1 / 60.);
         //optional but useful: debug drawing
-//        m_dynamicsWorld->debugDrawWorld();
+        m_dynamicsWorld->debugDrawWorld();
     }
 
     renderme();

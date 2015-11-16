@@ -88,19 +88,10 @@ void PassiveWalkerExperiment::initObjects() {
 }
 
 void PassiveWalkerExperiment::worldStep() {
-    timeCount += 1. / 60.;
-    m_dynamicsWorld->stepSimulation(1 / 120., 60, 1 / 60.);
-//    if (timeCount > 10 * (1 / 60.))
-//    btVector3 com;
-//    btRigidBody* leftLeg = body->getUpperLeftLeg()->getRigidBody();
-//    btRigidBody* rightLeg = body->getUpperRightLeg()->getRigidBody();
-//    com = leftLeg->getCenterOfMassPosition();
-//    printf("Left Leg: (%f, %f, %f)\n", com.x(), com.y(), com.z());
-//    com = rightLeg->getCenterOfMassPosition();
-//    printf("Right Leg: (%f, %f, %f)\n", com.x(), com.y(), com.z());
-
+    btDynamicsWorld* w = getDynamicsWorld();
+    w->stepSimulation(1 / 60.f);
     selectedBody->actuate(timeCount, 0);
-
+    timeCount += 1. / 60.;
 }
 
 bool PassiveWalkerExperiment::stopExperiment() {
@@ -168,19 +159,11 @@ void PassiveWalkerExperiment::simulate() {
     double acum_height = 0;
     double current_height = 0;
     double min_height = 0.649991;
-    double acum_left_foot_height = 0;
-    double acum_right_foot_height = 0;
     double acum_velocity = 0;
-    
-    double current_left_foot_height = 0;
-    double current_right_foot_height = 0;
-
     
     double initial_angle = 0;
     double acum_direction = 0;
-    
-    double angle = 0;
-    
+        
     worldStep();
     initial_height = walker->getHeight();
     initial_angle = walker->getAngleInclination();

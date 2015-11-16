@@ -21,8 +21,7 @@ public:
 
     const double bodyScale = BODY_SCALE;
 //    const btVector3 bodyInitialPosition = btVector3(0, 2 * BODY_SCALE, 0);
-//    const btVector3 bodyInitialPosition = btVector3(0, 0.5 * BODY_SCALE, 0);
-    const btVector3 bodyInitialPosition = btVector3(0, 0.601 * BODY_SCALE, 0);
+    const btVector3 bodyInitialPosition = btVector3(0, 0.6 * BODY_SCALE, 0);
     
     const double FEMALE_BODY_MASS = 61.99;
     const double MALE_BODY_MASS = 73;
@@ -69,7 +68,7 @@ public:
     //double U_LEG_MASS = 0.105 * BODY_SCALE;
     double U_LEG_MASS = 0.1416 * BODY_SCALE;
     
-    btVector3 U_LEG_ORIENTATION = btVector3(0, 0, 0);
+    btVector3 U_LEG_ORIENTATION = btVector3(180, 0, 0);
     btVector3 U_LEG_POSITION = btVector3(btScalar(0.18 * BODY_SCALE),
                                          btScalar(0.0075 + 2 * L_LEG_RADIUS + L_LEG_HEIGHT + U_LEG_RADIUS + U_LEG_HEIGHT),
                                          btScalar(0.0));
@@ -173,11 +172,10 @@ public:
                                              btScalar(0),
                                              btScalar(0));
     btVector3 kneeUpperLegOffset = btVector3(btScalar(0),
-                                             btScalar(-U_LEG_RADIUS - U_LEG_HEIGHT),
-//                                             btScalar(0),
+                                             btScalar(-L_LEG_RADIUS -U_LEG_RADIUS - U_LEG_HEIGHT),
                                              btScalar(0));
-        btVector3 kneeAngularLowerLimit = btVector3(-SIMD_EPSILON * 0.8, -SIMD_EPSILON * 0, -SIMD_EPSILON * 0);
-    btVector3 kneeAngularUpperLimit = btVector3(SIMD_PI * 0.6, SIMD_EPSILON * 0, SIMD_EPSILON * 0);
+        btVector3 kneeAngularLowerLimit = btVector3(-SIMD_EPSILON, -SIMD_EPSILON, -SIMD_EPSILON);
+    btVector3 kneeAngularUpperLimit = btVector3(SIMD_PI * 0.6, SIMD_EPSILON, SIMD_EPSILON);
     
     
     // SPINE-PELVIS
@@ -254,7 +252,7 @@ public:
                                         btScalar(0.));
     
     btVector3 leftHipAngularUpperLimit = btVector3(SIMD_HALF_PI * 0.25, 0., 0.);
-    btVector3 leftHipAngularLowerLimit = btVector3(-SIMD_HALF_PI * 0.5, 0., 0.);
+    btVector3 leftHipAngularLowerLimit = btVector3(-SIMD_HALF_PI, 0., 0.);
     
     
     // RIGHT HIP
@@ -267,7 +265,7 @@ public:
                                          btScalar(0.));
     
     btVector3 rightHipAngularUpperLimit = btVector3(SIMD_HALF_PI * 0.25, 0., 0.);
-    btVector3 rightHipAngularLowerLimit = btVector3(-SIMD_HALF_PI * 0.5, 0., 0.);
+    btVector3 rightHipAngularLowerLimit = btVector3(-SIMD_HALF_PI, 0., 0.);
 };
 
 #endif /* defined(__test__BodyParameters__) */

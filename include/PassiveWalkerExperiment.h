@@ -10,9 +10,9 @@ enum BodyType {
     generic, fourier, double_cosine
 };
 
-//#define     GENERIC             1
+#define     GENERIC             1
 //#define     FOURIER             1
-#define     DOUBLE_COSINE       1
+//#define     DOUBLE_COSINE       1
 
 #ifdef      GENERIC
 #define     VALUES_SIZE         12
