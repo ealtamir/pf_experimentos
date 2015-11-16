@@ -33,10 +33,10 @@
 
 #include "BasicDemo.h"
 
-#define VALUES_SIZE         12
 #define POPULATION_SIZE     55
 #define GENERATIONS         300
-#define VISUAL              false
+#define VISUAL              true
+
 
 int mainLoop();
 double getTimeElapsed();
@@ -46,6 +46,8 @@ double values[VALUES_SIZE];
 double fitness;
 
 long int time_begin = 0;
+
+
 
 // Fitness
 class MiExperimentoFitness : public GaFitnessOperation {
@@ -126,23 +128,37 @@ int mainLoop(char* executablePath) {
     time_begin = before.tv_sec * 1000 + before.tv_usec / 1000;
     
     cout << "Starting GA runloop..." << endl;
-    WalkerBody* body = PassiveWalkerExperiment::getInstance()->getWalkerBody();
     GaInitialize();
+    
+    GaValueIntervalBounds<double> amplitude(-80, 80);
+    GaValueIntervalBounds<double> frequency(0.01, 5);
+    GaValueIntervalBounds<double> phase(0, SIMD_PI);
+    GaValueIntervalBounds<double> independentTerm(-5, 5);
+    
+    GaIntervalValueSet<double> amplitudeValueSet(amplitude, amplitude, GaGlobalRandomDoubleGenerator, false);
+    GaIntervalValueSet<double> frequencyValueSet(frequency, frequency, GaGlobalRandomDoubleGenerator, false);
+    GaIntervalValueSet<double> phaseValueSet(phase, phase, GaGlobalRandomDoubleGenerator, false);
+    GaIntervalValueSet<double> independentTermValueSet(independentTerm, independentTerm, GaGlobalRandomDoubleGenerator, false);
 
-    GaIntervalValueSet<double>** multiValueSet = body->getMultiValueSet();
-    int numberOfValueSets = body->numberOfParams;
-    
-//    // Fourier actuator
-//    GaIntervalValueSet<double> *multiValueSet[VALUES_SIZE] = {
-//        &amplitudeValueSet, &amplitudeValueSet, &amplitudeValueSet, &amplitudeValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet,
-//        &amplitudeValueSet, &amplitudeValueSet, &amplitudeValueSet, &amplitudeValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet,
-//    };
+#if GENERIC
+    // Fourier actuator
+    GaIntervalValueSet<double> *multiValueSet[VALUES_SIZE] = {
+        &amplitudeValueSet, &amplitudeValueSet, &frequencyValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet,
+        &amplitudeValueSet, &amplitudeValueSet, &frequencyValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet
+    };
+#elif FOURIER
+    GaIntervalValueSet<double> *multiValueSet[VALUES_SIZE] = {
+        &amplitudeValueSet, &amplitudeValueSet, &amplitudeValueSet, &amplitudeValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet,
+        &amplitudeValueSet, &amplitudeValueSet, &amplitudeValueSet, &amplitudeValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet
+    };
+#else
     // Double frec cos actuator
-//    GaIntervalValueSet<double> *multiValueSet[VALUES_SIZE] = {
-//        &amplitudeValueSet, &frequencyValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet,
-//        &amplitudeValueSet, &frequencyValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet
-//    };
-    
+    GaIntervalValueSet<double> *multiValueSet[VALUES_SIZE] = {
+        &amplitudeValueSet, &frequencyValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet,
+        &amplitudeValueSet, &frequencyValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet
+    };
+#endif
+
     
     // CHROMOSOME PARAMETERS
     double  mutationProbability = 0.3;
@@ -163,7 +179,7 @@ int mainLoop(char* executablePath) {
     GaFitnessComparator* 	fitnessComparator = GaFitnessComparatorCatalogue::Instance().GetEntryData("GaMaxFitnessComparator");
     GaChromosomeDomainBlock<double>* _ccb = new GaChromosomeDomainBlock<double>(
                         (GaValueSet<double>**)(multiValueSet),
-                        numberOfValueSets,
+                        VALUES_SIZE,
                         crossoverMethod,
                         mutationOperation,
                         fitnessCalculator,
@@ -173,7 +189,7 @@ int mainLoop(char* executablePath) {
     
     
     // Used as prototype to initilize other chromosomes
-    GaMVArithmeticChromosome<double> chromosomePrototype(numberOfValueSets, _ccb);
+    GaMVArithmeticChromosome<double> chromosomePrototype(VALUES_SIZE, _ccb);
     
     
     // POPULATION PARAMETERS

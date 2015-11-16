@@ -24,3 +24,11 @@ btVector3 CosineDoubleFrecActuator::actuatorFunc(double t, int stage) {
         return btVector3(parameters[stage_index+A]*cos(parameters[stage_index+W2]*(psi_t-(SIMD_PI/parameters[stage_index+W1])+(SIMD_PI/parameters[stage_index+W2]))) + parameters[stage_index+IND_TERM],0,0);
     }
 }
+
+void CosineDoubleFrecActuator::setActuatorValues(double vals[]) {
+    parameters[A] = vals[A];
+    parameters[W1] = vals[W1];
+    parameters[W2] = vals[W2];
+    parameters[FASE] = vals[FASE];
+    parameters[IND_TERM] = vals[IND_TERM];
+}

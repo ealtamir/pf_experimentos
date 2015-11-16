@@ -35,26 +35,6 @@ public:
     
     int numberOfParams;
     
-protected:
-    
-    virtual void initializeMultiValueSet() = 0;
-    
-    
-    void initializeIntervalBounds();
-    
-    
-    Chromosome::Representation::GaIntervalValueSet<double>** multiValueSet = nullptr;
-    
-    Chromosome::Representation::GaValueIntervalBounds<double>* amplitude;
-    Chromosome::Representation::GaValueIntervalBounds<double>* frequency;
-    Chromosome::Representation::GaValueIntervalBounds<double>* phase;
-    Chromosome::Representation::GaValueIntervalBounds<double>* independentTerm;
-    
-    Chromosome::Representation::GaIntervalValueSet<double>* amplitudeValueSet;
-    Chromosome::Representation::GaIntervalValueSet<double>* frequencyValueSet;
-    Chromosome::Representation::GaIntervalValueSet<double>* phaseValueSet;
-    Chromosome::Representation::GaIntervalValueSet<double>* independentTermValueSet;
-    
 };
 
 
