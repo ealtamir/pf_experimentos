@@ -17,9 +17,10 @@ class FourierActuator : public Actuator {
 public:
     FourierActuator(bool isLeft = false);
     
+    virtual void setActuatorValues(double vals[]);
+    
 protected:
-    virtual btVector3
-    actuatorFunc(double t, int stage);
+    virtual btVector3 actuatorFunc(double t, int stage);
 };
 
 #endif /* defined(__proyecto_pf__FourierActuator__) */

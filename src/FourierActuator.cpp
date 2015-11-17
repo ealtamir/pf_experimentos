@@ -21,11 +21,20 @@ FourierActuator::FourierActuator(bool isLeft) : Actuator(isLeft) {
     
 }
 
-btVector3
-FourierActuator::actuatorFunc(double t, int stage) {
+btVector3 FourierActuator::actuatorFunc(double t, int stage) {
     double senos = parameters[A1] * sin(parameters[W] * t + parameters[FASE])
                  + parameters[A2] * sin(2 * parameters[W] * t + parameters[FASE]);
     double cosenos = parameters[A3] * cos(parameters[W] * t + parameters[FASE])
                    + parameters[A4] * cos(2 * parameters[W] * t + parameters[FASE]);
     return btVector3(senos + cosenos + parameters[IND_TERM], 0, 0);
+}
+
+void FourierActuator::setActuatorValues(double vals[]) {
+    parameters[A1] = vals[A1];
+    parameters[A2] = vals[A2];
+    parameters[A3] = vals[A3];
+    parameters[A4] = vals[A4];
+    parameters[W] = vals[W];
+    parameters[FASE] = vals[FASE];
+    parameters[IND_TERM] = vals[IND_TERM];
 }

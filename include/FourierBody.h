@@ -9,6 +9,15 @@
 #ifndef FourierBody_hpp
 #define FourierBody_hpp
 
-#include <stdio.h>
+#include "WalkerBody.h"
+#include "BodyParameters.h"
+
+class FourierBody : public WalkerBody {
+    
+public:
+    FourierBody(btDynamicsWorld* world, BodyParameters &params);
+    
+    virtual void setActuatorValues(std::vector<double> vals);
+};
 
 #endif /* FourierBody_hpp */

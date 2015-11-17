@@ -51,9 +51,9 @@ float PassiveWalkerExperiment::getFitness(const std::vector<double> vals) {
     double fitness = 0;
     fitnessLock.lock();
     PassiveWalkerExperiment* experiment = PassiveWalkerExperiment::getInstance();
-//    WalkerBody* body = experiment->getWalkerBody();
-    experiment->setBodyActuatorValues(vals);
-//    body->setActuatorValues(vals);
+    WalkerBody* body = experiment->selectedBody;
+//    experiment->setBodyActuatorValues(vals);
+    body->setActuatorValues(vals);
     experiment->simulate();
     fitness = experiment->getHeight() * experiment->getDirection() * experiment->getVelocity();
     fitnessLock.unlock();
@@ -75,8 +75,8 @@ void PassiveWalkerExperiment::initializeBodies() {
         params = new GenericBodyParameters();
         selectedBody = new GenericBody(m_dynamicsWorld, *params);
     } else if (BODY_TYPE == BodyType::fourier) {
-//        params = new FourierBodyParameters();
-//        selectedBody = new FourierBody(m_dynamicsWorld, *params);
+        params = new FourierBodyParameters();
+        selectedBody = new FourierBody(m_dynamicsWorld, *params);
     } else {
         params = new CosineDoubleFrecBodyParameters();
         selectedBody = new CosineDoubleFrecBody(m_dynamicsWorld, *params);

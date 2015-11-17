@@ -34,7 +34,7 @@
 #include "BasicDemo.h"
 
 #define POPULATION_SIZE     55
-#define GENERATIONS         3000
+#define GENERATIONS         10
 #define VISUAL              true
 
 
@@ -143,17 +143,15 @@ int mainLoop(char* executablePath) {
     GaIntervalValueSet<double> independentTermValueSet(independentTerm, independentTerm, GaGlobalRandomDoubleGenerator, false);
 
 #if GENERIC
-    // Fourier actuator
     GaIntervalValueSet<double> *multiValueSet[VALUES_SIZE] = {
         &amplitudeLowerValueSet, &amplitudeLowerValueSet, &frequencyValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet,
         &amplitudeUpperValueSet, &amplitudeUpperValueSet, &frequencyValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet
     };
 #elif FOURIER
-//    // Fourier actuator
-//    GaIntervalValueSet<double> *multiValueSet[VALUES_SIZE] = {
-//        &amplitudeLowerValueSet, &amplitudeValueSet, &amplitudeValueSet, &amplitudeValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet,
-//        &amplitudeUpperValueSet, &amplitudeValueSet, &amplitudeValueSet, &amplitudeValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet
-//    };
+    GaIntervalValueSet<double> *multiValueSet[VALUES_SIZE] = {
+        &amplitudeLowerValueSet, &amplitudeUpperValueSet, &amplitudeLowerValueSet, &amplitudeUpperValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet,
+        &amplitudeLowerValueSet, &amplitudeUpperValueSet, &amplitudeLowerValueSet, &amplitudeUpperValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet
+    };
 #else
     GaIntervalValueSet<double> *multiValueSet[VALUES_SIZE] = {
         &amplitudeLowerValueSet, &frequencyValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet,
@@ -294,7 +292,7 @@ int main(int argc,char* argv[]) {
 //        std::vector<double> vals(arr, arr + sizeof(arr) / sizeof(arr[0]));
         
         for (int i = 0; i < vals.size(); i++) {
-            std::cout << "Values: " << vals[i] << std::endl;
+//            std::cout << "Values: " << vals[i] << std::endl;
         }
 //        const std::vector<double> arr = {10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10};
 //        const std::vector<double> arr = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
