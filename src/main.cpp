@@ -35,7 +35,7 @@
 
 #define POPULATION_SIZE     250
 #define GENERATIONS         300
-#define VISUAL              false
+#define VISUAL              true
 
 
 int mainLoop();
@@ -282,6 +282,7 @@ int main(int argc,char* argv[]) {
 //        BasicDemo* bd = new BasicDemo();
 //        bd->initPhysics();
         PassiveWalkerExperiment* experiment = PassiveWalkerExperiment::getInstance();
+        experiment->getDynamicsWorld()->stepSimulation(1 / 60.f, 0);
         WalkerBody* body = experiment->selectedBody;
         experiment->setCameraDistance(btScalar(5.));
         experiment->setCameraUp(btVector3(0, 15, 0));
