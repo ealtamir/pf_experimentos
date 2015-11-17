@@ -130,9 +130,9 @@ int mainLoop(char* executablePath) {
     cout << "Starting GA runloop..." << endl;
     GaInitialize();
     
-    GaValueIntervalBounds<double> amplitudeLower(-25, 25);
-    GaValueIntervalBounds<double> amplitudeUpper(-45, 55);
-    GaValueIntervalBounds<double> frequency(0.01, 10);
+    GaValueIntervalBounds<double> amplitudeLower(1, 25);
+    GaValueIntervalBounds<double> amplitudeUpper(1, 55);
+    GaValueIntervalBounds<double> frequency(0.01, 3);
     GaValueIntervalBounds<double> phase(-SIMD_PI, SIMD_PI);
     GaValueIntervalBounds<double> independentTerm(-5, 5);
     
@@ -161,11 +161,11 @@ int mainLoop(char* executablePath) {
 
     
     // CHROMOSOME PARAMETERS
-    double  mutationProbability = 0.02;
-    int     numOfMutatedValues = 2;
+    double  mutationProbability = 0.20;
+    int     numOfMutatedValues = 3;
     bool    onlyAcceptImprovingMutations = false;
-    double  crossoverProbability = 0.8;
-    int     crossoverPoints = 3;
+    double  crossoverProbability = 0.9;
+    int     crossoverPoints = 4;
     GaChromosomeParams* chromosomeParams = new GaChromosomeParams(mutationProbability,
                                         numOfMutatedValues,
                                         onlyAcceptImprovingMutations,
@@ -212,7 +212,7 @@ int mainLoop(char* executablePath) {
     Population::SelectionOperations::GaSelectDuplicatesParams selectParams(duplicates, selectionSize);
     
     int replacementSize = 230;
-    int bestChromosomesThatRemain = 3;
+    int bestChromosomesThatRemain = 15;
     Population::ReplacementOperations::GaReplaceElitismParams replaceParams(replacementSize,
                                                                             bestChromosomesThatRemain);
     
@@ -237,7 +237,7 @@ int mainLoop(char* executablePath) {
                                                  populationConfiguration);
     
     
-    int numberOfWorkers = 8;
+    int numberOfWorkers = 1;
     GaMultithreadingAlgorithmParams algParam(numberOfWorkers);
     Algorithm::SimpleAlgorithms::GaIncrementalAlgorithm* algorithm = new Algorithm::SimpleAlgorithms::GaIncrementalAlgorithm( population, algParam );
     
