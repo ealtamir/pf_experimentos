@@ -33,9 +33,9 @@
 
 #include "BasicDemo.h"
 
-#define POPULATION_SIZE     55
-#define GENERATIONS         10
-#define VISUAL              true
+#define POPULATION_SIZE     250
+#define GENERATIONS         300
+#define VISUAL              false
 
 
 int mainLoop();
@@ -130,9 +130,9 @@ int mainLoop(char* executablePath) {
     cout << "Starting GA runloop..." << endl;
     GaInitialize();
     
-    GaValueIntervalBounds<double> amplitudeLower(-30, 35);
-    GaValueIntervalBounds<double> amplitudeUpper(-50, 55);
-    GaValueIntervalBounds<double> frequency(0.01, 5);
+    GaValueIntervalBounds<double> amplitudeLower(-25, 25);
+    GaValueIntervalBounds<double> amplitudeUpper(-45, 55);
+    GaValueIntervalBounds<double> frequency(0.01, 10);
     GaValueIntervalBounds<double> phase(-SIMD_PI, SIMD_PI);
     GaValueIntervalBounds<double> independentTerm(-5, 5);
     
@@ -161,7 +161,7 @@ int mainLoop(char* executablePath) {
 
     
     // CHROMOSOME PARAMETERS
-    double  mutationProbability = 0.3;
+    double  mutationProbability = 0.02;
     int     numOfMutatedValues = 2;
     bool    onlyAcceptImprovingMutations = false;
     double  crossoverProbability = 0.8;
@@ -206,12 +206,12 @@ int mainLoop(char* executablePath) {
                                             bestChromosomesToTrack,
                                             worstChromosomesToTrack);
     
-    int selectionSize = 55;
+    int selectionSize = 250;
     bool duplicates = false;
     
     Population::SelectionOperations::GaSelectDuplicatesParams selectParams(duplicates, selectionSize);
     
-    int replacementSize = 45;
+    int replacementSize = 230;
     int bestChromosomesThatRemain = 3;
     Population::ReplacementOperations::GaReplaceElitismParams replaceParams(replacementSize,
                                                                             bestChromosomesThatRemain);
@@ -292,7 +292,7 @@ int main(int argc,char* argv[]) {
 //        std::vector<double> vals(arr, arr + sizeof(arr) / sizeof(arr[0]));
         
         for (int i = 0; i < vals.size(); i++) {
-//            std::cout << "Values: " << vals[i] << std::endl;
+            std::cout << "Values: " << vals[i] << std::endl;
         }
 //        const std::vector<double> arr = {10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10};
 //        const std::vector<double> arr = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};

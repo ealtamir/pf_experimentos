@@ -2,21 +2,21 @@ data = csvread('latest_result.txt');
 
 chromosome = data(:,1);
 
-upper_A1 = chromosome(2);
-upper_A2 = chromosome(3);
-upper_A3 = chromosome(4);
-upper_A4 = chromosome(5);
-upper_W = chromosome(6);
-upper_fase = chromosome(7);
-upper_ind_term = chromosome(8);
+lower_A1 = chromosome(2);
+lower_A2 = chromosome(3);
+lower_A3 = chromosome(4);
+lower_A4 = chromosome(5);
+lower_W = chromosome(6);
+lower_fase = chromosome(7);
+lower_ind_term = chromosome(8);
 
-lower_A1 = chromosome(9);
-lower_A2 = chromosome(10);
-lower_A3 = chromosome(11);
-lower_A4 = chromosome(12);
-lower_W = chromosome(13);
-lower_fase = chromosome(14);
-lower_ind_term = chromosome(15);
+upper_A1 = chromosome(9);
+upper_A2 = chromosome(10);
+upper_A3 = chromosome(11);
+upper_A4 = chromosome(12);
+upper_W = chromosome(13);
+upper_fase = chromosome(14);
+upper_ind_term = chromosome(15);
 
 x = [1:0.001:10];
 
@@ -50,9 +50,9 @@ lower_y_r = lower_sines_r + lower_cosines_r;
 subplot(2,1,1)
 plot(x,upper_y,x,upper_y_r)
 title('Plot generic function')
-legend('upper leg','upper_r leg')
+legend('upper leg','upper right leg')
 
 subplot(2,1,2)
 plot(x,lower_y,x,lower_y_r)
 title('Plot generic function')
-legend('lower leg','lower_r leg')
+legend('lower leg','lower right leg')

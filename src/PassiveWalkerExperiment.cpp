@@ -89,7 +89,7 @@ void PassiveWalkerExperiment::initObjects() {
 
 void PassiveWalkerExperiment::worldStep() {
     btDynamicsWorld* w = getDynamicsWorld();
-    w->stepSimulation(1 / 60.f);
+    w->stepSimulation(1 / 60.f, 0);
     selectedBody->actuate(timeCount, 0);
     timeCount += 1. / 60.;
 }

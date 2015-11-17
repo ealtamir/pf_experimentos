@@ -22,7 +22,7 @@
 #include "ObjectStoppedCondition.h"
 
 const btScalar DEFAULT_EXPERIMENT_INTERVAL = 0.001;
-const btScalar SIMULATION_STEPS = 60 * 1; // if it's 60 the simulation is 1 second
+const btScalar SIMULATION_STEPS = 60 * 3; // if it's 60 the simulation is 1 second
 const btScalar DIRECTION_CONSTANT = 0.02;
 const btScalar VELOCITY_CONSTANT = 4.6;
 const btScalar OBJETIVE_VELOCITY = 1;
