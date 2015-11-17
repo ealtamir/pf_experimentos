@@ -23,11 +23,14 @@ btVector3 CosineDoubleFrecActuator::actuatorFunc(double t, int stage) {
     if (function_condition) {
         resp = btVector3(parameters[stage_index+A]*cos(parameters[stage_index+W1]*psi_t) + parameters[stage_index+IND_TERM],0,0);
         std::cout << resp.x() << std::endl;
-        return resp;
+//        return resp;
+        return btVector3(10,0,0);
     } else {
         resp = btVector3(parameters[stage_index+A]*cos(parameters[stage_index+W2]*(psi_t-(SIMD_PI/parameters[stage_index+W1])+(SIMD_PI/parameters[stage_index+W2]))) + parameters[stage_index+IND_TERM],0,0);
         std::cout << resp.x() << std::endl;
-        return resp;
+//        return resp;
+        return btVector3(10,0,0);
+
     }
 }
 
