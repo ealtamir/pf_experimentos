@@ -34,8 +34,8 @@
 #include "BasicDemo.h"
 
 #define POPULATION_SIZE     250
-#define GENERATIONS         3000
-#define VISUAL              false
+#define GENERATIONS         300
+#define VISUAL              true
 
 
 int mainLoop();
@@ -172,7 +172,7 @@ int mainLoop(char* executablePath) {
 //                                        crossoverProbability,
 //                                        crossoverPoints);
     
-    GaChromosomeParams* chromosomeParams = new GaChromosomeParams( 0.08F, 2, false, 0.8F, 2 );
+    GaChromosomeParams* chromosomeParams = new GaChromosomeParams( 0.08F, 2, false, 0.8F, 4 );
     
     //CHROMOSOME CONFIGURATION BLOCK (CCB)
     GaCrossoverOperation*   crossoverMethod = GaCrossoverCatalogue::Instance().GetEntryData("GaMultiValueCrossover");
@@ -211,9 +211,9 @@ int mainLoop(char* executablePath) {
     int selectionSize = 250;
     bool duplicates = false;
     
-    Population::SelectionOperations::GaSelectRandomBestParams selectParams(230, false, 240);
+    Population::SelectionOperations::GaSelectRandomBestParams selectParams(100, false, 150);
     
-    int replacementSize = 230;
+    int replacementSize = 100;
     int bestChromosomesThatRemain = 2;
     Population::ReplacementOperations::GaReplaceElitismParams replaceParams(replacementSize,
                                                                             bestChromosomesThatRemain);
@@ -284,7 +284,6 @@ int main(int argc,char* argv[]) {
 //        BasicDemo* bd = new BasicDemo();
 //        bd->initPhysics();
         PassiveWalkerExperiment* experiment = PassiveWalkerExperiment::getInstance();
-        experiment->getDynamicsWorld()->stepSimulation(1 / 60.f, 0);
         WalkerBody* body = experiment->selectedBody;
         experiment->setCameraDistance(btScalar(5.));
         experiment->setCameraUp(btVector3(0, 15, 0));
