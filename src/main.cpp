@@ -34,8 +34,8 @@
 #include "BasicDemo.h"
 
 #define POPULATION_SIZE     250
-#define GENERATIONS         300
-#define VISUAL              true
+#define GENERATIONS         3000
+#define VISUAL              false
 
 
 int mainLoop();
@@ -161,16 +161,18 @@ int mainLoop(char* executablePath) {
 
     
     // CHROMOSOME PARAMETERS
-    double  mutationProbability = 0.20;
+    double  mutationProbability = 0.8;
     int     numOfMutatedValues = 3;
     bool    onlyAcceptImprovingMutations = false;
-    double  crossoverProbability = 0.9;
-    int     crossoverPoints = 4;
-    GaChromosomeParams* chromosomeParams = new GaChromosomeParams(mutationProbability,
-                                        numOfMutatedValues,
-                                        onlyAcceptImprovingMutations,
-                                        crossoverProbability,
-                                        crossoverPoints);
+    double  crossoverProbability = 0.7;
+    int     crossoverPoints = 2;
+//    GaChromosomeParams* chromosomeParams = new GaChromosomeParams(mutationProbability,
+//                                        numOfMutatedValues,
+//                                        onlyAcceptImprovingMutations,
+//                                        crossoverProbability,
+//                                        crossoverPoints);
+    
+    GaChromosomeParams* chromosomeParams = new GaChromosomeParams( 0.08F, 2, false, 0.8F, 2 );
     
     //CHROMOSOME CONFIGURATION BLOCK (CCB)
     GaCrossoverOperation*   crossoverMethod = GaCrossoverCatalogue::Instance().GetEntryData("GaMultiValueCrossover");
@@ -197,8 +199,8 @@ int mainLoop(char* executablePath) {
     bool    resizablePopulation = false;
     bool    sortedPopulation = false;
     bool    scaledValueFitness = false;
-    int     bestChromosomesToTrack = 3;
-    int     worstChromosomesToTrack = 3;
+    int     bestChromosomesToTrack = 5;
+    int     worstChromosomesToTrack = 5;
     GaPopulationParameters populationParams(populationSize,
                                             resizablePopulation,
                                             sortedPopulation,
@@ -209,22 +211,22 @@ int mainLoop(char* executablePath) {
     int selectionSize = 250;
     bool duplicates = false;
     
-    Population::SelectionOperations::GaSelectDuplicatesParams selectParams(duplicates, selectionSize);
+    Population::SelectionOperations::GaSelectRandomBestParams selectParams(230, false, 240);
     
     int replacementSize = 230;
-    int bestChromosomesThatRemain = 15;
+    int bestChromosomesThatRemain = 2;
     Population::ReplacementOperations::GaReplaceElitismParams replaceParams(replacementSize,
                                                                             bestChromosomesThatRemain);
     
     
-    int numberOfOffsprings = 2;
-    int checkForDuplicates = true;
+    int numberOfOffsprings = 3;
+    int checkForDuplicates = false;
     GaCouplingParams couplingParams(numberOfOffsprings, checkForDuplicates);
     
     GaPopulationConfiguration* populationConfiguration = new GaPopulationConfiguration(
                                     populationParams,
                                     &_ccb->GetFitnessComparator(),
-                                    GaSelectionCatalogue::Instance().GetEntryData("GaSelectRouletteWheel"),
+                                    GaSelectionCatalogue::Instance().GetEntryData("GaSelectRandom"),
                                     &selectParams,
                                     GaReplacementCatalogue::Instance().GetEntryData("GaReplaceWorst"),
                                     &replaceParams,
