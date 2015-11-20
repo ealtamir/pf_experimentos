@@ -34,7 +34,7 @@
 #include "BasicDemo.h"
 
 #define POPULATION_SIZE     250
-#define GENERATIONS         500
+#define GENERATIONS         1000
 #define VISUAL              true
 
 
