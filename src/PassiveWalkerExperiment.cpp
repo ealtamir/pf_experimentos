@@ -10,7 +10,14 @@
 
 #include "PassiveWalkerExperiment.h"
 #include "GenericBodyParameters.h"
+#include "GenericBody.h"
+
 #include "FourierBodyParameters.h"
+#include "FourierBody.h"
+
+#include "CosineDoubleFrecBodyParameters.h"
+#include "CosineDoubleFrecBody.h"
+
 #include "IOTools.h"
 
 #define FIFO_PATHNAME   "/tmp/passive_walker_exp.fifo"
@@ -20,7 +27,7 @@
 #define FITNESS_EXPONENT_CONSTANT 5
 
 
-std::mutex lock;
+std::mutex fitnessLock;
 
 PassiveWalkerExperiment* PassiveWalkerExperiment::walkerInstance;
 
@@ -35,19 +42,21 @@ PassiveWalkerExperiment* PassiveWalkerExperiment::getInstance() {
 PassiveWalkerExperiment::PassiveWalkerExperiment() {}
 
 PassiveWalkerExperiment::~PassiveWalkerExperiment() {
-	delete body;
+	delete selectedBody;
     delete params;
 }
 
 float PassiveWalkerExperiment::getFitness(const std::vector<double> vals) {
     
     double fitness = 0;
-    lock.lock();
+    fitnessLock.lock();
     PassiveWalkerExperiment* experiment = PassiveWalkerExperiment::getInstance();
-    experiment->setBodyActuatorValues(vals);
+    WalkerBody* body = experiment->selectedBody;
+//    experiment->setBodyActuatorValues(vals);
+    body->setActuatorValues(vals);
     experiment->simulate();
     fitness = experiment->getHeight() * experiment->getDirection() * experiment->getVelocity();
-    lock.unlock();
+    fitnessLock.unlock();
 //    std::cout << "Height: " << experiment->getHeight() << std::endl;
 //    std::cout << "Direction: " << experiment->getDirection() << std::endl;
 //    std::cout << "Velocity: " << experiment->getVelocity() << std::endl;
@@ -62,9 +71,16 @@ float PassiveWalkerExperiment::getFitness(const std::vector<double> vals) {
 }
 
 void PassiveWalkerExperiment::initializeBodies() {
-    params = new GenericBodyParameters();
-//    params = new FourierBodyParameters();
-    body = new WalkerBody(m_dynamicsWorld, *params);
+    if (BODY_TYPE == BodyType::generic) {
+        params = new GenericBodyParameters();
+        selectedBody = new GenericBody(m_dynamicsWorld, *params);
+    } else if (BODY_TYPE == BodyType::fourier) {
+        params = new FourierBodyParameters();
+        selectedBody = new FourierBody(m_dynamicsWorld, *params);
+    } else {
+        params = new CosineDoubleFrecBodyParameters();
+        selectedBody = new CosineDoubleFrecBody(m_dynamicsWorld, *params);
+    }
 }
 
 void PassiveWalkerExperiment::initObjects() {
@@ -74,7 +90,7 @@ void PassiveWalkerExperiment::initObjects() {
 void PassiveWalkerExperiment::worldStep() {
     btDynamicsWorld* w = getDynamicsWorld();
     w->stepSimulation(1 / 60.f);
-    body->actuate(timeCount, 0);
+    selectedBody->actuate(timeCount, 0);
     timeCount += 1. / 60.;
 }
 

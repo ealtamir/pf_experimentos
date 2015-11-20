@@ -10,13 +10,19 @@
 #define __test__GenericActuator__
 
 #include <stdio.h>
+#include <vector>
 #include "Actuator.h"
+
+enum GenericActuatorParams {
+    
+};
 
 class GenericActuator : public Actuator {
     
 public:
     GenericActuator(bool isLeft = false);
 
+    virtual void setActuatorValues(double vals[]);
     
 protected:
     btVector3 actuatorFunc(double t, int stage);

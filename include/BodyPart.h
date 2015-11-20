@@ -20,6 +20,8 @@ public:
     
     void actuate(double t, int stage);
     
+    Actuator* getActuator() { return actuator; }
+    
 //    // Generic
     void setActuatorValues(double sin_ampl, double cos_ampl, double sin_freq,
                            double cos_freq, double phase, double indTerm);

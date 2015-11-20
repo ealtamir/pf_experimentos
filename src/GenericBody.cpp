@@ -4,148 +4,38 @@
 #include "LegBodyGroup.h"
 #include "TorsoBodyGroup.h"
 #include "ConstraintBuilder.h"
+#include "GenericActuator.h"
 
 
-GenericBody::GenericBody(btDynamicsWorld* world, BodyParameters &params) : Body::Body(world) {
-    // Contains nothing
+GenericBody::GenericBody(btDynamicsWorld* world, BodyParameters& params) : WalkerBody(world, params) {
+    numberOfParams = 12;
 }
 
-btTypedConstraint*
-GenericBody::createLeftShoulder(BodyPart* leftArm, BodyPart* torso,
-                                BodyParameters &params) {
-    ConstraintParams constraintParams = {
-        torso,
-        leftArm,
-        params.leftShoulderTorsoOffset,
-        params.leftShoulderLeftArmOffset,
-        nullptr,
-        &params.leftShoulderLeftArmEulerZYX,
-        params.leftShoulderAngularLowerLimit,
-        params.leftShoulderAngularUpperLimit
+void GenericBody::setActuatorValues(std::vector<double> vals) {
+    
+    GenericActuator* actuator;
+    double values[30] = {
+        vals[0], vals[1], vals[2], vals[3], vals[4], vals[5],
+        vals[6], vals[7], vals[8], vals[9], vals[10], vals[11]
     };
     
-    btTypedConstraint* constraint = ConstraintBuilder::create6DoFConstraint(constraintParams);
-    constraints.push_back(constraint);
-    world->addConstraint(constraint, true);
-    return constraint;
-}
-
-btTypedConstraint*
-GenericBody::createRightShoulder(BodyPart* rightArm, BodyPart* torso,
-                                 BodyParameters &params) {
+    BodyPart* leftLowerLeg = getLowerLeftLeg();
+    actuator = dynamic_cast<GenericActuator*>(leftLowerLeg->getActuator());
+    actuator->setActuatorValues(values);
     
-    ConstraintParams constraintParams = {
-        torso,
-        rightArm,
-        params.rightShoulderTorsoOffset,
-        params.rightShoulderRightArmOffset,
-        nullptr,
-        &params.rightShoulderRightArmEulerZYX,
-        params.rightShoulderAngularLowerLimit,
-        params.rightShoulderAngularUpperLimit
-    };
+    BodyPart* leftUpperLeg = getUpperLeftLeg();
+    actuator = dynamic_cast<GenericActuator*>(leftUpperLeg->getActuator());
+    actuator->setActuatorValues(&values[6]);
+
+    values[4] += SIMD_PI;
+    values[10] += SIMD_PI;
     
-    btTypedConstraint* constraint = ConstraintBuilder::create6DoFConstraint(constraintParams);
-    constraints.push_back(constraint);
-    world->addConstraint(constraint, true);
-    return constraint;
-}
-
-btTypedConstraint*
-GenericBody::createLeftHip(BodyPart* leftHip, BodyPart* torso,
-                           BodyParameters &params) {
-
-    ConstraintParams constraintParams = {
-        torso,
-        leftHip,
-        params.leftHipTorsoOffset,
-        params.leftHipOffset,
-        nullptr,
-        nullptr,
-        params.leftHipAngularLowerLimit,
-        params.leftHipAngularUpperLimit
-    };
+    BodyPart* rightLowerLeg = getLowerRightLeg();
+    actuator = dynamic_cast<GenericActuator*>(rightLowerLeg->getActuator());
+    actuator->setActuatorValues(values);
     
-    btTypedConstraint* constraint = ConstraintBuilder::create6DoFConstraint(constraintParams);
-    constraints.push_back(constraint);
-    world->addConstraint(constraint, true);
-    return constraint;
-}
-
-btTypedConstraint*
-GenericBody::createRightHip(BodyPart* rightHip, BodyPart* torso,
-                            BodyParameters &params) {
-
-    ConstraintParams constraintParams = {
-        torso,
-        rightHip,
-        params.rightHipTorsoOffset,
-        params.rightHipOffset,
-        nullptr,
-        nullptr,
-        params.rightHipAngularLowerLimit,
-        params.rightHipAngularUpperLimit
-    };
+    BodyPart* rightUpperLeg = getUpperRightLeg();
+    actuator = dynamic_cast<GenericActuator*>(rightUpperLeg->getActuator());
+    actuator->setActuatorValues(&values[6]);
     
-    btTypedConstraint* constraint = ConstraintBuilder::create6DoFConstraint(constraintParams);
-    
-    constraints.push_back(constraint);
-    world->addConstraint(constraint, true);
-    return constraint;
-}
-
-BodyGroup*
-GenericBody::createLeftArm(btDynamicsWorld* world,
-                           BodyParameters &params) {
-    BodyGroup* left_arm = new ArmBodyGroup(world,
-                                           params,
-                                           leftOffset);
-    bodyGroups.push_back(left_arm);
-    left_arm->initBodyGroup();
-    return left_arm;
-}
-
-BodyGroup*
-GenericBody::createRightArm(btDynamicsWorld* world,
-                            BodyParameters &params) {
-    BodyGroup* right_arm = new ArmBodyGroup(world,
-                                            params,
-                                            rightOffset);
-    bodyGroups.push_back(right_arm);
-    right_arm->initBodyGroup();
-    return right_arm;
-}
-
-BodyGroup*
-GenericBody::createLeftLeg(btDynamicsWorld* world,
-                           BodyParameters &params) {
-    BodyGroup* left_leg = new LegBodyGroup(world,
-                                           params,
-                                           leftOffset, true);
-    bodyGroups.push_back(left_leg);
-    left_leg->initBodyGroup();
-    return left_leg;
-}
-
-BodyGroup*
-GenericBody::createRightLeg(btDynamicsWorld* world,
-                            BodyParameters &params) {
-    BodyGroup* right_leg = new LegBodyGroup(world,
-                                            params,
-                                            rightOffset);
-    bodyGroups.push_back(right_leg);
-    right_leg->initBodyGroup();
-    return right_leg;
-}
-
-BodyGroup*
-GenericBody::createTorso(btDynamicsWorld* world,
-                         BodyParameters &params) {
-    
-    BodyGroup* torso = new TorsoBodyGroup(world,
-                                          params,
-                                          rightOffset);
-    bodyGroups.push_back(torso);
-    torso->initBodyGroup();
-    return torso;
 }
