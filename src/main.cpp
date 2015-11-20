@@ -34,7 +34,7 @@
 #include "BasicDemo.h"
 
 #define POPULATION_SIZE     55
-#define GENERATIONS         10
+#define GENERATIONS         10000
 #define VISUAL              true
 
 
@@ -161,7 +161,7 @@ int mainLoop(char* executablePath) {
 
     
     // CHROMOSOME PARAMETERS
-    double  mutationProbability = 0.3;
+    double  mutationProbability = 0.1;
     int     numOfMutatedValues = 2;
     bool    onlyAcceptImprovingMutations = false;
     double  crossoverProbability = 0.8;
