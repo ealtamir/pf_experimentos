@@ -41,6 +41,6 @@ BodyPart* WalkerBody::getLowerRightLeg() {
 }
 
 BodyPart* WalkerBody::getUpperRightLeg() {
-    return bodyGroups[1]->getBodyParts()[0];
+    return bodyGroups[1]->getBodyParts()[1];
 }
 

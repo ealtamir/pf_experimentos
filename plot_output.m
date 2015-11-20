@@ -1,10 +1,10 @@
 % Put this inside bin/Debug and execute it to plot the mean per generation
 
-load 'output.dat';
+data = csvread('output.dat');
 
-generations = 1000;
-populationSize = 55;
-fitneses = output(:,2);
+generations = 300;
+populationSize = 250;
+fitneses = data(:,2);
 boxplotMatrix = zeros(populationSize, generations);
 'Max Fitness'
 max(fitneses)
@@ -15,5 +15,9 @@ for i = 1:generations
     end
 end
 
-%boxplot(boxplotMatrix)
+% boxplot(boxplotMatrix)
+hold on
+plot(1:generations, max(boxplotMatrix))
 plot(1:generations, mean(boxplotMatrix))
+errorbar(1:generations, mean(boxplotMatrix), -std(boxplotMatrix)/2, std(boxplotMatrix)/2)
+legend('max', 'mean')

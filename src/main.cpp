@@ -33,8 +33,8 @@
 
 #include "BasicDemo.h"
 
-#define POPULATION_SIZE     55
-#define GENERATIONS         10000
+#define POPULATION_SIZE     250
+#define GENERATIONS         300
 #define VISUAL              true
 
 
@@ -130,9 +130,9 @@ int mainLoop(char* executablePath) {
     cout << "Starting GA runloop..." << endl;
     GaInitialize();
     
-    GaValueIntervalBounds<double> amplitudeLower(-30, 35);
-    GaValueIntervalBounds<double> amplitudeUpper(-50, 55);
-    GaValueIntervalBounds<double> frequency(0.01, 5);
+    GaValueIntervalBounds<double> amplitudeLower(1, 25);
+    GaValueIntervalBounds<double> amplitudeUpper(1, 55);
+    GaValueIntervalBounds<double> frequency(0.01, 3);
     GaValueIntervalBounds<double> phase(-SIMD_PI, SIMD_PI);
     GaValueIntervalBounds<double> independentTerm(-5, 5);
     
@@ -161,16 +161,18 @@ int mainLoop(char* executablePath) {
 
     
     // CHROMOSOME PARAMETERS
-    double  mutationProbability = 0.1;
-    int     numOfMutatedValues = 2;
+    double  mutationProbability = 0.8;
+    int     numOfMutatedValues = 3;
     bool    onlyAcceptImprovingMutations = false;
-    double  crossoverProbability = 0.8;
-    int     crossoverPoints = 3;
-    GaChromosomeParams* chromosomeParams = new GaChromosomeParams(mutationProbability,
-                                        numOfMutatedValues,
-                                        onlyAcceptImprovingMutations,
-                                        crossoverProbability,
-                                        crossoverPoints);
+    double  crossoverProbability = 0.7;
+    int     crossoverPoints = 2;
+//    GaChromosomeParams* chromosomeParams = new GaChromosomeParams(mutationProbability,
+//                                        numOfMutatedValues,
+//                                        onlyAcceptImprovingMutations,
+//                                        crossoverProbability,
+//                                        crossoverPoints);
+    
+    GaChromosomeParams* chromosomeParams = new GaChromosomeParams( 0.08F, 2, false, 0.8F, 4 );
     
     //CHROMOSOME CONFIGURATION BLOCK (CCB)
     GaCrossoverOperation*   crossoverMethod = GaCrossoverCatalogue::Instance().GetEntryData("GaMultiValueCrossover");
@@ -197,8 +199,8 @@ int mainLoop(char* executablePath) {
     bool    resizablePopulation = false;
     bool    sortedPopulation = false;
     bool    scaledValueFitness = false;
-    int     bestChromosomesToTrack = 3;
-    int     worstChromosomesToTrack = 3;
+    int     bestChromosomesToTrack = 5;
+    int     worstChromosomesToTrack = 5;
     GaPopulationParameters populationParams(populationSize,
                                             resizablePopulation,
                                             sortedPopulation,
@@ -206,25 +208,25 @@ int mainLoop(char* executablePath) {
                                             bestChromosomesToTrack,
                                             worstChromosomesToTrack);
     
-    int selectionSize = 55;
+    int selectionSize = 250;
     bool duplicates = false;
     
-    Population::SelectionOperations::GaSelectDuplicatesParams selectParams(duplicates, selectionSize);
+    Population::SelectionOperations::GaSelectRandomBestParams selectParams(100, false, 150);
     
-    int replacementSize = 45;
-    int bestChromosomesThatRemain = 3;
+    int replacementSize = 100;
+    int bestChromosomesThatRemain = 2;
     Population::ReplacementOperations::GaReplaceElitismParams replaceParams(replacementSize,
                                                                             bestChromosomesThatRemain);
     
     
-    int numberOfOffsprings = 2;
-    int checkForDuplicates = true;
+    int numberOfOffsprings = 3;
+    int checkForDuplicates = false;
     GaCouplingParams couplingParams(numberOfOffsprings, checkForDuplicates);
     
     GaPopulationConfiguration* populationConfiguration = new GaPopulationConfiguration(
                                     populationParams,
                                     &_ccb->GetFitnessComparator(),
-                                    GaSelectionCatalogue::Instance().GetEntryData("GaSelectRouletteWheel"),
+                                    GaSelectionCatalogue::Instance().GetEntryData("GaSelectRandom"),
                                     &selectParams,
                                     GaReplacementCatalogue::Instance().GetEntryData("GaReplaceWorst"),
                                     &replaceParams,
@@ -237,7 +239,7 @@ int mainLoop(char* executablePath) {
                                                  populationConfiguration);
     
     
-    int numberOfWorkers = 8;
+    int numberOfWorkers = 1;
     GaMultithreadingAlgorithmParams algParam(numberOfWorkers);
     Algorithm::SimpleAlgorithms::GaIncrementalAlgorithm* algorithm = new Algorithm::SimpleAlgorithms::GaIncrementalAlgorithm( population, algParam );
     
@@ -292,7 +294,7 @@ int main(int argc,char* argv[]) {
 //        std::vector<double> vals(arr, arr + sizeof(arr) / sizeof(arr[0]));
         
         for (int i = 0; i < vals.size(); i++) {
-//            std::cout << "Values: " << vals[i] << std::endl;
+            std::cout << "Values: " << vals[i] << std::endl;
         }
 //        const std::vector<double> arr = {10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10};
 //        const std::vector<double> arr = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
