@@ -92,6 +92,9 @@ void PassiveWalkerExperiment::worldStep() {
     w->stepSimulation(1 / 60.f, 10, 1 / 500.);
     selectedBody->actuate(timeCount, 0);
     timeCount += 1. / 60.;
+    btTransform v;
+    selectedBody->getLowerRightLeg()->getRigidBody()->getMotionState()->getWorldTransform(v);
+    printf("%f, %f, %f\n",v.getOrigin().getX(),v.getOrigin().getY(),v.getOrigin().getZ());
 }
 
 bool PassiveWalkerExperiment::stopExperiment() {
