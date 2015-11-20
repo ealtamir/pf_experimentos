@@ -33,7 +33,8 @@
 
 #include "BasicDemo.h"
 
-#define POPULATION_SIZE     250
+#define POPULATION_SIZE     55
+#define REPLACEMENT_PERCENTAGE 90
 #define GENERATIONS         1000
 #define VISUAL              true
 
@@ -299,7 +300,8 @@ int main(int argc,char* argv[]) {
 //        const std::vector<double> arr = {10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10};
 //        const std::vector<double> arr = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
         body->setActuatorValues(vals);
-        return glutmain(argc, argv, 800, 600, "Experiment",experiment);
+        experiment->simulate();
+        //return glutmain(argc, argv, 800, 600, "Experiment",experiment);
 //        return glutmain(argc, argv, 800, 600, "BasicDemo",bd);
     } else {
         clearFile("output.dat");
