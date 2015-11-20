@@ -33,9 +33,14 @@
 
 #include "BasicDemo.h"
 
-#define POPULATION_SIZE     250
-#define GENERATIONS         1000
-#define VISUAL              true
+// NEW GA
+#include <ga/ga.h>
+#include <ga/GARealGenome.h>
+#include <ga/GARealGenome.C>
+
+#define POPULATION_SIZE     50
+#define GENERATIONS         100
+#define VISUAL              false
 
 
 int mainLoop();
@@ -161,7 +166,7 @@ int mainLoop(char* executablePath) {
 
     
     // CHROMOSOME PARAMETERS
-    double  mutationProbability = 0.8;
+    double  mutationProbability = 0.1;
     int     numOfMutatedValues = 3;
     bool    onlyAcceptImprovingMutations = false;
     double  crossoverProbability = 0.7;
@@ -208,13 +213,13 @@ int mainLoop(char* executablePath) {
                                             bestChromosomesToTrack,
                                             worstChromosomesToTrack);
     
-    int selectionSize = 250;
+    int selectionSize = 50;
     bool duplicates = false;
     
-    Population::SelectionOperations::GaSelectRandomBestParams selectParams(100, false, 150);
+    Population::SelectionOperations::GaSelectRandomBestParams selectParams(30, false, 40);
     
-    int replacementSize = 100;
-    int bestChromosomesThatRemain = 2;
+    int replacementSize = 10;
+    int bestChromosomesThatRemain = 1;
     Population::ReplacementOperations::GaReplaceElitismParams replaceParams(replacementSize,
                                                                             bestChromosomesThatRemain);
     
@@ -279,7 +284,118 @@ double getTimeElapsed(){
     return (after.tv_sec * 1000 + after.tv_usec / 1000) - time_begin;
 }
 
+// This objective function tries to maximize the occurance of the first and
+// fourth alleles.  It tries to put the first allele in the even elements and
+// the fourth allele in the odd elements.
+
+float
+Objective1(GAGenome& g)
+{
+    GARealGenome& genome = (GARealGenome&)g;
+    float value=0.0;
+    for(int i=0; i<genome.length(); i++){
+        if(i%2 == 0 && genome.gene(i) == genome.alleleset().allele(0))
+            value += 1.0;
+        if(i%2 != 0 && genome.gene(i) == genome.alleleset().allele(3))
+            value += 1.0;
+    }
+    return value;
+}
+
+
+// This objective function tries to generate a straight - it gives higher score
+// to a genome whose elements descend in value.  If two genomes both have
+// elements in strictly descending order, they get the same score regardless
+// of their values.
+
+float
+Objective2(GAGenome& g)
+{
+    GARealGenome& genome = (GARealGenome&)g;
+    float value=0.0;
+    for(int i=1; i<genome.length(); i++)
+        if(genome.gene(i) < genome.gene(i-1)) value += 1.0;
+    return value;
+}
+
+
+// This objective function generates a straight by giving higher score to a
+// genome whose elements ascend in value.
+
+float
+Objective3(GAGenome& g)
+{
+    GARealGenome& genome = (GARealGenome&)g;
+    float value=0.0;
+    for(int i=1; i<genome.length(); i++)
+        if(genome.gene(i) > genome.gene(i-1)) value += 1.0;
+    return value;
+}
+
+
+// This objective tries to maximize each element in the genome.
+
+float
+Objective4(GAGenome& g)
+{
+    GARealGenome& genome = (GARealGenome&)g;
+    float value=0.0;
+    for(int i=0; i<genome.length(); i++)
+        value += genome.gene(i);
+    return value;
+}
+
 int main(int argc,char* argv[]) {
+    cout << "Example 21\n\n";
+    cout << "This example shows various uses of the allele set object\n";
+    cout << "in combination with the real number genome.\n\n"; cout.flush();
+    
+    // See if we've been given a seed to use (for testing purposes).  When you
+    // specify a random seed, the evolution will be exactly the same each time
+    // you use that seed number.
+    
+    unsigned int seed = 0;
+    for(int ii=1; ii<argc; ii++) {
+        if(strcmp(argv[ii++],"seed") == 0) {
+            seed = atoi(argv[ii]);
+        }
+    }
+    
+    // This genome is created using an array of allele sets.  This means that each
+    // element of the genome will assume a value in its corresponding allele set.
+    // For example, since the first allele set is [0,10], the first element of the
+    // genome will be in [0,10].  Notice that you can add allele sets in many other
+    // ways than those shown.
+    
+    GARealAlleleSetArray alleles4;
+    alleles4.add(0,10);
+    alleles4.add(50,100);
+    alleles4.add(-10,-5);
+    alleles4.add(-0.01,-0.0001);
+    alleles4.add(10000,11000);
+    GARealGenome genome4(alleles4, Objective4);
+    
+    
+    // Now that we have the genomes, create a parameter list that will be used for
+    // all of the genetic algorithms and all of the genomes.
+    
+    GAParameterList params;
+    GASteadyStateGA::registerDefaultParameters(params);
+    params.set(gaNnGenerations, 100);
+    params.set(gaNpopulationSize, 110);
+    params.set(gaNscoreFrequency, 1);
+    // generation  TAB  mean  TAB  max  TAB  min  TAB deviation  TAB  diversity NEWLINE
+    params.set(gaNselectScores, (int)GAStatistics::AllScores);
+    params.set(gaNflushFrequency, 1);
+    params.parse(argc, argv, gaFalse);
+    
+    GASteadyStateGA ga4(genome4);
+    ga4.parameters(params);
+    ga4.set(gaNscoreFilename, "bog4.dat");
+    cout << "\nrunning ga number 4 (maximize each gene)..." << endl;
+    ga4.evolve();
+    cout << "the ga generated:\n" << ga4.statistics().bestIndividual() << endl;
+    
     if(VISUAL) {
 //        BasicDemo* bd = new BasicDemo();
 //        bd->initPhysics();
