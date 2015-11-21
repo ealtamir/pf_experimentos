@@ -153,6 +153,11 @@ int mainLoop(char* executablePath) {
         &amplitudeLowerValueSet, &amplitudeUpperValueSet, &amplitudeLowerValueSet, &amplitudeUpperValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet,
         &amplitudeLowerValueSet, &amplitudeUpperValueSet, &amplitudeLowerValueSet, &amplitudeUpperValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet
     };
+#elif PARTIDA
+    GaIntervalValueSet<double> *multiValueSet[VALUES_SIZE] = {
+        &amplitudeLowerValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet,
+        &amplitudeUpperValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet
+    };
 #else
     GaIntervalValueSet<double> *multiValueSet[VALUES_SIZE] = {
         &amplitudeLowerValueSet, &frequencyValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet,
@@ -300,8 +305,8 @@ int main(int argc,char* argv[]) {
 //        const std::vector<double> arr = {10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10};
 //        const std::vector<double> arr = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
         body->setActuatorValues(vals);
-        experiment->simulate();
-        //return glutmain(argc, argv, 800, 600, "Experiment",experiment);
+        //experiment->simulate();
+        return glutmain(argc, argv, 800, 600, "Experiment",experiment);
 //        return glutmain(argc, argv, 800, 600, "BasicDemo",bd);
     } else {
         clearFile("output.dat");

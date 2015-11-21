@@ -20,7 +20,8 @@ CapsuleBodyPart::CapsuleBodyPart(btScalar r,
                                  btScalar m,
                                  const btTransform &trans,
                                  Actuator* actuator, btVector3 centerofMass) {
-    this->actuator = actuator;
+    this->actuator.push_back(actuator);
+    
     
     btCollisionShape* capsule = new btCapsuleShape(r, h);
     btCompoundShape* compound = new btCompoundShape();

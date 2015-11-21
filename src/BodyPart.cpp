@@ -6,19 +6,20 @@ BodyPart::~BodyPart() {
 }
 
 void BodyPart::actuate(double t, int stage) {
-    if (actuator != nullptr) {
-        body->applyTorque(actuator->eval(t, stage));
+    
+    if (actuator.size()>=(stage+1) && actuator[stage] != nullptr) {
+        body->applyTorque(actuator[stage]->eval(t, stage));
     }
 }
 
 //// Generic
 void BodyPart::setActuatorValues(double sin_ampl, double cos_ampl, double sin_freq,
                                  double cos_freq, double phase, double indTerm) {
-    if (actuator == NULL) {
+    if (actuator[0] == NULL) {
         return;
     }
     double params[6] = {sin_ampl, cos_ampl, sin_freq, cos_freq, phase, indTerm};
-    actuator->setParameters(params);
+    actuator[0]->setParameters(params);
 
 }
 

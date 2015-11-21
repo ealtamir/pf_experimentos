@@ -15,6 +15,9 @@
 #include "FourierBodyParameters.h"
 #include "FourierBody.h"
 
+#include "PartidaBodyParameters.h"
+#include "PartidaBody.h"
+
 #include "CosineDoubleFrecBodyParameters.h"
 #include "CosineDoubleFrecBody.h"
 
@@ -77,6 +80,9 @@ void PassiveWalkerExperiment::initializeBodies() {
     } else if (BODY_TYPE == BodyType::fourier) {
         params = new FourierBodyParameters();
         selectedBody = new FourierBody(m_dynamicsWorld, *params);
+    } else if (BODY_TYPE == BodyType::partida) {
+        params = new PartidaBodyParameters();
+        selectedBody = new PartidaBody(m_dynamicsWorld, *params);
     } else {
         params = new CosineDoubleFrecBodyParameters();
         selectedBody = new CosineDoubleFrecBody(m_dynamicsWorld, *params);

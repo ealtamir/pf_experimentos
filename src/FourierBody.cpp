@@ -28,22 +28,22 @@ void FourierBody::setActuatorValues(std::vector<double> vals) {
     };
     
     BodyPart* leftLowerLeg = getLowerLeftLeg();
-    actuator = dynamic_cast<FourierActuator*>(leftLowerLeg->getActuator());
+    actuator = dynamic_cast<FourierActuator*>(leftLowerLeg->getActuator(0));
     actuator->setActuatorValues(values);
     
     BodyPart* leftUpperLeg = getUpperLeftLeg();
-    actuator = dynamic_cast<FourierActuator*>(leftUpperLeg->getActuator());
+    actuator = dynamic_cast<FourierActuator*>(leftUpperLeg->getActuator(0));
     actuator->setActuatorValues(&values[6]);
     
     values[6] += SIMD_PI;
     values[13] += SIMD_PI;
     
     BodyPart* rightLowerLeg = getLowerRightLeg();
-    actuator = dynamic_cast<FourierActuator*>(rightLowerLeg->getActuator());
+    actuator = dynamic_cast<FourierActuator*>(rightLowerLeg->getActuator(0));
     actuator->setActuatorValues(values);
     
     BodyPart* rightUpperLeg = getUpperRightLeg();
-    actuator = dynamic_cast<FourierActuator*>(rightUpperLeg->getActuator());
+    actuator = dynamic_cast<FourierActuator*>(rightUpperLeg->getActuator(0));
     actuator->setActuatorValues(&values[6]);
     
 }

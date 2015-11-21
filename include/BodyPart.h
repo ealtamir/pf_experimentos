@@ -3,6 +3,7 @@
 
 #include <BulletDynamics/btBulletDynamicsCommon.h>
 #include <string>
+#include <vector>
 #include "Actuator.h"
 
 const float LINEAR_DAMPING = 0.05;
@@ -20,7 +21,7 @@ public:
     
     void actuate(double t, int stage);
     
-    Actuator* getActuator() { return actuator; }
+    Actuator* getActuator(int index) { return actuator[index]; }
     
 //    // Generic
     void setActuatorValues(double sin_ampl, double cos_ampl, double sin_freq,
@@ -36,7 +37,7 @@ protected:
     
 	std::string identifier;
     
-    Actuator* actuator = nullptr;
+    std::vector<Actuator*> actuator;
 
 };
 

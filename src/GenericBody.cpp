@@ -20,22 +20,22 @@ void GenericBody::setActuatorValues(std::vector<double> vals) {
     };
     
     BodyPart* leftLowerLeg = getLowerLeftLeg();
-    actuator = dynamic_cast<GenericActuator*>(leftLowerLeg->getActuator());
+    actuator = dynamic_cast<GenericActuator*>(leftLowerLeg->getActuator(0));
     actuator->setActuatorValues(values);
     
     BodyPart* leftUpperLeg = getUpperLeftLeg();
-    actuator = dynamic_cast<GenericActuator*>(leftUpperLeg->getActuator());
+    actuator = dynamic_cast<GenericActuator*>(leftUpperLeg->getActuator(0));
     actuator->setActuatorValues(&values[6]);
 
     values[4] += SIMD_PI;
     values[10] += SIMD_PI;
     
     BodyPart* rightLowerLeg = getLowerRightLeg();
-    actuator = dynamic_cast<GenericActuator*>(rightLowerLeg->getActuator());
+    actuator = dynamic_cast<GenericActuator*>(rightLowerLeg->getActuator(0));
     actuator->setActuatorValues(values);
     
     BodyPart* rightUpperLeg = getUpperRightLeg();
-    actuator = dynamic_cast<GenericActuator*>(rightUpperLeg->getActuator());
+    actuator = dynamic_cast<GenericActuator*>(rightUpperLeg->getActuator(0));
     actuator->setActuatorValues(&values[6]);
     
 }
