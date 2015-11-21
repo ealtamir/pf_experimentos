@@ -29,6 +29,10 @@ btVector3 FourierActuator::actuatorFunc(double t, int stage) {
     return btVector3(senos + cosenos + parameters[IND_TERM], 0, 0);
 }
 
+bool FourierActuator::isFirstStep(double t){
+    return false;
+}
+
 void FourierActuator::setActuatorValues(double vals[]) {
     parameters[A1] = vals[A1];
     parameters[A2] = vals[A2];

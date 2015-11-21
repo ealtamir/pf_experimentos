@@ -96,7 +96,15 @@ void PassiveWalkerExperiment::initObjects() {
 void PassiveWalkerExperiment::worldStep() {
     btDynamicsWorld* w = getDynamicsWorld();
     w->stepSimulation(1 / 60.f, 10, 1 / 500.);
-    selectedBody->actuate(timeCount, 0);
+    if(BODY_TYPE==BodyType::partida){
+        PartidaBody* partida= dynamic_cast<PartidaBody*>(selectedBody);
+        partida->actuate(timeCount, 0);
+    }
+    else{
+        selectedBody->actuate(timeCount, 0);
+    }
+
+    
     timeCount += 1. / 60.;
     btTransform v;
     selectedBody->getLowerRightLeg()->getRigidBody()->getMotionState()->getWorldTransform(v);

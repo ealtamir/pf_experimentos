@@ -11,6 +11,8 @@ public:
     
     virtual void setActuatorValues(double vals[]);
     
+    virtual bool isFirstStep(double t);
+    
 protected:
     virtual btVector3 actuatorFunc(double t, int stage);
 };

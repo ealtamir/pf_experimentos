@@ -30,6 +30,10 @@ btVector3 GenericActuator::actuatorFunc(double t, int stage) {
     return btVector3(f, 0, 0);
 }
 
+bool GenericActuator::isFirstStep(double t){
+    return false;
+}
+
 void GenericActuator::setActuatorValues(double vals[]) {
     parameters[SIN_AMPLITUD] = vals[SIN_AMPLITUD];
     parameters[COS_AMPLITUD] = vals[COS_AMPLITUD];

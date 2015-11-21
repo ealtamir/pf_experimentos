@@ -19,6 +19,8 @@ class PartidaBody : public WalkerBody {
 public:
     PartidaBody(btDynamicsWorld* world, BodyParameters &params);
     
+    void actuate(double t, int stage);
+    
     virtual void setActuatorValues(std::vector<double> vals);
 };
 

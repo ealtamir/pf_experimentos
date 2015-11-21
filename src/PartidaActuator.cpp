@@ -25,6 +25,10 @@ btVector3 PartidaActuator::actuatorFunc(double t, int stage) {
     return btVector3(senos + parameters[IND_TERM], 0, 0);
 }
 
+bool PartidaActuator::isFirstStep(double t){
+    return t<(parameters[W]/2);
+}
+
 void PartidaActuator::setActuatorValues(double vals[]) {
     parameters[A] = vals[A];
     parameters[W] = vals[W];

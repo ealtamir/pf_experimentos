@@ -21,6 +21,8 @@ class GenericActuator : public Actuator {
     
 public:
     GenericActuator(bool isLeft = false);
+    
+    virtual bool isFirstStep(double t);
 
     virtual void setActuatorValues(double vals[]);
     

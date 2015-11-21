@@ -21,6 +21,14 @@ PartidaBody::PartidaBody(btDynamicsWorld* world, BodyParameters& params) : Walke
     numberOfParams = 8;
 }
 
+void
+PartidaBody::actuate(double t, int stage) {
+    
+    for (BodyGroup* group : bodyGroups) {
+        group->actuate(t, 1);
+    }
+}
+
 void PartidaBody::setActuatorValues(std::vector<double> vals) {
     
     PartidaActuator* actuator;

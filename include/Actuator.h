@@ -25,6 +25,8 @@ public:
     
     void setParameters(double *parameters);
     
+    virtual bool isFirstStep(double t) = 0;
+    
     virtual void setActuatorValues(double vals[]) = 0;
     
 protected:

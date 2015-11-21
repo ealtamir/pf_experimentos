@@ -18,6 +18,8 @@ class PartidaActuator : public Actuator {
 public:
     PartidaActuator(bool isLeft = false);
     
+    virtual bool isFirstStep(double t);
+    
     virtual void setActuatorValues(double vals[]);
     
 protected:

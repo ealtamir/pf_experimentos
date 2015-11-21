@@ -29,6 +29,10 @@ btVector3 CosineDoubleFrecActuator::actuatorFunc(double t, int stage) {
     return resp;
 }
 
+bool CosineDoubleFrecActuator::isFirstStep(double t){
+    return false;
+}
+
 void CosineDoubleFrecActuator::setActuatorValues(double vals[]) {
     parameters[A] = vals[A];
     parameters[W1] = vals[W1];
