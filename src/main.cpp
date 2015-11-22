@@ -40,7 +40,7 @@
 
 #define POPULATION_SIZE     50
 #define GENERATIONS         100
-#define VISUAL              false
+#define VISUAL              true
 
 
 int mainLoop();
@@ -339,10 +339,11 @@ float
 Objective4(GAGenome& g)
 {
     GARealGenome& genome = (GARealGenome&)g;
-    float value=0.0;
-    for(int i=0; i<genome.length(); i++)
-        value += genome.gene(i);
-    return value;
+    static double arr[] = { -20.8932, 9.77636, 0.91726, 0.180875, 1.95841, -6.66473, -7.68414, 105.134, 0.517725, 0.491385 };
+    for(int i=0; i < genome.length(); i++)
+        arr[i] = genome.gene(i);
+    std::vector<double> vals(arr, arr + sizeof(arr) / sizeof(arr[0]));
+    return PassiveWalkerExperiment::getFitness(vals);
 }
 
 int main(int argc,char* argv[]) {
@@ -368,11 +369,16 @@ int main(int argc,char* argv[]) {
     // ways than those shown.
     
     GARealAlleleSetArray alleles4;
-    alleles4.add(0,10);
-    alleles4.add(50,100);
-    alleles4.add(-10,-5);
-    alleles4.add(-0.01,-0.0001);
-    alleles4.add(10000,11000);
+    alleles4.add(0,50);
+    alleles4.add(0.01, 5);
+    alleles4.add(0.01, 5);
+    alleles4.add(-SIMD_PI,SIMD_PI);
+    alleles4.add(-10,10);
+    alleles4.add(0,50);
+    alleles4.add(0.01, 5);
+    alleles4.add(0.01, 5);
+    alleles4.add(-SIMD_PI,SIMD_PI);
+    alleles4.add(-10,10);
     GARealGenome genome4(alleles4, Objective4);
     
     
@@ -381,7 +387,7 @@ int main(int argc,char* argv[]) {
     
     GAParameterList params;
     GASteadyStateGA::registerDefaultParameters(params);
-    params.set(gaNnGenerations, 100);
+    params.set(gaNnGenerations, 200);
     params.set(gaNpopulationSize, 110);
     params.set(gaNscoreFrequency, 1);
     // generation  TAB  mean  TAB  max  TAB  min  TAB deviation  TAB  diversity NEWLINE
@@ -396,6 +402,14 @@ int main(int argc,char* argv[]) {
     ga4.evolve();
     cout << "the ga generated:\n" << ga4.statistics().bestIndividual() << endl;
     
+    GARealGenome& genome = (GARealGenome&)ga4.statistics().bestIndividual();
+    
+    static double arr[] = { -20.8932, 9.77636, 0.91726, 0.180875, 1.95841, -6.66473, -7.68414, 105.134, 0.517725, 0.491385 };
+    for(int i=0; i < genome.length(); i++)
+        arr[i] = genome.gene(i);
+    std::vector<double> vals(arr, arr + sizeof(arr) / sizeof(arr[0]));
+    
+    
     if(VISUAL) {
 //        BasicDemo* bd = new BasicDemo();
 //        bd->initPhysics();
@@ -404,7 +418,7 @@ int main(int argc,char* argv[]) {
         experiment->setCameraDistance(btScalar(5.));
         experiment->setCameraUp(btVector3(0, 15, 0));
         std::string exePath(argv[0]);
-        std::vector<double> vals = loadPreviousParams(exePath);
+//        std::vector<double> vals = loadPreviousParams(exePath);
         
 //        static const double arr[] = { -20.8932, 9.77636, 0.91726, 0.180875, 1.95841, -6.66473, -7.68414, 105.134, 0.517725, 0.491385, 1.70121, -3.30518 };
 //        std::vector<double> vals(arr, arr + sizeof(arr) / sizeof(arr[0]));
