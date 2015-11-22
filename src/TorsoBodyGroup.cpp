@@ -29,7 +29,7 @@ TorsoBodyGroup::createHead(BodyParameters &params, const btVector3 positionAdjus
                                           params.HEAD_MASS,
                                           headPos,
                                           params.bodyInitialPosition,
-                                          centerOfMass);
+                                          centerOfMass,BodyGroup::null_fill);
     
     bodyParts.push_back(head);
     return head;

@@ -44,7 +44,7 @@ BodyGroup::generateStandardPart(const double r,
                                 const btVector3 &position,
                                 const btVector3 &positionOffset,
                                 btVector3 centerOfMass,
-                                Actuator* actuator) {
+                                std::vector<Actuator*> actuator) {
     btTransform offset;
     offset.setIdentity();
     offset.setOrigin(positionOffset);
@@ -65,7 +65,7 @@ BodyGroup::generateStandardPart(const double r,
                                 const btTransform adjust,
                                 const btVector3 &positionOffset,
                                 btVector3 centerOfMass,
-                                Actuator* actuator) {
+                                std::vector<Actuator*> actuator) {
     
     btTransform offset;
     offset.setIdentity();

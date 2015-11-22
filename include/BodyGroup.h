@@ -17,7 +17,9 @@ public:
     void actuate(double t, int stage);
     
     std::vector<BodyPart*> getBodyParts() { return bodyParts; };
-
+    
+    static std::vector<Actuator*> null_fill;
+    
 protected:
 	std::vector<BodyPart*> bodyParts;
     std::vector<btTypedConstraint*> constraints;
@@ -33,7 +35,7 @@ protected:
                          const btVector3& position,
                          const btVector3& positionOffset,
                          btVector3 centerOfMass,
-                         Actuator* actuator = nullptr );
+                         std::vector<Actuator*> actuator = null_fill );
     
     BodyPart*
     generateStandardPart(const double r,
@@ -42,7 +44,7 @@ protected:
                          const btTransform adjust,
                          const btVector3 &positionOffset,
                          btVector3 centerOfMass,
-                         Actuator* actuator = nullptr);
+                         std::vector<Actuator*> actuator = null_fill);
     
     BodyPart*
     generateFoot(const double m,

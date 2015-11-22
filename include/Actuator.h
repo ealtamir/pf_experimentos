@@ -10,6 +10,7 @@
 #define __test__Actuator__
 
 #include <stdio.h>
+#include <vector>
 #include <BulletDynamics/btBulletDynamicsCommon.h>
 
 #define PARAMS_SIZE 30
@@ -17,6 +18,7 @@
 class Actuator {
     
 public:
+    
     
     Actuator(bool isLeft);
     

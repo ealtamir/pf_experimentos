@@ -11,8 +11,8 @@ LegBodyGroup::LegBodyGroup(btDynamicsWorld* world,
                            const btVector3 positionAdjust,
                            bool isLeft) : BodyGroup(world){
     
-    Actuator* lowerLegAct;
-    Actuator* upperLegAct;
+    std::vector<Actuator*> lowerLegAct;
+    std::vector<Actuator*> upperLegAct;
     BodyPart* lowerLeg;
     BodyPart* upperLeg;
     BodyPart* foot;

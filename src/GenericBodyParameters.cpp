@@ -13,19 +13,19 @@
 
 GenericBodyParameters::GenericBodyParameters() {
     
-    rightLowerArmAct = new GenericActuator();
-    rightUpperArmAct = new GenericActuator();
+    rightLowerArmAct.push_back( new GenericActuator());
+    rightUpperArmAct.push_back( new GenericActuator());
     
-    leftLowerArmAct = new GenericActuator();
-    leftUpperArmAct = new GenericActuator();
+    leftLowerArmAct.push_back( new GenericActuator());
+    leftUpperArmAct.push_back( new GenericActuator());
     
-    hipAct = new GenericActuator();
+    hipAct.push_back( new GenericActuator());
     
-    rightLowerLegAct = new GenericActuator();
-    rightUpperLegAct = new GenericActuator();
+    rightLowerLegAct.push_back( new GenericActuator());
+    rightUpperLegAct.push_back( new GenericActuator());
     
-    leftLowerLegAct = new GenericActuator(true);
-    leftUpperLegAct = new GenericActuator(true);
+    leftLowerLegAct.push_back( new GenericActuator(true));
+    leftUpperLegAct.push_back( new GenericActuator(true));
 }
 
 GenericBodyParameters::~GenericBodyParameters() {

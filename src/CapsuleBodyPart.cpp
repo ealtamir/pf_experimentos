@@ -11,16 +11,19 @@ CapsuleBodyPart::CapsuleBodyPart(btScalar radius,
                                  btScalar height,
                                  btScalar mass,
                                  const btTransform& transform, btVector3 centerofMass) {
-
-    CapsuleBodyPart(radius, height, mass, transform, nullptr, centerofMass);
+    std::vector<Actuator*> null_vec;
+    CapsuleBodyPart(radius, height, mass, transform, null_vec, centerofMass);
 }
 
 CapsuleBodyPart::CapsuleBodyPart(btScalar r,
                                  btScalar h,
                                  btScalar m,
                                  const btTransform &trans,
-                                 Actuator* actuator, btVector3 centerofMass) {
-    this->actuator.push_back(actuator);
+                                 std::vector<Actuator*> actuator, btVector3 centerofMass) {
+    for(int i=0;i<actuator.size();i++){
+        this->actuator.push_back(actuator[i]);
+    }
+
     
     
     btCollisionShape* capsule = new btCapsuleShape(r, h);

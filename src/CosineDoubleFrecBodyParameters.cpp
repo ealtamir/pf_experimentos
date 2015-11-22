@@ -2,19 +2,19 @@
 #include "CosineDoubleFrecActuator.h"
 
 CosineDoubleFrecBodyParameters::CosineDoubleFrecBodyParameters() {
-    rightLowerArmAct = new CosineDoubleFrecActuator();
-    rightUpperArmAct = new CosineDoubleFrecActuator();
+    rightLowerArmAct.push_back( new CosineDoubleFrecActuator());
+    rightUpperArmAct.push_back( new CosineDoubleFrecActuator());
     
-    leftLowerArmAct = new CosineDoubleFrecActuator();
-    leftUpperArmAct = new CosineDoubleFrecActuator();
+    leftLowerArmAct.push_back( new CosineDoubleFrecActuator());
+    leftUpperArmAct.push_back( new CosineDoubleFrecActuator());
     
-    hipAct = new CosineDoubleFrecActuator();
+    hipAct.push_back( new CosineDoubleFrecActuator());
     
-    rightLowerLegAct = new CosineDoubleFrecActuator();
-    rightUpperLegAct = new CosineDoubleFrecActuator();
+    rightLowerLegAct.push_back( new CosineDoubleFrecActuator());
+    rightUpperLegAct.push_back( new CosineDoubleFrecActuator());
     
-    leftLowerLegAct = new CosineDoubleFrecActuator(true);
-    leftUpperLegAct = new CosineDoubleFrecActuator(true);
+    leftLowerLegAct.push_back( new CosineDoubleFrecActuator(true));
+    leftUpperLegAct.push_back( new CosineDoubleFrecActuator(true));
 }
 
 CosineDoubleFrecBodyParameters::~CosineDoubleFrecBodyParameters() {

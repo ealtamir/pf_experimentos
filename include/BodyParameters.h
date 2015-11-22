@@ -10,6 +10,7 @@
 #define __test__BodyParameters__
 
 #include <stdio.h>
+#include <vector>
 #include <BulletDynamics/btBulletDynamicsCommon.h>
 #include "Actuator.h"
 
@@ -34,11 +35,11 @@ public:
     
     /******************** ACTUATORS ********************/
 
-    Actuator *rightLowerLegAct, *rightUpperLegAct;
-    Actuator *leftLowerLegAct, *leftUpperLegAct;
-    Actuator *hipAct;
-    Actuator *rightLowerArmAct, *rightUpperArmAct;
-    Actuator *leftLowerArmAct, *leftUpperArmAct;
+    std::vector<Actuator*> rightLowerLegAct, rightUpperLegAct;
+    std::vector<Actuator*>leftLowerLegAct, leftUpperLegAct;
+    std::vector<Actuator*>hipAct;
+    std::vector<Actuator*>rightLowerArmAct, rightUpperArmAct;
+    std::vector<Actuator*>leftLowerArmAct, leftUpperArmAct;
     
     /******************** ANGLES ********************/
     

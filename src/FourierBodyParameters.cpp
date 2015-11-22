@@ -3,19 +3,19 @@
 
 
 FourierBodyParameters::FourierBodyParameters() {
-    rightLowerArmAct = new FourierActuator();
-    rightUpperArmAct = new FourierActuator();
+    rightLowerArmAct.push_back(new FourierActuator());
+    rightUpperArmAct.push_back( new FourierActuator());
     
-    leftLowerArmAct = new FourierActuator();
-    leftUpperArmAct = new FourierActuator();
+    leftLowerArmAct.push_back( new FourierActuator());
+    leftUpperArmAct.push_back( new FourierActuator());
     
-    hipAct = new FourierActuator();
+    hipAct.push_back( new FourierActuator());
     
-    rightLowerLegAct = new FourierActuator();
-    rightUpperLegAct = new FourierActuator();
+    rightLowerLegAct.push_back( new FourierActuator());
+    rightUpperLegAct.push_back( new FourierActuator());
     
-    leftLowerLegAct = new FourierActuator(true);
-    leftUpperLegAct = new FourierActuator(true);
+    leftLowerLegAct.push_back( new FourierActuator(true));
+    leftUpperLegAct.push_back( new FourierActuator(true));
 }
 
 FourierBodyParameters::~FourierBodyParameters() {

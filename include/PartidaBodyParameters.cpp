@@ -11,19 +11,19 @@
 #include "PartidaActuator.h"
 
 PartidaBodyParameters::PartidaBodyParameters() {
-    rightLowerArmAct = new PartidaActuator();
-    rightUpperArmAct = new PartidaActuator();
+    rightLowerArmAct.push_back( new PartidaActuator());
+    rightUpperArmAct.push_back( new PartidaActuator());
     
-    leftLowerArmAct = new PartidaActuator();
-    leftUpperArmAct = new PartidaActuator();
+    leftLowerArmAct.push_back( new PartidaActuator());
+    leftUpperArmAct.push_back( new PartidaActuator());
     
-    hipAct = new PartidaActuator();
+    hipAct.push_back( new PartidaActuator());
     
-    rightLowerLegAct = new PartidaActuator();
-    rightUpperLegAct = new PartidaActuator();
+    rightLowerLegAct.push_back( new PartidaActuator());
+    rightUpperLegAct.push_back( new PartidaActuator());
     
-    leftLowerLegAct = new PartidaActuator(true);
-    leftUpperLegAct = new PartidaActuator(true);
+    leftLowerLegAct.push_back( new PartidaActuator(true));
+    leftUpperLegAct.push_back( new PartidaActuator(true));
 }
 
 PartidaBodyParameters::~PartidaBodyParameters() {
