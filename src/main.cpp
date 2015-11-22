@@ -369,15 +369,15 @@ int main(int argc,char* argv[]) {
     // ways than those shown.
     
     GARealAlleleSetArray alleles4;
-    alleles4.add(0,50);
-    alleles4.add(0.01, 5);
-    alleles4.add(0.01, 5);
-    alleles4.add(-SIMD_PI,SIMD_PI);
+    alleles4.add(-60,60);
+    alleles4.add(0.01, 10);
+    alleles4.add(0.01, 10);
+    alleles4.add(-SIMD_PI, SIMD_PI);
     alleles4.add(-10,10);
-    alleles4.add(0,50);
-    alleles4.add(0.01, 5);
-    alleles4.add(0.01, 5);
-    alleles4.add(-SIMD_PI,SIMD_PI);
+    alleles4.add(-30, -30);
+    alleles4.add(0.01, 10);
+    alleles4.add(0.01, 10);
+    alleles4.add(-SIMD_PI, SIMD_PI);
     alleles4.add(-10,10);
     GARealGenome genome4(alleles4, Objective4);
     
@@ -387,7 +387,7 @@ int main(int argc,char* argv[]) {
     
     GAParameterList params;
     GASteadyStateGA::registerDefaultParameters(params);
-    params.set(gaNnGenerations, 200);
+    params.set(gaNnGenerations, 1000);
     params.set(gaNpopulationSize, 110);
     params.set(gaNscoreFrequency, 1);
     // generation  TAB  mean  TAB  max  TAB  min  TAB deviation  TAB  diversity NEWLINE
