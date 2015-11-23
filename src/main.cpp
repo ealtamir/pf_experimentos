@@ -304,7 +304,14 @@ int main(int argc,char* argv[]) {
         }
 //        const std::vector<double> arr = {10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10};
 //        const std::vector<double> arr = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
-        body->setActuatorValues(vals);
+        if(BODY_TYPE==BodyType::partida){
+            body->setActuatorValues(0,vals);
+            body->setActuatorValues(1,vals);
+        }
+        else{
+            body->setActuatorValues(0,vals);
+        }
+
         //experiment->simulate();
         return glutmain(argc, argv, 800, 600, "Experiment",experiment);
 //        return glutmain(argc, argv, 800, 600, "BasicDemo",bd);

@@ -14,6 +14,8 @@
 #include "WalkerBody.h"
 #include "BodyParameters.h"
 
+#define     OTHER_FUNCTION_VALUES_SIZE         10
+
 class PartidaBody : public WalkerBody {
     
 public:
@@ -21,7 +23,7 @@ public:
     
     void actuate(double t, int stage);
     
-    virtual void setActuatorValues(std::vector<double> vals);
+    virtual void setActuatorValues(int index, std::vector<double> vals);
 };
 
 #endif /* defined(__MongoDoll__PartidaBody__) */

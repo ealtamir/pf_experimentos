@@ -17,7 +17,7 @@ class FourierBody : public WalkerBody {
 public:
     FourierBody(btDynamicsWorld* world, BodyParameters &params);
     
-    virtual void setActuatorValues(std::vector<double> vals);
+    virtual void setActuatorValues(int index, std::vector<double> vals);
 };
 
 #endif /* FourierBody_hpp */

@@ -13,6 +13,6 @@ class GenericBody : public WalkerBody {
 public:
 	GenericBody(btDynamicsWorld* world, BodyParameters &params);
     
-    virtual void setActuatorValues(std::vector<double> vals);
+    virtual void setActuatorValues(int index, std::vector<double> vals);
 };
 #endif

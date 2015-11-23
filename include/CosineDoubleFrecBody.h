@@ -17,7 +17,7 @@ class CosineDoubleFrecBody : public WalkerBody {
 public:
     CosineDoubleFrecBody(btDynamicsWorld* world, BodyParameters &params);
     
-    virtual void setActuatorValues(std::vector<double> vals);
+    virtual void setActuatorValues(int index, std::vector<double> vals);
 
 };
 

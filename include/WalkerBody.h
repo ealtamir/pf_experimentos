@@ -26,7 +26,7 @@ public:
     
     Chromosome::Representation::GaIntervalValueSet<double>** getMultiValueSet();
     
-    virtual void setActuatorValues(std::vector<double> vals) = 0;
+    virtual void setActuatorValues(int index, std::vector<double> vals) = 0;
     
     BodyPart* getLowerLeftLeg();
     BodyPart* getUpperLeftLeg();

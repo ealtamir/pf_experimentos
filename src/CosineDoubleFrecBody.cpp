@@ -15,8 +15,10 @@ CosineDoubleFrecBody::CosineDoubleFrecBody(btDynamicsWorld* world,
 }
 
 void
-CosineDoubleFrecBody::setActuatorValues(std::vector<double> vals) {
-    
+CosineDoubleFrecBody::setActuatorValues(int index, std::vector<double> vals) {
+    if( index != 0 ){
+        return;
+    }
     CosineDoubleFrecActuator* actuator;
     double values[30] = {
         vals[0], vals[1], vals[2], vals[3], vals[4],

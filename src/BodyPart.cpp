@@ -7,8 +7,13 @@ BodyPart::~BodyPart() {
 
 void BodyPart::actuate(double t, int stage) {
     if(actuator.size()>0){
-        if(stage==1 && actuator[0]!=nullptr && !(actuator[0]->isFirstStep(t))){
-            body->applyTorque(actuator[0]->eval(t, stage));
+        if(stage==1){
+            if(actuator[1]!=nullptr && (actuator[1]->isFirstStep(t))){
+                body->applyTorque(actuator[1]->eval(t, stage));
+            }
+            else{
+                body->applyTorque(actuator[0]->eval(t, stage));
+            }
         }
         else{
             if(actuator[0]!=nullptr){

@@ -19,7 +19,10 @@ FourierBody::FourierBody(btDynamicsWorld* world, BodyParameters& params) : Walke
     numberOfParams = 14;
 }
 
-void FourierBody::setActuatorValues(std::vector<double> vals) {
+void FourierBody::setActuatorValues(int index, std::vector<double> vals) {
+    if(index != 0){
+        return;
+    }
     
     FourierActuator* actuator;
     double values[30] = {
