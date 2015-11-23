@@ -58,7 +58,8 @@ float PassiveWalkerExperiment::getFitness(const std::vector<double> vals) {
 //    experiment->setBodyActuatorValues(vals);
     if(BODY_TYPE==BodyType::partida){
         body->setActuatorValues(0,vals);
-        body->setActuatorValues(1,vals);
+        std::vector<double> vals_second = std::vector<double>(vals.begin () + VALUES_SIZE, vals.end());
+        body->setActuatorValues(1,vals_second);
     }
     else{
         body->setActuatorValues(0,vals);
@@ -114,7 +115,7 @@ void PassiveWalkerExperiment::worldStep() {
     timeCount += 1. / 60.;
     btTransform v;
     selectedBody->getLowerRightLeg()->getRigidBody()->getMotionState()->getWorldTransform(v);
-    printf("%f, %f, %f\n",v.getOrigin().getX(),v.getOrigin().getY(),v.getOrigin().getZ());
+    //printf("%f, %f, %f\n",v.getOrigin().getX(),v.getOrigin().getY(),v.getOrigin().getZ());
 }
 
 bool PassiveWalkerExperiment::stopExperiment() {

@@ -29,6 +29,7 @@
 // PF includes
 #include "Experiment.h"
 #include "PassiveWalkerExperiment.h"
+#include "PartidaBody.h"
 #include "IOTools.h"
 
 #include "BasicDemo.h"
@@ -36,14 +37,19 @@
 #define POPULATION_SIZE     55
 #define REPLACEMENT_PERCENTAGE 90
 #define GENERATIONS         1000
-#define VISUAL              true
+#define VISUAL              false
 
+#ifdef      PARTIDA
+#define VALUES_TOTAL_SIZE   VALUES_SIZE + OTHER_FUNCTION_VALUES_SIZE
+#else
+#define VALUES_TOTAL_SIZE   VALUES_SIZE
+#endif
 
 int mainLoop();
 double getTimeElapsed();
 double getAngleBetween(btVector3 v1, btVector3 v2);
 
-double values[VALUES_SIZE];
+double values[VALUES_TOTAL_SIZE];
 double fitness;
 
 long int time_begin = 0;
@@ -119,7 +125,7 @@ void MiExperimentoObserver::StatisticUpdate(const Common::GaStatistics &statisti
     for (int i = 0; i < POPULATION_SIZE; i++) {
         bestChromo = algorithm.GetPopulation(statistics.GetCurrentGeneration()).GetAt(i);
         const std::vector<double>& vals = dynamic_cast<const GaMVArithmeticChromosome<double>*>( &(*bestChromo) )->GetCode();
-        storeGenerationInfo("output.dat", statistics.GetCurrentGeneration(), bestChromo->GetFitness(), vals, VALUES_SIZE);
+        storeGenerationInfo("output.dat", statistics.GetCurrentGeneration(), bestChromo->GetFitness(), vals, VALUES_TOTAL_SIZE);
     }
 }
 
@@ -144,22 +150,26 @@ int mainLoop(char* executablePath) {
     GaIntervalValueSet<double> independentTermValueSet(independentTerm, independentTerm, GaGlobalRandomDoubleGenerator, false);
 
 #if GENERIC
-    GaIntervalValueSet<double> *multiValueSet[VALUES_SIZE] = {
+    GaIntervalValueSet<double> *multiValueSet[VALUES_TOTAL_SIZE] = {
         &amplitudeLowerValueSet, &amplitudeLowerValueSet, &frequencyValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet,
         &amplitudeUpperValueSet, &amplitudeUpperValueSet, &frequencyValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet
     };
 #elif FOURIER
-    GaIntervalValueSet<double> *multiValueSet[VALUES_SIZE] = {
+    GaIntervalValueSet<double> *multiValueSet[VALUES_TOTAL_SIZE] = {
         &amplitudeLowerValueSet, &amplitudeUpperValueSet, &amplitudeLowerValueSet, &amplitudeUpperValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet,
         &amplitudeLowerValueSet, &amplitudeUpperValueSet, &amplitudeLowerValueSet, &amplitudeUpperValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet
     };
 #elif PARTIDA
-    GaIntervalValueSet<double> *multiValueSet[VALUES_SIZE] = {
+    /* Aca se ponen tanto los parametros de la funcion de primer paso como los del resto de los pasos */
+    GaIntervalValueSet<double> *multiValueSet[VALUES_TOTAL_SIZE] = {
         &amplitudeLowerValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet,
-        &amplitudeUpperValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet
+        &amplitudeUpperValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet,
+        
+        &amplitudeLowerValueSet, &frequencyValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet,
+        &amplitudeUpperValueSet, &frequencyValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet
     };
 #else
-    GaIntervalValueSet<double> *multiValueSet[VALUES_SIZE] = {
+    GaIntervalValueSet<double> *multiValueSet[VALUES_TOTAL_SIZE] = {
         &amplitudeLowerValueSet, &frequencyValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet,
         &amplitudeUpperValueSet, &frequencyValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet
     };
@@ -187,7 +197,7 @@ int mainLoop(char* executablePath) {
     GaFitnessComparator* 	fitnessComparator = GaFitnessComparatorCatalogue::Instance().GetEntryData("GaMaxFitnessComparator");
     GaChromosomeDomainBlock<double>* _ccb = new GaChromosomeDomainBlock<double>(
                         (GaValueSet<double>**)(multiValueSet),
-                        VALUES_SIZE,
+                        VALUES_TOTAL_SIZE,
                         crossoverMethod,
                         mutationOperation,
                         fitnessCalculator,
@@ -197,7 +207,7 @@ int mainLoop(char* executablePath) {
     
     
     // Used as prototype to initilize other chromosomes
-    GaMVArithmeticChromosome<double> chromosomePrototype(VALUES_SIZE, _ccb);
+    GaMVArithmeticChromosome<double> chromosomePrototype(VALUES_TOTAL_SIZE, _ccb);
     
     
     // POPULATION PARAMETERS
@@ -214,12 +224,12 @@ int mainLoop(char* executablePath) {
                                             bestChromosomesToTrack,
                                             worstChromosomesToTrack);
     
-    int selectionSize = 250;
+    int selectionSize = 55;
     bool duplicates = false;
     
     Population::SelectionOperations::GaSelectRandomBestParams selectParams(100, false, 150);
     
-    int replacementSize = 100;
+    int replacementSize = 40;
     int bestChromosomesThatRemain = 2;
     Population::ReplacementOperations::GaReplaceElitismParams replaceParams(replacementSize,
                                                                             bestChromosomesThatRemain);
@@ -265,7 +275,7 @@ int mainLoop(char* executablePath) {
     
     
     cout << endl << "Mejor cromosoma encontrado:  ";
-    for(int i = 0; i < VALUES_SIZE; i++){
+    for(int i = 0; i < VALUES_TOTAL_SIZE; i++){
         cout << values[i] << ",";
     }
     cout << endl << "Fitness: " << fitness;
@@ -273,7 +283,7 @@ int mainLoop(char* executablePath) {
     cout << getTimeElapsed() / 1000.0;
     cout << " segundos ";
     
-    updateResultFiles(std::string(executablePath), fitness, values, VALUES_SIZE, getTimeElapsed());
+    updateResultFiles(std::string(executablePath), fitness, values, VALUES_TOTAL_SIZE, getTimeElapsed());
     return 0;
 }
 
@@ -306,7 +316,8 @@ int main(int argc,char* argv[]) {
 //        const std::vector<double> arr = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
         if(BODY_TYPE==BodyType::partida){
             body->setActuatorValues(0,vals);
-            body->setActuatorValues(1,vals);
+            std::vector<double> vals_second = std::vector<double>(vals.begin () + VALUES_SIZE, vals.end());
+            body->setActuatorValues(1,vals_second);
         }
         else{
             body->setActuatorValues(0,vals);

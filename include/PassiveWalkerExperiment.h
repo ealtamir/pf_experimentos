@@ -24,6 +24,7 @@ const BodyType BODY_TYPE = BodyType::fourier;
 #elif       PARTIDA
 #define     VALUES_SIZE         8
 
+
 const BodyType BODY_TYPE = BodyType::partida;
 #elif       DOUBLE_COSINE
 #define     VALUES_SIZE         10
