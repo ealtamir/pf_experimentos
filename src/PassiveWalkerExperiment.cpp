@@ -26,6 +26,7 @@
 
 #define FITNESS_EXPONENT_CONSTANT 5
 
+#define FIRST_STEP_TIME 0.5
 
 std::mutex fitnessLock;
 
@@ -90,7 +91,15 @@ void PassiveWalkerExperiment::initObjects() {
 void PassiveWalkerExperiment::worldStep() {
     btDynamicsWorld* w = getDynamicsWorld();
     w->stepSimulation(1 / 60.f, 10, 1 / 500.);
-    selectedBody->actuate(timeCount, 0);
+    
+    int stageValue = 0;
+    if(timeCount <= FIRST_STEP_TIME) {
+        stageValue = 0;
+    } else {
+        stageValue = 1;
+    }
+    
+    selectedBody->actuate(timeCount, stageValue);
     timeCount += 1. / 60.;
 }
 
