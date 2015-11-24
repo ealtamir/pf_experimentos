@@ -29,6 +29,8 @@
 
 #define FITNESS_EXPONENT_CONSTANT 5
 
+#define FIRST_STEP_TIME 1
+
 
 std::mutex fitnessLock;
 
@@ -87,9 +89,6 @@ void PassiveWalkerExperiment::initializeBodies() {
     } else if (BODY_TYPE == BodyType::fourier) {
         params = new FourierBodyParameters();
         selectedBody = new FourierBody(m_dynamicsWorld, *params);
-    } else if (BODY_TYPE == BodyType::partida) {
-        params = new PartidaBodyParameters();
-        selectedBody = new PartidaBody(m_dynamicsWorld, *params);
     } else {
         params = new CosineDoubleFrecBodyParameters();
         selectedBody = new CosineDoubleFrecBody(m_dynamicsWorld, *params);
@@ -103,14 +102,13 @@ void PassiveWalkerExperiment::initObjects() {
 void PassiveWalkerExperiment::worldStep() {
     btDynamicsWorld* w = getDynamicsWorld();
     w->stepSimulation(1 / 60.f, 10, 1 / 500.);
-    if(BODY_TYPE==BodyType::partida){
-        PartidaBody* partida= dynamic_cast<PartidaBody*>(selectedBody);
-        partida->actuate(timeCount, 0);
+    int stageValue = 0;
+    if (timeCount <= FIRST_STEP_TIME) {
+        stageValue = 0;
+    } else {
+        stageValue = 1;
     }
-    else{
-        selectedBody->actuate(timeCount, 0);
-    }
-
+    selectedBody->actuate(timeCount, stageValue);
     
     timeCount += 1. / 60.;
     btTransform v;

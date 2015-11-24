@@ -36,7 +36,7 @@
 
 #define POPULATION_SIZE     55
 #define REPLACEMENT_PERCENTAGE 90
-#define GENERATIONS         1000
+#define GENERATIONS         100
 #define VISUAL              false
 
 #ifdef      PARTIDA

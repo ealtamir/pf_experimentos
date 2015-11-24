@@ -7,13 +7,12 @@
 #include "WalkerBody.h"
 
 enum BodyType {
-    generic, fourier, double_cosine, partida
+    generic, fourier, double_cosine
 };
 
 //#define     GENERIC             1
 //#define     FOURIER             1
-//#define     DOUBLE_COSINE       1
-#define     PARTIDA       1
+#define     DOUBLE_COSINE       1
 
 #ifdef      GENERIC
 #define     VALUES_SIZE         12
@@ -21,11 +20,6 @@ const BodyType BODY_TYPE = BodyType::generic;
 #elif       FOURIER
 #define     VALUES_SIZE         14
 const BodyType BODY_TYPE = BodyType::fourier;
-#elif       PARTIDA
-#define     VALUES_SIZE         8
-
-
-const BodyType BODY_TYPE = BodyType::partida;
 #elif       DOUBLE_COSINE
 #define     VALUES_SIZE         10
 const BodyType BODY_TYPE = BodyType::double_cosine;
