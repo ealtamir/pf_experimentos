@@ -10,10 +10,11 @@
 #include "GenericActuator.h"
 #include "FourierActuator.h"
 #include "CosineDoubleFrecActuator.h"
+#include "MetaActuator.h"
 
-GenericBodyParameters::GenericBodyParameters() {
+GenericBodyParameters::GenericBodyParameters(Actuator *firstStepActuator) {
     
-    rightLowerArmAct = new GenericActuator();
+    rightLowerArmAct = new MetaActuator(firstStepActuator, new GenericActuator());
     rightUpperArmAct = new GenericActuator();
     
     leftLowerArmAct = new GenericActuator();
@@ -24,8 +25,8 @@ GenericBodyParameters::GenericBodyParameters() {
     rightLowerLegAct = new GenericActuator();
     rightUpperLegAct = new GenericActuator();
     
-    leftLowerLegAct = new GenericActuator(true);
-    leftUpperLegAct = new GenericActuator(true);
+    leftLowerLegAct = new GenericActuator();
+    leftUpperLegAct = new GenericActuator();
 }
 
 GenericBodyParameters::~GenericBodyParameters() {

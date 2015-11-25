@@ -6,9 +6,7 @@
 
 class CosineDoubleFrecActuator : public Actuator {
     
-public:
-    CosineDoubleFrecActuator(bool isLeft = false);
-    
+public:    
     virtual void setActuatorValues(double vals[]);
     
 protected:

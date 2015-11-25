@@ -7,11 +7,6 @@
 #define FASE 3
 #define IND_TERM 4
 
-
-CosineDoubleFrecActuator::CosineDoubleFrecActuator(bool isLeft) : Actuator(isLeft) {
-    
-}
-
 btVector3 CosineDoubleFrecActuator::actuatorFunc(double t, int stage) {
     btVector3 resp;
 //    double omega = (2*parameters[W1]*parameters[W2])/(parameters[W1]+parameters[W2]);

@@ -5,6 +5,8 @@
 
 #include "Experiment.h"
 #include "WalkerBody.h"
+#include "Actuator.h"
+#include "GenericActuator.h"
 
 enum BodyType {
     generic, fourier, double_cosine
@@ -33,10 +35,11 @@ const btScalar OBJETIVE_VELOCITY = 1;
 const btScalar CYCLE_CONSTANT = 30;
 const double HALF_PI_IN_DEGREES = 90;
 
-
 class PassiveWalkerExperiment : public Experiment {
 
 public:
+    Actuator *firstStepActuator = new GenericActuator();
+    
     ~PassiveWalkerExperiment();
     
     static float getFitness(const std::vector<double> vals);

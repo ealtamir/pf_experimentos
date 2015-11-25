@@ -13,8 +13,8 @@ CosineDoubleFrecBodyParameters::CosineDoubleFrecBodyParameters() {
     rightLowerLegAct = new CosineDoubleFrecActuator();
     rightUpperLegAct = new CosineDoubleFrecActuator();
     
-    leftLowerLegAct = new CosineDoubleFrecActuator(true);
-    leftUpperLegAct = new CosineDoubleFrecActuator(true);
+    leftLowerLegAct = new CosineDoubleFrecActuator();
+    leftUpperLegAct = new CosineDoubleFrecActuator();
 }
 
 CosineDoubleFrecBodyParameters::~CosineDoubleFrecBodyParameters() {

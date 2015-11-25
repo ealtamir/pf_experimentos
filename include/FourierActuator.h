@@ -14,9 +14,7 @@
 
 class FourierActuator : public Actuator {
     
-public:
-    FourierActuator(bool isLeft = false);
-    
+public:    
     virtual void setActuatorValues(double vals[]);
     
 protected:

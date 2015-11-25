@@ -48,32 +48,21 @@ PassiveWalkerExperiment::~PassiveWalkerExperiment() {
 }
 
 float PassiveWalkerExperiment::getFitness(const std::vector<double> vals) {
-    
     double fitness = 0;
     fitnessLock.lock();
     PassiveWalkerExperiment* experiment = PassiveWalkerExperiment::getInstance();
     WalkerBody* body = experiment->selectedBody;
-//    experiment->setBodyActuatorValues(vals);
     body->setActuatorValues(vals);
     experiment->simulate();
     fitness = experiment->getHeight() * experiment->getDirection() * experiment->getVelocity();
     fitnessLock.unlock();
-//    std::cout << "Height: " << experiment->getHeight() << std::endl;
-//    std::cout << "Direction: " << experiment->getDirection() << std::endl;
-//    std::cout << "Velocity: " << experiment->getVelocity() << std::endl;
-//    std::cout << "Left foot height: " << experiment->getLeftFootHeight() << std::endl;
-//    std::cout << "Right foot height: " << experiment->getRightFootHeight() << std::endl;
-//    std::cout << "Foot correctness: " << experiment->getCorrectFootHipPosition() << std::endl;
 
-//    return experiment->getHeight() * experiment->getDirection() * experiment->getVelocity() * experiment->getLeftFootHeight() * experiment->getRightFootHeight() * experiment->getCorrectFootHipPosition();
-    
-//    std::cout << "Fitness: " << experiment->getHeight() * experiment->getDirection() * experiment->getVelocity() << std::endl;
     return fitness;
 }
 
 void PassiveWalkerExperiment::initializeBodies() {
     if (BODY_TYPE == BodyType::generic) {
-        params = new GenericBodyParameters();
+        params = new GenericBodyParameters(firstStepActuator);
         selectedBody = new GenericBody(m_dynamicsWorld, *params);
     } else if (BODY_TYPE == BodyType::fourier) {
         params = new FourierBodyParameters();
@@ -91,14 +80,12 @@ void PassiveWalkerExperiment::initObjects() {
 void PassiveWalkerExperiment::worldStep() {
     btDynamicsWorld* w = getDynamicsWorld();
     w->stepSimulation(1 / 60.f, 10, 1 / 500.);
-    
     int stageValue = 0;
     if(timeCount <= FIRST_STEP_TIME) {
         stageValue = 0;
     } else {
         stageValue = 1;
     }
-    
     selectedBody->actuate(timeCount, stageValue);
     timeCount += 1. / 60.;
 }

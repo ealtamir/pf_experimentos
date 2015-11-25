@@ -8,10 +8,6 @@
 
 #include "Actuator.h"
 
-
-Actuator::Actuator(bool isLeft) {
-}
-
 btVector3 Actuator::eval(double t, int stage) {
     return actuatorFunc(t, stage);
 }

@@ -18,10 +18,7 @@ class Actuator {
     
 public:
     
-    Actuator(bool isLeft);
-    
     btVector3 eval(double t, int stage);
-    
     
     void setParameters(double *parameters);
     

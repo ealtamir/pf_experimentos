@@ -16,12 +16,6 @@
 #define FASE 4
 #define IND_TERM 5
 
-
-
-GenericActuator::GenericActuator(bool isLeft) : Actuator(isLeft) {
-
-}
-
 btVector3 GenericActuator::actuatorFunc(double t, int stage) {
     
     double f = parameters[SIN_AMPLITUD] * sin(parameters[SIN_FREC] * t + parameters[FASE])

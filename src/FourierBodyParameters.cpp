@@ -1,5 +1,6 @@
 #include "FourierBodyParameters.h"
 #include "FourierActuator.h"
+#include "PassiveWalkerExperiment.h"
 
 
 FourierBodyParameters::FourierBodyParameters() {
@@ -14,8 +15,8 @@ FourierBodyParameters::FourierBodyParameters() {
     rightLowerLegAct = new FourierActuator();
     rightUpperLegAct = new FourierActuator();
     
-    leftLowerLegAct = new FourierActuator(true);
-    leftUpperLegAct = new FourierActuator(true);
+    leftLowerLegAct = new FourierActuator();
+    leftUpperLegAct = new FourierActuator();
 }
 
 FourierBodyParameters::~FourierBodyParameters() {

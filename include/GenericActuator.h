@@ -20,8 +20,6 @@ enum GenericActuatorParams {
 class GenericActuator : public Actuator {
     
 public:
-    GenericActuator(bool isLeft = false);
-
     virtual void setActuatorValues(double vals[]);
     
 protected:

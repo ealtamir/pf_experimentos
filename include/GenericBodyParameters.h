@@ -15,7 +15,7 @@
 class GenericBodyParameters : public BodyParameters {
     
 public:
-    GenericBodyParameters();
+    GenericBodyParameters(Actuator *firstStepActuator);
     ~GenericBodyParameters();
 };
 

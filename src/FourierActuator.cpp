@@ -16,11 +16,6 @@
 #define FASE 5
 #define IND_TERM 6
 
-
-FourierActuator::FourierActuator(bool isLeft) : Actuator(isLeft) {
-    
-}
-
 btVector3 FourierActuator::actuatorFunc(double t, int stage) {
     double senos = parameters[A1] * sin(parameters[W] * t + parameters[FASE])
                  + parameters[A2] * sin(2 * parameters[W] * t + parameters[FASE]);
