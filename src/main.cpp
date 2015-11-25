@@ -39,7 +39,7 @@
 #include <ga/GARealGenome.C>
 
 #define POPULATION_SIZE             50
-#define GENERATIONS                 100
+#define GENERATIONS                 3
 #define GENOME_MUTATION             0.1
 #define REPLACEMENT_PORCENTAGE      0.4
 #define LAST_RESULTS                false
