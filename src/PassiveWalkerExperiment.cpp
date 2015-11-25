@@ -189,6 +189,7 @@ void PassiveWalkerExperiment::simulate() {
     max_height = acum_height / SIMULATION_STEPS;
     average_velocity = acum_velocity / SIMULATION_STEPS;
     direction = acum_direction / SIMULATION_STEPS;
+    timeCount = 0;
 }
 
 double getDirectionAngle(double previous_position_x, double previous_position_z,

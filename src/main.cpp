@@ -162,6 +162,7 @@ int main(int argc,char* argv[]) {
     params.set(gaNselectScores, (int)GAStatistics::AllScores);
     params.set(gaNflushFrequency, 1);
     params.set(gaNpMutation, GENOME_MUTATION);
+    params.set(gaNrecordDiversity, gaTrue);
     params.parse(argc, argv, gaFalse);
     
     GASteadyStateGA ga4(genome4);
