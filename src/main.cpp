@@ -39,7 +39,7 @@
 #include <ga/GARealGenome.C>
 
 #define POPULATION_SIZE             50
-#define GENERATIONS                 3
+#define GENERATIONS                 100
 #define GENOME_MUTATION             0.1
 #define REPLACEMENT_PORCENTAGE      0.4
 #define LAST_RESULTS                false
@@ -125,8 +125,8 @@ int main(int argc,char* argv[]) {
         alleles4.add(-SIMD_PI, SIMD_PI);
         alleles4.add(-10,10);
     #else
-        alleles4.add(-60, 60);
-        alleles4.add(-60, 60);
+        alleles4.add(-40, 40);
+        alleles4.add(-40, 40);
         alleles4.add(0.01, 10);
         alleles4.add(0.01, 10);
         alleles4.add(-SIMD_PI, SIMD_PI);
@@ -138,7 +138,7 @@ int main(int argc,char* argv[]) {
         alleles4.add(-SIMD_PI, SIMD_PI);
         alleles4.add(-10,10);
     
-        alleles4.add(-60, 60);
+        alleles4.add(-40, 40);
         alleles4.add(0.01, 10);
         alleles4.add(0.01, 10);
         alleles4.add(-SIMD_PI, SIMD_PI);

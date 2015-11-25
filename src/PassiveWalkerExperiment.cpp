@@ -54,7 +54,7 @@ float PassiveWalkerExperiment::getFitness(const std::vector<double> vals) {
     WalkerBody* body = experiment->selectedBody;
     body->setActuatorValues(vals);
     experiment->simulate();
-    fitness = experiment->getHeight() * experiment->getDirection() * experiment->getVelocity();
+    fitness = experiment->getHeight();// * experiment->getDirection() * experiment->getVelocity();
     fitnessLock.unlock();
 
     return fitness;
@@ -78,6 +78,7 @@ void PassiveWalkerExperiment::initObjects() {
 }
 
 void PassiveWalkerExperiment::worldStep() {
+//    cout << selectedBody->getHeight() << endl;
     btDynamicsWorld* w = getDynamicsWorld();
     w->stepSimulation(1 / 60.f, 10, 1 / 500.);
     int stageValue = 0;
