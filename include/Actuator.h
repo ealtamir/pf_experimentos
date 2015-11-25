@@ -24,6 +24,8 @@ public:
     
     virtual void setActuatorValues(double vals[]) = 0;
     
+    virtual Actuator* clone() = 0;
+    
 protected:
     double parameters[PARAMS_SIZE];
     
