@@ -65,7 +65,7 @@ float
 Objective4(GAGenome& g)
 {
     GARealGenome& genome = (GARealGenome&)g;
-    static double arr[] = { -20.8932, -20.8932, 9.77636, 0.91726, 0.180875, 1.95841, -20.8932, -6.66473, -7.68414, 105.134, 0.517725, 0.491385 };
+    static double arr[] = { 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21 };
     for(int i=0; i < genome.length(); i++)
         arr[i] = genome.gene(i);
     std::vector<double> vals(arr, arr + sizeof(arr) / sizeof(arr[0]));
@@ -124,6 +124,19 @@ int main(int argc,char* argv[]) {
     alleles4.add(-SIMD_PI, SIMD_PI);
     alleles4.add(-10,10);
 #else
+    alleles4.add(-60,60);
+    alleles4.add(-60,60);
+    alleles4.add(0.01, 10);
+    alleles4.add(0.01, 10);
+    alleles4.add(-SIMD_PI, SIMD_PI);
+    alleles4.add(-10,10);
+    alleles4.add(-30, -30);
+    alleles4.add(-30, -30);
+    alleles4.add(0.01, 10);
+    alleles4.add(0.01, 10);
+    alleles4.add(-SIMD_PI, SIMD_PI);
+    alleles4.add(-10,10);
+    
     alleles4.add(-60,60);
     alleles4.add(0.01, 10);
     alleles4.add(0.01, 10);

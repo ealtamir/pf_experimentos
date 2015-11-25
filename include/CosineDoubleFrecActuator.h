@@ -9,6 +9,8 @@ class CosineDoubleFrecActuator : public Actuator {
 public:    
     virtual void setActuatorValues(double vals[]);
     
+    virtual void setActuatorValues(double vals1[], double vals2[]);
+    
     virtual Actuator* clone();
     
 protected:

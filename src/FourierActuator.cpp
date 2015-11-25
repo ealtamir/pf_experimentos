@@ -34,6 +34,16 @@ void FourierActuator::setActuatorValues(double vals[]) {
     parameters[IND_TERM] = vals[IND_TERM];
 }
 
+void FourierActuator::setActuatorValues(double vals1[], double vals2[]) {
+    parameters[A1] = vals1[A1];
+    parameters[A2] = vals1[A2];
+    parameters[A3] = vals1[A3];
+    parameters[A4] = vals1[A4];
+    parameters[W] = vals1[W];
+    parameters[FASE] = vals1[FASE];
+    parameters[IND_TERM] = vals1[IND_TERM];
+}
+
 Actuator* FourierActuator::clone() {
     return new FourierActuator();
 }

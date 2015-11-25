@@ -24,6 +24,8 @@ public:
     
     virtual void setActuatorValues(double vals[]) = 0;
     
+    virtual void setActuatorValues(double vals1[], double vals2[]) = 0;
+    
     virtual Actuator* clone() = 0;
     
     virtual btVector3 actuatorFunc(double t, int stage) = 0;

@@ -19,6 +19,8 @@ public:
     
     virtual void setActuatorValues(double vals[]);
     
+    virtual void setActuatorValues(double vals1[], double vals2[]);
+    
     Actuator *first = nullptr;
     Actuator *second = nullptr;
     

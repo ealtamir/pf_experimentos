@@ -33,6 +33,15 @@ void GenericActuator::setActuatorValues(double vals[]) {
     parameters[IND_TERM] = vals[IND_TERM];
 }
 
+void GenericActuator::setActuatorValues(double vals1[], double vals2[]) {
+    parameters[SIN_AMPLITUD] = vals1[SIN_AMPLITUD];
+    parameters[COS_AMPLITUD] = vals1[COS_AMPLITUD];
+    parameters[SIN_FREC] = vals1[SIN_FREC];
+    parameters[COS_FREC] = vals1[COS_FREC];
+    parameters[FASE] = vals1[FASE];
+    parameters[IND_TERM] = vals1[IND_TERM];
+}
+
 Actuator* GenericActuator::clone() {
     return new GenericActuator();
 }
