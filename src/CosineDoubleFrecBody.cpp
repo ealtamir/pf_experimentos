@@ -17,28 +17,28 @@ CosineDoubleFrecBody::CosineDoubleFrecBody(btDynamicsWorld* world,
 void
 CosineDoubleFrecBody::setActuatorValues(std::vector<double> vals) {
     
-    CosineDoubleFrecActuator* actuator;
+    Actuator* actuator;
     double values[30] = {
         vals[0], vals[1], vals[2], vals[3], vals[4],
         vals[5], vals[6], vals[7], vals[8], vals[9]
     };
     
     BodyPart* leftLowerLeg = getLowerLeftLeg();
-    actuator = dynamic_cast<CosineDoubleFrecActuator*>(leftLowerLeg->getActuator());
+    actuator = dynamic_cast<Actuator*>(leftLowerLeg->getActuator());
     actuator->setActuatorValues(values);
     
     BodyPart* leftUpperLeg = getUpperLeftLeg();
-    actuator = dynamic_cast<CosineDoubleFrecActuator*>(leftUpperLeg->getActuator());
+    actuator = dynamic_cast<Actuator*>(leftUpperLeg->getActuator());
     actuator->setActuatorValues(&values[5]);
     
     values[3] += SIMD_PI;
     values[8] += SIMD_PI;
     
     BodyPart* rightLowerLeg = getLowerRightLeg();
-    actuator = dynamic_cast<CosineDoubleFrecActuator*>(rightLowerLeg->getActuator());
+    actuator = dynamic_cast<Actuator*>(rightLowerLeg->getActuator());
     actuator->setActuatorValues(values);
     
     BodyPart* rightUpperLeg = getUpperRightLeg();
-    actuator = dynamic_cast<CosineDoubleFrecActuator*>(rightUpperLeg->getActuator());
+    actuator = dynamic_cast<Actuator*>(rightUpperLeg->getActuator());
     actuator->setActuatorValues(&values[5]);
 }

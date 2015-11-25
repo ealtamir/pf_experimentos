@@ -38,9 +38,11 @@
 #include <ga/GARealGenome.h>
 #include <ga/GARealGenome.C>
 
-#define POPULATION_SIZE     50
-#define GENERATIONS         100
-#define VISUAL              true
+#define POPULATION_SIZE         50
+#define GENERATIONS             100
+#define VISUAL                  true
+#define GENOME_MUTATION         0.01
+#define REPLACEMENT_PORCENTAGE  0.4
 
 
 int mainLoop();
@@ -140,16 +142,18 @@ int main(int argc,char* argv[]) {
     
     GAParameterList params;
     GASteadyStateGA::registerDefaultParameters(params);
-    params.set(gaNnGenerations, 100);
-    params.set(gaNpopulationSize, 50);
+    params.set(gaNnGenerations, GENERATIONS);
+    params.set(gaNpopulationSize, POPULATION_SIZE);
     params.set(gaNscoreFrequency, 1);
     // generation  TAB  mean  TAB  max  TAB  min  TAB deviation  TAB  diversity NEWLINE
     params.set(gaNselectScores, (int)GAStatistics::AllScores);
     params.set(gaNflushFrequency, 1);
+    params.set(gaNpMutation, GENOME_MUTATION);
     params.parse(argc, argv, gaFalse);
     
     GASteadyStateGA ga4(genome4);
     ga4.parameters(params);
+    ga4.pReplacement(REPLACEMENT_PORCENTAGE);
     ga4.set(gaNscoreFilename, "bog4.dat");
     cout << "\nrunning ga number 4 (maximize each gene)..." << endl;
     ga4.evolve();

@@ -21,29 +21,29 @@ FourierBody::FourierBody(btDynamicsWorld* world, BodyParameters& params) : Walke
 
 void FourierBody::setActuatorValues(std::vector<double> vals) {
     
-    FourierActuator* actuator;
+    Actuator* actuator;
     double values[30] = {
         vals[0], vals[1], vals[2], vals[3], vals[4], vals[5], vals[6],
         vals[7], vals[8], vals[9], vals[10], vals[11], vals[12], vals[13]
     };
     
     BodyPart* leftLowerLeg = getLowerLeftLeg();
-    actuator = dynamic_cast<FourierActuator*>(leftLowerLeg->getActuator());
+    actuator = dynamic_cast<Actuator*>(leftLowerLeg->getActuator());
     actuator->setActuatorValues(values);
     
     BodyPart* leftUpperLeg = getUpperLeftLeg();
-    actuator = dynamic_cast<FourierActuator*>(leftUpperLeg->getActuator());
+    actuator = dynamic_cast<Actuator*>(leftUpperLeg->getActuator());
     actuator->setActuatorValues(&values[6]);
     
     values[6] += SIMD_PI;
     values[13] += SIMD_PI;
     
     BodyPart* rightLowerLeg = getLowerRightLeg();
-    actuator = dynamic_cast<FourierActuator*>(rightLowerLeg->getActuator());
+    actuator = dynamic_cast<Actuator*>(rightLowerLeg->getActuator());
     actuator->setActuatorValues(values);
     
     BodyPart* rightUpperLeg = getUpperRightLeg();
-    actuator = dynamic_cast<FourierActuator*>(rightUpperLeg->getActuator());
+    actuator = dynamic_cast<Actuator*>(rightUpperLeg->getActuator());
     actuator->setActuatorValues(&values[6]);
     
 }

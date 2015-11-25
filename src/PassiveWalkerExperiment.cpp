@@ -65,10 +65,10 @@ void PassiveWalkerExperiment::initializeBodies() {
         params = new GenericBodyParameters(firstStepActuator);
         selectedBody = new GenericBody(m_dynamicsWorld, *params);
     } else if (BODY_TYPE == BodyType::fourier) {
-        params = new FourierBodyParameters();
+        params = new FourierBodyParameters(firstStepActuator);
         selectedBody = new FourierBody(m_dynamicsWorld, *params);
     } else {
-        params = new CosineDoubleFrecBodyParameters();
+        params = new CosineDoubleFrecBodyParameters(firstStepActuator);
         selectedBody = new CosineDoubleFrecBody(m_dynamicsWorld, *params);
     }
 }
