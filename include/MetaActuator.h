@@ -22,6 +22,8 @@ public:
     Actuator *first = nullptr;
     Actuator *second = nullptr;
     
+    virtual Actuator* clone();
+    
 protected:
     double parameters[PARAMS_SIZE];
     

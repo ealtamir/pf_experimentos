@@ -31,3 +31,7 @@ void CosineDoubleFrecActuator::setActuatorValues(double vals[]) {
     parameters[FASE] = vals[FASE];
     parameters[IND_TERM] = vals[IND_TERM];
 }
+
+Actuator* CosineDoubleFrecActuator::clone() {
+    return new CosineDoubleFrecActuator();
+}

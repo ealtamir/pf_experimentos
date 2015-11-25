@@ -7,7 +7,7 @@
 class CosineDoubleFrecBodyParameters : public BodyParameters {
     
 public:
-    CosineDoubleFrecBodyParameters();
+    CosineDoubleFrecBodyParameters(Actuator *firstStepActuator);
     ~CosineDoubleFrecBodyParameters();
 };
 

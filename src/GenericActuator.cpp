@@ -33,6 +33,6 @@ void GenericActuator::setActuatorValues(double vals[]) {
     parameters[IND_TERM] = vals[IND_TERM];
 }
 
-Actuator* clone() {
+Actuator* GenericActuator::clone() {
     return new GenericActuator();
 }

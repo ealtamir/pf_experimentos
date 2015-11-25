@@ -7,7 +7,7 @@
 class FourierBodyParameters : public BodyParameters {
     
 public:
-    FourierBodyParameters();
+    FourierBodyParameters(Actuator *firstStepActuator);
     ~FourierBodyParameters();
 };
 

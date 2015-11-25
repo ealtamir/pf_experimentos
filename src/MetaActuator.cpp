@@ -17,8 +17,13 @@ void MetaActuator::setParameters(double *params) {
 }
 
 btVector3 MetaActuator::actuatorFunc(double t, int stage) {
-    return btVector3(0,0,1);
+    return second->actuatorFunc(t, stage);
 }
 
 void MetaActuator::setActuatorValues(double vals[]) {
+    second->setActuatorValues(vals);
+}
+
+Actuator* MetaActuator::clone() {
+    return new MetaActuator(first->clone(), second->clone());
 }

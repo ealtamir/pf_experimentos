@@ -26,11 +26,10 @@ public:
     
     virtual Actuator* clone() = 0;
     
+    virtual btVector3 actuatorFunc(double t, int stage) = 0;
+    
 protected:
     double parameters[PARAMS_SIZE];
-    
-    virtual btVector3 actuatorFunc(double t, int stage) = 0;
-
 };
 
 #endif /* defined(__test__Actuator__) */
