@@ -204,8 +204,3 @@ double getDirectionAngle(double previous_position_x, double previous_position_z,
      
 }
 
-
-
-
-
-

@@ -7,7 +7,11 @@ MetaActuator::MetaActuator(Actuator *first, Actuator *second) {
 }
 
 btVector3 MetaActuator::actuatorFunc(double t, int stage) {
-    return second->actuatorFunc(t, stage);
+    if(stage == 0) {
+        return first->actuatorFunc(t, stage);
+    } else {
+        return second->actuatorFunc(t, stage);
+    }
 }
 
 void MetaActuator::setActuatorValues(double vals[]) {
