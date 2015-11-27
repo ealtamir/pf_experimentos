@@ -38,9 +38,13 @@
     -BulletCollision.framework
     -LinearMath.framework
 
-7.bis- -Get the path to the include folder of the galib, '$REPOSITORY_PATH/libraries/galib/247/include'
-       -Go to xcode, select the project target and add that path to the 'header search path'
-       -Also add the libga.a dragging it to the root target of the project on xcode ( the libga.a is inside '$REPOSITORY_PATH/libraries/galib/247/lib/libga.a' )
+7.bis- Installing galib:
+        -Get the path to the include folder of the galib, '$REPOSITORY_PATH/libraries/galib/247/include'
+        -Go to xcode, select the project target and add that path to the 'header search path'
+        -Also add the libga.a dragging it to the root target of the project on xcode ( the libga.a is inside '$REPOSITORY_PATH/libraries/galib/247/lib/libga.a' ).
+       In case the static library don't work do the following:
+          ```brew install galib```
+          and find the path where it was installed(usually /usr/local/Cellar/galib). The folder tree will be like the one described above to find the static lirary
 
 8- Drag and drop the static libs on the folder 'libraries' to the root of the project
 
