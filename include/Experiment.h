@@ -19,8 +19,6 @@
 #include "GlutDemoApplication.h"
 #include "WalkerBody.h"
 
-#include "ObjectStoppedCondition.h"
-
 
 
 

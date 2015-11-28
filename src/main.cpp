@@ -33,9 +33,6 @@
 
 #include "BasicDemo.h"
 
-#define POPULATION_SIZE     250
-#define GENERATIONS         1000
-#define VISUAL              true
 
 
 int mainLoop();
@@ -46,8 +43,6 @@ double values[VALUES_SIZE];
 double fitness;
 
 long int time_begin = 0;
-
-
 
 // Fitness
 class MiExperimentoFitness : public GaFitnessOperation {
@@ -130,9 +125,9 @@ int mainLoop(char* executablePath) {
     cout << "Starting GA runloop..." << endl;
     GaInitialize();
     
-    GaValueIntervalBounds<double> amplitudeLower(1, 25);
-    GaValueIntervalBounds<double> amplitudeUpper(1, 55);
-    GaValueIntervalBounds<double> frequency(0.01, 3);
+    GaValueIntervalBounds<double> amplitudeLower(-20, 20);
+    GaValueIntervalBounds<double> amplitudeUpper(-55, 55);
+    GaValueIntervalBounds<double> frequency(-3, 3);
     GaValueIntervalBounds<double> phase(-SIMD_PI, SIMD_PI);
     GaValueIntervalBounds<double> independentTerm(-5, 5);
     
@@ -152,27 +147,44 @@ int mainLoop(char* executablePath) {
         &amplitudeLowerValueSet, &amplitudeUpperValueSet, &amplitudeLowerValueSet, &amplitudeUpperValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet,
         &amplitudeLowerValueSet, &amplitudeUpperValueSet, &amplitudeLowerValueSet, &amplitudeUpperValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet
     };
-#else
+#elif DOUBLE_COSINE
     GaIntervalValueSet<double> *multiValueSet[VALUES_SIZE] = {
         &amplitudeLowerValueSet, &frequencyValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet,
         &amplitudeUpperValueSet, &frequencyValueSet, &frequencyValueSet, &phaseValueSet, &independentTermValueSet
+    };
+#else
+    GaIntervalValueSet<double> *multiValueSet[VALUES_SIZE] = {
+        &independentTermValueSet,
+        &amplitudeLowerValueSet, &amplitudeLowerValueSet, &amplitudeLowerValueSet, &amplitudeLowerValueSet,
+        &amplitudeLowerValueSet, &amplitudeLowerValueSet, &amplitudeLowerValueSet, &amplitudeLowerValueSet,
+        &amplitudeLowerValueSet, &amplitudeLowerValueSet, &amplitudeLowerValueSet, &amplitudeLowerValueSet,
+        &amplitudeLowerValueSet, &amplitudeLowerValueSet, &amplitudeLowerValueSet, &amplitudeLowerValueSet,
+        &amplitudeLowerValueSet, &amplitudeLowerValueSet,
+        &frequencyValueSet, &phaseValueSet,
+        &independentTermValueSet,
+        &amplitudeLowerValueSet, &amplitudeLowerValueSet, &amplitudeLowerValueSet, &amplitudeLowerValueSet,
+        &amplitudeLowerValueSet, &amplitudeLowerValueSet, &amplitudeLowerValueSet, &amplitudeLowerValueSet,
+        &amplitudeLowerValueSet, &amplitudeLowerValueSet, &amplitudeLowerValueSet, &amplitudeLowerValueSet,
+        &amplitudeLowerValueSet, &amplitudeLowerValueSet, &amplitudeLowerValueSet, &amplitudeLowerValueSet,
+        &amplitudeLowerValueSet, &amplitudeLowerValueSet,
+        &frequencyValueSet, &phaseValueSet
     };
 #endif
 
     
     // CHROMOSOME PARAMETERS
-    double  mutationProbability = 0.8;
-    int     numOfMutatedValues = 3;
+    double  mutationProbability = 0.7;
+    int     numOfMutatedValues = VALUES_SIZE;
     bool    onlyAcceptImprovingMutations = false;
-    double  crossoverProbability = 0.7;
-    int     crossoverPoints = 2;
-//    GaChromosomeParams* chromosomeParams = new GaChromosomeParams(mutationProbability,
-//                                        numOfMutatedValues,
-//                                        onlyAcceptImprovingMutations,
-//                                        crossoverProbability,
-//                                        crossoverPoints);
+    double  crossoverProbability = 0.3;
+    int     crossoverPoints = 4;
+    GaChromosomeParams* chromosomeParams = new GaChromosomeParams(mutationProbability,
+                                        numOfMutatedValues,
+                                        onlyAcceptImprovingMutations,
+                                        crossoverProbability,
+                                        crossoverPoints);
     
-    GaChromosomeParams* chromosomeParams = new GaChromosomeParams( 0.08F, 2, false, 0.8F, 4 );
+//    GaChromosomeParams* chromosomeParams = new GaChromosomeParams( 0.08F, 2, false, 0.8F, 4 );
     
     //CHROMOSOME CONFIGURATION BLOCK (CCB)
     GaCrossoverOperation*   crossoverMethod = GaCrossoverCatalogue::Instance().GetEntryData("GaMultiValueCrossover");
@@ -199,8 +211,8 @@ int mainLoop(char* executablePath) {
     bool    resizablePopulation = false;
     bool    sortedPopulation = false;
     bool    scaledValueFitness = false;
-    int     bestChromosomesToTrack = 5;
-    int     worstChromosomesToTrack = 5;
+    int     bestChromosomesToTrack = 1;
+    int     worstChromosomesToTrack = 1;
     GaPopulationParameters populationParams(populationSize,
                                             resizablePopulation,
                                             sortedPopulation,
@@ -208,19 +220,19 @@ int mainLoop(char* executablePath) {
                                             bestChromosomesToTrack,
                                             worstChromosomesToTrack);
     
-    int selectionSize = 250;
+    int selectionSize = 0.8 * GENERATIONS;
     bool duplicates = false;
     
     Population::SelectionOperations::GaSelectRandomBestParams selectParams(100, false, 150);
     
-    int replacementSize = 100;
+    int replacementSize = 0.8 * GENERATIONS;
     int bestChromosomesThatRemain = 2;
     Population::ReplacementOperations::GaReplaceElitismParams replaceParams(replacementSize,
                                                                             bestChromosomesThatRemain);
     
     
     int numberOfOffsprings = 3;
-    int checkForDuplicates = false;
+    int checkForDuplicates = true;
     GaCouplingParams couplingParams(numberOfOffsprings, checkForDuplicates);
     
     GaPopulationConfiguration* populationConfiguration = new GaPopulationConfiguration(
@@ -239,7 +251,7 @@ int mainLoop(char* executablePath) {
                                                  populationConfiguration);
     
     
-    int numberOfWorkers = 1;
+    int numberOfWorkers = 8;
     GaMultithreadingAlgorithmParams algParam(numberOfWorkers);
     Algorithm::SimpleAlgorithms::GaIncrementalAlgorithm* algorithm = new Algorithm::SimpleAlgorithms::GaIncrementalAlgorithm( population, algParam );
     

@@ -18,11 +18,12 @@
 #include "CosineDoubleFrecBodyParameters.h"
 #include "CosineDoubleFrecBody.h"
 
+#include "ExtraFourierBody.h"
+#include "ExtraFourierBodyParameters.h"
+
 #include "IOTools.h"
 
 #define FIFO_PATHNAME   "/tmp/passive_walker_exp.fifo"
-
-#define DESIRED_ZSPEED  1
 
 #define FITNESS_EXPONENT_CONSTANT 5
 
@@ -55,7 +56,7 @@ float PassiveWalkerExperiment::getFitness(const std::vector<double> vals) {
 //    experiment->setBodyActuatorValues(vals);
     body->setActuatorValues(vals);
     experiment->simulate();
-    fitness = experiment->getHeight() * experiment->getDirection() * experiment->getVelocity();
+    fitness = experiment->getHeight() * experiment->getDirection() * experiment->getVelocity() * experiment->getFeetSimmetry();
     fitnessLock.unlock();
 //    std::cout << "Height: " << experiment->getHeight() << std::endl;
 //    std::cout << "Direction: " << experiment->getDirection() << std::endl;
@@ -77,9 +78,12 @@ void PassiveWalkerExperiment::initializeBodies() {
     } else if (BODY_TYPE == BodyType::fourier) {
         params = new FourierBodyParameters();
         selectedBody = new FourierBody(m_dynamicsWorld, *params);
-    } else {
+    } else if (BODY_TYPE == BodyType::double_cosine) {
         params = new CosineDoubleFrecBodyParameters();
         selectedBody = new CosineDoubleFrecBody(m_dynamicsWorld, *params);
+    } else {
+        params = new ExtraFourierBodyParameters();
+        selectedBody = new ExtraFourierBody(m_dynamicsWorld, *params);
     }
 }
 
@@ -89,6 +93,11 @@ void PassiveWalkerExperiment::initObjects() {
 
 void PassiveWalkerExperiment::worldStep() {
     btDynamicsWorld* w = getDynamicsWorld();
+//    if (timeCount <= SIMULATION_SECONDS) {
+//        w->stepSimulation(1 / 60.f, 10, 1 / 500.);
+//        selectedBody->actuate(timeCount, 0);
+//        timeCount += 1. / 60.;
+//    }
     w->stepSimulation(1 / 60.f, 10, 1 / 500.);
     selectedBody->actuate(timeCount, 0);
     timeCount += 1. / 60.;
@@ -145,6 +154,36 @@ double PassiveWalkerExperiment::getAngleCoefficient(btVector3& normalizedVel) {
     return 1 / exp(diff * diff * FITNESS_EXPONENT_CONSTANT);
 }
 
+double PassiveWalkerExperiment::getFeetSimmetry() {
+    double leftFootZ, leftFootX;
+    double rightFootZ, rightFootX;
+    double hipZ, hipX;
+    double diffZ, diffX;
+    double valZ, valX;
+    btRigidBody* leftFoot = selectedBody->getLeftFoot()->getRigidBody();
+    btRigidBody* rightFoot = selectedBody->getRightFoot()->getRigidBody();
+    btRigidBody* hip = selectedBody->getHip()->getRigidBody();
+    
+    btVector3 position;
+    position = leftFoot->getCenterOfMassPosition();
+    leftFootZ = position.z();
+    leftFootX = position.x();
+    
+    position = rightFoot->getCenterOfMassPosition();
+    rightFootZ = position.z();
+    rightFootX = position.x();
+    
+    position = hip->getCenterOfMassPosition();
+    hipZ = position.z();
+    hipX = position.x();
+    
+    diffZ = abs(abs(leftFootZ - hipZ) - abs(rightFootZ - hipZ));
+    diffX = abs(abs(leftFootX - hipX) - abs(rightFootX - hipX));
+    valX = 1 / exp(diffX * diffX * FITNESS_EXPONENT_CONSTANT);
+    valZ = 1 / exp(diffZ * diffZ * FITNESS_EXPONENT_CONSTANT);
+    return (valX + valZ) / 2;
+}
+
 
 void PassiveWalkerExperiment::simulate() {
     max_height = 0;
@@ -181,7 +220,7 @@ void PassiveWalkerExperiment::simulate() {
         // Velocity Fitness
         btVector3 current_velocity = walker->getVelocity();
         acum_velocity += getVelocityCoefficient(current_velocity,
-                                                DESIRED_ZSPEED);
+                                                TARGET_SPEED);
         // Angle Fitness
         if (current_velocity != btVector3(0, 0, 0)) {
             current_velocity.normalize();
