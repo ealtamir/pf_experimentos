@@ -142,12 +142,12 @@ int main(int argc,char* argv[]) {
         alleles4.add(-SIMD_PI, SIMD_PI);
         alleles4.add(-10,10);
 #else FIRST_STEP_DOUBLE_COSINE
-        alleles4.add(-40, 40);
+        alleles4.add(0, 40);
         alleles4.add(0.01, 10);
         alleles4.add(0.01, 10);
         alleles4.add(-SIMD_PI, SIMD_PI);
         alleles4.add(-10,10);
-        alleles4.add(-30, 30);
+        alleles4.add(0, 30);
         alleles4.add(0.01, 10);
         alleles4.add(0.01, 10);
         alleles4.add(-SIMD_PI, SIMD_PI);
@@ -183,12 +183,12 @@ int main(int argc,char* argv[]) {
         alleles4.add(-SIMD_PI, SIMD_PI);
         alleles4.add(-10,10);
 #else
-        alleles4.add(-40, 40);
+        alleles4.add(0, 40);
         alleles4.add(0.01, 10);
         alleles4.add(0.01, 10);
         alleles4.add(-SIMD_PI, SIMD_PI);
         alleles4.add(-10,10);
-        alleles4.add(-30, 30);
+        alleles4.add(0, 30);
         alleles4.add(0.01, 10);
         alleles4.add(0.01, 10);
         alleles4.add(-SIMD_PI, SIMD_PI);
