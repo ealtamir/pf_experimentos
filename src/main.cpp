@@ -39,10 +39,10 @@
 #include <ga/GARealGenome.C>
 
 #define POPULATION_SIZE             50
-#define GENERATIONS                 5
+#define GENERATIONS                 100
 #define GENOME_MUTATION             0.3
 #define REPLACEMENT_PORCENTAGE      0.9
-#define LAST_RESULTS                true
+#define LAST_RESULTS                false
 
 
 int mainLoop();
@@ -144,16 +144,16 @@ int main(int argc,char* argv[]) {
         alleles4.add(-SIMD_PI, SIMD_PI);
         alleles4.add(-10,10);
 #elif FIRST_STEP_DOUBLE_COSINE
-        alleles4.add(1, 25);
+        alleles4.add(-25, 25);
         alleles4.add(0.1, 10);
         alleles4.add(0.1, 10);
         alleles4.add(-SIMD_PI, SIMD_PI);
-        alleles4.add(0,10);
-        alleles4.add(1, 40);
+        alleles4.add(-10,10);
+        alleles4.add(-40, 40);
         alleles4.add(0.1, 10);
         alleles4.add(0.1, 10);
         alleles4.add(-SIMD_PI, SIMD_PI);
-        alleles4.add(0,10);
+        alleles4.add(-10,10);
 #endif
     
 #if GENERIC
@@ -185,16 +185,16 @@ int main(int argc,char* argv[]) {
         alleles4.add(-SIMD_PI, SIMD_PI);
         alleles4.add(-10,10);
 #elif DOUBLE_COSINE
-        alleles4.add(1, 25);
+        alleles4.add(-25, 25);
         alleles4.add(0.1, 10);
         alleles4.add(0.1, 10);
         alleles4.add(-SIMD_PI, SIMD_PI);
-        alleles4.add(0,10);
-        alleles4.add(1, 40);
+        alleles4.add(-10,10);
+        alleles4.add(-40, 40);
         alleles4.add(0.1, 10);
         alleles4.add(0.1, 10);
         alleles4.add(-SIMD_PI, SIMD_PI);
-        alleles4.add(0,10);
+        alleles4.add(-10,10);
 #endif
         GARealGenome genome4(alleles4, Objective4);
     
