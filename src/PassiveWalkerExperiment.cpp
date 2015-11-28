@@ -87,7 +87,7 @@ void PassiveWalkerExperiment::worldStep() {
     } else {
         stageValue = 1;
     }
-    selectedBody->actuate(timeCount, stageValue);
+//    selectedBody->actuate(timeCount, stageValue);
     timeCount += 1. / 60.;
 }
 
