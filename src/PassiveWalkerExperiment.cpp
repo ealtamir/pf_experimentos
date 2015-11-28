@@ -18,15 +18,16 @@
 #include "CosineDoubleFrecBodyParameters.h"
 #include "CosineDoubleFrecBody.h"
 
+#include "ExtraFourierBody.h"
+#include "ExtraFourierBodyParameters.h"
+
 #include "IOTools.h"
 
 #define FIFO_PATHNAME   "/tmp/passive_walker_exp.fifo"
 
-#define DESIRED_ZSPEED  1
-
 #define FITNESS_EXPONENT_CONSTANT 5
 
-#define FIRST_STEP_TIME 1
+#define FIRST_STEP_TIME 0
 
 std::mutex fitnessLock;
 
@@ -49,14 +50,11 @@ PassiveWalkerExperiment::~PassiveWalkerExperiment() {
 
 float PassiveWalkerExperiment::getFitness(const std::vector<double> vals) {
     double fitness = 0;
-    fitnessLock.lock();
     PassiveWalkerExperiment* experiment = PassiveWalkerExperiment::getInstance();
     WalkerBody* body = experiment->selectedBody;
     body->setActuatorValues(vals);
     experiment->simulate();
-    fitness = experiment->getHeight() * experiment->getDirection() * experiment->getVelocity();
-    fitnessLock.unlock();
-
+    fitness = experiment->getHeight() * experiment->getDirection() * experiment->getVelocity() * experiment->getFeetSimmetry();
     return fitness;
 }
 
@@ -64,12 +62,18 @@ void PassiveWalkerExperiment::initializeBodies() {
     if (BODY_TYPE == BodyType::generic) {
         params = new GenericBodyParameters(firstStepActuator);
         selectedBody = new GenericBody(m_dynamicsWorld, *params);
+        
     } else if (BODY_TYPE == BodyType::fourier) {
         params = new FourierBodyParameters(firstStepActuator);
         selectedBody = new FourierBody(m_dynamicsWorld, *params);
-    } else {
+        
+    } else if (BODY_TYPE == BodyType::double_cosine) {
         params = new CosineDoubleFrecBodyParameters(firstStepActuator);
         selectedBody = new CosineDoubleFrecBody(m_dynamicsWorld, *params);
+        
+    } else {
+        params = new ExtraFourierBodyParameters();
+        selectedBody = new ExtraFourierBody(m_dynamicsWorld, *params);
     }
 }
 
@@ -80,6 +84,11 @@ void PassiveWalkerExperiment::initObjects() {
 void PassiveWalkerExperiment::worldStep() {
 //    cout << selectedBody->getHeight() << endl;
     btDynamicsWorld* w = getDynamicsWorld();
+//    if (timeCount <= SIMULATION_SECONDS) {
+//        w->stepSimulation(1 / 60.f, 10, 1 / 500.);
+//        selectedBody->actuate(timeCount, 0);
+//        timeCount += 1. / 60.;
+//    }
     w->stepSimulation(1 / 60.f, 10, 1 / 500.);
     int stageValue = 0;
     if(timeCount <= FIRST_STEP_TIME) {
@@ -142,6 +151,36 @@ double PassiveWalkerExperiment::getAngleCoefficient(btVector3& normalizedVel) {
     return 1 / exp(diff * diff * FITNESS_EXPONENT_CONSTANT);
 }
 
+double PassiveWalkerExperiment::getFeetSimmetry() {
+    double leftFootZ, leftFootX;
+    double rightFootZ, rightFootX;
+    double hipZ, hipX;
+    double diffZ, diffX;
+    double valZ, valX;
+    btRigidBody* leftFoot = selectedBody->getLeftFoot()->getRigidBody();
+    btRigidBody* rightFoot = selectedBody->getRightFoot()->getRigidBody();
+    btRigidBody* hip = selectedBody->getHip()->getRigidBody();
+    
+    btVector3 position;
+    position = leftFoot->getCenterOfMassPosition();
+    leftFootZ = position.z();
+    leftFootX = position.x();
+    
+    position = rightFoot->getCenterOfMassPosition();
+    rightFootZ = position.z();
+    rightFootX = position.x();
+    
+    position = hip->getCenterOfMassPosition();
+    hipZ = position.z();
+    hipX = position.x();
+    
+    diffZ = abs(abs(leftFootZ - hipZ) - abs(rightFootZ - hipZ));
+    diffX = abs(abs(leftFootX - hipX) - abs(rightFootX - hipX));
+    valX = 1 / exp(diffX * diffX * FITNESS_EXPONENT_CONSTANT);
+    valZ = 1 / exp(diffZ * diffZ * FITNESS_EXPONENT_CONSTANT);
+    return (valX + valZ) / 2;
+}
+
 
 void PassiveWalkerExperiment::simulate() {
     max_height = 0;
@@ -178,7 +217,7 @@ void PassiveWalkerExperiment::simulate() {
         // Velocity Fitness
         btVector3 current_velocity = walker->getVelocity();
         acum_velocity += getVelocityCoefficient(current_velocity,
-                                                DESIRED_ZSPEED);
+                                                TARGET_SPEED);
         // Angle Fitness
         if (current_velocity != btVector3(0, 0, 0)) {
             current_velocity.normalize();

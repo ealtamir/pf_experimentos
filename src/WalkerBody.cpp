@@ -28,6 +28,18 @@ WalkerBody::WalkerBody(btDynamicsWorld* world, BodyParameters &params) : Body(wo
                    params);
 }
 
+BodyPart* WalkerBody::getLeftFoot() {
+    return bodyGroups[0]->getBodyParts()[2];
+}
+
+BodyPart* WalkerBody::getRightFoot() {
+    return bodyGroups[1]->getBodyParts()[2];
+}
+
+BodyPart* WalkerBody::getHip() {
+    return bodyGroups[2]->getBodyParts()[0];
+}
+
 BodyPart* WalkerBody::getLowerLeftLeg() {
     return bodyGroups[0]->getBodyParts()[0];
 }

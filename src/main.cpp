@@ -38,11 +38,6 @@
 #include <ga/GARealGenome.h>
 #include <ga/GARealGenome.C>
 
-#define POPULATION_SIZE             50
-#define GENERATIONS                 100
-#define GENOME_MUTATION             0.3
-#define REPLACEMENT_PORCENTAGE      0.9
-#define LAST_RESULTS                false
 
 
 int mainLoop();
@@ -66,23 +61,8 @@ Objective4(GAGenome& g)
 {
     GARealGenome& genome = (GARealGenome&)g;
     int size = 0;
-#if FIRST_STEP_GENERIC
-    size += 12;
-#elif FIRST_STEP_FOURIER
-    size += 14;
-#elif FIRST_STEP_DOUBLE_COSINE
-    size += 10;
-#endif
-    
-#if GENERIC
-    size += 12;
-#elif FOURIER
-    size += 14;
-#elif DOUBLE_COSINE
-    size += 10;
-#endif
 
-    double arr[size];
+    double arr[VALUES_SIZE];
     for(int i=0; i < genome.length(); i++)
         arr[i] = genome.gene(i);
     std::vector<double> vals(arr, arr + sizeof(arr) / sizeof(arr[0]));
@@ -195,6 +175,28 @@ int main(int argc,char* argv[]) {
         alleles4.add(0.1, 10);
         alleles4.add(-SIMD_PI, SIMD_PI);
         alleles4.add(-10,10);
+#elif EXTRA_FOURIER
+        alleles4.add(-10, 10);
+        alleles4.add(-60,60);
+        alleles4.add(-60,60);
+        alleles4.add(-60,60);
+        alleles4.add(-60,60);
+        alleles4.add(-60,60);
+        alleles4.add(-60,60);
+        alleles4.add(-60,60);
+        alleles4.add(-60,60);
+        alleles4.add(-60,60);
+        alleles4.add(-60,60);
+        alleles4.add(-60,60);
+        alleles4.add(-60,60);
+        alleles4.add(-60,60);
+        alleles4.add(-60,60);
+        alleles4.add(-60,60);
+        alleles4.add(-60,60);
+        alleles4.add(-60,60);
+        alleles4.add(-60,60);
+        alleles4.add(0.1, 10);
+        alleles4.add(-SIMD_PI, SIMD_PI);
 #endif
         GARealGenome genome4(alleles4, Objective4);
     

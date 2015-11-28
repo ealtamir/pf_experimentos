@@ -57,7 +57,9 @@ btRigidBody* Experiment::createGround()
     btTransform groundTransform;
     groundTransform.setIdentity();
     groundTransform.setOrigin(btVector3(0, -0.5, 0));
-    return localCreateRigidBody(btScalar(0.), groundTransform, groundShape);
+    btRigidBody* floor = localCreateRigidBody(btScalar(0.), groundTransform, groundShape);
+    floor->setFriction(1);
+    return floor;
 }
 
 void Experiment::clientMoveAndDisplay()

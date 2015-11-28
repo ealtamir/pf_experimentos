@@ -33,6 +33,10 @@ public:
     BodyPart* getLowerRightLeg();
     BodyPart* getUpperRightLeg();
     
+    BodyPart* getLeftFoot();
+    BodyPart* getRightFoot();
+    BodyPart* getHip();
+    
     int numberOfParams;
     
 };

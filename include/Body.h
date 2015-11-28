@@ -22,6 +22,7 @@ public:
     double getHeight();
     double getLeftFootHeight();
     double getRightFootHeight();
+    
     btVector3 getPosition();
     btVector3 getVelocity();
     double getAngleInclination();
