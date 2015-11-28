@@ -70,7 +70,7 @@ Objective4(GAGenome& g)
     size += 12;
 #elif FIRST_STEP_FOURIER
     size += 14;
-#else FIRST_STEP_DOUBLE_COSINE
+#elif FIRST_STEP_DOUBLE_COSINE
     size += 10;
 #endif
     
@@ -78,11 +78,11 @@ Objective4(GAGenome& g)
     size += 12;
 #elif FOURIER
     size += 14;
-#else
+#elif DOUBLE_COSINE
     size += 10;
 #endif
 
-    static double arr[size];
+    double arr[size];
     for(int i=0; i < genome.length(); i++)
         arr[i] = genome.gene(i);
     std::vector<double> vals(arr, arr + sizeof(arr) / sizeof(arr[0]));
@@ -141,7 +141,7 @@ int main(int argc,char* argv[]) {
         alleles4.add(0.01, 10);
         alleles4.add(-SIMD_PI, SIMD_PI);
         alleles4.add(-10,10);
-#else FIRST_STEP_DOUBLE_COSINE
+#elif FIRST_STEP_DOUBLE_COSINE
         alleles4.add(0, 40);
         alleles4.add(0.01, 10);
         alleles4.add(0.01, 10);
@@ -182,7 +182,7 @@ int main(int argc,char* argv[]) {
         alleles4.add(0.01, 10);
         alleles4.add(-SIMD_PI, SIMD_PI);
         alleles4.add(-10,10);
-#else
+#elif DOUBLE_COSINE
         alleles4.add(0, 40);
         alleles4.add(0.01, 10);
         alleles4.add(0.01, 10);

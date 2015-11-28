@@ -7,6 +7,8 @@
 #include "WalkerBody.h"
 #include "Actuator.h"
 #include "GenericActuator.h"
+#include "FourierActuator.h"
+#include "CosineDoubleFrecActuator.h"
 
 enum BodyType {
     generic, fourier, double_cosine
@@ -42,7 +44,14 @@ const double HALF_PI_IN_DEGREES = 90;
 class PassiveWalkerExperiment : public Experiment {
 
 public:
+    
+#if FIRST_STEP_GENERIC
     Actuator *firstStepActuator = new GenericActuator();
+#elif FIRST_STEP_FOURIER
+    Actuator *firstStepActuator = new FourierActuator();
+#elif FIRST_STEP_DOUBLE_COSINE
+    Actuator *firstStepActuator = new CosineDoubleFrecActuator();
+#endif
     
     ~PassiveWalkerExperiment();
     
