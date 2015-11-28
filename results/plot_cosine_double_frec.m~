@@ -46,7 +46,7 @@ else
 end
 
 
-psi = x + first2_step_upper_fase - floor((x + first2_step_upper_fase)/((pi/first_step_upper_W1) + (pi/first2_step_upper_W2))) * ((pi/first2_step_upper_W1) + (pi/first2_step_upper_W2));
+psi = x + first_step_upper_fase + pi - floor((x + first_step_upper_fase + pi)/((pi/first_step_upper_W1) + (pi/first_step_upper_W2))) * ((pi/first_step_upper_W1) + (pi/first_step_upper_W2));
 
 if(first_step_upper_W1*psi < pi)
     first_step_upper_r = first2_step_upper_A*cos(first2_step_upper_W1*psi) + first2_step_upper_ind_term;
@@ -54,25 +54,25 @@ else
     first_step_upper_r = first2_step_upper_A*cos(first2_step_upper_W2*(psi-(pi/first2_step_upper_W1)+(pi/first2_step_upper_W2))) + first2_step_upper_ind_term;
 end
 
-psi = x + first2_step_lower_fase - floor((x + first2_step_lower_fase)/((pi/first2_step_lower_W1) + (pi/first2_step_lower_W2))) * ((pi/first2_step_lower_W1) + (pi/first2_step_lower_W2));
+psi = x + first2_step_lower_fase + pi - floor((x + first2_step_lower_fase + pi)/((pi/first2_step_lower_W1) + (pi/first2_step_lower_W2))) * ((pi/first2_step_lower_W1) + (pi/first2_step_lower_W2));
 
 if(first_step_lower_W1*psi < pi)
-    first_step_lower_r = first2_step_lower_A*cos(first2_step_lower_W1*psi) + first2_step_lower_ind_term;
+    first_step_lower_r = first_step_lower_A*cos(first_step_lower_W1*psi) + first_step_lower_ind_term;
 else
-    first_step_lower_r = first2_step_lower_A*cos(first2_step_lower_W2*(psi-(pi/first2_step_lower_W1)+(pi/first2_step_lower_W2))) + first2_step_lower_ind_term;
+    first_step_lower_r = first_step_lower_A*cos(first_step_lower_W2*(psi-(pi/first_step_lower_W1)+(pi/first_step_lower_W2))) + first_step_lower_ind_term;
 end
 
-subplot(2,2,1)
+subplot(3,2,1)
 plot(x,first_step_upper,x,first_step_upper_r)
 title('Plot cosine double frec function')
-legend('upper left leg first','upper right leg first')
+legend('upper leg first','upper right leg first')
 
 axis([0 first_step_time -50 50])
 
-subplot(2,2,3)
+subplot(3,2,2)
 plot(x,first_step_lower,x,first_step_lower_r)
 title('Plot cosine double frec function')
-legend('lower left leg first','lower right leg first')
+legend('lower legfirst','lower right leg first')
 
 axis([0 first_step_time -50 50])
 
@@ -121,16 +121,16 @@ else
     lower_r = lower_A*cos(lower_W2*(psi-(pi/lower_W1)+(pi/lower_W2))) + lower_ind_term;
 end
 
-subplot(2,2,2)
+subplot(3,2,5)
 plot(x,upper,x,upper_r)
 title('Plot cosine double frec function')
-legend('upper left leg','upper right leg')
+legend('upper leg','upper right leg')
 
 axis([first_step_time 3 -50 50])
 
-subplot(2,2,4)
+subplot(3,2,6)
 plot(x,lower,x,lower_r)
 title('Plot cosine double frec function')
-legend('lower left leg','lower right leg')
+legend('lower leg','lower right leg')
 
 axis([first_step_time 3 -50 50])

@@ -26,7 +26,7 @@
 
 #define FITNESS_EXPONENT_CONSTANT 5
 
-#define FIRST_STEP_TIME 1
+#define FIRST_STEP_TIME 0.7
 
 std::mutex fitnessLock;
 
@@ -54,7 +54,7 @@ float PassiveWalkerExperiment::getFitness(const std::vector<double> vals) {
     WalkerBody* body = experiment->selectedBody;
     body->setActuatorValues(vals);
     experiment->simulate();
-    fitness = experiment->getHeight() * experiment->getDirection() * experiment->getVelocity();
+    fitness = experiment->max_height;// * experiment->getDirection() * experiment->getVelocity();
     fitnessLock.unlock();
 
     return fitness;
@@ -79,8 +79,10 @@ void PassiveWalkerExperiment::initObjects() {
 
 void PassiveWalkerExperiment::worldStep() {
 //    cout << selectedBody->getHeight() << endl;
+    if (timeCount > 5)
+        return;
     btDynamicsWorld* w = getDynamicsWorld();
-    w->stepSimulation(1 / 60.f, 10, 1 / 500.);
+    w->stepSimulation(1 / 60.f, 10, 1 / 480.);
     int stageValue = 0;
     if(timeCount <= FIRST_STEP_TIME) {
         stageValue = 0;
@@ -88,6 +90,7 @@ void PassiveWalkerExperiment::worldStep() {
         stageValue = 1;
     }
     selectedBody->actuate(timeCount, stageValue);
+    cout << selectedBody->getHeight() << endl;;
     timeCount += 1. / 60.;
 }
 
@@ -160,7 +163,7 @@ void PassiveWalkerExperiment::simulate() {
     
     double initial_angle = 0;
     double acum_direction = 0;
-        
+    
     worldStep();
     initial_height = walker->getHeight();
     initial_angle = walker->getAngleInclination();
@@ -191,6 +194,7 @@ void PassiveWalkerExperiment::simulate() {
     average_velocity = acum_velocity / SIMULATION_STEPS;
     direction = acum_direction / SIMULATION_STEPS;
     timeCount = 0;
+    exp->clientResetScene();
 }
 
 double getDirectionAngle(double previous_position_x, double previous_position_z,

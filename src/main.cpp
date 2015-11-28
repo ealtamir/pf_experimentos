@@ -39,10 +39,10 @@
 #include <ga/GARealGenome.C>
 
 #define POPULATION_SIZE             50
-#define GENERATIONS                 100
+#define GENERATIONS                 10
 #define GENOME_MUTATION             0.3
 #define REPLACEMENT_PORCENTAGE      0.9
-#define LAST_RESULTS                false
+#define LAST_RESULTS                true
 
 
 int mainLoop();
@@ -67,11 +67,11 @@ Objective4(GAGenome& g)
     GARealGenome& genome = (GARealGenome&)g;
     int size = 0;
 #if FIRST_STEP_GENERIC
-    size += 12;
+    size += 24;
 #elif FIRST_STEP_FOURIER
     size += 14;
 #elif FIRST_STEP_DOUBLE_COSINE
-    size += 10;
+    size += 20;
 #endif
     
 #if GENERIC
@@ -116,14 +116,27 @@ int main(int argc,char* argv[]) {
     
         GARealAlleleSetArray alleles4;
 #if FIRST_STEP_GENERIC
-        alleles4.add(-60,60);
-        alleles4.add(-60,60);
+        alleles4.add(-30,30);
+        alleles4.add(-30,30);
         alleles4.add(0.01, 10);
         alleles4.add(0.01, 10);
         alleles4.add(-SIMD_PI, SIMD_PI);
         alleles4.add(-10,10);
-        alleles4.add(-30, -30);
-        alleles4.add(-30, -30);
+        alleles4.add(-60, 60);
+        alleles4.add(-60, 60);
+        alleles4.add(0.01, 10);
+        alleles4.add(0.01, 10);
+        alleles4.add(-SIMD_PI, SIMD_PI);
+        alleles4.add(-10,10);
+        
+        alleles4.add(-30,30);
+        alleles4.add(-30,30);
+        alleles4.add(0.01, 10);
+        alleles4.add(0.01, 10);
+        alleles4.add(-SIMD_PI, SIMD_PI);
+        alleles4.add(-10,10);
+        alleles4.add(-60, 60);
+        alleles4.add(-60, 60);
         alleles4.add(0.01, 10);
         alleles4.add(0.01, 10);
         alleles4.add(-SIMD_PI, SIMD_PI);
@@ -154,17 +167,27 @@ int main(int argc,char* argv[]) {
         alleles4.add(0.1, 10);
         alleles4.add(-SIMD_PI, SIMD_PI);
         alleles4.add(-10,10);
+        alleles4.add(-25, 25);
+        alleles4.add(0.1, 10);
+        alleles4.add(0.1, 10);
+        alleles4.add(-SIMD_PI, SIMD_PI);
+        alleles4.add(-10,10);
+        alleles4.add(-40, 40);
+        alleles4.add(0.1, 10);
+        alleles4.add(0.1, 10);
+        alleles4.add(-SIMD_PI, SIMD_PI);
+        alleles4.add(-10,10);
 #endif
     
 #if GENERIC
-        alleles4.add(-60,60);
-        alleles4.add(-60,60);
+        alleles4.add(-30,30);
+        alleles4.add(-30,30);
         alleles4.add(0.01, 10);
         alleles4.add(0.01, 10);
         alleles4.add(-SIMD_PI, SIMD_PI);
         alleles4.add(-10,10);
-        alleles4.add(-30, -30);
-        alleles4.add(-30, -30);
+        alleles4.add(-60, 60);
+        alleles4.add(-60, 60);
         alleles4.add(0.01, 10);
         alleles4.add(0.01, 10);
         alleles4.add(-SIMD_PI, SIMD_PI);
@@ -223,7 +246,24 @@ int main(int argc,char* argv[]) {
     
         GARealGenome& genome = (GARealGenome&)ga4.statistics().bestIndividual();
     
-        static double arr[] = { 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21 };
+        int size = 0;
+#if FIRST_STEP_GENERIC
+        size += 24;
+#elif FIRST_STEP_FOURIER
+        size += 14;
+#elif FIRST_STEP_DOUBLE_COSINE
+        size += 20;
+#endif
+        
+#if GENERIC
+        size += 12;
+#elif FOURIER
+        size += 14;
+#elif DOUBLE_COSINE
+        size += 10;
+#endif
+        
+        double arr[size];
         for(int i=0; i < genome.length(); i++)
             arr[i] = genome.gene(i);
         std::vector<double> vals(arr, arr + sizeof(arr) / sizeof(arr[0]));
@@ -238,7 +278,7 @@ int main(int argc,char* argv[]) {
             std::cout << "Values: " << vals[i] << std::endl;
         }
         
-        updateResultFiles(exePath, genome.fitness(), &vals[0], 20, getTimeElapsed());
+        updateResultFiles(exePath, genome.fitness(), &vals[0], size, getTimeElapsed());
         body->setActuatorValues(vals);
         return glutmain(argc, argv, 800, 600, "Experiment", experiment);
     } else {
@@ -250,6 +290,8 @@ int main(int argc,char* argv[]) {
         std::string exePath(argv[0]);
         std::vector<double> vals = loadPreviousParams(exePath);
         body->setActuatorValues(vals);
+        float aux = experiment->getFitness(vals);
+        cout << "fitness: " <<  aux << endl;
         for (int i = 0; i < vals.size(); i++) {
             std::cout << "Values: " << vals[i] << std::endl;
         }
