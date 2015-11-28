@@ -65,7 +65,24 @@ float
 Objective4(GAGenome& g)
 {
     GARealGenome& genome = (GARealGenome&)g;
-    static double arr[] = { 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21 };
+    int size = 0;
+#if FIRST_STEP_GENERIC
+    size += 12;
+#elif FIRST_STEP_FOURIER
+    size += 14;
+#else FIRST_STEP_DOUBLE_COSINE
+    size += 10;
+#endif
+    
+#if GENERIC
+    size += 12;
+#elif FOURIER
+    size += 14;
+#else
+    size += 10;
+#endif
+
+    static double arr[size];
     for(int i=0; i < genome.length(); i++)
         arr[i] = genome.gene(i);
     std::vector<double> vals(arr, arr + sizeof(arr) / sizeof(arr[0]));
@@ -96,7 +113,7 @@ int main(int argc,char* argv[]) {
         // ways than those shown.
     
         GARealAlleleSetArray alleles4;
-    #if GENERIC
+#if FIRST_STEP_GENERIC
         alleles4.add(-60,60);
         alleles4.add(-60,60);
         alleles4.add(0.01, 10);
@@ -109,7 +126,7 @@ int main(int argc,char* argv[]) {
         alleles4.add(0.01, 10);
         alleles4.add(-SIMD_PI, SIMD_PI);
         alleles4.add(-10,10);
-    #elif FOURIER
+#elif FIRST_STEP_FOURIER
         alleles4.add(-60,60);
         alleles4.add(-60,60);
         alleles4.add(-60,60);
@@ -124,20 +141,48 @@ int main(int argc,char* argv[]) {
         alleles4.add(0.01, 10);
         alleles4.add(-SIMD_PI, SIMD_PI);
         alleles4.add(-10,10);
-    #else
-        alleles4.add(-40, 40);
+#else FIRST_STEP_DOUBLE_COSINE
         alleles4.add(-40, 40);
         alleles4.add(0.01, 10);
         alleles4.add(0.01, 10);
         alleles4.add(-SIMD_PI, SIMD_PI);
         alleles4.add(-10,10);
         alleles4.add(-30, 30);
-        alleles4.add(-30, 30);
         alleles4.add(0.01, 10);
         alleles4.add(0.01, 10);
         alleles4.add(-SIMD_PI, SIMD_PI);
         alleles4.add(-10,10);
+#endif
     
+#if GENERIC
+        alleles4.add(-60,60);
+        alleles4.add(-60,60);
+        alleles4.add(0.01, 10);
+        alleles4.add(0.01, 10);
+        alleles4.add(-SIMD_PI, SIMD_PI);
+        alleles4.add(-10,10);
+        alleles4.add(-30, -30);
+        alleles4.add(-30, -30);
+        alleles4.add(0.01, 10);
+        alleles4.add(0.01, 10);
+        alleles4.add(-SIMD_PI, SIMD_PI);
+        alleles4.add(-10,10);
+#elif FOURIER
+        alleles4.add(-60,60);
+        alleles4.add(-60,60);
+        alleles4.add(-60,60);
+        alleles4.add(-60,60);
+        alleles4.add(0.01, 10);
+        alleles4.add(-SIMD_PI, SIMD_PI);
+        alleles4.add(-10,10);
+        alleles4.add(-30,30);
+        alleles4.add(-30,30);
+        alleles4.add(-30,30);
+        alleles4.add(-30,30);
+        alleles4.add(0.01, 10);
+        alleles4.add(-SIMD_PI, SIMD_PI);
+        alleles4.add(-10,10);
+#else
         alleles4.add(-40, 40);
         alleles4.add(0.01, 10);
         alleles4.add(0.01, 10);
@@ -148,7 +193,7 @@ int main(int argc,char* argv[]) {
         alleles4.add(0.01, 10);
         alleles4.add(-SIMD_PI, SIMD_PI);
         alleles4.add(-10,10);
-    #endif
+#endif
         GARealGenome genome4(alleles4, Objective4);
     
         // Now that we have the genomes, create a parameter list that will be used for
