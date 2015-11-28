@@ -39,7 +39,7 @@
 #include <ga/GARealGenome.C>
 
 #define POPULATION_SIZE             50
-#define GENERATIONS                 100
+#define GENERATIONS                 1000
 #define GENOME_MUTATION             0.1
 #define REPLACEMENT_PORCENTAGE      0.4
 #define LAST_RESULTS                false
@@ -86,7 +86,9 @@ Objective4(GAGenome& g)
     for(int i=0; i < genome.length(); i++)
         arr[i] = genome.gene(i);
     std::vector<double> vals(arr, arr + sizeof(arr) / sizeof(arr[0]));
-    return PassiveWalkerExperiment::getFitness(vals);
+    float aux = PassiveWalkerExperiment::getFitness(vals);
+    cout << aux << endl;
+    return aux;
 }
 
 int main(int argc,char* argv[]) {
@@ -142,12 +144,12 @@ int main(int argc,char* argv[]) {
         alleles4.add(-SIMD_PI, SIMD_PI);
         alleles4.add(-10,10);
 #elif FIRST_STEP_DOUBLE_COSINE
-        alleles4.add(0, 40);
+        alleles4.add(-40, 40);
         alleles4.add(0.01, 10);
         alleles4.add(0.01, 10);
         alleles4.add(-SIMD_PI, SIMD_PI);
         alleles4.add(-10,10);
-        alleles4.add(0, 30);
+        alleles4.add(-30, 30);
         alleles4.add(0.01, 10);
         alleles4.add(0.01, 10);
         alleles4.add(-SIMD_PI, SIMD_PI);
@@ -183,12 +185,12 @@ int main(int argc,char* argv[]) {
         alleles4.add(-SIMD_PI, SIMD_PI);
         alleles4.add(-10,10);
 #elif DOUBLE_COSINE
-        alleles4.add(0, 40);
+        alleles4.add(-40, 40);
         alleles4.add(0.01, 10);
         alleles4.add(0.01, 10);
         alleles4.add(-SIMD_PI, SIMD_PI);
         alleles4.add(-10,10);
-        alleles4.add(0, 30);
+        alleles4.add(-30, 30);
         alleles4.add(0.01, 10);
         alleles4.add(0.01, 10);
         alleles4.add(-SIMD_PI, SIMD_PI);
@@ -236,7 +238,7 @@ int main(int argc,char* argv[]) {
             std::cout << "Values: " << vals[i] << std::endl;
         }
         
-        updateResultFiles(exePath, genome.fitness(), &vals[0], 22, getTimeElapsed());
+        updateResultFiles(exePath, genome.fitness(), &vals[0], 20, getTimeElapsed());
         body->setActuatorValues(vals);
         return glutmain(argc, argv, 800, 600, "Experiment", experiment);
     } else {
@@ -248,6 +250,9 @@ int main(int argc,char* argv[]) {
         std::string exePath(argv[0]);
         std::vector<double> vals = loadPreviousParams(exePath);
         body->setActuatorValues(vals);
+        for (int i = 0; i < vals.size(); i++) {
+            std::cout << "Values: " << vals[i] << std::endl;
+        }
         return glutmain(argc, argv, 800, 600, "Experiment", experiment);
     }
 }
