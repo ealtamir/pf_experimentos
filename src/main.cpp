@@ -39,9 +39,9 @@
 #include <ga/GARealGenome.C>
 
 #define POPULATION_SIZE             50
-#define GENERATIONS                 1000
-#define GENOME_MUTATION             0.1
-#define REPLACEMENT_PORCENTAGE      0.4
+#define GENERATIONS                 100
+#define GENOME_MUTATION             0.3
+#define REPLACEMENT_PORCENTAGE      0.9
 #define LAST_RESULTS                false
 
 
@@ -87,7 +87,7 @@ Objective4(GAGenome& g)
         arr[i] = genome.gene(i);
     std::vector<double> vals(arr, arr + sizeof(arr) / sizeof(arr[0]));
     float aux = PassiveWalkerExperiment::getFitness(vals);
-    cout << aux << endl;
+//    cout << aux << endl;
     return aux;
 }
 
@@ -144,14 +144,14 @@ int main(int argc,char* argv[]) {
         alleles4.add(-SIMD_PI, SIMD_PI);
         alleles4.add(-10,10);
 #elif FIRST_STEP_DOUBLE_COSINE
-        alleles4.add(-40, 40);
-        alleles4.add(0.01, 10);
-        alleles4.add(0.01, 10);
+        alleles4.add(0, 25);
+        alleles4.add(0.1, 10);
+        alleles4.add(0.1, 10);
         alleles4.add(-SIMD_PI, SIMD_PI);
         alleles4.add(-10,10);
-        alleles4.add(-30, 30);
-        alleles4.add(0.01, 10);
-        alleles4.add(0.01, 10);
+        alleles4.add(0, 40);
+        alleles4.add(0.1, 10);
+        alleles4.add(0.1, 10);
         alleles4.add(-SIMD_PI, SIMD_PI);
         alleles4.add(-10,10);
 #endif
@@ -185,14 +185,14 @@ int main(int argc,char* argv[]) {
         alleles4.add(-SIMD_PI, SIMD_PI);
         alleles4.add(-10,10);
 #elif DOUBLE_COSINE
-        alleles4.add(-40, 40);
-        alleles4.add(0.01, 10);
-        alleles4.add(0.01, 10);
+        alleles4.add(0, 25);
+        alleles4.add(0.1, 10);
+        alleles4.add(0.1, 10);
         alleles4.add(-SIMD_PI, SIMD_PI);
         alleles4.add(-10,10);
-        alleles4.add(-30, 30);
-        alleles4.add(0.01, 10);
-        alleles4.add(0.01, 10);
+        alleles4.add(0, 40);
+        alleles4.add(0.1, 10);
+        alleles4.add(0.1, 10);
         alleles4.add(-SIMD_PI, SIMD_PI);
         alleles4.add(-10,10);
 #endif

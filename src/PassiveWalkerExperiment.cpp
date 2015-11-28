@@ -26,7 +26,7 @@
 
 #define FITNESS_EXPONENT_CONSTANT 5
 
-#define FIRST_STEP_TIME 0.75
+#define FIRST_STEP_TIME 1
 
 std::mutex fitnessLock;
 

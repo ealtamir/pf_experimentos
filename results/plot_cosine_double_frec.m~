@@ -1,7 +1,6 @@
 data = csvread('latest_result.txt');
 
 chromosome = data(:,1);
-first_step_time = 0.8;
 
 first_step_lower_A = chromosome(2);
 first_step_lower_W1 = chromosome(3);
@@ -15,7 +14,7 @@ first_step_upper_W2 = chromosome(9);
 first_step_upper_fase = chromosome(10);
 first_step_upper_ind_term = chromosome(11);
 
-x = [0:0.001:10];    
+x = [1:0.001:10];    
 
 psi = x + first_step_upper_fase - floor((x + first_step_upper_fase)/((pi/first_step_upper_W1) + (pi/first_step_upper_W2))) * ((pi/first_step_upper_W1) + (pi/first_step_upper_W2));
 
@@ -50,19 +49,15 @@ else
     first_step_lower_r = first_step_lower_A*cos(first_step_lower_W2*(psi-(pi/first_step_lower_W1)+(pi/first_step_lower_W2))) + first_step_lower_ind_term;
 end
 
-subplot(2,2,1)
+subplot(4,1,1)
 plot(x,first_step_upper,x,first_step_upper_r)
 title('Plot cosine double frec function')
-legend('upper leg first','upper right leg first')
+legend('upper leg','upper right leg')
 
-axis([0 first_step_time -50 50])
-
-subplot(2,2,3)
+subplot(4,1,2)
 plot(x,first_step_lower,x,first_step_lower_r)
-title('Plot cosine double frec function')
-legend('lower legfirst','lower right leg first')
-
-axis([0 first_step_time -50 50])
+title('Plot generic function')
+legend('lower leg','lower right leg')
 
 lower_A = chromosome(12);
 lower_W1 = chromosome(13);
@@ -109,16 +104,12 @@ else
     lower_r = lower_A*cos(lower_W2*(psi-(pi/lower_W1)+(pi/lower_W2))) + lower_ind_term;
 end
 
-subplot(2,2,2)
+subplot(4,2,1)
 plot(x,upper,x,upper_r)
-title('Plot cosine double frec function')
+title('Plot generic function')
 legend('upper leg','upper right leg')
 
-axis([first_step_time 3 -50 50])
-
-subplot(2,2,4)
+subplot(4,2,2)
 plot(x,lower,x,lower_r)
-title('Plot cosine double frec function')
+title('Plot generic function')
 legend('lower leg','lower right leg')
-
-axis([first_step_time 3 -50 50])
