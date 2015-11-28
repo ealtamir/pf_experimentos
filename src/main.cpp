@@ -1,25 +1,3 @@
-// GA libraries
-#include "Initialization.h"
-#include "Algorithm.h"
-#include "IncrementalAlgorithm.h"
-
-#include "Population.h"
-#include "Chromosome.h"
-#include "DomainChromosome.h"
-#include "MultiValueChromosome.h"
-
-#include "PopulationOperations.h"
-#include "ChromosomeOperations.h"
-#include "SelectionOperations.h"
-#include "ReplacementOperations.h"
-#include "CouplingOperations.h"
-#include "MutationOperations.h"
-#include "ScalingOperations.h"
-
-#include "ValueSets.h"
-
-#include "StopCriterias.h" 
-
 // System libraries
 #include <stdlib.h>
 #include <vector>
@@ -62,10 +40,10 @@ Objective4(GAGenome& g)
     GARealGenome& genome = (GARealGenome&)g;
     int size = 0;
 
-    double arr[VALUES_SIZE];
-    for(int i=0; i < genome.length(); i++)
-        arr[i] = genome.gene(i);
-    std::vector<double> vals(arr, arr + sizeof(arr) / sizeof(arr[0]));
+    std::vector<double> vals;
+    for(int i=0; i < genome.length(); i++) {
+        vals.push_back(genome.gene(i));
+    }
     float aux = PassiveWalkerExperiment::getFitness(vals);
 //    cout << aux << endl;
     return aux;
@@ -176,6 +154,30 @@ int main(int argc,char* argv[]) {
         alleles4.add(-SIMD_PI, SIMD_PI);
         alleles4.add(-10,10);
 #elif EXTRA_FOURIER
+        // Lower
+        alleles4.add(-10, 10);
+        alleles4.add(-60,60);
+        alleles4.add(-60,60);
+        alleles4.add(-60,60);
+        alleles4.add(-60,60);
+        alleles4.add(-60,60);
+        alleles4.add(-60,60);
+        alleles4.add(-60,60);
+        alleles4.add(-60,60);
+        alleles4.add(-60,60);
+        alleles4.add(-60,60);
+        alleles4.add(-60,60);
+        alleles4.add(-60,60);
+        alleles4.add(-60,60);
+        alleles4.add(-60,60);
+        alleles4.add(-60,60);
+        alleles4.add(-60,60);
+        alleles4.add(-60,60);
+        alleles4.add(-60,60);
+        alleles4.add(0.1, 10);
+        alleles4.add(-SIMD_PI, SIMD_PI);
+
+        // Upper
         alleles4.add(-10, 10);
         alleles4.add(-60,60);
         alleles4.add(-60,60);
@@ -225,10 +227,10 @@ int main(int argc,char* argv[]) {
     
         GARealGenome& genome = (GARealGenome&)ga4.statistics().bestIndividual();
     
-        static double arr[] = { 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21 };
+//        double arr[VALUES_SIZE];
+        std::vector<double> vals;
         for(int i=0; i < genome.length(); i++)
-            arr[i] = genome.gene(i);
-        std::vector<double> vals(arr, arr + sizeof(arr) / sizeof(arr[0]));
+            vals.push_back(genome.gene(i));
     
         PassiveWalkerExperiment* experiment = PassiveWalkerExperiment::getInstance();
         WalkerBody* body = experiment->selectedBody;
@@ -240,7 +242,7 @@ int main(int argc,char* argv[]) {
             std::cout << "Values: " << vals[i] << std::endl;
         }
         
-        updateResultFiles(exePath, genome.fitness(), &vals[0], 20, getTimeElapsed());
+        updateResultFiles(exePath, genome.fitness(), &vals[0], vals.size(), getTimeElapsed());
         body->setActuatorValues(vals);
         return glutmain(argc, argv, 800, 600, "Experiment", experiment);
     } else {

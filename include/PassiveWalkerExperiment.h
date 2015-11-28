@@ -20,8 +20,7 @@ enum BodyType {
 #define GENERATIONS                 100
 #define GENOME_MUTATION             0.3
 #define REPLACEMENT_PORCENTAGE      0.9
-#define LAST_RESULTS                false
-
+#define LAST_RESULTS                true
 
 // FIRST STEP
 //#define     FIRST_STEP_GENERIC             1

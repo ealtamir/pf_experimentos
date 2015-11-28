@@ -14,14 +14,15 @@
 #include "Actuator.h"
 
 #define     BODY_SCALE      1
+#define     STATIC_PELVIS   1
 
 class BodyParameters {
     
 public:
 
     const double bodyScale = BODY_SCALE;
-//    const btVector3 bodyInitialPosition = btVector3(0, 2 * BODY_SCALE, 0);
-    const btVector3 bodyInitialPosition = btVector3(0, 0.6 * BODY_SCALE, 0);
+    const btVector3 bodyInitialPosition = btVector3(0, 2 * BODY_SCALE, 0);
+//    const btVector3 bodyInitialPosition = btVector3(0, 0.6 * BODY_SCALE, 0);
     
     const double FEMALE_BODY_MASS = 61.99;
     const double MALE_BODY_MASS = 73;
@@ -105,7 +106,7 @@ public:
     // Pelvis
     double PELVIS_RADIUS = 0.15 * BODY_SCALE;
     double PELVIS_HEIGHT = 0.05 * BODY_HEIGHT * BODY_SCALE;
-    double PELVIS_MASS = 0.1366 * BODY_MASS * BODY_SCALE;
+    double PELVIS_MASS = 0.1366 * BODY_MASS * BODY_SCALE * !STATIC_PELVIS;
     btVector3 PELVIS_ORIENTATION = btVector3(0, 0, 0);
     btVector3 PELVIS_POSITION = btVector3(btScalar(0),
                                           btScalar(0.015 + L_LEG_RADIUS * 2 + L_LEG_HEIGHT + U_LEG_RADIUS + U_LEG_HEIGHT + PELVIS_HEIGHT/2),
