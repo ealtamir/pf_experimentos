@@ -29,8 +29,6 @@
 
 #define FIRST_STEP_TIME 0
 
-std::mutex fitnessLock;
-
 PassiveWalkerExperiment* PassiveWalkerExperiment::walkerInstance;
 
 PassiveWalkerExperiment* PassiveWalkerExperiment::getInstance() {
@@ -82,22 +80,22 @@ void PassiveWalkerExperiment::initObjects() {
 }
 
 void PassiveWalkerExperiment::worldStep() {
-//    cout << selectedBody->getHeight() << endl;
-    btDynamicsWorld* w = getDynamicsWorld();
-//    if (timeCount <= SIMULATION_SECONDS) {
-//        w->stepSimulation(1 / 60.f, 10, 1 / 500.);
-//        selectedBody->actuate(timeCount, 0);
-//        timeCount += 1. / 60.;
-//    }
-    w->stepSimulation(1 / 60.f, 10, 1 / 500.);
-    int stageValue = 0;
-    if(timeCount <= FIRST_STEP_TIME) {
-        stageValue = 0;
-    } else {
-        stageValue = 1;
+
+    if (timeCount < 5) {
+        cout << selectedBody->getHeight() << endl;
+        btDynamicsWorld* w = getDynamicsWorld();
+        w->stepSimulation(1 / 60.f, 10, 1 / 500.);
+        int stageValue = 0;
+        
+        if(timeCount <= FIRST_STEP_TIME) {
+            stageValue = 0;
+        } else {
+            stageValue = 1;
+        }
+        selectedBody->actuate(timeCount, stageValue);
+        timeCount += 1. / 60.;
     }
-    selectedBody->actuate(timeCount, stageValue);
-    timeCount += 1. / 60.;
+
 }
 
 bool PassiveWalkerExperiment::stopExperiment() {
@@ -133,7 +131,6 @@ double Experiment::getCorrectFootHipPosition() const {
 double PassiveWalkerExperiment::getHeightCoefficient(double h,
                                                      double min_h,
                                                      double optimal_h) {
-    
     double diff = optimal_h - h;
     return 1 / exp(diff * diff * FITNESS_EXPONENT_CONSTANT);
 }
@@ -199,13 +196,13 @@ void PassiveWalkerExperiment::simulate() {
     
     double initial_angle = 0;
     double acum_direction = 0;
-        
+    
     worldStep();
     initial_height = walker->getHeight();
     initial_angle = walker->getAngleInclination();
     
-    exp->objectsInitialized = false;
     exp->clientResetScene();
+    exp->objectsInitialized = false;
 
     for (int i = 0; i < SIMULATION_STEPS; i++) {
         worldStep();
@@ -230,6 +227,8 @@ void PassiveWalkerExperiment::simulate() {
     average_velocity = acum_velocity / SIMULATION_STEPS;
     direction = acum_direction / SIMULATION_STEPS;
     timeCount = 0;
+    
+    exp->clientResetScene();
 }
 
 double getDirectionAngle(double previous_position_x, double previous_position_z,

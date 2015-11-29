@@ -174,7 +174,7 @@ int main(int argc,char* argv[]) {
         alleles4.add(-60,60);
         alleles4.add(-60,60);
         alleles4.add(-60,60);
-        alleles4.add(0.1, 10);
+        alleles4.add(0.1, 2);
         alleles4.add(-SIMD_PI, SIMD_PI);
 
         // Upper
@@ -197,7 +197,7 @@ int main(int argc,char* argv[]) {
         alleles4.add(-60,60);
         alleles4.add(-60,60);
         alleles4.add(-60,60);
-        alleles4.add(0.1, 10);
+        alleles4.add(0.1, 2);
         alleles4.add(-SIMD_PI, SIMD_PI);
 #endif
         GARealGenome genome4(alleles4, Objective4);
@@ -254,6 +254,8 @@ int main(int argc,char* argv[]) {
         std::string exePath(argv[0]);
         std::vector<double> vals = loadPreviousParams(exePath);
         body->setActuatorValues(vals);
+        double fitness = experiment->getFitness(vals);
+        cout << "fitness: " << fitness << endl;
         for (int i = 0; i < vals.size(); i++) {
             std::cout << "Values: " << vals[i] << std::endl;
         }

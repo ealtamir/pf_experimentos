@@ -14,15 +14,14 @@
 #include "Actuator.h"
 
 #define     BODY_SCALE      1
-#define     STATIC_PELVIS   1
+#define     STATIC_PELVIS   0 // 0 = no, 1 = yes
 
 class BodyParameters {
     
 public:
 
     const double bodyScale = BODY_SCALE;
-    const btVector3 bodyInitialPosition = btVector3(0, 2 * BODY_SCALE, 0);
-//    const btVector3 bodyInitialPosition = btVector3(0, 0.6 * BODY_SCALE, 0);
+    const btVector3 bodyInitialPosition = btVector3(0, (0.6 + 0.4 * STATIC_PELVIS) * BODY_SCALE, 0);
     
     const double FEMALE_BODY_MASS = 61.99;
     const double MALE_BODY_MASS = 73;
