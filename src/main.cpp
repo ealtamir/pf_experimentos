@@ -295,6 +295,12 @@ int main(int argc,char* argv[]) {
         for (int i = 0; i < vals.size(); i++) {
             std::cout << "Values: " << vals[i] << std::endl;
         }
-        return glutmain(argc, argv, 800, 600, "Experiment", experiment);
+        
+        for (int i = 0; i < 300 ; i++) {
+            experiment->worldStep();
+            experiment->selectedBody->printPositions(i);
+        }
+        
+//        return glutmain(argc, argv, 800, 600, "Experiment", experiment);
     }
 }

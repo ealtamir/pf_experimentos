@@ -62,6 +62,8 @@ public:
     virtual void simulate();
     
     static PassiveWalkerExperiment* getInstance();
+    
+    virtual void worldStep();
 
     
 private:
@@ -82,8 +84,6 @@ protected:
 	virtual void initializeBodies();
 
 	virtual void initObjects();
-
-	virtual void worldStep();
 
 	virtual bool stopExperiment();
     

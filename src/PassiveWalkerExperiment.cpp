@@ -90,7 +90,7 @@ void PassiveWalkerExperiment::worldStep() {
         stageValue = 1;
     }
     selectedBody->actuate(timeCount, stageValue);
-    cout << selectedBody->getHeight() << endl;;
+//    cout << selectedBody->getHeight() << endl;;
     timeCount += 1. / 60.;
 }
 
