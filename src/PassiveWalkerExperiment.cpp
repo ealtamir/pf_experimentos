@@ -81,8 +81,6 @@ void PassiveWalkerExperiment::initObjects() {
 
 void PassiveWalkerExperiment::worldStep() {
 
-    if (timeCount < 5) {
-        cout << selectedBody->getHeight() << endl;
         btDynamicsWorld* w = getDynamicsWorld();
         w->stepSimulation(1 / 60.f, 10, 1 / 500.);
         int stageValue = 0;
@@ -94,7 +92,6 @@ void PassiveWalkerExperiment::worldStep() {
         }
         selectedBody->actuate(timeCount, stageValue);
         timeCount += 1. / 60.;
-    }
 
 }
 
