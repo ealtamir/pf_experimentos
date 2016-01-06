@@ -10,7 +10,9 @@
 #include "GenericTorsoBodyGroup.h"
 #include "LegBodyGroup.h"
 #include "Initialization.h"
+#include <iostream>
 
+void printBodyParty(btRigidBody* rigidBody);
 
 WalkerBody::WalkerBody(btDynamicsWorld* world, BodyParameters &params) : Body(world) {
     
@@ -54,5 +56,27 @@ BodyPart* WalkerBody::getLowerRightLeg() {
 
 BodyPart* WalkerBody::getUpperRightLeg() {
     return bodyGroups[1]->getBodyParts()[1];
+}
+
+void WalkerBody::printPositions(int i) {
+    std::cout << 6 << std::endl;
+    std::cout << i << std::endl;
+    printBodyParty(getUpperLeftLeg()->getRigidBody());
+    printBodyParty(getLowerLeftLeg()->getRigidBody());
+    printBodyParty(getLeftFoot()->getRigidBody());
+    
+    printBodyParty(getUpperRightLeg()->getRigidBody());
+    printBodyParty(getLowerRightLeg()->getRigidBody());
+    printBodyParty(getRightFoot()->getRigidBody());
+
+}
+
+void printBodyParty(btRigidBody* rigidBody) {
+    btVector3 ull = rigidBody->getCenterOfMassPosition();
+    btTransform transform;
+    rigidBody->getMotionState()->getWorldTransform(transform);
+    btQuaternion ullr = transform.getRotation();
+    std::cout << ull.x() << "\t" << ull.y() << "\t" << ull.z() << "\t";
+    std::cout << ullr.x() << "\t" << ullr.y() << "\t" << ullr.z() << "\t" << ullr.w() << std::endl;
 }
 

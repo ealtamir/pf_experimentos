@@ -32,12 +32,13 @@ public:
     BodyPart* getUpperLeftLeg();
     BodyPart* getLowerRightLeg();
     BodyPart* getUpperRightLeg();
-    
     BodyPart* getLeftFoot();
     BodyPart* getRightFoot();
     BodyPart* getHip();
     
     int numberOfParams;
+    
+    void printPositions(int i);
     
 };
 

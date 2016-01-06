@@ -104,8 +104,10 @@ public:
     // Torso body group
     // Pelvis
     double PELVIS_RADIUS = 0.15 * BODY_SCALE;
-    double PELVIS_HEIGHT = 0.005 * BODY_HEIGHT * BODY_SCALE;
+    double PELVIS_HEIGHT = 0 * BODY_HEIGHT * BODY_SCALE;
     double PELVIS_MASS = 0.1366 * BODY_MASS * BODY_SCALE * !STATIC_PELVIS;
+
+    
     btVector3 PELVIS_ORIENTATION = btVector3(0, 0, 0);
     btVector3 PELVIS_POSITION = btVector3(btScalar(0),
                                           btScalar(0.015 + L_LEG_RADIUS * 2 + L_LEG_HEIGHT + U_LEG_RADIUS + U_LEG_HEIGHT + PELVIS_HEIGHT/2),

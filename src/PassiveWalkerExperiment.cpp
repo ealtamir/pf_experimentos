@@ -27,7 +27,8 @@
 
 #define FITNESS_EXPONENT_CONSTANT 5
 
-#define FIRST_STEP_TIME 0
+
+#define FIRST_STEP_TIME 0.7
 
 PassiveWalkerExperiment* PassiveWalkerExperiment::walkerInstance;
 
@@ -81,18 +82,20 @@ void PassiveWalkerExperiment::initObjects() {
 
 void PassiveWalkerExperiment::worldStep() {
 
-        btDynamicsWorld* w = getDynamicsWorld();
-        w->stepSimulation(1 / 60.f, 10, 1 / 500.);
-        int stageValue = 0;
-        
-        if(timeCount <= FIRST_STEP_TIME) {
-            stageValue = 0;
-        } else {
-            stageValue = 1;
-        }
-        selectedBody->actuate(timeCount, stageValue);
-        timeCount += 1. / 60.;
-
+//    cout << selectedBody->getHeight() << endl;
+    if (timeCount > 5)
+        return;
+    btDynamicsWorld* w = getDynamicsWorld();
+    w->stepSimulation(1 / 60.f, 10, 1 / 480.);
+    int stageValue = 0;
+    if(timeCount <= FIRST_STEP_TIME) {
+        stageValue = 0;
+    } else {
+        stageValue = 1;
+    }
+    selectedBody->actuate(timeCount, stageValue);
+//    cout << selectedBody->getHeight() << endl;;
+    timeCount += 1. / 60.;
 }
 
 bool PassiveWalkerExperiment::stopExperiment() {
@@ -228,7 +231,6 @@ void PassiveWalkerExperiment::simulate() {
     direction = acum_direction / SIMULATION_STEPS;
     feet_symmetry = acum_feet_symmetry / SIMULATION_STEPS;
     timeCount = 0;
-    
     exp->clientResetScene();
 }
 

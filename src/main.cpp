@@ -17,7 +17,6 @@
 #include <ga/GARealGenome.C>
 
 
-
 int mainLoop();
 double getTimeElapsed();
 double getAngleBetween(btVector3 v1, btVector3 v2);
@@ -38,7 +37,7 @@ float
 Objective4(GAGenome& g)
 {
     GARealGenome& genome = (GARealGenome&)g;
-    int size = 0;
+    int size = ACTUATOR_SIZE;
 
     std::vector<double> vals;
     for(int i=0; i < genome.length(); i++) {
@@ -74,14 +73,27 @@ int main(int argc,char* argv[]) {
     
         GARealAlleleSetArray alleles4;
 #if FIRST_STEP_GENERIC
-        alleles4.add(-60,60);
-        alleles4.add(-60,60);
+        alleles4.add(-30,30);
+        alleles4.add(-30,30);
         alleles4.add(0.01, 10);
         alleles4.add(0.01, 10);
         alleles4.add(-SIMD_PI, SIMD_PI);
         alleles4.add(-10,10);
-        alleles4.add(-30, -30);
-        alleles4.add(-30, -30);
+        alleles4.add(-60, 60);
+        alleles4.add(-60, 60);
+        alleles4.add(0.01, 10);
+        alleles4.add(0.01, 10);
+        alleles4.add(-SIMD_PI, SIMD_PI);
+        alleles4.add(-10,10);
+        
+        alleles4.add(-30,30);
+        alleles4.add(-30,30);
+        alleles4.add(0.01, 10);
+        alleles4.add(0.01, 10);
+        alleles4.add(-SIMD_PI, SIMD_PI);
+        alleles4.add(-10,10);
+        alleles4.add(-60, 60);
+        alleles4.add(-60, 60);
         alleles4.add(0.01, 10);
         alleles4.add(0.01, 10);
         alleles4.add(-SIMD_PI, SIMD_PI);
@@ -112,17 +124,27 @@ int main(int argc,char* argv[]) {
         alleles4.add(0.1, 10);
         alleles4.add(-SIMD_PI, SIMD_PI);
         alleles4.add(-10,10);
+        alleles4.add(-25, 25);
+        alleles4.add(0.1, 10);
+        alleles4.add(0.1, 10);
+        alleles4.add(-SIMD_PI, SIMD_PI);
+        alleles4.add(-10,10);
+        alleles4.add(-40, 40);
+        alleles4.add(0.1, 10);
+        alleles4.add(0.1, 10);
+        alleles4.add(-SIMD_PI, SIMD_PI);
+        alleles4.add(-10,10);
 #endif
     
 #if GENERIC
-        alleles4.add(-60,60);
-        alleles4.add(-60,60);
+        alleles4.add(-30,30);
+        alleles4.add(-30,30);
         alleles4.add(0.01, 10);
         alleles4.add(0.01, 10);
         alleles4.add(-SIMD_PI, SIMD_PI);
         alleles4.add(-10,10);
-        alleles4.add(-30, -30);
-        alleles4.add(-30, -30);
+        alleles4.add(-60, 60);
+        alleles4.add(-60, 60);
         alleles4.add(0.01, 10);
         alleles4.add(0.01, 10);
         alleles4.add(-SIMD_PI, SIMD_PI);
@@ -227,8 +249,11 @@ int main(int argc,char* argv[]) {
     
         GARealGenome& genome = (GARealGenome&)ga4.statistics().bestIndividual();
     
-//        double arr[VALUES_SIZE];
-        std::vector<double> vals;
+
+        int size = ACTUATOR_SIZE;
+
+        std::vector<double> vals;        
+        double arr[size];
         for(int i=0; i < genome.length(); i++)
             vals.push_back(genome.gene(i));
     
@@ -242,7 +267,8 @@ int main(int argc,char* argv[]) {
             std::cout << "Values: " << vals[i] << std::endl;
         }
         
-        updateResultFiles(exePath, genome.fitness(), &vals[0], vals.size(), getTimeElapsed());
+
+        updateResultFiles(exePath, genome.fitness(), &vals[0], size, getTimeElapsed());
         body->setActuatorValues(vals);
         return glutmain(argc, argv, 800, 600, "Experiment", experiment);
     } else {
@@ -254,11 +280,17 @@ int main(int argc,char* argv[]) {
         std::string exePath(argv[0]);
         std::vector<double> vals = loadPreviousParams(exePath);
         body->setActuatorValues(vals);
-        double fitness = experiment->getFitness(vals);
-        cout << "fitness: " << fitness << endl;
+        float aux = experiment->getFitness(vals);
+        cout << "fitness: " <<  aux << endl;
         for (int i = 0; i < vals.size(); i++) {
             std::cout << "Values: " << vals[i] << std::endl;
         }
-        return glutmain(argc, argv, 800, 600, "Experiment", experiment);
+        
+        for (int i = 0; i < 300 ; i++) {
+            experiment->worldStep();
+            experiment->selectedBody->printPositions(i);
+        }
+        
+//        return glutmain(argc, argv, 800, 600, "Experiment", experiment);
     }
 }
