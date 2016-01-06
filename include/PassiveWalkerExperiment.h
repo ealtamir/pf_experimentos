@@ -28,10 +28,10 @@ enum BodyType {
 #define     FIRST_STEP_DOUBLE_COSINE       1
 
 // SECOND STEP
-//#define     GENERIC             1
+#define     GENERIC             1
 //#define     FOURIER             1
 //#define     DOUBLE_COSINE       1
-#define     EXTRA_FOURIER             1
+//#define     EXTRA_FOURIER             1
 
 #if FIRST_STEP_GENERIC
 

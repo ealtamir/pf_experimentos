@@ -52,7 +52,7 @@ float PassiveWalkerExperiment::getFitness(const std::vector<double> vals) {
     WalkerBody* body = experiment->selectedBody;
     body->setActuatorValues(vals);
     experiment->simulate();
-    fitness = experiment->getHeight() * experiment->getDirection() * experiment->getVelocity() * experiment->getFeetSimmetry();
+    fitness = experiment->getHeight() * experiment->getDirection() * experiment->getVelocity() * experiment->feet_symmetry;
     return fitness;
 }
 
@@ -193,6 +193,7 @@ void PassiveWalkerExperiment::simulate() {
     
     double initial_angle = 0;
     double acum_direction = 0;
+    double acum_feet_symmetry = 0;
     
     worldStep();
     initial_height = walker->getHeight();
@@ -217,12 +218,15 @@ void PassiveWalkerExperiment::simulate() {
             current_velocity.normalize();
             acum_direction += getAngleCoefficient(current_velocity);
         }
+        
+        acum_feet_symmetry += getFeetSimmetry();
 
     }
     
     max_height = acum_height / SIMULATION_STEPS;
     average_velocity = acum_velocity / SIMULATION_STEPS;
     direction = acum_direction / SIMULATION_STEPS;
+    feet_symmetry = acum_feet_symmetry / SIMULATION_STEPS;
     timeCount = 0;
     
     exp->clientResetScene();
