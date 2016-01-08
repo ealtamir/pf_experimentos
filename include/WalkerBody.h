@@ -14,8 +14,6 @@
 #include "Body.h"
 #include "Chromosome.h"
 #include "ValueSets.h"
- 
-
 
 const btScalar BODY_PART_QTY = 6;
 

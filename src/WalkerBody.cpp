@@ -11,6 +11,7 @@
 #include "LegBodyGroup.h"
 #include "Initialization.h"
 #include <iostream>
+#include "IOTools.h"
 
 void printBodyParty(btRigidBody* rigidBody);
 
@@ -59,8 +60,9 @@ BodyPart* WalkerBody::getUpperRightLeg() {
 }
 
 void WalkerBody::printPositions(int i) {
-    std::cout << 6 << std::endl;
-    std::cout << i << std::endl;
+    storeOvitoLine(6, i);
+//    std::cout << 6 << std::endl;
+//    std::cout << i << std::endl;
     printBodyParty(getUpperLeftLeg()->getRigidBody());
     printBodyParty(getLowerLeftLeg()->getRigidBody());
     printBodyParty(getLeftFoot()->getRigidBody());
@@ -76,7 +78,8 @@ void printBodyParty(btRigidBody* rigidBody) {
     btTransform transform;
     rigidBody->getMotionState()->getWorldTransform(transform);
     btQuaternion ullr = transform.getRotation();
-    std::cout << ull.x() << "\t" << ull.y() << "\t" << ull.z() << "\t";
-    std::cout << ullr.x() << "\t" << ullr.y() << "\t" << ullr.z() << "\t" << ullr.w() << std::endl;
+    storeOvitoLineValues(ull, ullr);
+//    std::cout << ull.x() << "\t" << ull.y() << "\t" << ull.z() << "\t";
+//    std::cout << ullr.x() << "\t" << ullr.y() << "\t" << ullr.z() << "\t" << ullr.w() << std::endl;
 }
 

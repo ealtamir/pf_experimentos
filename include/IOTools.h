@@ -14,10 +14,12 @@
 #include <vector>
 #include <fstream>
 #include <mutex>
-
+#include <BulletDynamics/btBulletDynamicsCommon.h>
 
 #define     FIFO_PATHNAME           "/tmp/passive_walker_exp.fifo"
 #define     DATA_PLOTTING_ACTIVE    0
+#define     OVITO_PATH              "/Users/tomymehdi/itba/pf_experimentos/bin/Debug/ovito.xyz"
+
 
 
 using std::string;
@@ -54,6 +56,10 @@ void storeNewBestFitness(string resultsDirPath, double fitness, double params[],
 void storeLatestResults(string resultsDirPath, double fitness, double params[], int paramSize);
 
 void storeInfo(string filename, double fitness, double params[], int paramSize);
+
+void storeOvitoLine(int numberOfLines, int label);
+
+void storeOvitoLineValues(btVector3 position, btQuaternion orientation);
 
 void storeGenerationInfo(string filename, int generation, double fitness, const std::vector<double>& params, int paramSize);
 

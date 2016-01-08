@@ -15,7 +15,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include "IOTools.h"
-
+#include <math.h>
 
 using namespace std;
 
@@ -115,6 +115,31 @@ void storeLatestResults(string resultsDirPath, double fitness, double params[], 
     resultsDirPath.append("/latest_result.txt");
     cout << "Storing results in: " << resultsDirPath << endl;
     storeInfo(resultsDirPath, fitness, params, paramSize);
+}
+
+void storeOvitoLine(int numberOfLines, int label) {
+    string resultsDirPath = OVITO_PATH;
+    
+    ofstream file(resultsDirPath, std::ios::app);
+    if (file.good()) {
+        file << fixed << numberOfLines << endl;
+        file << fixed << label << endl;
+    } else {
+        cout << "results not stored." << endl;
+    }
+    file.close();
+}
+
+void storeOvitoLineValues(btVector3 position, btQuaternion orientation) {
+    string resultsDirPath = OVITO_PATH;
+    
+    ofstream file(resultsDirPath, std::ios::app);
+    if (file.good()) {
+        file << fixed << setprecision(5) << position.x() << "\t" << position.y() << "\t" << position.z() << "\t" << orientation.x() << "\t" << orientation.y() << "\t" << orientation.z() << "\t" << orientation.w() << endl;
+    } else {
+        cout << "results not stored." << endl;
+    }
+    file.close();
 }
 
 void storeInfo(string filename, double fitness, double params[], int paramSize) {

@@ -286,6 +286,7 @@ int main(int argc,char* argv[]) {
             std::cout << "Values: " << vals[i] << std::endl;
         }
         
+        clearFile(OVITO_PATH);
         for (int i = 0; i < 300 ; i++) {
             experiment->worldStep();
             experiment->selectedBody->printPositions(i);
