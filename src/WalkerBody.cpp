@@ -79,10 +79,15 @@ void printBodyParty(BodyPart* bodyPart) {
     double radius = bodyPart->getRadius();
     double height = bodyPart->getHeight();
     btVector3 ull = rigidBody->getCenterOfMassPosition();
-    btTransform transform;
+    btTransform transform, rectAngleTransformXAxis, resultTransform;
+    rectAngleTransformXAxis.setRotation(btQuaternion(1,0,0,1));
+    
     rigidBody->getMotionState()->getWorldTransform(transform);
-    btQuaternion ullr = transform.getRotation();
-    storeOvitoLineValues(ull, ullr,radius, height);
+    
+    resultTransform = transform*rectAngleTransformXAxis;
+    btQuaternion ullr = resultTransform.getRotation();
+
+    storeOvitoLineValues(ull, ullr, radius, height);
 //    std::cout << ull.x() << "\t" << ull.y() << "\t" << ull.z() << "\t";
 //    std::cout << ullr.x() << "\t" << ullr.y() << "\t" << ullr.z() << "\t" << ullr.w() << std::endl;
 }
