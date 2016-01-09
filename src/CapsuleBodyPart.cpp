@@ -23,6 +23,7 @@ CapsuleBodyPart::CapsuleBodyPart(btScalar r,
     this->actuator = actuator;
     this->radius = r;
     this->height = h;
+    this->centerOfMass = centerofMass;
     
     btCollisionShape* capsule = new btCapsuleShape(r, h);
     btCompoundShape* compound = new btCompoundShape();

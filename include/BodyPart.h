@@ -22,9 +22,11 @@ public:
     
     Actuator* getActuator() { return actuator; }
     
-    double getRadius() { return radius;}
+    double getRadius() { return radius; }
     
-    double getHeight() { return height;}
+    double getHeight() { return height; }
+    
+    btVector3 getCenterOfMass() { return centerOfMass; }
 
 protected:
 	btRigidBody* body;
@@ -36,6 +38,8 @@ protected:
     double radius;
     
     double height;
+    
+    btVector3 centerOfMass;
 
 };
 

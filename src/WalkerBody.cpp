@@ -78,7 +78,9 @@ void printBodyParty(BodyPart* bodyPart) {
     btRigidBody* rigidBody = bodyPart->getRigidBody();
     double radius = bodyPart->getRadius();
     double height = bodyPart->getHeight();
-    btVector3 ull = rigidBody->getCenterOfMassPosition();
+    
+    //btVector3 ull = rigidBody->getCenterOfMassPosition();
+    btVector3 ull = bodyPart->getCenterOfMass()+ rigidBody->getCenterOfMassPosition();
     btTransform transform, rectAngleTransformXAxis, resultTransform;
     rectAngleTransformXAxis.setRotation(btQuaternion(1,0,0,1));
     
