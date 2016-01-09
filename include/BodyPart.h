@@ -21,6 +21,10 @@ public:
     void actuate(double t, int stage);
     
     Actuator* getActuator() { return actuator; }
+    
+    double getRadius() { return radius;}
+    
+    double getHeight() { return height;}
 
 protected:
 	btRigidBody* body;
@@ -28,6 +32,10 @@ protected:
 	std::string identifier;
     
     Actuator* actuator = nullptr;
+    
+    double radius;
+    
+    double height;
 
 };
 

@@ -18,7 +18,7 @@
 
 #define     FIFO_PATHNAME           "/tmp/passive_walker_exp.fifo"
 #define     DATA_PLOTTING_ACTIVE    0
-#define     OVITO_PATH              "/Users/tomymehdi/itba/pf_experimentos/bin/Debug/ovito.xyz"
+#define     OVITO_PATH              "/Users/teresa/Documents/Proyecto Final/Experimentos/pf_experimentos/bin/Debug/ovito.xyz"
 
 
 
@@ -59,7 +59,7 @@ void storeInfo(string filename, double fitness, double params[], int paramSize);
 
 void storeOvitoLine(int numberOfLines, int label);
 
-void storeOvitoLineValues(btVector3 position, btQuaternion orientation);
+void storeOvitoLineValues(btVector3 position, btQuaternion orientation, double radius, double height);
 
 void storeGenerationInfo(string filename, int generation, double fitness, const std::vector<double>& params, int paramSize);
 
