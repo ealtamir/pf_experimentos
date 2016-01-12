@@ -18,7 +18,8 @@
 
 #define     FIFO_PATHNAME           "/tmp/passive_walker_exp.fifo"
 #define     DATA_PLOTTING_ACTIVE    0
-#define     OVITO_PATH              "/Users/tomymehdi/itba/pf_experimentos/bin/Debug/ovito.xyz"
+//#define     OVITO_PATH              "/Users/tomymehdi/itba/pf_experimentos/bin/Debug/ovito.xyz"
+#define     OVITO_PATH              "/Users/Enzo/PF/proyecto/bin/Debug/ovito.xyz"
 
 
 

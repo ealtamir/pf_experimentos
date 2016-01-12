@@ -17,6 +17,7 @@
 #include <ga/GARealGenome.C>
 
 
+
 int mainLoop();
 double getTimeElapsed();
 double getAngleBetween(btVector3 v1, btVector3 v2);
@@ -292,6 +293,6 @@ int main(int argc,char* argv[]) {
             experiment->selectedBody->printPositions(i);
         }
         
-//        return glutmain(argc, argv, 800, 600, "Experiment", experiment);
+        return glutmain(argc, argv, 800, 600, "Experiment", experiment);
     }
 }
