@@ -17,7 +17,6 @@
 #include <ga/GARealGenome.C>
 
 
-
 int mainLoop();
 double getTimeElapsed();
 double getAngleBetween(btVector3 v1, btVector3 v2);

@@ -14,6 +14,8 @@ ConvexHullBodyPart::ConvexHullBodyPart(btVector3 points[], btScalar mass, const 
     btVector3 inertia(0, 0, 0);
     btQuaternion rotation(0, 0, 0, 1);
     
+    this->radius = 0.075;
+    this->height = 0.075;
     
     btConvexHullShape* convexHullShape = new btConvexHullShape(0,0,sizeof(btVector3));
     convexHullShape->addPoint(btVector3(-0.075 ,0.015     ,-0.075*0.1));

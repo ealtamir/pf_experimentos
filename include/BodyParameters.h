@@ -105,7 +105,8 @@ public:
     // Pelvis
     double PELVIS_RADIUS = 0.15 * BODY_SCALE;
     double PELVIS_HEIGHT = 0 * BODY_HEIGHT * BODY_SCALE;
-    double PELVIS_MASS = 0.1366 * BODY_MASS * BODY_SCALE * !STATIC_PELVIS;
+//    double PELVIS_MASS = 0.1366 * BODY_MASS * BODY_SCALE * !STATIC_PELVIS;
+    double PELVIS_MASS = 0.05 * BODY_MASS * BODY_SCALE * !STATIC_PELVIS;
 
     
     btVector3 PELVIS_ORIENTATION = btVector3(0, 0, 0);

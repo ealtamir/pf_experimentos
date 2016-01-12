@@ -13,7 +13,7 @@
 #include <iostream>
 #include "IOTools.h"
 
-void printBodyParty(btRigidBody* rigidBody);
+void printBodyParty(BodyPart* bodyPart);
 
 WalkerBody::WalkerBody(btDynamicsWorld* world, BodyParameters &params) : Body(world) {
     
@@ -60,25 +60,39 @@ BodyPart* WalkerBody::getUpperRightLeg() {
 }
 
 void WalkerBody::printPositions(int i) {
-    storeOvitoLine(6, i);
+    storeOvitoLine(7, i);
 //    std::cout << 6 << std::endl;
 //    std::cout << i << std::endl;
-    printBodyParty(getUpperLeftLeg()->getRigidBody());
-    printBodyParty(getLowerLeftLeg()->getRigidBody());
-    printBodyParty(getLeftFoot()->getRigidBody());
+    printBodyParty(getHip());
+    printBodyParty(getUpperLeftLeg());
+    printBodyParty(getLowerLeftLeg());
+    printBodyParty(getLeftFoot());
     
-    printBodyParty(getUpperRightLeg()->getRigidBody());
-    printBodyParty(getLowerRightLeg()->getRigidBody());
-    printBodyParty(getRightFoot()->getRigidBody());
+    printBodyParty(getUpperRightLeg());
+    printBodyParty(getLowerRightLeg());
+    printBodyParty(getRightFoot());
 
 }
 
-void printBodyParty(btRigidBody* rigidBody) {
-    btVector3 ull = rigidBody->getCenterOfMassPosition();
-    btTransform transform;
-    rigidBody->getMotionState()->getWorldTransform(transform);
-    btQuaternion ullr = transform.getRotation();
-    storeOvitoLineValues(ull, ullr);
+void printBodyParty(BodyPart* bodyPart) {
+    btRigidBody* rigidBody = bodyPart->getRigidBody();
+    double radius = bodyPart->getRadius();
+    double height = bodyPart->getHeight();
+    
+    //btVector3 ull = rigidBody->getCenterOfMassPosition();
+    btVector3 ull = bodyPart->getCenterOfMass()+ rigidBody->getCenterOfMassPosition();
+//    btQuaternion helper = rigidBody->getOrientation();
+//    helper.setRotation(btVector3(1, 0, 0), SIMD_HALF_PI);
+//    
+//    btTransform transform, rectAngleTransformXAxis, resultTransform;
+//    rectAngleTransformXAxis.setIdentity();
+//    rectAngleTransformXAxis.setRotation(helper);
+//    rigidBody->getMotionState()->getWorldTransform(transform);
+//    
+//    resultTransform = transform*rectAngleTransformXAxis;
+    btQuaternion ullr = rigidBody->getOrientation();
+
+    storeOvitoLineValues(ull, ullr, radius, height);
 //    std::cout << ull.x() << "\t" << ull.y() << "\t" << ull.z() << "\t";
 //    std::cout << ullr.x() << "\t" << ullr.y() << "\t" << ullr.z() << "\t" << ullr.w() << std::endl;
 }

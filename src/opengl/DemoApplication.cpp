@@ -1436,9 +1436,9 @@ void	DemoApplication::clientResetScene()
 					myMotionState->m_graphicsWorldTrans = myMotionState->m_startWorldTrans;
 					body->setCenterOfMassTransform( myMotionState->m_graphicsWorldTrans );
 					colObj->setInterpolationWorldTransform( myMotionState->m_startWorldTrans );
-					colObj->forceActivationState(ACTIVE_TAG);
+					colObj->forceActivationState(DISABLE_DEACTIVATION);
 					colObj->activate();
-					colObj->setDeactivationTime(0);
+					colObj->setDeactivationTime(1000);
 					//colObj->setActivationState(WANTS_DEACTIVATION);
 				}
 				//removed cached contact points (this is not necessary if all objects have been removed from the dynamics world)

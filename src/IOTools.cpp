@@ -130,12 +130,12 @@ void storeOvitoLine(int numberOfLines, int label) {
     file.close();
 }
 
-void storeOvitoLineValues(btVector3 position, btQuaternion orientation) {
+void storeOvitoLineValues(btVector3 position, btQuaternion orientation, double ratio, double height) {
     string resultsDirPath = OVITO_PATH;
     
     ofstream file(resultsDirPath, std::ios::app);
     if (file.good()) {
-        file << fixed << setprecision(5) << position.x() << "\t" << position.y() << "\t" << position.z() << "\t" << orientation.x() << "\t" << orientation.y() << "\t" << orientation.z() << "\t" << orientation.w() << endl;
+        file << fixed << setprecision(5) << position.x() << "\t" << position.y() << "\t" << position.z() << "\t" << orientation.x() << "\t" << orientation.y() << "\t" << orientation.z() << "\t" << orientation.w() << "\t" << ratio << "\t" << height << endl;
     } else {
         cout << "results not stored." << endl;
     }
