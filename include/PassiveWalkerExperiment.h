@@ -16,8 +16,8 @@ enum BodyType {
 };
 
 // PARAMETERS
-#define POPULATION_SIZE             10
-#define GENERATIONS                 20
+#define POPULATION_SIZE             15
+#define GENERATIONS                 200
 #define GENOME_MUTATION             0.3
 #define REPLACEMENT_PORCENTAGE      0.7
 #define LAST_RESULTS                false
@@ -103,8 +103,8 @@ public:
     static PassiveWalkerExperiment* getInstance();
     
     virtual void worldStep();
-
     
+
 private:
     PassiveWalkerExperiment();
     
@@ -119,6 +119,9 @@ private:
     double getAngleCoefficient(btVector3& normalizedVel);
     
     double getFeetSimmetry();
+    
+    double getFeetBelowHipCoefficient();
+    
 	    
 protected:
         

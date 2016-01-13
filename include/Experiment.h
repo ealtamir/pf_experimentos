@@ -78,6 +78,8 @@ protected:
     
     double feet_symmetry = -1;
     
+    double feet_hip_treshold = -1;
+    
     double left_foot_height = -1;
     
     double right_foot_height = -1;

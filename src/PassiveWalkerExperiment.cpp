@@ -53,8 +53,9 @@ float PassiveWalkerExperiment::getFitness(const std::vector<double> vals) {
     WalkerBody* body = experiment->selectedBody;
     body->setActuatorValues(vals);
     experiment->simulate();
-    fitness = experiment->getHeight() * experiment->getDirection() * experiment->getVelocity() * experiment->feet_symmetry;
-//    cout << fitne ss << endl;
+    fitness = experiment->getHeight() * experiment->getDirection() *
+              experiment->getVelocity() * experiment->feet_symmetry *
+              experiment->feet_hip_treshold;
     return fitness;
 }
 
@@ -179,6 +180,21 @@ double PassiveWalkerExperiment::getFeetSimmetry() {
     return (valX + valZ) / 2;
 }
 
+double PassiveWalkerExperiment::getFeetBelowHipCoefficient() {
+    btRigidBody* leftFoot = selectedBody->getLeftFoot()->getRigidBody();
+    btRigidBody* rightFoot = selectedBody->getRightFoot()->getRigidBody();
+    btRigidBody* hip = selectedBody->getHip()->getRigidBody();
+    double hip_h, leftFoot_h, rightFoot_h;
+    hip_h = hip->getCenterOfMassPosition().y();
+    leftFoot_h = leftFoot->getCenterOfMassPosition().y();
+    rightFoot_h = rightFoot->getCenterOfMassPosition().y();
+    
+    if (hip_h <= leftFoot_h || hip_h <= rightFoot_h) {
+        return 0;
+    }
+    return 1;
+}
+
 
 void PassiveWalkerExperiment::simulate() {
     max_height = 0;
@@ -226,12 +242,14 @@ void PassiveWalkerExperiment::simulate() {
         }
 
         acum_feet_symmetry += getFeetSimmetry();
+        feet_val += getFeetBelowHipCoefficient();
     }
     
     max_height = acum_height / SIMULATION_STEPS;
     average_velocity = acum_velocity / SIMULATION_STEPS;
     direction = acum_direction / SIMULATION_STEPS;
     feet_symmetry = acum_feet_symmetry / SIMULATION_STEPS;
+    feet_hip_treshold = feet_val / SIMULATION_STEPS;
     timeCount = 0;
     exp->clientResetScene();
 }
