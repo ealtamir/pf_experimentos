@@ -243,11 +243,14 @@ int main(int argc,char* argv[]) {
         ga4.parameters(params);
         ga4.pReplacement(REPLACEMENT_PORCENTAGE);
         ga4.set(gaNscoreFilename, "bog4.dat");
+        ga4.scaling(GANoScaling());
         cout << "\nrunning ga number 4 (maximize each gene)..." << endl;
         ga4.evolve();
         cout << "the ga generated:\n" << ga4.statistics().bestIndividual() << endl;
-    
-        GARealGenome& genome = (GARealGenome&)ga4.statistics().bestIndividual();
+        GARealGenome& genome = (GARealGenome&) ga4.statistics().bestIndividual();
+        cout << "fitness: " << genome.fitness() << endl;
+        
+        cout << "statistics: " << ga4.statistics() << endl;
     
 
         int size = ACTUATOR_SIZE;
@@ -263,10 +266,10 @@ int main(int argc,char* argv[]) {
         experiment->setCameraUp(btVector3(0, 15, 0));
         std::string exePath(argv[0]);
      
-        for (int i = 0; i < vals.size(); i++) {
-            std::cout << "Values: " << vals[i] << std::endl;
-        }
-        
+//        for (int i = 0; i < vals.size(); i++) {
+//            std::cout << "Values: " << vals[i] << std::endl;
+//        }
+//        
 
         updateResultFiles(exePath, genome.fitness(), &vals[0], size, getTimeElapsed());
         body->setActuatorValues(vals);
