@@ -120,7 +120,7 @@ private:
     
     double getFeetSimmetry();
     
-    double getFeetBelowHipCoefficient();
+    bool getFeetBelowHipCoefficient();
     
 	    
 protected:

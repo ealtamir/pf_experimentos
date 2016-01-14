@@ -170,6 +170,7 @@ int main(int argc,char* argv[]) {
         alleles4.add(0.1, 10);
         alleles4.add(-SIMD_PI, SIMD_PI);
         alleles4.add(-50,50);
+        
         alleles4.add(-100, 100);
         alleles4.add(0.1, 10);
         alleles4.add(0.1, 10);
@@ -182,6 +183,7 @@ int main(int argc,char* argv[]) {
 //        alleles4.add(0.1, 10);
 //        alleles4.add(-SIMD_PI, SIMD_PI);
 //        alleles4.add(-10,10);
+        
 //        alleles4.add(-40, 40);
 //        alleles4.add(0.1, 10);
 //        alleles4.add(0.1, 10);
@@ -249,6 +251,7 @@ int main(int argc,char* argv[]) {
         params.set(gaNflushFrequency, 1);
         params.set(gaNpMutation, GENOME_MUTATION);
         params.set(gaNrecordDiversity, gaTrue);
+        params.set(gaNelitism, gaTrue);
         params.parse(argc, argv, gaFalse);
     
         GASteadyStateGA ga4(genome4);
