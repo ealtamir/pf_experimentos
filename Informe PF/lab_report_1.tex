@@ -54,6 +54,9 @@
 
 \usepackage{layout} %Used for "margin debugging"
 
+\usepackage[export]{adjustbox} 
+\usepackage{subcaption}
+
 \pagestyle{fancy}
 \fancyheadoffset{0cm} %Used for heading without margins
 \fancyhead[L]{} % 1. sectionname
@@ -88,7 +91,8 @@
 %	DOCUMENT INFORMATION
 %----------------------------------------------------------------------------------------
 
-\title{PROYECTO FINAL: \\ SIMULACI\'ON Y ANIMACI\'ON BIOMEC\'ANICA \\DE UN HUMANOIDE } % Title
+\title{\textbf{PROYECTO FINAL: \\ \vspace*{2ex} \textcolor{cyan}{\textit{SIMULACI\'ON Y ANIMACI\'ON BIOMEC\'ANICA \\DE UN HUMANOIDE}  }  \vspace*{3ex}} } % Title
+
 \author{Informe realizado por: }
 \affil{Altamiranda Graterol, Enzo\\% If the blocks option of authblk is removed \\ is treated as ,
 \url{ealtamir@itba.edu.ar}}
@@ -97,10 +101,10 @@
 \url{tfontane@itba.edu.ar}}
 
 \affil{Mehdi, Tom\'as\\
-\url{tmehdi@itba.edu.ar}}
+\url{tmehdi@itba.edu.ar}\vspace*{3ex}}
 
-\author{Director:}
-\affil{ Dr. PARISI, Daniel Ricardo}
+\author{\textbf{Director:}}
+\affil{ \textbf{Dr. PARISI, Daniel Ricardo} \vspace*{3ex}}
 
 \date{\today} % Date for the report
 
@@ -182,17 +186,84 @@ Finalmente, se obtiene la aceleraci\'on:\\
  \begin{equation}
   x(t) = x_i +v_i t+\frac{1}{2} \mu_d gt^2
 \end{equation}
-\\Los resultados obtenidos exponen que posiblemente Bullet utilice el modelo antes expuesto a la hora de simular. No obstante, vale aclarar que, cuanto mayor sea el paso de simulaci\'on  -o \textit{stepping}- empleado, mayor es la discrepancia entre la simulaci\'on y el modelo, posiblemente porque la precisi\'on es menor y eso lleva a cometer un error mayor. \\ 
+\\Los resultados obtenidos -ver Fig. \ref{fig1}, \ref{fig2} y \ref{fig3}- exponen que posiblemente Bullet utilice el modelo antes expuesto a la hora de simular. No obstante, vale aclarar que, cuanto mayor sea el paso de simulaci\'on  -o \textit{stepping}- empleado, mayor es la discrepancia entre la simulaci\'on y el modelo, posiblemente porque la precisi\'on es menor y eso lleva a cometer un error mayor. \\ 
+\begin{figure}[ht] 
+  \begin{subfigure}[b]{0.5\linewidth}
+    \centering
+    \includegraphics[width=0.75\linewidth]{image002.png} 
+    \caption{Con $\mu_d=0.25$} 
+    \label{fig1:a} 
+    \vspace{4ex}
+  \end{subfigure}%% 
+  \begin{subfigure}[b]{0.5\linewidth}
+    \centering
+    \includegraphics[width=0.75\linewidth]{image003.png} 
+    \caption{Con $\mu_d=0.50$} 
+    \label{fig1:b} 
+    \vspace{4ex}
+  \end{subfigure} 
+  \begin{subfigure}[b]{\linewidth}
+    \centering
+    \includegraphics[width=0.4\linewidth]{image001.png} 
+    \caption{Con $\mu_d=0.75$} 
+    \label{fig1:c} 
+  \end{subfigure}%%
+  \caption{Experimentos con $v_i = 10$ m/s}
+  \label{fig1} 
+  \vspace*{4ex}
+\end{figure}
 
-\includegraphics[width=7cm, height=4.5cm]{image001.png}
-\includegraphics[width=7cm, height=4.5cm]{image002.png}
-\includegraphics[width=7cm, height=4.5cm]{image003.png}
-\includegraphics[width=7cm, height=4.5cm]{image004.png}
-\includegraphics[width=7cm, height=4.5cm]{image005.png}
-\includegraphics[width=7cm, height=4.5cm]{image006.png}
-\includegraphics[width=7cm, height=4.5cm]{image007.png}
-\includegraphics[width=7cm, height=4.5cm]{image008.png}
-\includegraphics[width=7cm, height=4.5cm]{image009.png}
+\begin{figure}[ht] 
+  \begin{subfigure}[b]{0.5\linewidth}
+    \centering
+    \includegraphics[width=0.75\linewidth]{image009.png} 
+    \caption{Con $\mu_d=0.25$} 
+    \label{fig2:a} 
+    \vspace{4ex}
+  \end{subfigure}%% 
+  \begin{subfigure}[b]{0.5\linewidth}
+    \centering
+    \includegraphics[width=0.75\linewidth]{image007.png} 
+    \caption{Con $\mu_d=0.50$} 
+    \label{fig2:b} 
+    \vspace{4ex}
+  \end{subfigure} 
+  \begin{subfigure}[b]{\linewidth}
+    \centering
+    \includegraphics[width=0.4\linewidth]{image008.png} 
+    \caption{Con $\mu_d=0.75$} 
+    \label{fig2:c} 
+  \end{subfigure}%%
+  \caption{Experimentos con $v_i = 3$ m/s}
+  \label{fig2} 
+  \vspace*{4ex}
+\end{figure}
+
+\begin{figure}[!ht] 
+  \begin{subfigure}[b]{0.5\linewidth}
+    \centering
+    \includegraphics[width=0.75\linewidth]{image004.png} 
+    \caption{Con $\mu_d=0.25$} 
+    \label{fig3:a} 
+    \vspace{4ex}
+  \end{subfigure}%% 
+  \begin{subfigure}[b]{0.5\linewidth}
+    \centering
+    \includegraphics[width=0.75\linewidth]{image005.png} 
+    \caption{Con $\mu_d=0.50$} 
+    \label{fig3:b} 
+    \vspace{4ex}
+  \end{subfigure} 
+  \begin{subfigure}[b]{\linewidth}
+    \centering
+    \includegraphics[width=0.4\linewidth]{image006.png} 
+    \caption{Con $\mu_d=0.75$} 
+    \label{fig3:c} 
+  \end{subfigure}%%
+  \caption{Experimentos con $v_i = 1$ m/s}
+  \label{fig3} 
+\end{figure}
+
 
 \item El segundo simula una esfera a una altura determinada sobre el suelo, que tiene una rapidez constante en el eje perpendicular al piso y que eventualmente colisiona contra el mismo. Se desea comprobar que la colisi\'on entre el cuerpo y el suelo respete el modelo de colisiones el\'asticas y que la velocidad final de la esfera despu\'es del choque sea proporcional al coeficiente de restituci\'on de la misma.\\ 
  \begin{equation}
