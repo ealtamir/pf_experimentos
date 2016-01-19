@@ -243,6 +243,7 @@ void PassiveWalkerExperiment::simulate() {
 
         acum_feet_symmetry += getFeetSimmetry();
         feet_val = feet_val && getFeetBelowHipCoefficient();
+        
     }
     
     max_height = acum_height / SIMULATION_STEPS;
@@ -252,6 +253,7 @@ void PassiveWalkerExperiment::simulate() {
     feet_hip_treshold = feet_val;
     cout << feet_hip_treshold << endl;
     timeCount = 0;
+    //printf("%f \t %f \t %f \t %f \t %d\n",getHeight(), getVelocity(),getDirection(),getFeetSimmetry(),(getFeetBelowHipCoefficient())?1:0);
     exp->clientResetScene();
 }
 
