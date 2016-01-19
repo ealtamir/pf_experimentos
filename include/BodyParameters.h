@@ -43,8 +43,8 @@ public:
     /******************** ANGLES ********************/
     
     double LEFT_LEG_ANGLE = SIMD_PI / 4;
-    double RIGHT_LEG_ANGLE = 4 * SIMD_PI / 6;
-    double RIGHT_LOWER_LEG_ANGLE = 11 * SIMD_PI / 6;
+    double RIGHT_LEG_ANGLE = 1 * SIMD_PI / 6;
+    double RIGHT_LOWER_LEG_ANGLE = 1 * SIMD_PI / 6;
     
     /******************** PARTS ********************/
     
@@ -254,7 +254,7 @@ public:
                                         btScalar(0.));
     
     btVector3 leftHipAngularUpperLimit = btVector3(SIMD_HALF_PI * 0.25, 0., 0.);
-    btVector3 leftHipAngularLowerLimit = btVector3(-SIMD_HALF_PI, 0., 0.);
+    btVector3 leftHipAngularLowerLimit = btVector3(-SIMD_HALF_PI* 0.25, 0., 0.);
     
     
     // RIGHT HIP
@@ -267,7 +267,7 @@ public:
                                          btScalar(0.));
     
     btVector3 rightHipAngularUpperLimit = btVector3(SIMD_HALF_PI * 0.25, 0., 0.);
-    btVector3 rightHipAngularLowerLimit = btVector3(-SIMD_HALF_PI, 0., 0.);
+    btVector3 rightHipAngularLowerLimit = btVector3(-SIMD_HALF_PI* 0.25, 0., 0.);
 };
 
 #endif /* defined(__test__BodyParameters__) */

@@ -352,6 +352,8 @@ int main(int argc,char* argv[]) {
             experiment->selectedBody->printPositions(i);
         }
         
+        experiment->simulate();
+        
         return glutmain(argc, argv, 800, 600, "Experiment", experiment);
     }
 }
