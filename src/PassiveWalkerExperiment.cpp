@@ -215,7 +215,7 @@ void PassiveWalkerExperiment::simulate() {
     double acum_direction = 0;
     double acum_feet_symmetry = 0;
     
-    bool feet_val = 1;
+    int feet_val = 0;
     
     worldStep();
     initial_height = walker->getHeight();
@@ -242,15 +242,16 @@ void PassiveWalkerExperiment::simulate() {
         }
 
         acum_feet_symmetry += getFeetSimmetry();
-        feet_val = feet_val && getFeetBelowHipCoefficient();
+        feet_val += getFeetBelowHipCoefficient();
     }
+    
     
     max_height = acum_height / SIMULATION_STEPS;
     average_velocity = acum_velocity / SIMULATION_STEPS;
     direction = acum_direction / SIMULATION_STEPS;
     feet_symmetry = acum_feet_symmetry / SIMULATION_STEPS;
-    feet_hip_treshold = feet_val;
-    cout << feet_hip_treshold << endl;
+    
+    feet_hip_treshold = feet_val / SIMULATION_STEPS;
     timeCount = 0;
     exp->clientResetScene();
 }

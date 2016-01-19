@@ -17,9 +17,9 @@ enum BodyType {
 
 // PARAMETERS
 #define POPULATION_SIZE             15
-#define GENERATIONS                 500
-#define GENOME_MUTATION             0.3
-#define REPLACEMENT_PORCENTAGE      0.7
+#define GENERATIONS                 300
+#define GENOME_MUTATION             0.5
+#define REPLACEMENT_PERCENTAGE      0.7
 #define LAST_RESULTS                false
 
 // FIRST STEP

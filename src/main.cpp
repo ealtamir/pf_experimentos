@@ -237,30 +237,72 @@ int main(int argc,char* argv[]) {
         alleles4.add(-SIMD_PI, SIMD_PI);
 #endif
         GARealGenome genome4(alleles4, Objective4);
-    
-        // Now that we have the genomes, create a parameter list that will be used for
-        // all of the genetic algorithms and all of the genomes.
+        
+        GARealGenome::FlipMutator(genome4, GENOME_MUTATION);
+        
+//        define name        full name                   short name  default value
+//        
+//        gaNminimaxi         minimaxi                    mm          int   gaDefMiniMaxi        = 1
+//        gaNnGenerations     number_of_generations       ngen        int   gaDefNumGen          = 250
+//        gaNpConvergence     convergence_percentage      pconv       float gaDefPConv           = 0.99
+//        gaNnConvergence     generations_to_convergence  nconv       int   gaDefNConv           = 20
+//        gaNpCrossover       crossover_probability       pcross      float gaDefPCross          = 0.9
+//        gaNpMutation        mutation_probability        pmut        float gaDefPMut            = 0.01
+//        gaNpopulationSize   population_size             popsize     int   gaDefPopSize         = 30
+//        gaNnPopulations     number_of_populations       npop        int   gaDefNPop            = 10
+//        gaNpReplacement     replacement_percentage      prepl       float gaDefPRepl           = 0.25
+//        gaNnReplacement     replacement_number          nrepl       int   gaDefNRepl           = 5
+//        gaNnBestGenomes     number_of_best              nbest       int   gaDefNumBestGenomes  = 1
+//        gaNscoreFrequency   score_frequency             sfreq       int   gaDefScoreFrequency1 = 1
+//        gaNflushFrequency   flush_frequency             ffreq       int   gaDefFlushFrequency  = 0
+//        gaNscoreFilename    score_filename              sfile       char* gaDefScoreFilename   = "generations.dat"
+//        gaNselectScores     select_scores               sscores     int   gaDefSelectScores    = GAStatistics::Maximum
+//        gaNelitism          elitism                     el          GABoolean gaDefElitism     = gaTrue
+//        gaNnOffspring       number_of_offspring         noffspr     int   gaDefNumOff          = 2
+//        gaNrecordDiversity  record_diversity            recdiv      GABoolean gaDefDivFlag     = gaFalse
+//        gaNpMigration       migration_percentage        pmig        float gaDefPMig            = 0.1
+//        gaNnMigration       migration_number            nmig        int   gaDefNMig            = 5
     
         GAParameterList params;
         GASteadyStateGA::registerDefaultParameters(params);
         params.set(gaNnGenerations, GENERATIONS);
         params.set(gaNpopulationSize, POPULATION_SIZE);
-        params.set(gaNscoreFrequency, 1);
-        // generation  TAB  mean  TAB  max  TAB  min  TAB deviation  TAB  diversity NEWLINE
-        params.set(gaNselectScores, (int)GAStatistics::AllScores);
-        params.set(gaNflushFrequency, 1);
+        params.set(gaNpCrossover, 0.9);
         params.set(gaNpMutation, GENOME_MUTATION);
         params.set(gaNrecordDiversity, gaTrue);
         params.set(gaNelitism, gaTrue);
+        
+        params.set(gaNscoreFrequency, 1);
+        params.set(gaNflushFrequency, 1);
+        
+        // generation  mean  max  min deviation  diversity
+        params.set(gaNselectScores, (int)GAStatistics::AllScores);
+        
         params.parse(argc, argv, gaFalse);
     
         GASteadyStateGA ga4(genome4);
         ga4.parameters(params);
-        ga4.pReplacement(REPLACEMENT_PORCENTAGE);
+        ga4.pReplacement(REPLACEMENT_PERCENTAGE);
+        
+        // Default is GARealGenome::UniformCrossover
+        ga4.crossover(GARealGenome::OnePointCrossover);
+
+//      GARankSelector
+//      GARouletteWheelSelector
+//      GATournamentSelector
+//      GADSSelector
+//      GASRSSelector
+//      GAUniformSelector
+//      http://lancet.mit.edu/galib-2.4/API.html#selection
+        ga4.selector(GATournamentSelector());
+        
         ga4.set(gaNscoreFilename, "bog4.dat");
         ga4.scaling(GANoScaling());
+        
         cout << "\nrunning ga number 4 (maximize each gene)..." << endl;
         ga4.evolve();
+        
+        
         cout << "the ga generated:\n" << ga4.statistics().bestIndividual() << endl;
         GARealGenome& genome = (GARealGenome&) ga4.statistics().bestIndividual();
         cout << "fitness: " << genome.fitness() << endl;
