@@ -92,10 +92,16 @@ void PassiveWalkerExperiment::worldStep() {
     int stageValue = 0;
     if(timeCount <= FIRST_STEP_TIME) {
         stageValue = 0;
+        
+        //empujon en la pelvis
+        btRigidBody* rb = selectedBody->getHip()->getRigidBody();
+        rb->applyForce(btVector3(0, 0, -200), btVector3(0, 0, 0));
     } else {
         stageValue = 1;
     }
+    
     selectedBody->actuate(timeCount, stageValue);
+    
 //    cout << selectedBody->getHeight() << endl;;
     timeCount += 1. / 60.;
 }
