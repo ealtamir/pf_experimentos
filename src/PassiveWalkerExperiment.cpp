@@ -56,9 +56,10 @@ float PassiveWalkerExperiment::getFitness(const std::vector<double> vals) {
         experiment->setConstantRiel(vals.at(vals.size()-1));
     }
     experiment->simulate();
-    fitness = experiment->getHeight() * experiment->getDirection() *
-              experiment->getVelocity() * experiment->feet_symmetry *
-              experiment->feet_hip_treshold;
+    fitness = experiment->getHeight() * experiment->getVelocity() *
+    experiment->getDirection();// * experiment->feet_symmetry *
+//              experiment->feet_hip_treshold;
+    cout << "Fitnes: " << fitness << endl;
     return fitness;
 }
 
@@ -161,20 +162,19 @@ double PassiveWalkerExperiment::getHeightCoefficient(double h,
                                                      double min_h,
                                                      double optimal_h) {
     double diff = optimal_h - h;
-    return 1 / exp(diff * diff * FITNESS_EXPONENT_CONSTANT);
+    return 1 / exp(diff * diff * FITNESS_EXPONENT_CONSTANT*2);
 }
 
 double PassiveWalkerExperiment::getVelocityCoefficient(btVector3& current_velocity, double desiredZspeed) {
     double diff = current_velocity.norm() - desiredZspeed;
-    return 1 / exp(diff * diff * 20);
-    
+    return 1 / exp(diff * diff * FITNESS_EXPONENT_CONSTANT*4);    
 }
 
 double PassiveWalkerExperiment::getAngleCoefficient(btVector3& normalizedVel) {
     btVector3 desiredDir(0, 0, -1);
     double cosineVal = normalizedVel.dot(desiredDir);
     double diff = cosineVal - 1;
-    return 1 / exp(diff * diff * 20);
+    return 1 / exp(diff * diff * FITNESS_EXPONENT_CONSTANT*4);
 }
 
 double PassiveWalkerExperiment::getFeetSimmetry() {
@@ -261,8 +261,13 @@ void PassiveWalkerExperiment::simulate() {
     initial_angle = walker->getAngleInclination();
     initial_foot_position = selectedBody->getLeftFoot()->getRigidBody()->getCenterOfMassPosition().y();
     
+//    cout << "initial height: " << initial_height << endl;
+    
     exp->clientResetScene();
     exp->objectsInitialized = false;
+//    cout << "Altura de la cadera" << endl;
+//    cout << "Velocidad" << endl;
+//    cout << "Direccion" << endl;
 
 
     for (int i = 0; i < SIMULATION_STEPS; i++) {
@@ -270,12 +275,13 @@ void PassiveWalkerExperiment::simulate() {
 
         // Height Fitness
         current_height = walker->getHeight();
+//        cout << current_height << endl;
         acum_height += getHeightCoefficient(current_height, min_height, initial_height);
         
         // Velocity Fitness
         btVector3 current_velocity = walker->getVelocity();
-        acum_velocity += getVelocityCoefficient(current_velocity,
-                                                TARGET_SPEED);
+//        cout << current_velocity.x()<<"," << current_velocity.y()<<","<< current_velocity.z() << endl;
+        acum_velocity += getVelocityCoefficient(current_velocity, TARGET_SPEED);
         // Angle Fitness
         if (current_velocity != btVector3(0, 0, 0)) {
             current_velocity.normalize();
