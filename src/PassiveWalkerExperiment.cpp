@@ -134,12 +134,12 @@ double PassiveWalkerExperiment::getHeightCoefficient(double h,
                                                      double min_h,
                                                      double optimal_h) {
     double diff = optimal_h - h;
-    return 1 / exp(diff * diff * FITNESS_EXPONENT_CONSTANT);
+    return 1 / exp(diff * diff * 20);
 }
 
 double PassiveWalkerExperiment::getVelocityCoefficient(btVector3& current_velocity, double desiredZspeed) {
     double diff = current_velocity.norm() - desiredZspeed;
-    return 1 / exp(diff * diff * FITNESS_EXPONENT_CONSTANT);
+    return 1 / exp(diff * diff * 20);
     
 }
 
@@ -147,7 +147,7 @@ double PassiveWalkerExperiment::getAngleCoefficient(btVector3& normalizedVel) {
     btVector3 desiredDir(0, 0, -1);
     double cosineVal = normalizedVel.dot(desiredDir);
     double diff = cosineVal - 1;
-    return 1 / exp(diff * diff * FITNESS_EXPONENT_CONSTANT);
+    return 1 / exp(diff * diff * 20);
 }
 
 double PassiveWalkerExperiment::getFeetSimmetry() {
@@ -173,14 +173,14 @@ double PassiveWalkerExperiment::getFeetSimmetry() {
     hipZ = position.z();
     hipX = position.x();
     
-    diffZ = abs(abs(leftFootZ - hipZ) - abs(rightFootZ - hipZ));
-    diffX = abs(abs(leftFootX - hipX) - abs(rightFootX - hipX));
-    valX = 1 / exp(diffX * diffX * FITNESS_EXPONENT_CONSTANT);
-    valZ = 1 / exp(diffZ * diffZ * FITNESS_EXPONENT_CONSTANT);
+    diffZ = abs(leftFootZ - hipZ + rightFootZ - hipZ);
+    diffX = abs(leftFootX - hipX + rightFootX - hipX);
+    valX = 1 / exp(diffX * diffX * 20);
+    valZ = 1 / exp(diffZ * diffZ * 20);
     return (valX + valZ) / 2;
 }
 
-bool PassiveWalkerExperiment::getFeetBelowHipCoefficient() {
+double PassiveWalkerExperiment::getFeetBelowHipCoefficient(double initial_foot_pos, double initial_hip_pos) {
     btRigidBody* leftFoot = selectedBody->getLeftFoot()->getRigidBody();
     btRigidBody* rightFoot = selectedBody->getRightFoot()->getRigidBody();
     btRigidBody* hip = selectedBody->getHip()->getRigidBody();
@@ -192,7 +192,13 @@ bool PassiveWalkerExperiment::getFeetBelowHipCoefficient() {
     if (hip_h <= leftFoot_h || hip_h <= rightFoot_h) {
         return 0;
     }
-    return 1;
+    
+    double diff_left_foot = leftFoot_h - initial_foot_pos;
+    double diff_right_foot = rightFoot_h - initial_foot_pos;
+    double left_foot_score = 1 / exp(diff_left_foot * diff_left_foot * 20);
+    double right_foot_score = 1 / exp(diff_right_foot * diff_right_foot * 20);
+    
+    return (left_foot_score + right_foot_score) / 2;
 }
 
 
@@ -205,6 +211,8 @@ void PassiveWalkerExperiment::simulate() {
     PassiveWalkerExperiment* exp = this;
     WalkerBody* walker = dynamic_cast<WalkerBody*>(exp->getWalkerBody());
     
+    double temp = 0;
+    
     double initial_height = 0;
     double acum_height = 0;
     double current_height = 0;
@@ -215,14 +223,18 @@ void PassiveWalkerExperiment::simulate() {
     double acum_direction = 0;
     double acum_feet_symmetry = 0;
     
-    int feet_val = 0;
+    double initial_foot_position;
+    double feet_val = 0;
+    
     
     worldStep();
     initial_height = walker->getHeight();
     initial_angle = walker->getAngleInclination();
+    initial_foot_position = selectedBody->getLeftFoot()->getRigidBody()->getCenterOfMassPosition().y();
     
     exp->clientResetScene();
     exp->objectsInitialized = false;
+
 
     for (int i = 0; i < SIMULATION_STEPS; i++) {
         worldStep();
@@ -242,7 +254,11 @@ void PassiveWalkerExperiment::simulate() {
         }
 
         acum_feet_symmetry += getFeetSimmetry();
-        feet_val += getFeetBelowHipCoefficient();
+        temp = getFeetBelowHipCoefficient(initial_foot_position, initial_height);
+        
+        feet_val += temp;
+        
+//        cout << temp << endl;
     }
     
     
@@ -252,6 +268,7 @@ void PassiveWalkerExperiment::simulate() {
     feet_symmetry = acum_feet_symmetry / SIMULATION_STEPS;
     
     feet_hip_treshold = feet_val / SIMULATION_STEPS;
+        
     timeCount = 0;
     exp->clientResetScene();
 }

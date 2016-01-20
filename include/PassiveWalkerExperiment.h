@@ -10,17 +10,19 @@
 #include "FourierActuator.h"
 #include "CosineDoubleFrecActuator.h"
 #include "ExtraFourierActuator.h"
+#include "BodyParameters.h"
 
 enum BodyType {
     generic, fourier, double_cosine, extra_fourier
 };
 
 // PARAMETERS
-#define POPULATION_SIZE             15
-#define GENERATIONS                 300
-#define GENOME_MUTATION             0.5
+#define POPULATION_SIZE             50
+#define GENERATIONS                 60
+#define GENOME_MUTATION             0.3
 #define REPLACEMENT_PERCENTAGE      0.7
-#define LAST_RESULTS                false
+#define LAST_RESULTS                (false || STATIC_PELVIS)
+
 
 // FIRST STEP
 #define     FIRST_STEP_GENERIC             1
@@ -28,9 +30,9 @@ enum BodyType {
 //#define     FIRST_STEP_DOUBLE_COSINE       1
 
 // SECOND STEP
-//#define     GENERIC             1
+#define     GENERIC             1
 //#define     FOURIER             1
-#define     DOUBLE_COSINE       1
+//#define     DOUBLE_COSINE       1
 //#define     EXTRA_FOURIER             1
 
 #if FIRST_STEP_GENERIC
@@ -76,7 +78,7 @@ const btScalar DEFAULT_EXPERIMENT_INTERVAL = 0.001;
 const btScalar SIMULATION_STEPS = 60 * 5; // if it's 60 the simulation is 1 second
 const btScalar DIRECTION_CONSTANT = 0.02;
 const btScalar VELOCITY_CONSTANT = 4.6;
-const btScalar TARGET_SPEED = 2;
+const btScalar TARGET_SPEED = 0.7;
 const btScalar CYCLE_CONSTANT = 30;
 const double HALF_PI_IN_DEGREES = 90;
 
@@ -120,7 +122,7 @@ private:
     
     double getFeetSimmetry();
     
-    bool getFeetBelowHipCoefficient();
+    double getFeetBelowHipCoefficient(double initial_foot_pos, double initial_hip_pos);
     
 	    
 protected:

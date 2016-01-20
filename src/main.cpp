@@ -270,7 +270,7 @@ int main(int argc,char* argv[]) {
         params.set(gaNpCrossover, 0.9);
         params.set(gaNpMutation, GENOME_MUTATION);
         params.set(gaNrecordDiversity, gaTrue);
-        params.set(gaNelitism, gaTrue);
+        params.set(gaNelitism, gaFalse);
         
         params.set(gaNscoreFrequency, 1);
         params.set(gaNflushFrequency, 1);
@@ -285,7 +285,8 @@ int main(int argc,char* argv[]) {
         ga4.pReplacement(REPLACEMENT_PERCENTAGE);
         
         // Default is GARealGenome::UniformCrossover
-        ga4.crossover(GARealGenome::OnePointCrossover);
+//        ga4.crossover(GARealGenome::OnePointCrossover);
+        ga4.crossover(GARealGenome::UniformCrossover);
 
 //      GARankSelector
 //      GARouletteWheelSelector
@@ -294,7 +295,8 @@ int main(int argc,char* argv[]) {
 //      GASRSSelector
 //      GAUniformSelector
 //      http://lancet.mit.edu/galib-2.4/API.html#selection
-        ga4.selector(GATournamentSelector());
+//        ga4.selector(GATournamentSelector());
+        ga4.selector(GARouletteWheelSelector());
         
         ga4.set(gaNscoreFilename, "bog4.dat");
         ga4.scaling(GANoScaling());
