@@ -134,7 +134,7 @@ double PassiveWalkerExperiment::getHeightCoefficient(double h,
                                                      double min_h,
                                                      double optimal_h) {
     double diff = optimal_h - h;
-    return 1 / exp(diff * diff * 20);
+    return 1 / exp(diff * diff * FITNESS_EXPONENT_CONSTANT);
 }
 
 double PassiveWalkerExperiment::getVelocityCoefficient(btVector3& current_velocity, double desiredZspeed) {
@@ -175,8 +175,8 @@ double PassiveWalkerExperiment::getFeetSimmetry() {
     
     diffZ = abs(leftFootZ - hipZ + rightFootZ - hipZ);
     diffX = abs(leftFootX - hipX + rightFootX - hipX);
-    valX = 1 / exp(diffX * diffX * 20);
-    valZ = 1 / exp(diffZ * diffZ * 20);
+    valX = 1 / exp(diffX * diffX * FITNESS_EXPONENT_CONSTANT);
+    valZ = 1 / exp(diffZ * diffZ * FITNESS_EXPONENT_CONSTANT);
     return (valX + valZ) / 2;
 }
 
@@ -195,8 +195,8 @@ double PassiveWalkerExperiment::getFeetBelowHipCoefficient(double initial_foot_p
     
     double diff_left_foot = leftFoot_h - initial_foot_pos;
     double diff_right_foot = rightFoot_h - initial_foot_pos;
-    double left_foot_score = 1 / exp(diff_left_foot * diff_left_foot * 20);
-    double right_foot_score = 1 / exp(diff_right_foot * diff_right_foot * 20);
+    double left_foot_score = 1 / exp(diff_left_foot * diff_left_foot * FITNESS_EXPONENT_CONSTANT);
+    double right_foot_score = 1 / exp(diff_right_foot * diff_right_foot * FITNESS_EXPONENT_CONSTANT);
     
     return (left_foot_score + right_foot_score) / 2;
 }
