@@ -57,9 +57,9 @@ float PassiveWalkerExperiment::getFitness(const std::vector<double> vals) {
     }
     experiment->simulate();
     fitness = experiment->getHeight() * experiment->getVelocity() *
-    experiment->getDirection();// * experiment->feet_symmetry *
-//              experiment->feet_hip_treshold;
-    cout << "Fitnes: " << fitness << endl;
+    experiment->getDirection() * experiment->feet_symmetry *
+              experiment->feet_hip_treshold;
+//    cout << "Fitnes: " << fitness << endl;
     return fitness;
 }
 
