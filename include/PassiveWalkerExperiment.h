@@ -126,6 +126,8 @@ private:
     
     double getFeetBelowHipCoefficient(double initial_foot_pos, double initial_hip_pos);
     
+    double initialHeight = -1;
+    
 	    
 protected:
         
