@@ -44,7 +44,7 @@ public:
     
     double LEFT_LEG_ANGLE = SIMD_PI / 4;
     double RIGHT_LEG_ANGLE = 1 * SIMD_PI / 4;
-    double RIGHT_LOWER_LEG_ANGLE = 1 * SIMD_PI / 6;
+    double RIGHT_LOWER_LEG_ANGLE = 1 * SIMD_PI / 4;
     
     /******************** PARTS ********************/
     

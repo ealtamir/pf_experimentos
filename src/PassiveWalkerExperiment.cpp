@@ -112,13 +112,13 @@ void PassiveWalkerExperiment::worldStep() {
     selectedBody->actuate(timeCount, stageValue);
     
     if(initialHeight<0){
-        initialHeight= selectedBody->getHeight();
+        initialHeight= 1.1*(selectedBody->getHeight());
     }
     else{
         
         btRigidBody* rb = selectedBody->getHip()->getRigidBody();
         double delta_l = (selectedBody->getHeight()-initialHeight);
-        rb->applyForce(btVector3(0, -constantRiel*delta_l, 0), btVector3(0, 0, 0));
+        rb->applyForce(btVector3(0, -constantRiel*delta_l, -30), btVector3(0, 0, 0));
         
     }
     

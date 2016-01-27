@@ -237,7 +237,7 @@ int main(int argc,char* argv[]) {
         alleles4.add(-SIMD_PI, SIMD_PI);
 #endif
 #if RIEL
-       alleles4.add(500, 900);
+       alleles4.add(700, 1200);
 #endif
         
         GARealGenome genome4(alleles4, Objective4);
@@ -316,7 +316,7 @@ int main(int argc,char* argv[]) {
         cout << "statistics: " << ga4.statistics() << endl;
     
 
-        int size = ACTUATOR_SIZE;
+        int size = ACTUATOR_SIZE+RIEL;
 
         std::vector<double> vals;        
         double arr[size];
