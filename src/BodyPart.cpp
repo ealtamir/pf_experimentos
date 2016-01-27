@@ -6,6 +6,7 @@ BodyPart::~BodyPart() {
 }
 
 void BodyPart::actuate(double t, int stage) {
+    
     if (actuator != nullptr) {
         body->applyTorque(actuator->eval(t, stage));
     }

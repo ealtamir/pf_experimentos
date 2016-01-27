@@ -95,8 +95,8 @@ void PassiveWalkerExperiment::worldStep() {
         
         //empujon en la pelvis
         if(PELVIS_EMPUJON){
-            btRigidBody* rb = selectedBody->getHip()->getRigidBody();
-            rb->applyForce(btVector3(0, 0, -200), btVector3(0, 0, 0));
+            btRigidBody* hipRigidBody = selectedBody->getHip()->getRigidBody();
+            hipRigidBody->applyForce(btVector3(0, 100, -100), btVector3(0, 0, 0));
         }
     } else {
         stageValue = 1;
@@ -111,7 +111,6 @@ void PassiveWalkerExperiment::worldStep() {
 bool PassiveWalkerExperiment::stopExperiment() {
 	return false;
 }
-
 
 
 double Experiment::getHeight() const {

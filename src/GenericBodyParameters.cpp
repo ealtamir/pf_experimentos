@@ -8,6 +8,7 @@
 
 #include "GenericBodyParameters.h"
 #include "GenericActuator.h"
+#include "GenericActuatorHip.hpp"
 #include "FourierActuator.h"
 #include "CosineDoubleFrecActuator.h"
 #include "MetaActuator.h"
@@ -20,7 +21,7 @@ GenericBodyParameters::GenericBodyParameters(Actuator *firstStepActuator) {
     leftLowerArmAct = new MetaActuator(firstStepActuator->clone(), new GenericActuator());
     leftUpperArmAct = new MetaActuator(firstStepActuator->clone(), new GenericActuator());
     
-    hipAct = new MetaActuator(firstStepActuator->clone(), new GenericActuator());
+    hipAct = new MetaActuator(firstStepActuator->clone(), new GenericActuatorHip());
     
     rightLowerLegAct = new MetaActuator(firstStepActuator->clone(), new GenericActuator());
     rightUpperLegAct = new MetaActuator(firstStepActuator->clone(), new GenericActuator());
