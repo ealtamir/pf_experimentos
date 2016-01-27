@@ -21,7 +21,7 @@ GenericBodyParameters::GenericBodyParameters(Actuator *firstStepActuator) {
     leftLowerArmAct = new MetaActuator(firstStepActuator->clone(), new GenericActuator());
     leftUpperArmAct = new MetaActuator(firstStepActuator->clone(), new GenericActuator());
     
-    hipAct = new MetaActuator(firstStepActuator->clone(), new GenericActuatorHip());
+    hipAct = new MetaActuator(firstStepActuator->clone(), new GenericActuator());
     
     rightLowerLegAct = new MetaActuator(firstStepActuator->clone(), new GenericActuator());
     rightUpperLegAct = new MetaActuator(firstStepActuator->clone(), new GenericActuator());

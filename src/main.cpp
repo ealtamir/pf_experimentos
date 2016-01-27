@@ -21,7 +21,7 @@ int mainLoop();
 double getTimeElapsed();
 double getAngleBetween(btVector3 v1, btVector3 v2);
 
-double values[VALUES_SIZE];
+double values[VALUES_SIZE+1];
 double fitness;
 
 long int time_begin = 0;
@@ -98,13 +98,6 @@ int main(int argc,char* argv[]) {
         alleles4.add(0.01, 10);
         alleles4.add(-SIMD_PI, SIMD_PI);
         alleles4.add(-10,10);
-        
-        alleles4.add(-30,30);
-        alleles4.add(-30,30);
-        alleles4.add(0.01, 10);
-        alleles4.add(0.01, 10);
-        alleles4.add(-SIMD_PI, SIMD_PI);
-        alleles4.add(-10,10);
 #elif FIRST_STEP_FOURIER
         alleles4.add(-60,60);
         alleles4.add(-60,60);
@@ -152,13 +145,6 @@ int main(int argc,char* argv[]) {
         alleles4.add(-10,10);
         alleles4.add(-60, 60);
         alleles4.add(-60, 60);
-        alleles4.add(0.01, 10);
-        alleles4.add(0.01, 10);
-        alleles4.add(-SIMD_PI, SIMD_PI);
-        alleles4.add(-10,10);
-        
-        alleles4.add(-30,30);
-        alleles4.add(-30,30);
         alleles4.add(0.01, 10);
         alleles4.add(0.01, 10);
         alleles4.add(-SIMD_PI, SIMD_PI);
@@ -251,6 +237,10 @@ int main(int argc,char* argv[]) {
         alleles4.add(0.1, 2);
         alleles4.add(-SIMD_PI, SIMD_PI);
 #endif
+#if RIEL
+       alleles4.add(500, 1500);
+#endif
+        
         GARealGenome genome4(alleles4, Objective4);
         
         GARealGenome::FlipMutator(genome4, GENOME_MUTATION);
@@ -327,10 +317,10 @@ int main(int argc,char* argv[]) {
         cout << "statistics: " << ga4.statistics() << endl;
     
 
-        int size = ACTUATOR_SIZE;
+        int size = ACTUATOR_SIZE + RIEL;
 
         std::vector<double> vals;        
-        double arr[size];
+//        double arr[size];
         for(int i=0; i < genome.length(); i++)
             vals.push_back(genome.gene(i));
     
@@ -357,20 +347,12 @@ int main(int argc,char* argv[]) {
         std::string exePath(argv[0]);
         std::vector<double> vals = loadPreviousParams(exePath);
         body->setActuatorValues(vals);
+        experiment->setConstantRiel(vals.at(vals.size()-1));
         float aux = experiment->getFitness(vals);
         cout << "fitness: " <<  aux << endl;
         for (int i = 0; i < vals.size(); i++) {
             std::cout << "Values: " << vals[i] << std::endl;
         }
-        
-        clearFile(OVITO_PATH);
-        for (int i = 0; i < 300 ; i++) {
-            experiment->worldStep();
-            experiment->selectedBody->printPositions(i);
-        }
-        
-        experiment->simulate();
-        
         return glutmain(argc, argv, 800, 600, "Experiment", experiment);
     }
 }

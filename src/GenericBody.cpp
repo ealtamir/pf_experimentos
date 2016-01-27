@@ -23,9 +23,6 @@ void GenericBody::setActuatorValues(std::vector<double> vals) {
         
         vals[24], vals[25], vals[26], vals[27], vals[28], vals[29],
         vals[30], vals[31], vals[32], vals[33], vals[34], vals[35],
-        
-        // Estos corresponden a la cadera
-        vals[36], vals[37], vals[38], vals[39], vals[40], vals[41]
     };
     
     //
@@ -49,8 +46,4 @@ void GenericBody::setActuatorValues(std::vector<double> vals) {
     BodyPart* rightUpperLeg = getUpperRightLeg();
     actuator = dynamic_cast<Actuator*>(rightUpperLeg->getActuator());
     actuator->setActuatorValues(&values[18], &values[30]);
-    
-    BodyPart* hip = getHip();
-    actuator = dynamic_cast<Actuator*>(rightUpperLeg->getActuator());
-    actuator->setActuatorValues(&values[36], &values[36]);
 }

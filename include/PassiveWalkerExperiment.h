@@ -18,13 +18,12 @@ enum BodyType {
 
 // PARAMETERS
 #define POPULATION_SIZE             50
-#define GENERATIONS                 60
+#define GENERATIONS                 50
 #define GENOME_MUTATION             0.3
 #define REPLACEMENT_PERCENTAGE      0.7
-#define LAST_RESULTS                (true || STATIC_PELVIS)
+#define LAST_RESULTS                (false || STATIC_PELVIS)
 #define PELVIS_EMPUJON              0 // 0 = no, 1 = yes
-
-
+#define RIEL                        1
 
 // FIRST STEP
 #define     FIRST_STEP_GENERIC               1
@@ -36,6 +35,7 @@ enum BodyType {
 //#define     FOURIER                   1
 //#define     DOUBLE_COSINE             1
 //#define     EXTRA_FOURIER             1
+
 
 #if FIRST_STEP_GENERIC
 #define FIRST_STEP_VALUES_SIZE  12
@@ -73,6 +73,7 @@ const BodyType BODY_TYPE = BodyType::double_cosine;
 #elif       EXTRA_FOURIER
 #define     VALUES_SIZE         (42 + (FIRST_STEP_VALUES_SIZE))
 const BodyType BODY_TYPE = BodyType::extra_fourier;
+#define SECOND_STEP_ACTUATOR_SIZE 42;
 #endif
 
 const int ACTUATOR_SIZE = FIRST_STEP_ACTUATOR_SIZE + SECOND_STEP_ACTUATOR_SIZE;
@@ -107,6 +108,8 @@ public:
     
     static PassiveWalkerExperiment* getInstance();
     
+    void setConstantRiel(double constant);
+    
     virtual void worldStep();
     
 
@@ -126,6 +129,11 @@ private:
     double getFeetSimmetry();
     
     double getFeetBelowHipCoefficient(double initial_foot_pos, double initial_hip_pos);
+    
+    double initialHeight = -1;
+    
+    double constantRiel = -1;
+    
     
 	    
 protected:
