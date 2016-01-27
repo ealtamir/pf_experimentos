@@ -52,6 +52,9 @@ float PassiveWalkerExperiment::getFitness(const std::vector<double> vals) {
     PassiveWalkerExperiment* experiment = PassiveWalkerExperiment::getInstance();
     WalkerBody* body = experiment->selectedBody;
     body->setActuatorValues(vals);
+    if(RIEL){
+        experiment->setConstantRiel(vals.at(vals.size()-1));
+    }
     experiment->simulate();
     fitness = experiment->getHeight() * experiment->getDirection() *
               experiment->getVelocity() * experiment->feet_symmetry *
@@ -78,12 +81,16 @@ void PassiveWalkerExperiment::initializeBodies() {
     }
 }
 
+void PassiveWalkerExperiment::setConstantRiel(double constant){
+    this->constantRiel = constant;
+}
+
 void PassiveWalkerExperiment::initObjects() {
 	objectsInitialized = true;
 }
 
 void PassiveWalkerExperiment::worldStep() {
-    int k=100;
+    //int k=100;
 //    cout << selectedBody->getHeight() << endl;
     if (timeCount > 5)
         return;
@@ -111,7 +118,7 @@ void PassiveWalkerExperiment::worldStep() {
         
         btRigidBody* rb = selectedBody->getHip()->getRigidBody();
         double delta_l = (selectedBody->getHeight()-initialHeight);
-        rb->applyForce(btVector3(0, -900*delta_l, 0), btVector3(0, 0, 0));
+        rb->applyForce(btVector3(0, -constantRiel*delta_l, 0), btVector3(0, 0, 0));
         
     }
     
@@ -223,6 +230,8 @@ double PassiveWalkerExperiment::getFeetBelowHipCoefficient(double initial_foot_p
 
 
 void PassiveWalkerExperiment::simulate() {
+    initialHeight = -1; //para worldstep
+    
     max_height = 0;
     left_foot_height = 0;
     right_foot_height = 0;

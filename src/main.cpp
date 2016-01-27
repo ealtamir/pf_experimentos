@@ -21,7 +21,7 @@ int mainLoop();
 double getTimeElapsed();
 double getAngleBetween(btVector3 v1, btVector3 v2);
 
-double values[VALUES_SIZE];
+double values[VALUES_SIZE+1];
 double fitness;
 
 long int time_begin = 0;
@@ -236,6 +236,10 @@ int main(int argc,char* argv[]) {
         alleles4.add(0.1, 2);
         alleles4.add(-SIMD_PI, SIMD_PI);
 #endif
+#if RIEL
+       alleles4.add(500, 900);
+#endif
+        
         GARealGenome genome4(alleles4, Objective4);
         
         GARealGenome::FlipMutator(genome4, GENOME_MUTATION);
@@ -342,6 +346,7 @@ int main(int argc,char* argv[]) {
         std::string exePath(argv[0]);
         std::vector<double> vals = loadPreviousParams(exePath);
         body->setActuatorValues(vals);
+        experiment->setConstantRiel(vals.at(vals.size()-1));
         float aux = experiment->getFitness(vals);
         cout << "fitness: " <<  aux << endl;
         for (int i = 0; i < vals.size(); i++) {
