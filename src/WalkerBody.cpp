@@ -22,7 +22,7 @@ WalkerBody::WalkerBody(btDynamicsWorld* world, BodyParameters &params) : Body(wo
     BodyGroup* torso = createTorso(world, params);
     
     btRigidBody* rb = getHip()->getRigidBody();
-    rb->setAngularFactor(btVector3(0.1, 0, 0.1));
+    rb->setAngularFactor(btVector3(0, 0, 0));
     
     GenericTorsoBodyGroup* torsoGroup = dynamic_cast<GenericTorsoBodyGroup*>(torso);
 

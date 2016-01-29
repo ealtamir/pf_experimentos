@@ -92,8 +92,8 @@ void PassiveWalkerExperiment::initObjects() {
 void PassiveWalkerExperiment::worldStep() {
     //int k=100;
 //    cout << selectedBody->getHeight() << endl;
-    if (timeCount > 5)
-        return;
+//    if (timeCount > 10)
+//        return;
     btDynamicsWorld* w = getDynamicsWorld();
     w->stepSimulation(1 / 60.f, 10, 1 / 480.);
     int stageValue = 0;
@@ -101,10 +101,10 @@ void PassiveWalkerExperiment::worldStep() {
         stageValue = 0;
         
         //empujon en la pelvis
-        if(PELVIS_EMPUJON){
-            btRigidBody* rb = selectedBody->getHip()->getRigidBody();
-            rb->applyForce(btVector3(0, 0, -100), btVector3(0, 0, 0));
-        }
+//        if(PELVIS_EMPUJON){
+//            btRigidBody* rb = selectedBody->getHip()->getRigidBody();
+//            rb->applyForce(btVector3(0, 0, -100), btVector3(0, 0, 0));
+//        }
     } else {
         stageValue = 1;
     }
@@ -118,7 +118,6 @@ void PassiveWalkerExperiment::worldStep() {
         btRigidBody* rb = selectedBody->getHip()->getRigidBody();
         double delta_l = (selectedBody->getHeight()-initialHeight*1.05);
         rb->applyForce(btVector3(0, -constantRiel * delta_l, 0), btVector3(0, 0, 0));
-        
     }
     
     

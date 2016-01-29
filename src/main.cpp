@@ -238,7 +238,7 @@ int main(int argc,char* argv[]) {
         alleles4.add(-SIMD_PI, SIMD_PI);
 #endif
 #if RIEL
-       alleles4.add(500, 1500);
+       alleles4.add(700, 1600);
 #endif
         
         GARealGenome genome4(alleles4, Objective4);
