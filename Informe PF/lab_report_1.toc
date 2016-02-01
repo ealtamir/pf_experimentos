@@ -11,22 +11,22 @@
 \contentsline {section}{\numberline {3}Modelo Utilizado}{7}{section.3}
 \contentsline {subsection}{\numberline {3.1}Composici\'on F\'isica del Humanoide}{7}{subsection.3.1}
 \contentsline {subsection}{\numberline {3.2}Articulaciones}{7}{subsection.3.2}
-\contentsline {section}{\numberline {4}Actuadores}{7}{section.4}
+\contentsline {section}{\numberline {4}Actuadores}{8}{section.4}
 \contentsline {subsection}{\numberline {4.1}Gen\'erico}{8}{subsection.4.1}
 \contentsline {subsection}{\numberline {4.2}Fourier}{8}{subsection.4.2}
 \contentsline {subsection}{\numberline {4.3}Extra Fourier}{8}{subsection.4.3}
 \contentsline {subsection}{\numberline {4.4}Doble coseno}{8}{subsection.4.4}
 \contentsline {section}{\numberline {5}Funci\'on de Partida}{8}{section.5}
-\contentsline {section}{\numberline {6}Algoritmo Gen\'etico}{8}{section.6}
-\contentsline {subsection}{\numberline {6.1}Individuo}{8}{subsection.6.1}
-\contentsline {subsection}{\numberline {6.2}Fitness}{8}{subsection.6.2}
+\contentsline {section}{\numberline {6}Algoritmo Gen\'etico}{9}{section.6}
+\contentsline {subsection}{\numberline {6.1}Individuo}{9}{subsection.6.1}
+\contentsline {subsection}{\numberline {6.2}Fitness}{9}{subsection.6.2}
 \contentsline {subsubsection}{\numberline {6.2.1}Altura}{9}{subsubsection.6.2.1}
 \contentsline {subsubsection}{\numberline {6.2.2}Velocidad}{9}{subsubsection.6.2.2}
-\contentsline {subsubsection}{\numberline {6.2.3}Direcci\'on}{9}{subsubsection.6.2.3}
+\contentsline {subsubsection}{\numberline {6.2.3}Direcci\'on}{10}{subsubsection.6.2.3}
 \contentsline {subsection}{\numberline {6.3}Par\'ametros del Algoritmo}{10}{subsection.6.3}
 \contentsline {subsubsection}{\numberline {6.3.1}M\'etodos de selecci\'on}{10}{subsubsection.6.3.1}
 \contentsline {subsubsection}{\numberline {6.3.2}M\'etodos de cruza}{10}{subsubsection.6.3.2}
 \contentsline {subsubsection}{\numberline {6.3.3}Mutaci\'on}{10}{subsubsection.6.3.3}
 \contentsline {section}{\numberline {7}Resultados Obtenidos}{10}{section.7}
-\contentsline {section}{\numberline {8}Conclusiones}{10}{section.8}
+\contentsline {section}{\numberline {8}Conclusiones}{11}{section.8}
 \contentsline {section}{Referencias}{11}{section.8}

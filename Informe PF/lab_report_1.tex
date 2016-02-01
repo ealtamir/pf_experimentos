@@ -20,7 +20,7 @@
 %----------------------------------------------------------------------------------------
 
 \documentclass{article}
-\usepackage[spanish]{babel}
+\usepackage[spanish,es-tabla]{babel}
 
 \usepackage[a4paper,
  %left=20mm,
@@ -91,7 +91,7 @@
 %	DOCUMENT INFORMATION
 %----------------------------------------------------------------------------------------
 
-\title{\textbf{PROYECTO FINAL: \\ \vspace*{2ex} \textcolor{cyan}{\textit{SIMULACI\'ON Y ANIMACI\'ON BIOMEC\'ANICA \\DE UN HUMANOIDE}  }  \vspace*{3ex}} } % Title
+\title{\textbf{\\PROYECTO FINAL: \\ \vspace*{2ex} \textcolor{cyan}{\textit{SIMULACI\'ON Y ANIMACI\'ON BIOMEC\'ANICA \\DE UN HUMANOIDE}  }  \vspace*{3ex}} } % Title
 
 \author{Informe realizado por: }
 \affil{Altamiranda Graterol, Enzo\\% If the blocks option of authblk is removed \\ is treated as ,
@@ -108,6 +108,8 @@
 
 \date{\today} % Date for the report
 
+\author{\textbf{Instituto Tecnol\'ogico de Buenos Aires - ITBA} }
+\affil{\vspace*{3ex}}
 \begin{document}
 
 % \layout %CAREFUL!! This is only for "debugging"
@@ -329,27 +331,33 @@ Se modela al cuerpo humano, con el motor Bullet Physics, como un conjunto de seg
 Como ya se dijo, el humanoide fue modelado en Bullet como un conjunto de segmentos, unidos por articulaciones. Los segmentos son cuerpos rig\'idos 
 
 Se dividi\'o al cuerpo humano en los siguientes segmentos: cabeza, tronco, miembro superior, pelvis y miembro inferior (muslo, pierna y pie). Considerar la mitad superior del cuerpo implicaba tener    Para la simplificaci\'on del problema \\ \\
-A continuaci\'on se presenta la composici\'on de cada segmento (de acuerdo a la biomec\'anica) \\ 
-\begin{center}
-	\begin{tabular}{ | c | c | c | c | c | c |}
-	  \hline
-	  Parte & Cantidad & Forma & Largo (en m) & Peso (en kg) & Uniones\\
-	  \hline 
-	  \hline
-	  Pelvis & 1 & esf\'erico & 0.08655 & 9.9718 & Cadera\\
-	  \hline
-	  Muslo & 2 & esfero-cilindro & 0.4015 & 10.3368 & Cadera y Rodilla\\
-	  \hline
-	  Pierna & 2 & esfero-cilindro &  0.4015 & 3.1609 & Rodilla y Tobillo\\
-	  \hline
-	  Pie & 2 & esfero-cilindro & - & 1.0001 & Tobillo\\
-	  \hline
-	\end{tabular}
-\end{center}
+A continuaci\'on se presenta la composici\'on de cada segmento (de acuerdo a la biomec\'anica) 
+\begin {table}[ht]
+	\begin{center}
+		\begin{tabular}{ | c | c | c | c | c | c |}
+	  		 \hline
+	  		Parte & Cantidad & Forma & Largo (en m) & Peso (en kg) & Uniones\\
+	  		\hline 
+	  		\hline
+	  		Pelvis & 1 & esf\'erico & 0.08655 & 9.9718 & Cadera\\
+	  		\hline
+	  		Muslo & 2 & esfero-cilindro & 0.4015 & 10.3368 & Cadera y Rodilla\\
+	  		\hline
+	  		Pierna & 2 & esfero-cilindro &  0.4015 & 3.1609 & Rodilla y Tobillo\\
+	  		\hline
+	  		Pie & 2 & esfero-cilindro & - & 1.0001 & Tobillo\\
+	  		\hline
+		\end{tabular}
+		\caption{Segmentos del humanoide}
+	\end{center}
+\end{table}
 %\end{adjustwidth}
 
 \subsection{Articulaciones}
-En el 
+Para unir los distintos segmentos entre s\'i, se utilizaron articulaciones bisagra con 2 grados de libertad: en el eje Z -en donde ocurre la caminata- y en el eje Y -el perpendicular al piso-. Adem\'as, para cada caso en particular, se definieron cotas para los \'angulos que pueden existir entre los segmentos. Esto es muy importante, no s\'olo porque se adec\'ua a datos biol\'ogicos, sino porque, de otro modo la caminata no podr\'ia lograrse: si los \'angulos son demasiado altos, la caminata se produce girando las piernas por encima de la pelvis; si por el contrario, son demasiado bajos, las piernas van a estar muy r\'igidas, originando pocos pasos y muy cortos. 
+Tanto para la  \\
+Por otra parte, a la pelvis se le restringe todo tipo de rotaci\'on. 
+
 \section{Actuadores}
 %\begin{adjustwidth}{1.1cm}{0cm}
 
@@ -421,7 +429,7 @@ xxxxx
 \subsection{Individuo}
 
 %\begin{adjustwidth}{1.25cm}{0cm}
-xxxxx
+Para simplificar 
 %\end{adjustwidth}
 
 \subsection{Fitness}
@@ -484,7 +492,8 @@ Se\~nala qu\'e tan similares son la direcci\'on objetivo -un vector unitario, qu
 \subsubsection{M\'etodos de selecci\'on}
 \label{metodos de seleccion}
 %\begin{adjustwidth}{1.4cm}{0cm}
-xxxx
+Varios son los m\'etodos de selecci\'on que son usados con frecuencia: Elite (priorizan en cada generaci\'on los individuos con mejor fitness), y los estoc\'asticos (los individuos que sobreviven en cada generaci\'on  son elegidos probabil\'isticamente), como Rouleta, por Torneos, Boltzmann. \\
+Actualmente, la funci\'on de fitness involucra caracter\'isticas muy restrictivas (como la simetr\'ia y el hecho de prohibir que los pies est\'en por encima de la pelvis). Utilizar m\'etodos de selecci\'on que prioricen lo estoc\'astico no resulta conveniente (pues mayor ser\'a la probabilidad de generar individuos no favorables). Por eso, se utiliz\'o un m\'etodo un poco m\'as elitista, como el de Torneos. La probabilidad es de 0.7.
 %\end{adjustwidth}
 
 \subsubsection{M\'etodos de cruza}
