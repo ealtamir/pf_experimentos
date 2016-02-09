@@ -56,8 +56,8 @@
 
 After all you should get something like this:
 
-![alt tag](https://raw.githubusercontent.com/ealtamir/pf_experimentos/start-genetic-algorithm/readme1.png)
-![alt tag](https://raw.githubusercontent.com/ealtamir/pf_experimentos/start-genetic-algorithm/readme2.png)
+![alt tag](https://raw.githubusercontent.com/ealtamir/pf_experimentos/master/readme1.png)
+![alt tag](https://raw.githubusercontent.com/ealtamir/pf_experimentos/master/readme2.png)
 
 11- Change the XCode's build location. This is needed because we use relative paths to read files
 from the project directory. In order to do this, you have to go to XCode's options (shortcut Command-,), 
