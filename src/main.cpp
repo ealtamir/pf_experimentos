@@ -73,12 +73,43 @@ int main(int argc,char* argv[]) {
     
         GARealAlleleSetArray alleles4;
 #if FIRST_STEP_GENERIC
-        alleles4.add(-30,10);
-        alleles4.add(0,30);
+        
+        alleles4.add(-30,30);
+        alleles4.add(-30,30);
         alleles4.add(0.01, 10);
         alleles4.add(0.01, 10);
         alleles4.add(-SIMD_PI, SIMD_PI);
         alleles4.add(-10,10);
+        
+        alleles4.add(-30,30);
+        alleles4.add(-30,30);
+        alleles4.add(0.01, 10);
+        alleles4.add(0.01, 10);
+        alleles4.add(-SIMD_PI, SIMD_PI);
+        alleles4.add(-10,10);
+        
+        alleles4.add(-30,30);
+        alleles4.add(-30,30);
+        alleles4.add(0.01, 10);
+        alleles4.add(0.01, 10);
+        alleles4.add(-SIMD_PI, SIMD_PI);
+        alleles4.add(-10,10);
+        
+        
+        alleles4.add(-60, 60);
+        alleles4.add(-60, 60);
+        alleles4.add(0.01, 10);
+        alleles4.add(0.01, 10);
+        alleles4.add(-SIMD_PI, SIMD_PI);
+        alleles4.add(-10,10);
+        
+        alleles4.add(-60, 60);
+        alleles4.add(-60, 60);
+        alleles4.add(0.01, 10);
+        alleles4.add(0.01, 10);
+        alleles4.add(-SIMD_PI, SIMD_PI);
+        alleles4.add(-10,10);
+        
         alleles4.add(-60, 60);
         alleles4.add(-60, 60);
         alleles4.add(0.01, 10);
@@ -92,8 +123,58 @@ int main(int argc,char* argv[]) {
         alleles4.add(0.01, 10);
         alleles4.add(-SIMD_PI, SIMD_PI);
         alleles4.add(-10,10);
+        
+        alleles4.add(-30,30);
+        alleles4.add(-30,30);
+        alleles4.add(0.01, 10);
+        alleles4.add(0.01, 10);
+        alleles4.add(-SIMD_PI, SIMD_PI);
+        alleles4.add(-10,10);
+        
+        alleles4.add(-30,30);
+        alleles4.add(-30,30);
+        alleles4.add(0.01, 10);
+        alleles4.add(0.01, 10);
+        alleles4.add(-SIMD_PI, SIMD_PI);
+        alleles4.add(-10,10);
+        
         alleles4.add(-60, 60);
         alleles4.add(-60, 60);
+        alleles4.add(0.01, 10);
+        alleles4.add(0.01, 10);
+        alleles4.add(-SIMD_PI, SIMD_PI);
+        alleles4.add(-10,10);
+        
+        alleles4.add(-60, 60);
+        alleles4.add(-60, 60);
+        alleles4.add(0.01, 10);
+        alleles4.add(0.01, 10);
+        alleles4.add(-SIMD_PI, SIMD_PI);
+        alleles4.add(-10,10);
+        
+        alleles4.add(-60, 60);
+        alleles4.add(-60, 60);
+        alleles4.add(0.01, 10);
+        alleles4.add(0.01, 10);
+        alleles4.add(-SIMD_PI, SIMD_PI);
+        alleles4.add(-10,10);
+        
+        alleles4.add(-30,30);
+        alleles4.add(-30,30);
+        alleles4.add(0.01, 10);
+        alleles4.add(0.01, 10);
+        alleles4.add(-SIMD_PI, SIMD_PI);
+        alleles4.add(-10,10);
+        
+        alleles4.add(-30,30);
+        alleles4.add(-30,30);
+        alleles4.add(0.01, 10);
+        alleles4.add(0.01, 10);
+        alleles4.add(-SIMD_PI, SIMD_PI);
+        alleles4.add(-10,10);
+        
+        alleles4.add(-30,30);
+        alleles4.add(-30,30);
         alleles4.add(0.01, 10);
         alleles4.add(0.01, 10);
         alleles4.add(-SIMD_PI, SIMD_PI);
@@ -143,6 +224,31 @@ int main(int argc,char* argv[]) {
         alleles4.add(0.01, 10);
         alleles4.add(-SIMD_PI, SIMD_PI);
         alleles4.add(-10,10);
+        alleles4.add(-30,30);
+        alleles4.add(-30,30);
+        alleles4.add(0.01, 10);
+        alleles4.add(0.01, 10);
+        alleles4.add(-SIMD_PI, SIMD_PI);
+        alleles4.add(-10,10);
+        alleles4.add(-30,30);
+        alleles4.add(-30,30);
+        alleles4.add(0.01, 10);
+        alleles4.add(0.01, 10);
+        alleles4.add(-SIMD_PI, SIMD_PI);
+        alleles4.add(-10,10);
+        
+        alleles4.add(-60, 60);
+        alleles4.add(-60, 60);
+        alleles4.add(0.01, 10);
+        alleles4.add(0.01, 10);
+        alleles4.add(-SIMD_PI, SIMD_PI);
+        alleles4.add(-10,10);
+        alleles4.add(-60, 60);
+        alleles4.add(-60, 60);
+        alleles4.add(0.01, 10);
+        alleles4.add(0.01, 10);
+        alleles4.add(-SIMD_PI, SIMD_PI);
+        alleles4.add(-10,10);
         alleles4.add(-60, 60);
         alleles4.add(-60, 60);
         alleles4.add(0.01, 10);
@@ -150,6 +256,25 @@ int main(int argc,char* argv[]) {
         alleles4.add(-SIMD_PI, SIMD_PI);
         alleles4.add(-10,10);
         
+        alleles4.add(-30,30);
+        alleles4.add(-30,30);
+        alleles4.add(0.01, 10);
+        alleles4.add(0.01, 10);
+        alleles4.add(-SIMD_PI, SIMD_PI);
+        alleles4.add(-10,10);
+        alleles4.add(-30,30);
+        alleles4.add(-30,30);
+        alleles4.add(0.01, 10);
+        alleles4.add(0.01, 10);
+        alleles4.add(-SIMD_PI, SIMD_PI);
+        alleles4.add(-10,10);
+        alleles4.add(-30,30);
+        alleles4.add(-30,30);
+        alleles4.add(0.01, 10);
+        alleles4.add(0.01, 10);
+        alleles4.add(-SIMD_PI, SIMD_PI);
+        alleles4.add(-10,10);
+
 #elif FOURIER
         alleles4.add(-60,60);
         alleles4.add(-60,60);

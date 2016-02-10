@@ -18,7 +18,7 @@ enum BodyType {
 
 // PARAMETERS
 #define POPULATION_SIZE             50
-#define GENERATIONS                 70
+#define GENERATIONS                 100
 #define GENOME_MUTATION             0.3
 #define REPLACEMENT_PERCENTAGE      0.7
 #define LAST_RESULTS                (false || STATIC_PELVIS)
@@ -38,8 +38,8 @@ enum BodyType {
 
 
 #if FIRST_STEP_GENERIC
-#define FIRST_STEP_VALUES_SIZE  12
-#define FIRST_STEP_ACTUATOR_SIZE 24
+#define FIRST_STEP_VALUES_SIZE  18 * 5
+#define FIRST_STEP_ACTUATOR_SIZE 18 * 5
 
 #elif FIRST_STEP_FOURIER
 #define FIRST_STEP_VALUES_SIZE  14
@@ -56,7 +56,7 @@ enum BodyType {
 
 
 #ifdef      GENERIC
-#define     VALUES_SIZE         (12 + (FIRST_STEP_VALUES_SIZE))
+#define     VALUES_SIZE         (18 * 3 + (FIRST_STEP_VALUES_SIZE))
 const BodyType BODY_TYPE = BodyType::generic;
 #define SECOND_STEP_ACTUATOR_SIZE 12;
 
