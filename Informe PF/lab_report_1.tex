@@ -157,13 +157,16 @@ Una caracter\'istica muy importante de este trabajo es que, el humanoide no es f
 \subsection{Motor F\'isico}
 
 %\begin{adjustwidth}{1.2cm}{0cm}
-Se utiliz\'o el motor f\'isico Bullet Physics \cite{LinkBullet}. Est\'a implementado en C++.
+Se le llama motor f\'isico, o physics engine a un "software capaz de realizar simulaciones de ciertos sistemas físicos como la dinámica del cuerpo rígido, el movimiento de un fluido y la elasticidad" \cite{wikiPhysicsEngine}. \\
+Actualmente, existen muchos motores f\'isicos: ya sea de c\'odigo propietario (PhysX, Havok), como open-source (Bullet Physics, Box2D, Newton, OGRE). Considerando an\'alisis relacionados \cite{Comparissons}\cite{Comparissons2}, y la necesidad de que el espacio simulado fuese en 3D, se decidi\'o que Bullet Physics\cite{LinkBullet} es el m\'as id\'oneo. Est\'a implementado en C++ y ha sido utilizado en varios juegos (Grand Theft Auto IV y V, etc); en los efectos especiales de pel\'iculas (Hancock, Bolt, etc.); y proyectos cient\'ificos como el de la NASA; entre otros.\\
+Si bien (como se ver\'a m\'as adelante) Bullet tiene problemas asociados con el coeficiente de restituci\'on, posee una muy buena performance en la detecci\'on de colisiones, la dinámica y la resoluci\'on de constraints. Esto se debe, en parte, a diferentes algoritmos iterativos de orden lineal (donde el m\'as importante es Sequential Impulse), de caching y también a la utilizaci\'on de un modelo de fricci\'on de Coulomb aproximado \cite{Catto}. Adem\'as, el motor f\'isico brinda la posibilidad de regular la precisi\'on requerida en estos c\'alculos (sin olvidar nunca que, a mayor precisi\'on, mayor capacidad de c\'omputo requerida y, ergo, mayor tiempo). Dado que la construcci\'on del humanoide implica definir caracter\'isticas y restricciones de movimiento de cada una de sus partes, lo antes mencionado fue crucial para la elecci\'on de Bullet Physics en este proyecto.
+
 %\end{adjustwidth}
-\subsubsection{Experimentos}
+\subsubsection{Modelo de fricci\'on utilizado y su verificaci\'on}
 
 %\begin{adjustwidth}{1.3cm}{0cm}
-
-Para verificar el funcionamiento del motor f\'isico se llevaron a cabo dos experimentos  -en los cuales se compararon los resultados de la simulaci\'on en Bullet con los valores alcanzados por los modelos f\'isico-matem\'aticos de cada uno de los fen\'omenos en cuesti\'on-:\\
+Hay reglas f\'isicas relacionadas con el entorno y que son muy importantes para la caminata: el modelo de fricci\'on, con sus respectivos coeficientes de fricci\'on y restituci\'on.\\  
+En base a los modelos f\'isico-matem\'aticos utilizados  en los dos fen\'omenos en cuesti\'on (y que se explicar\'an a continuaci\'on), se llevaron a cabo dos experimentos para verificar que estuvieran en concordancia con los datos arrojados por Bullet:\\
 \begin{itemize}
 \item El primero simula un cubo con una rapidez constante en el eje horizontal, que gradualmente se detiene por acci\'on de la fricci\'on, hasta llegar al reposo. Se busc\'o determinar si el modelo utilizado por Bullet para simular las fuerzas resultantes sobre un cuerpo por acci\'on de la fricci\'on. \\
 Para este experimento se utiliz\'o el modelo matem\'atico que representa la posici\'on del cuerpo en el eje horizontal en funci\'on del tiempo, representado por la siguiente ecuaci\'on:
@@ -354,7 +357,7 @@ A continuaci\'on se presenta la composici\'on de cada segmento (de acuerdo a la 
 %\end{adjustwidth}
 
 \subsection{Articulaciones}
-Para unir los distintos segmentos entre s\'i, se utilizaron articulaciones bisagra con 2 grados de libertad: en el eje Z -en donde ocurre la caminata- y en el eje Y -el perpendicular al piso-. Adem\'as, para cada caso en particular, se definieron cotas para los \'angulos que pueden existir entre los segmentos. Esto es muy importante, no s\'olo porque se adec\'ua a datos biol\'ogicos, sino porque, de otro modo la caminata no podr\'ia lograrse: si los \'angulos son demasiado altos, la caminata se produce girando las piernas por encima de la pelvis; si por el contrario, son demasiado bajos, las piernas van a estar muy r\'igidas, originando pocos pasos y muy cortos. 
+Para unir los distintos segmentos entre s\'i, se utilizaron articulaciones bisagra con 1 grados de libertad: en el eje Z -en donde ocurre la caminata- y en el eje Y -el perpendicular al piso-. Adem\'as, para cada caso en particular, se definieron cotas para los \'angulos que pueden existir entre los segmentos. Esto es muy importante, no s\'olo porque se adec\'ua a datos biol\'ogicos, sino porque, de otro modo la caminata no podr\'ia lograrse: si los \'angulos son demasiado altos, la caminata se produce girando las piernas por encima de la pelvis; si por el contrario, son demasiado bajos, las piernas van a estar muy r\'igidas, originando pocos pasos y muy cortos. 
 Tanto para la  \\
 Por otra parte, a la pelvis se le restringe todo tipo de rotaci\'on. 
 
@@ -429,7 +432,7 @@ xxxxx
 \subsection{Individuo}
 
 %\begin{adjustwidth}{1.25cm}{0cm}
-Para simplificar 
+Los algoritmos gen\'eticos, por naturaleza, son lentos: tardan mucho tiempo, y tambi\'en en converger a una soluci\'on \'optima (con un fitness muy cercano a su cota superior). El manejo de un individuo debe ser eficiente y simple, . Y eso se logra con estructuras sencillas y b\'asicas. Es por eso que el individuo, en este caso, est\'a compuesto por un array de n\'umeros, que identifican tanto los valores asociados a las fuerzas de los actuadores.
 %\end{adjustwidth}
 
 \subsection{Fitness}
@@ -478,6 +481,10 @@ Se\~nala qu\'e tan similares son la direcci\'on objetivo -un vector unitario, qu
 \\ donde $t_{0}$ es el tiempo inicial, $t_{T}$ el tiempo final, $\vec{v_{t_{n}}}$ el versor de la direcci\'on del humanoide en el momento $t_{n}$, $\vec{V_{O}}$ el versor de la direcci\'on objetivo, simulation\_steps la cantidad pasos de simulaci\'on y C es una constante adimensional que vale 5 (dato experimental).
 \\ El producto escalar entre los versores responde a la Similitud Coseno: $\cos \theta = \frac{A \cdot B} {\|A\|\|B\| } $, donde A y B son vectores que no se encuentran normalizados, y $\theta$ es el \'angulo formado entre ellos. As\'i,  si $\cos \theta=1$, significa que los vectores est\'an paralelos entre s\'i -que es el efecto buscado en el caso de la direcci\'on-. 
 \\ Al producto escalar se le resta 1, para que el m\'odulo sea consistente con la funci\'on exponencial utilizada y que valga 1 cuando $\theta = 0$, y  0 cuando $\theta = \pi$. Cabe aclarar que se trata al \'angulo en forma sim\'etrica, ya que, por ejemplo $\cos(-\pi/6) = \cos(\pi/6)$.
+
+\subsubsection{Simetr\'ia}
+
+\subsubsection{Pies abajo}
 
 %\end{adjustwidth}
 
@@ -541,19 +548,23 @@ xxxxxxxx
 %----------------------------------------------------------------------------------------
 
 \begin{thebibliography}{1}
-\bibitem{Libro1}
-John Mattews and Kurtis Fink, \emph{M\'etodos Num\'ericos con Matlab, Fecha de publicacion: Mayo 2000 | ISBN-10: 8483221810 | ISBN-13: 978-8483221815 | Edicion: 3}
-\bibitem{LinkBullet} Sitio web de Bullet Physics: http://www.bulletphysics.org/
+\bibitem{wikiPhysicsEngine} Wikipedia: $https://es.wikipedia.org/wiki/Physics\_engine$
+\bibitem{LinkBullet} Sitio web de Bullet Physics: $http://www.bulletphysics.org/$
 \bibitem{Cuadrupedo}
 Kevin Kenny, M\'aximo Videla y Axel Wassington, \emph{Simulaci\'on y Animaci\'on Biomec\'anica de un Cuadr\'upedo, 2014 | ITBA}
 \bibitem{Comparissons}
 Andreas Gerndt y otros, \emph{An Evaluation of Open Source Physics Engines for Use in Virtual Reality Assembly Simulations, Fecha de publicaci\'on: 2012}
-\bibitem{LinkGaLib} Sitio web de GaLib: http://lancet.mit.edu/ga/
+\bibitem{Comparissons2}
+Tom Erez y otros, \emph{Simulation Tools for Model-Based Robotics: Comparison of Bullet, Havok, MuJoCo, ODE and PhysX}
+
+\bibitem{Catto}
+Erin Catto, \emph{Iterative Dynamic with Temporal Coherence, Fecha de publicaci\'on: 2005}
+\bibitem{LinkGaLib} Sitio web de GaLib: $http://lancet.mit.edu/ga/$
 \bibitem{flexibleMuscle}
 Thomas Geijtenbeek, Michiel van de Panne y A. Frank van der Stappen, \emph{Flexible Muscle-Based Locomotion for Bipedal Creatures, 2013 }
 \bibitem{Wojtyra}
 Marek Wojtyra, \emph{Multibody Simulation Model of Human Walking, 2003 | Warsaw University of Technology}
-\bibitem{biomechanics} http://www.exrx.net/Kinesiology/Segments.html
+\bibitem{biomechanics} $http://www.exrx.net/Kinesiology/Segments.html$
 \end{thebibliography}
 
 %----------------------------------------------------------------------------------------
