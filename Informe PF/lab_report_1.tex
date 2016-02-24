@@ -56,12 +56,13 @@
 
 \usepackage[export]{adjustbox} 
 \usepackage{subcaption}
+\usepackage{float}
 
 \pagestyle{fancy}
 \fancyheadoffset{0cm} %Used for heading without margins
 \fancyhead[L]{} % 1. sectionname
 
-\rhead{Simulaci\'on y Animaci\'on Biomec\'anica de un Humanoide}
+\rhead{ \textit{Simulaci\'on y Animaci\'on Biomec\'anica de un Humanoide}}
 \renewcommand{\headrulewidth}{0.4pt}
 
 
@@ -91,7 +92,7 @@
 %	DOCUMENT INFORMATION
 %----------------------------------------------------------------------------------------
 
-\title{\textbf{\\PROYECTO FINAL: \\ \vspace*{2ex} \textcolor{cyan}{\textit{SIMULACI\'ON Y ANIMACI\'ON BIOMEC\'ANICA \\DE UN HUMANOIDE}  }  \vspace*{3ex}} } % Title
+\title{\textbf{\\ \underline{PROYECTO} \underline{FINAL} \\ \vspace*{2ex} \textcolor{cyan}{\textit{SIMULACI\'ON Y ANIMACI\'ON BIOMEC\'ANICA \\DE UN HUMANOIDE}  }  \vspace*{3ex}} } % Title
 
 \author{Informe realizado por: }
 \affil{Altamiranda Graterol, Enzo\\% If the blocks option of authblk is removed \\ is treated as ,
@@ -104,12 +105,12 @@
 \url{tmehdi@itba.edu.ar}\vspace*{3ex}}
 
 \author{\textbf{Director:}}
-\affil{ \textbf{Dr. PARISI, Daniel Ricardo} \vspace*{3ex}}
+\affil{ \textbf{Dr. PARISI, Daniel Ricardo} \vspace*{8ex}}
 
 \date{\today} % Date for the report
 
 \author{\textbf{Instituto Tecnol\'ogico de Buenos Aires - ITBA} }
-\affil{\vspace*{3ex}}
+\affil{\vspace*{0ex}}
 \begin{document}
 
 % \layout %CAREFUL!! This is only for "debugging"
@@ -145,10 +146,10 @@ Este proyecto tiene como objetivo crear una simulaci\'on y animaci\'on de un hum
 
 \section{Introducci\'on}
 
-\begin{adjustwidth}{1cm}{0cm}
+%\begin{adjustwidth}{1cm}{0cm}
 Siempre ha sido de inter\'es la simulaci\'on biomec\'anica de seres vivos, especialmente en las ciencias naturales (zoolog\'ia, medicina, etc.). Pero \'ultimamente se ha incrementado el inter\'es en otras \'areas de aplicaci\'on, como los videojuegos, para agregarle  .
-Una caracter\'istica muy importante de este trabajo es que, el humanoide no es fruto de una animaci\'on, sino  un objeto compuesto de segmentos f\'isicos, que interaccionan. Adem\'as, est  
-\end{adjustwidth}
+Una caracter\'istica muy importante de este trabajo es que, el humanoide no es fruto de una animaci\'on, sino  un objeto compuesto de segmentos f\'isicos, que interaccionan.
+%\end{adjustwidth}
 
 
 \section{Herramientas}
@@ -191,8 +192,8 @@ Finalmente, se obtiene la aceleraci\'on:\\
  \begin{equation}
   x(t) = x_i +v_i t+\frac{1}{2} \mu_d gt^2
 \end{equation}
-\\Los resultados obtenidos -ver Fig. \ref{fig1}, \ref{fig2} y \ref{fig3}- exponen que posiblemente Bullet utilice el modelo antes expuesto a la hora de simular. No obstante, vale aclarar que, cuanto mayor sea el paso de simulaci\'on  -o \textit{stepping}- empleado, mayor es la discrepancia entre la simulaci\'on y el modelo, posiblemente porque la precisi\'on es menor y eso lleva a cometer un error mayor. \\ 
-\begin{figure}[ht] 
+
+\begin{figure}[H] 
   \begin{subfigure}[b]{0.5\linewidth}
     \centering
     \includegraphics[width=0.75\linewidth]{image002.png} 
@@ -213,12 +214,12 @@ Finalmente, se obtiene la aceleraci\'on:\\
     \caption{Con $\mu_d=0.75$} 
     \label{fig1:c} 
   \end{subfigure}%%
-  \caption{Experimentos con $v_i = 10$ m/s}
+  \caption{Experimentos con $v_i = 10 \frac{m}{s}$}
   \label{fig1} 
   \vspace*{4ex}
 \end{figure}
 
-\begin{figure}[ht] 
+\begin{figure}[H] 
   \begin{subfigure}[b]{0.5\linewidth}
     \centering
     \includegraphics[width=0.75\linewidth]{image009.png} 
@@ -239,12 +240,12 @@ Finalmente, se obtiene la aceleraci\'on:\\
     \caption{Con $\mu_d=0.75$} 
     \label{fig2:c} 
   \end{subfigure}%%
-  \caption{Experimentos con $v_i = 3$ m/s}
+  \caption{Experimentos con $v_i = 3 \frac{m}{s}$}
   \label{fig2} 
   \vspace*{4ex}
 \end{figure}
 
-\begin{figure}[!ht] 
+\begin{figure}[H] 
   \begin{subfigure}[b]{0.5\linewidth}
     \centering
     \includegraphics[width=0.75\linewidth]{image004.png} 
@@ -265,16 +266,116 @@ Finalmente, se obtiene la aceleraci\'on:\\
     \caption{Con $\mu_d=0.75$} 
     \label{fig3:c} 
   \end{subfigure}%%
-  \caption{Experimentos con $v_i = 1$ m/s}
+  \caption{Experimentos con $v_i = 1 \frac{m}{s}$}
   \label{fig3} 
 \end{figure}
 
+Los resultados obtenidos -ver Fig. \ref{fig1}, \ref{fig2} y \ref{fig3}- exponen que posiblemente Bullet utilice el modelo antes expuesto a la hora de simular. No obstante, vale aclarar que, cuanto mayor sea el paso de simulaci\'on  -o \textit{stepping}- empleado, mayor es la discrepancia entre la simulaci\'on y el modelo, posiblemente porque la precisi\'on es menor y eso lleva a cometer un error mayor. \\ 
 
 \item El segundo simula una esfera a una altura determinada sobre el suelo, que tiene una rapidez constante en el eje perpendicular al piso y que eventualmente colisiona contra el mismo. Se desea comprobar que la colisi\'on entre el cuerpo y el suelo respete el modelo de colisiones el\'asticas y que la velocidad final de la esfera despu\'es del choque sea proporcional al coeficiente de restituci\'on de la misma.\\ 
  \begin{equation}
-  e = \frac{v_f}{v_i}
+ \label{eq:restitution_coef}
+  e = \frac{v_f}{v_i} 
 \end{equation}
-\\Los resultados exponen una limitaci\'on del motor f\'isico: no representa correctamente las colisiones el\'asticas entre esferas y cuerpos r\'igidos, que ocurren a velocidades bajas. Esto queda en evidencia en los experimentos 1,2,3 y 4. En cada uno de ellos el error fue de casi el 100\%.\\
+\\ \\
+Las siguientes tablas muestran los experimentos realizados. En ellos, se mantienen fijos $v_{i}$ (velocidad inicial) y $e_{sim}$ (coeficiente de restituci\'on esperado); se obtiene $v_{f}$ (velocidad de la esfera al finalizar la simulaci\'on); y se calculan $e_{medida}$ (coeficiente de restituci\'on obtenido a partir de \eqref{eq:restitution_coef}) y $\epsilon_{rel}$ (error relativo entre los coeficientes): \\
+
+\begin {table}[H]
+	\begin{center}
+		\begin{tabular}{ | c || c | c | c | }
+	  		 \hline
+	  		$v_{i}$ & \multicolumn{3}{c |}{-0.5}\\
+	  		\hline 
+	  		$v_{f}$ & 0.000249 & 0.000219 & 0.001037\\
+	  		\hline
+	  		$e_{medida}$ & 0.000498 & 0.000438 & 0.002074 \\
+	  		\hline
+	  		$e_{sim}$ & 0.2 & 0.5 &  0.8 \\
+	  		\hline
+	  		$\epsilon_{rel}$ & 0.997 & 0.999 & 0.997 \\
+	  		\hline
+		\end{tabular}
+		\caption{Experimentos con coeficiente de fricci\'on de 0.75 y $v_i = 1 \frac{m}{s}$ }
+	\end{center}
+\end{table}
+
+\begin {table}[H]
+	\begin{center}
+		\begin{tabular}{ | c || c | c | c | }
+	  		 \hline
+	  		$v_{i}$ & \multicolumn{3}{c |}{-3.5}\\
+	  		\hline 
+	  		$v_{f}$ & 0.000057 & 0.000018 & 0.3\\
+	  		\hline
+	  		$e_{medida}$ & 0 & 0 & 0.0857 \\
+	  		\hline
+	  		$e_{sim}$ & 0.2 & 0.5 &  0.8 \\
+	  		\hline
+	  		$\epsilon_{rel}$ & 1 & 1 & 0.893 \\
+	  		\hline
+		\end{tabular}
+		\caption{Experimentos con coeficiente de fricci\'on de 0.75 y $v_i = -3.5 \frac{m}{s}$}
+	\end{center}
+\end{table}
+
+\begin {table}[H]
+	\begin{center}
+		\begin{tabular}{ | c || c | c | c | }
+	  		 \hline
+	  		$v_{i}$ & \multicolumn{3}{c |}{-4}\\
+	  		\hline 
+	  		$v_{f}$ & 0.000473 & 0.000424 & 1.23\\
+	  		\hline
+	  		$e_{medida}$ & 0.00012 & 0.00011 & 0.3 \\
+	  		\hline
+	  		$e_{sim}$ & 0.2 & 0.5 & 0.8 \\
+	  		\hline
+	  		$\epsilon_{rel}$ & 1 & 1 & 0.625 \\
+	  		\hline
+		\end{tabular}
+		\caption{Experimentos con coeficiente de fricci\'on de 0.75 y $v_i = -4 \frac{m}{s}$ }
+	\end{center}
+\end{table}
+
+\begin {table}[H]
+	\begin{center}
+		\begin{tabular}{ | c || c | c | c | }
+	  		 \hline
+	  		$v_{i}$ & \multicolumn{3}{c |}{-5}\\
+	  		\hline 
+	  		$v_{f}$ & 1 & 2.5 & 4\\
+	  		\hline
+	  		$e_{medida}$ & 0.2 & 0.5 & 0.8 \\
+	  		\hline
+	  		$e_{sim}$ & 0.2 & 0.5 & 0.8 \\
+	  		\hline
+	  		$\epsilon_{rel}$ & 0 & 0 & 0 \\
+	  		\hline
+		\end{tabular}
+		\caption{Experimentos con coeficiente de fricci\'on de 0.75 y $v_i = -5 \frac{m}{s}$ }
+	\end{center}
+\end{table}
+
+\begin {table}[H]
+	\begin{center}
+		\begin{tabular}{ | c || c | c | c | }
+	  		 \hline
+	  		$v_{i}$ & \multicolumn{3}{c |}{-10}\\
+	  		\hline 
+	  		$v_{f}$ & 2 & 5 & 8\\
+	  		\hline
+	  		$e_{medida}$ & 0.2 & 0.5 & 0.8 \\
+	  		\hline
+	  		$e_{sim}$ & 0.2 & 0.5 & 0.8 \\
+	  		\hline
+	  		$\epsilon_{rel}$ & 0 & 0 & 0 \\
+	  		\hline
+		\end{tabular}
+		\caption{Experimentos con coeficiente de fricci\'on de 0.75 y $v_i = -10 \frac{m}{s}$}
+	\end{center}
+\end{table}
+
+Los resultados exponen una limitaci\'on del motor f\'isico: no representa correctamente las colisiones el\'asticas entre esferas y cuerpos r\'igidos, que ocurren a velocidades bajas. Esto queda en evidencia en los experimentos 1,2,3 y 4. En cada uno de ellos el error fue de casi el 100\%.\\
 La raz\'on por la que ocurre este hecho se debe a que Bullet utiliza un algoritmo de colisi\'on que frena la velocidad de un objeto que est\'a a punto de colisionar, haciendo esto puede evitar que los s\'olidos se traspasen y de esta forma se pueden realizar c\'alculos de fuerza m\'as precisos. En el caso de los experimentos, las esferas poseen una rapidez muy baja, cuando est\'an a punto de colisionar Bullet reduce a\'un m\'as esta velocidad y eventualmente quedan con una velocidad tan baja que al chocar contra el suelo se aplica el efecto restitutivo a esta rapidez casi nula y se resuelve que la esfera debe queda en reposo, cuando en realidad deber\'ia poseer una velocidad baja, pero no despreciable. \\
 
 \end{itemize}
@@ -334,7 +435,7 @@ Se modela al cuerpo humano, con el motor Bullet Physics, como un conjunto de seg
 Como ya se dijo, el humanoide fue modelado en Bullet como un conjunto de segmentos, unidos por articulaciones. Los segmentos son cuerpos rig\'idos 
 
 Se dividi\'o al cuerpo humano en los siguientes segmentos: cabeza, tronco, miembro superior, pelvis y miembro inferior (muslo, pierna y pie). Considerar la mitad superior del cuerpo implicaba tener    Para la simplificaci\'on del problema \\ \\
-A continuaci\'on se presenta la composici\'on de cada segmento (de acuerdo a la biomec\'anica) 
+A continuaci\'on se presenta la composici\'on de cada segmento (de acuerdo a la biomec\'anica): 
 \begin {table}[ht]
 	\begin{center}
 		\begin{tabular}{ | c | c | c | c | c | c |}
@@ -367,19 +468,19 @@ Por otra parte, a la pelvis se le restringe todo tipo de rotaci\'on.
 Para representar la fuerza aplicada a cada uno de los segmentos, se utilizaron diferentes funciones (todas ellas peri\'odicas). A fin de simplificar el modelo, el humanoide tiene el mismo tipo de actuador aplicado en todos los segmentos.
 
 \subsection{Gen\'erico}
-
+Es el actuador m\'as sencillo (tanto matem\'atica como computacionalmente). No se consideraron las funciones trigonom\'etricas b\'asicas (es decir, solo $\sin$ o $\cos$), por los resultados obtenidos en el trabajo del Cuadr\'upedo, antes mencionado. La fase es la misma tanto en el seno como en el coseno, para evitar que se formen otro tipo de funciones no cíclicas ($f(t)=0$).
 \begin{equation}
   f(t) =  A_1 \sin(\omega_1t+\phi)+A_2 \cos(\omega_2t+\phi)+C
 \end{equation}
 
 \subsection{Fourier}
-
+Este actuador utiliza una serie de Fourier de dos t\'erminos. 
 \begin{equation}
   f(t) =  A_1 \sin(\omega t+\phi)+B_1 \cos(\omega t+\phi)+A_2 \sin(2\omega t+\phi)+B_2 \cos(2\omega t+\phi)+C
 \end{equation}
 
 \subsection{Extra Fourier}
-
+Es una extensi\'on del actuador anterior, pero con 9 t\'erminos. Por ser de mayor grado, brinda una mayor precisi\'on. Sin embargo, es m\'as dificil de manejar computacionalmente; y, adem\'as, que sea m\'as preciso no garantiza que con \'el se pueda lograr una buena caminata.
 \begin{equation}
 \begin{split}
   f(t) = &   A_1 \sin(\omega t+\phi)+B_1 \cos(\omega t+\phi)+A_2 \sin(2\omega t+\phi)+B_2 \cos(2\omega t+\phi) \\
@@ -391,7 +492,7 @@ Para representar la fuerza aplicada a cada uno de los segmentos, se utilizaron d
 \end{equation}
 
 \subsection{Doble coseno}
-
+Su funci\'on est\'a dada por emplear dos frecuencias distintas 
 \begin{equation}
 \begin{aligned}[c]
 \psi (t) = t+ \phi- \floor[\Bigg]{ \frac{t+\phi}{\pi/\omega_1+\pi/\omega_2} } (\pi/\omega_1+\pi/\omega_2) 
@@ -432,7 +533,7 @@ xxxxx
 \subsection{Individuo}
 
 %\begin{adjustwidth}{1.25cm}{0cm}
-Los algoritmos gen\'eticos, por naturaleza, son lentos: tardan mucho tiempo, y tambi\'en en converger a una soluci\'on \'optima (con un fitness muy cercano a su cota superior). El manejo de un individuo debe ser eficiente y simple, . Y eso se logra con estructuras sencillas y b\'asicas. Es por eso que el individuo, en este caso, est\'a compuesto por un array de n\'umeros, que identifican tanto los valores asociados a las fuerzas de los actuadores.
+Los algoritmos gen\'eticos, por naturaleza, son lentos: tardan mucho tiempo, y tambi\'en en converger a una soluci\'on \'optima (con un fitness muy cercano a su cota superior). El manejo de un individuo debe ser eficiente y simple, . Y eso se logra con estructuras sencillas y b\'asicas. Es por eso que el individuo, en este caso, est\'a compuesto por un array de n\'umeros, que identifican tanto los valores asociados a las fuerzas de los actuadores. 
 %\end{adjustwidth}
 
 \subsection{Fitness}
@@ -440,7 +541,7 @@ Los algoritmos gen\'eticos, por naturaleza, son lentos: tardan mucho tiempo, y t
 %\begin{adjustwidth}{1.25cm}{0cm}
 El papel de la funci\'on de fitness en un algoritmo gen\'etico es evaluar qu\'e tan bueno es un individuo. En este caso, est\'a definida como un producto de tres m\'odulos o propiedades: altura, velocidad y direcci\'on:
 \begin{equation}
-  fitness = altura * velocidad * direcci\acute{o}n
+  \text{fitness} = altura * velocidad * direcci\acute{o}n
 \end{equation}
 Los tres tienen la misma importancia y, por eso, como se ver\'a a continuaci\'on, est\'an definidos de forma similar (con una funci\'on exponencial y pueden valer entre 0 y 1). Con todo esto, dado que el fitness est\'a pensado como un producto, basta con que uno de los m\'odulos sea muy chico para  ``anular'' al individuo -es decir, otorgarle un valor que tiende a cero-. Sin embargo, los diferentes m\'odulos no son completamente independientes entre s\'i: por ejemplo, si la altura es demasiado baja, posiblemente la velocidad y la direcci\'on no sean adecuadas. \\
 %\end{adjustwidth}
@@ -450,7 +551,7 @@ Los tres tienen la misma importancia y, por eso, como se ver\'a a continuaci\'on
 %\begin{adjustwidth}{1.4cm}{0cm}
 Es un factor relacionado con la altura del individuo en toda la simulaci\'on, y se expresa:\\
 \begin{equation}
-  altura = \frac{\sum_{n=0}^{T} {e^{-C( h_{t_{n}} - h_{t_{0}} )^2  }}}{simulation\_steps}
+  \text{altura} = \frac{\sum_{n=0}^{T} {e^{-C( h_{t_{n}} - h_{t_{0}} )^2  }}}{\textit{simulation steps}}
 \end{equation}
 \\ donde $t_{0}$ es el tiempo inicial, $t_{T}$ el tiempo final, simulation\_steps la cantidad pasos de simulaci\'on y C una constante adimensional que vale 5 (dato experimental).
 \\
@@ -463,7 +564,7 @@ Se calcula a partir de la diferencia entre la altura en cada instante de la simu
 %\begin{adjustwidth}{1.4cm}{0cm}
 Indica qu\'e tan cercana es la velocidad del individuo con respecto a una velocidad objetivo -en este caso, es de 1.2 m/h-, y se expresa de la siguiente forma:\\
 \begin{equation}
-  velocidad = \frac{\sum_{n=0}^{T} {e^{-C( \|v_{t_{n}}\| - V_{O} )^2  }}}{simulation\_steps}
+  \text{velocidad} = \frac{\sum_{n=0}^{T} {e^{-C( \|v_{t_{n}}\| - V_{O} )^2  }}}{\textit{simulation steps}}
 \end{equation}
 \\ donde $t_{0}$ es el tiempo inicial, $t_{T}$ el tiempo final, $V_{O}$ la velocidad objetivo en el eje Z -el eje de la caminata-, simulation\_steps la cantidad pasos de simulaci\'on y C es una constante adimensional que vale 5 (dato experimental).
 \\
@@ -476,16 +577,27 @@ Sigue una l\'ogica y c\'alculo similares al factor de altura: a mayor discrepanc
 %\begin{adjustwidth}{1.4cm}{0cm}
 Se\~nala qu\'e tan similares son la direcci\'on objetivo -un vector unitario, que en este caso se encuentra en el eje Z- y la direcci\'on con la que camine el humanoide. Se calcula como sigue:\\
 \begin{equation}
- direcci\acute{o}n = \frac{\sum_{n=0}^{T} {e^{-C( \vec{v_{t_{n}}} \cdot \vec{V_{O} } -1)^2 } } }{simulation\_steps}
+ \text{direcci\'on} = \frac{\sum_{n=0}^{T} {e^{-C( \vec{v_{t_{n}}} \cdot \vec{V_{O} } -1)^2 } } }{\textit{simulation steps}}
 \end{equation}
 \\ donde $t_{0}$ es el tiempo inicial, $t_{T}$ el tiempo final, $\vec{v_{t_{n}}}$ el versor de la direcci\'on del humanoide en el momento $t_{n}$, $\vec{V_{O}}$ el versor de la direcci\'on objetivo, simulation\_steps la cantidad pasos de simulaci\'on y C es una constante adimensional que vale 5 (dato experimental).
 \\ El producto escalar entre los versores responde a la Similitud Coseno: $\cos \theta = \frac{A \cdot B} {\|A\|\|B\| } $, donde A y B son vectores que no se encuentran normalizados, y $\theta$ es el \'angulo formado entre ellos. As\'i,  si $\cos \theta=1$, significa que los vectores est\'an paralelos entre s\'i -que es el efecto buscado en el caso de la direcci\'on-. 
-\\ Al producto escalar se le resta 1, para que el m\'odulo sea consistente con la funci\'on exponencial utilizada y que valga 1 cuando $\theta = 0$, y  0 cuando $\theta = \pi$. Cabe aclarar que se trata al \'angulo en forma sim\'etrica, ya que, por ejemplo $\cos(-\pi/6) = \cos(\pi/6)$.
+\\ Al producto escalar se le resta 1, para que el m\'odulo sea consistente con la funci\'on exponencial utilizada y que valga 1 cuando $\theta = 0$, y  0 cuando $\theta = \pi$. Cabe aclarar que se trata al \'angulo en forma sim\'etrica, ya que, por ejemplo $\cos(-\pi/6) = \cos(\pi/6)$.\\
 
 \subsubsection{Simetr\'ia}
+\label{simetria}
+Se\~nala qu\'e tan equidistantes se encuentran los 
+\begin{equation}
+ \text{simetr\'ia} = \frac{\sum_{n=0}^{T} { \frac{1}{2} [e^{-C( lfoot_{Z} + rfoot_{Z}| ^2) } + e^{-C( lfoot_{X} + rfoot_{X}| ^2) }]  } } {\textit{simulation steps}}
+\end{equation}
+\\ donde $lfoot_{X} $ y $lfoot_{Z} $ es la distancia desde el pie izquierdo hasta la pelvis en los ejes X y Z, respectivamente; y  en donde $rfoot_{X} $ y $rfoot_{Z} $ es lo mismo, pero para el pie derecho. \\
 
 \subsubsection{Pies abajo}
-
+\label{piesabajo}
+Con los m\'odulos señalados anteriormente, se resalta que el humanoide camine con una velocidad y direcci\'on determinadas, que no se caiga y que mantenga simetr\'ia mientras ejecuta sus movimientos. Pero, todo esto dar\'ia, en el mejor de los casos, una caminata estilo ``estrella". Sin embargo, una caracter\'istica fundamental en una caminata normal es que las piernas (ergo, los pies tambi\'en) no sobrepasen la cadera. Si bien \'esta es una propiedad negativa (expresa lo que no debe tener una caminata), y se puede correr el riesgo de restringir demasiado, su ausencia da resultados peores.
+\begin{equation}
+ \text{pies abajo} = \frac{\sum_{n=0}^{T} { \frac{1}{2} ( \alpha  [e^{-C( l\_diff\_foot ^2) } + e^{-C( r\_diff\_foot ^2) }]  } } {\textit{simulation steps}}
+\end{equation}
+\\ donde  $\alpha = max(min(leftfoot,rightfoot)-hip,0),1) $ (es decir, vale 0 si la altura del pie izquierdo o derecho supera a la de la cadera, y 1 en otro caso); y $l\_diff\_foot $ y $r\_diff\_foot $ es la diferencia entre la posici\'on inicial de los pies y la altura en el momento $t_{n}$ de los pies izquierdo y derecho, respectivamente. \\
 %\end{adjustwidth}
 
 
