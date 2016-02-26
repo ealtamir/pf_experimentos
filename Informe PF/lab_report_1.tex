@@ -147,8 +147,8 @@ Este proyecto tiene como objetivo crear una simulaci\'on y animaci\'on de un hum
 \section{Introducci\'on}
 
 %\begin{adjustwidth}{1cm}{0cm}
-Siempre ha sido de inter\'es la simulaci\'on biomec\'anica de seres vivos, especialmente en las ciencias naturales (zoolog\'ia, medicina, etc.). Pero \'ultimamente se ha incrementado el inter\'es en otras \'areas de aplicaci\'on, como los videojuegos, para agregarle  .
-Una caracter\'istica muy importante de este trabajo es que, el humanoide no es fruto de una animaci\'on, sino  un objeto compuesto de segmentos f\'isicos, que interaccionan.
+\textbf{No est\'a terminada a\'un} \\Siempre ha sido de inter\'es la simulaci\'on biomec\'anica de seres vivos, especialmente en las ciencias naturales (zoolog\'ia, medicina, etc.). Pero \'ultimamente se ha incrementado el inter\'es en otras \'areas de aplicaci\'on, como los videojuegos, para agregarle  .
+Una caracter\'istica muy importante de este trabajo es que, el humanoide no es fruto de una animaci\'on, sino  un objeto compuesto de segmentos f\'isicos, que interaccionan. 
 %\end{adjustwidth}
 
 
@@ -158,9 +158,9 @@ Una caracter\'istica muy importante de este trabajo es que, el humanoide no es f
 \subsection{Motor F\'isico}
 
 %\begin{adjustwidth}{1.2cm}{0cm}
-Se le llama motor f\'isico, o physics engine a un "software capaz de realizar simulaciones de ciertos sistemas físicos como la dinámica del cuerpo rígido, el movimiento de un fluido y la elasticidad" \cite{wikiPhysicsEngine}. \\
-Actualmente, existen muchos motores f\'isicos: ya sea de c\'odigo propietario (PhysX, Havok), como open-source (Bullet Physics, Box2D, Newton, OGRE). Considerando an\'alisis relacionados \cite{Comparissons}\cite{Comparissons2}, y la necesidad de que el espacio simulado fuese en 3D, se decidi\'o que Bullet Physics\cite{LinkBullet} es el m\'as id\'oneo. Est\'a implementado en C++ y ha sido utilizado en varios juegos (Grand Theft Auto IV y V, etc); en los efectos especiales de pel\'iculas (Hancock, Bolt, etc.); y proyectos cient\'ificos como el de la NASA; entre otros.\\
-Si bien (como se ver\'a m\'as adelante) Bullet tiene problemas asociados con el coeficiente de restituci\'on, posee una muy buena performance en la detecci\'on de colisiones, la dinámica y la resoluci\'on de constraints. Esto se debe, en parte, a diferentes algoritmos iterativos de orden lineal (donde el m\'as importante es Sequential Impulse), de caching y también a la utilizaci\'on de un modelo de fricci\'on de Coulomb aproximado \cite{Catto}. Adem\'as, el motor f\'isico brinda la posibilidad de regular la precisi\'on requerida en estos c\'alculos (sin olvidar nunca que, a mayor precisi\'on, mayor capacidad de c\'omputo requerida y, ergo, mayor tiempo). Dado que la construcci\'on del humanoide implica definir caracter\'isticas y restricciones de movimiento de cada una de sus partes, lo antes mencionado fue crucial para la elecci\'on de Bullet Physics en este proyecto.
+Se le llama motor f\'isico o \textit{physics engine} a un  ``software capaz de realizar simulaciones de ciertos sistemas f\'isicos, como la din\'amica del cuerpo r\'igido, el movimiento de un fluido y la elasticidad" \cite{wikiPhysicsEngine}. \\
+Actualmente, existen muchos motores f\'isicos: ya sea de c\'odigo propietario (PhysX, Havok), como open-source (Bullet Physics, Box2D, Newton, OGRE). Considerando an\'alisis relacionados \cite{Comparissons}\cite{Comparissons2}, y la necesidad de que el espacio simulado fuese en 3D, se decidi\'o que Bullet Physics\cite{LinkBullet} es el m\'as id\'oneo. Est\'a implementado en C++ y ha sido utilizado en varios juegos (Grand Theft Auto IV y V, etc); en los efectos especiales de pel\'iculas (Hancock, Bolt, etc.); y proyectos cient\'ificos, como la herramienta open-source Tensegrity Robotics Toolkit de la NASA\footnote{http://bulletphysics.org/Bullet/phpBB3/viewtopic.php?f=17\&t=9978}; entre otros.\\
+Si bien (como se ver\'a m\'as adelante) Bullet tiene problemas asociados con el coeficiente de restituci\'on, posee una muy buena performance en la detecci\'on de colisiones, la din\'amica y la resoluci\'on de constraints. Esto se debe, en parte, a diferentes algoritmos iterativos de orden lineal (donde el m\'as importante es Sequential Impulse), de caching y tambi\'en a la utilizaci\'on de un modelo de fricci\'on de Coulomb aproximado \cite{Catto}. Adem\'as, el motor f\'isico brinda la posibilidad de regular la precisi\'on requerida en estos c\'alculos (sin olvidar nunca que, con iguales recursos, a mayor precisi\'on, mayor capacidad de c\'omputo requerida y, ergo, mayor tiempo). Dado que la construcci\'on del humanoide implica definir caracter\'isticas y restricciones de movimiento de cada una de sus partes, lo antes mencionado fue crucial para la elecci\'on de Bullet Physics en este proyecto.
 
 %\end{adjustwidth}
 \subsubsection{Modelo de fricci\'on utilizado y su verificaci\'on}
@@ -296,6 +296,7 @@ Las siguientes tablas muestran los experimentos realizados. En ellos, se mantien
 	  		\hline
 		\end{tabular}
 		\caption{Experimentos con coeficiente de fricci\'on de 0.75 y $v_i = 1 \frac{m}{s}$ }
+		\label{table:Exp1}
 	\end{center}
 \end{table}
 
@@ -315,6 +316,7 @@ Las siguientes tablas muestran los experimentos realizados. En ellos, se mantien
 	  		\hline
 		\end{tabular}
 		\caption{Experimentos con coeficiente de fricci\'on de 0.75 y $v_i = -3.5 \frac{m}{s}$}
+		\label{table:Exp2}
 	\end{center}
 \end{table}
 
@@ -334,6 +336,7 @@ Las siguientes tablas muestran los experimentos realizados. En ellos, se mantien
 	  		\hline
 		\end{tabular}
 		\caption{Experimentos con coeficiente de fricci\'on de 0.75 y $v_i = -4 \frac{m}{s}$ }
+		\label{table:Exp3}
 	\end{center}
 \end{table}
 
@@ -353,6 +356,7 @@ Las siguientes tablas muestran los experimentos realizados. En ellos, se mantien
 	  		\hline
 		\end{tabular}
 		\caption{Experimentos con coeficiente de fricci\'on de 0.75 y $v_i = -5 \frac{m}{s}$ }
+		\label{table:Exp4}
 	\end{center}
 \end{table}
 
@@ -372,11 +376,12 @@ Las siguientes tablas muestran los experimentos realizados. En ellos, se mantien
 	  		\hline
 		\end{tabular}
 		\caption{Experimentos con coeficiente de fricci\'on de 0.75 y $v_i = -10 \frac{m}{s}$}
+		\label{table:Exp5}
 	\end{center}
 \end{table}
 
-Los resultados exponen una limitaci\'on del motor f\'isico: no representa correctamente las colisiones el\'asticas entre esferas y cuerpos r\'igidos, que ocurren a velocidades bajas. Esto queda en evidencia en los experimentos 1,2,3 y 4. En cada uno de ellos el error fue de casi el 100\%.\\
-La raz\'on por la que ocurre este hecho se debe a que Bullet utiliza un algoritmo de colisi\'on que frena la velocidad de un objeto que est\'a a punto de colisionar, haciendo esto puede evitar que los s\'olidos se traspasen y de esta forma se pueden realizar c\'alculos de fuerza m\'as precisos. En el caso de los experimentos, las esferas poseen una rapidez muy baja, cuando est\'an a punto de colisionar Bullet reduce a\'un m\'as esta velocidad y eventualmente quedan con una velocidad tan baja que al chocar contra el suelo se aplica el efecto restitutivo a esta rapidez casi nula y se resuelve que la esfera debe queda en reposo, cuando en realidad deber\'ia poseer una velocidad baja, pero no despreciable. \\
+Los resultados exponen una limitaci\'on del motor f\'isico: no representa correctamente las colisiones el\'asticas entre esferas y cuerpos r\'igidos, que ocurren a velocidades bajas. Esto queda en evidencia en las Tablas \ref{table:Exp1}, \ref{table:Exp2}, \ref{table:Exp3} y \ref{table:Exp4}. En cada una de ellas el error fue de casi el 100\%.\\
+La raz\'on por la que ocurre este hecho se debe a que Bullet utiliza un algoritmo de colisi\'on que frena la velocidad de un objeto que est\'a a punto de colisionar. Haciendo esto puede evitar que los s\'olidos se traspasen y de esta forma se pueden realizar c\'alculos de fuerza m\'as precisos. En el caso de los experimentos, las esferas poseen una rapidez muy baja, cuando est\'an a punto de colisionar Bullet reduce a\'un m\'as esta velocidad y eventualmente quedan con una velocidad tan baja que al chocar contra el suelo se aplica el efecto restitutivo a esta rapidez casi nula y se resuelve que la esfera debe quedar en reposo, cuando en realidad deber\'ia poseer una velocidad baja, pero no despreciable. \\
 
 \end{itemize}
 
@@ -389,7 +394,7 @@ La raz\'on por la que ocurre este hecho se debe a que Bullet utiliza un algoritm
 \item C\'odigo abierto: mayor conocimiento sobre las f\'ormulas y m\'etodos implementados en el motor, a diferencia de lo acaecido en trabajos previos \cite{Cuadrupedo}, en donde al usar frameworks f\'isicos de c\'odigo cerrado, no se ten\'ia ni control ni conocimiento pleno de su funcionamiento.
 \item Soporte de la comunidad cientf\'ifica.
 \item Licencia libre.
-
+\\
 \end{itemize}
 %\end{adjustwidth}
 
@@ -398,6 +403,7 @@ La raz\'on por la que ocurre este hecho se debe a que Bullet utiliza un algoritm
 \begin{itemize}[leftmargin=5.5mm]
 \item Documentaci\'on poco clara y desordenada.
 \item Implementado en C++: al no formar este lenguaje parte de la expertise del equipo, fue m\'as dif\'icil de desarrollar.
+\\
 \end{itemize}
 %\end{adjustwidth}
 
@@ -432,6 +438,7 @@ Hay diversos modelos. Algunos son m\'as gen\'ericos \cite{flexibleMuscle} \cite{
 Se modela al cuerpo humano, con el motor Bullet Physics, como un conjunto de segmentos unidos por articulaciones. A cada uno de ellos se les aplica una fuerza en el centro de masa de cada segmento (denominada Actuador). Que la caminata se produzca o no, depende del tipo de actuador utilizado (la funci\'on utilizada para la fuerza), y de sus par\'ametros. El objetivo, entonces, se reduce a encontrar dichos par\'ametros. Para eso se usan los algoritmos gen\'eticos, un m\'etodo de Inteligencia Artificial. De este modo, se obtiene, de forma an\'aloga a la selecci\'on natural, los individuos que mejor se adapten a la caminata. Tanto los actuadores como el algoritmo gen\'etico se explicar\'an m\'as adelante. \\ 
 
 \subsection{Composici\'on F\'isica del Humanoide}
+\textbf{No est\'a terminada a\'un} \\
 Como ya se dijo, el humanoide fue modelado en Bullet como un conjunto de segmentos, unidos por articulaciones. Los segmentos son cuerpos rig\'idos 
 
 Se dividi\'o al cuerpo humano en los siguientes segmentos: cabeza, tronco, miembro superior, pelvis y miembro inferior (muslo, pierna y pie). Considerar la mitad superior del cuerpo implicaba tener    Para la simplificaci\'on del problema \\ \\
@@ -458,6 +465,7 @@ A continuaci\'on se presenta la composici\'on de cada segmento (de acuerdo a la 
 %\end{adjustwidth}
 
 \subsection{Articulaciones}
+\textbf{No est\'a terminada a\'un} \\
 Para unir los distintos segmentos entre s\'i, se utilizaron articulaciones bisagra con 1 grados de libertad: en el eje Z -en donde ocurre la caminata- y en el eje Y -el perpendicular al piso-. Adem\'as, para cada caso en particular, se definieron cotas para los \'angulos que pueden existir entre los segmentos. Esto es muy importante, no s\'olo porque se adec\'ua a datos biol\'ogicos, sino porque, de otro modo la caminata no podr\'ia lograrse: si los \'angulos son demasiado altos, la caminata se produce girando las piernas por encima de la pelvis; si por el contrario, son demasiado bajos, las piernas van a estar muy r\'igidas, originando pocos pasos y muy cortos. 
 Tanto para la  \\
 Por otra parte, a la pelvis se le restringe todo tipo de rotaci\'on. 
@@ -492,7 +500,7 @@ Es una extensi\'on del actuador anterior, pero con 9 t\'erminos. Por ser de mayo
 \end{equation}
 
 \subsection{Doble coseno}
-Su funci\'on est\'a dada por emplear dos frecuencias distintas 
+Su funci\'on est\'a dada por dividir a la función periódica en dos partes, cada una de ellas con funciones cosenoidales de frecuencias distintas.  
 \begin{equation}
 \begin{aligned}[c]
 \psi (t) = t+ \phi- \floor[\Bigg]{ \frac{t+\phi}{\pi/\omega_1+\pi/\omega_2} } (\pi/\omega_1+\pi/\omega_2) 
@@ -533,7 +541,7 @@ xxxxx
 \subsection{Individuo}
 
 %\begin{adjustwidth}{1.25cm}{0cm}
-Los algoritmos gen\'eticos, por naturaleza, son lentos: tardan mucho tiempo, y tambi\'en en converger a una soluci\'on \'optima (con un fitness muy cercano a su cota superior). El manejo de un individuo debe ser eficiente y simple, . Y eso se logra con estructuras sencillas y b\'asicas. Es por eso que el individuo, en este caso, est\'a compuesto por un array de n\'umeros, que identifican tanto los valores asociados a las fuerzas de los actuadores. 
+Los algoritmos gen\'eticos, generalmente, suelen ser lentos: tardan mucho tiempo, y tambi\'en en converger a una soluci\'on \'optima (necesitan muchas generaciones para llegar a eso, y pasando por varios máximos locales). El manejo de un individuo debe ser eficiente y simple. Y eso se logra con estructuras sencillas y b\'asicas. Es por eso que el individuo, en este caso, est\'a compuesto por un array de n\'umeros, que identifican tanto los valores asociados a las fuerzas de los actuadores. 
 %\end{adjustwidth}
 
 \subsection{Fitness}
@@ -541,7 +549,7 @@ Los algoritmos gen\'eticos, por naturaleza, son lentos: tardan mucho tiempo, y t
 %\begin{adjustwidth}{1.25cm}{0cm}
 El papel de la funci\'on de fitness en un algoritmo gen\'etico es evaluar qu\'e tan bueno es un individuo. En este caso, est\'a definida como un producto de tres m\'odulos o propiedades: altura, velocidad y direcci\'on:
 \begin{equation}
-  \text{fitness} = altura * velocidad * direcci\acute{o}n
+  \text{fitness} = \text{altura} * \text{velocidad} * \text{direcci\'on} * \text{simetr\'ia} *  \text{pies abajo}
 \end{equation}
 Los tres tienen la misma importancia y, por eso, como se ver\'a a continuaci\'on, est\'an definidos de forma similar (con una funci\'on exponencial y pueden valer entre 0 y 1). Con todo esto, dado que el fitness est\'a pensado como un producto, basta con que uno de los m\'odulos sea muy chico para  ``anular'' al individuo -es decir, otorgarle un valor que tiende a cero-. Sin embargo, los diferentes m\'odulos no son completamente independientes entre s\'i: por ejemplo, si la altura es demasiado baja, posiblemente la velocidad y la direcci\'on no sean adecuadas. \\
 %\end{adjustwidth}
@@ -585,7 +593,8 @@ Se\~nala qu\'e tan similares son la direcci\'on objetivo -un vector unitario, qu
 
 \subsubsection{Simetr\'ia}
 \label{simetria}
-Se\~nala qu\'e tan equidistantes se encuentran los 
+Se\~nala qu\'e tan equidistantes se encuentran los pies de la cadera, a lo largo de la caminata. Aplicando solamente los m\'odulos antes mencionados, provocaba resultados en donde una pierna quedaba m\'as distante de la pelvis que la otra, lo que provocaba que el humanoide se terminara arrastrando (y posiblemente afectando a la velocidad).\\
+Para mayor simplicidad, la simetr\'ia se calcul\'o a partir de los pies (y no de las piernas). Se tomaron en cuenta s\'olo los ejes X y Z, porque son los relacionados a la velocidad y a la direcci'on, respectivamente.
 \begin{equation}
  \text{simetr\'ia} = \frac{\sum_{n=0}^{T} { \frac{1}{2} [e^{-C( lfoot_{Z} + rfoot_{Z}| ^2) } + e^{-C( lfoot_{X} + rfoot_{X}| ^2) }]  } } {\textit{simulation steps}}
 \end{equation}
@@ -593,7 +602,8 @@ Se\~nala qu\'e tan equidistantes se encuentran los
 
 \subsubsection{Pies abajo}
 \label{piesabajo}
-Con los m\'odulos señalados anteriormente, se resalta que el humanoide camine con una velocidad y direcci\'on determinadas, que no se caiga y que mantenga simetr\'ia mientras ejecuta sus movimientos. Pero, todo esto dar\'ia, en el mejor de los casos, una caminata estilo ``estrella". Sin embargo, una caracter\'istica fundamental en una caminata normal es que las piernas (ergo, los pies tambi\'en) no sobrepasen la cadera. Si bien \'esta es una propiedad negativa (expresa lo que no debe tener una caminata), y se puede correr el riesgo de restringir demasiado, su ausencia da resultados peores.
+Con los m\'odulos señalados anteriormente, se resalta que el humanoide camine con una velocidad y direcci\'on determinadas, que no se caiga y que mantenga simetr\'ia mientras ejecuta sus movimientos. Pero, todo esto dar\'ia, en el mejor de los casos, una caminata estilo ``estrella". \\
+Sin embargo, una caracter\'istica fundamental en una caminata normal es que las piernas (ergo, los pies tambi\'en) no sobrepasen la cadera. Si bien \'esta es una propiedad negativa (expresa lo que no debe tener una caminata), y se puede correr el riesgo de restringir demasiado, su ausencia da resultados peores.
 \begin{equation}
  \text{pies abajo} = \frac{\sum_{n=0}^{T} { \frac{1}{2} ( \alpha  [e^{-C( l\_diff\_foot ^2) } + e^{-C( r\_diff\_foot ^2) }]  } } {\textit{simulation steps}}
 \end{equation}
