@@ -42,7 +42,7 @@ btVector3 GenericActuator::actuatorFunc(double t, int stage) {
     double fz = parameters[SIN_AMPLITUD_Z] * sin(parameters[SIN_FREC_Z] * t + parameters[FASE_Z])
         + parameters[COS_AMPLITUD_Z] * cos(parameters[COS_FREC_Z] * t
         + parameters[FASE_Z]) + parameters[IND_TERM_Z];
-    return btVector3(fx, fy, fz);
+    return btVector3(fx, fy, 0);
 }
 
 void GenericActuator::setActuatorValues(double vals[]) {
