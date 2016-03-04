@@ -21,6 +21,23 @@
 
 \documentclass{article}
 \usepackage[spanish,es-tabla]{babel}
+\newcommand\Monthname[1][EMPTY]{%
+  \ifnum1=#1Enero\else
+  \ifnum2=#1Febrero\else
+  \ifnum3=#1Marzo\else
+  \ifnum4=#1Abril\else
+  \ifnum5=#1Mayo\else
+  \ifnum6=#1Junio\else
+  \ifnum7=#1Julio\else
+  \ifnum8=#1Agosto\else
+  \ifnum9=#1Septiembre\else
+  \ifnum10=#1Octubre\else
+  \ifnum11=#1Noviembre\else
+  \ifnum12=#1Diciembre\else
+  \fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi
+}
+
+\usepackage{datetime}
 
 \usepackage[a4paper,
  %left=20mm,
@@ -37,6 +54,10 @@
 \usepackage{amsfonts}
 \usepackage{amsmath} % Required for some math elements 
 \usepackage{mathtools}
+
+\usepackage[labelformat=simple]{subcaption} % Required to add parentheses to subfigures references
+\renewcommand\thesubfigure{(\alph{subfigure})}
+
 \DeclarePairedDelimiter{\ceil}{\lceil}{\rceil} %this is for ceil and floor symbols
 \DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor} %this is for ceil and floor symbols
 
@@ -57,6 +78,8 @@
 \usepackage[export]{adjustbox} 
 \usepackage{subcaption}
 \usepackage{float}
+
+
 
 \pagestyle{fancy}
 \fancyheadoffset{0cm} %Used for heading without margins
@@ -86,30 +109,34 @@
 
 \renewcommand{\labelenumi}{\alph{enumi}.} % Make numbering in the enumerate environment by letter rather than number (e.g. section 6)
 
+\let\datespanish\relax
+\newdateformat{datespanish}{\Monthname[\THEMONTH] \THEYEAR}
+
 %\usepackage{times} % Uncomment to use the Times New Roman font
 
 %----------------------------------------------------------------------------------------
 %	DOCUMENT INFORMATION
 %----------------------------------------------------------------------------------------
 
-\title{\textbf{\\ \underline{PROYECTO} \underline{FINAL} \\ \vspace*{2ex} \textcolor{cyan}{\textit{SIMULACI\'ON Y ANIMACI\'ON BIOMEC\'ANICA \\DE UN HUMANOIDE}  }  \vspace*{3ex}} } % Title
+\title{\textbf{\Large{\\ \underline{PROYECTO} \underline{FINAL} \\ \vspace*{2ex} INGENIER\'IA INFORM\'ATICA - ITBA \\}} \vspace*{4ex} 
+\textbf{\textcolor{cyan}{\textit{SIMULACI\'ON Y ANIMACI\'ON BIOMEC\'ANICA \\DE UN HUMANOIDE}  }  \vspace*{3ex}} } % Title
 
-\author{Informe realizado por: }
-\affil{Altamiranda Graterol, Enzo\\% If the blocks option of authblk is removed \\ is treated as ,
+\author{\textbf{Autores:} }
+\affil{\textbf{Altamiranda Graterol, Enzo}\\% If the blocks option of authblk is removed \\ is treated as ,
 \url{ealtamir@itba.edu.ar}}
 
-\affil{Fontanella De Santis, Teresa\\
+\affil{\textbf{Fontanella De Santis, Teresa}\\
 \url{tfontane@itba.edu.ar}}
 
-\affil{Mehdi, Tom\'as\\
+\affil{\textbf{Mehdi, Tom\'as}\\
 \url{tmehdi@itba.edu.ar}\vspace*{3ex}}
 
-\author{\textbf{Director:}}
-\affil{ \textbf{Dr. PARISI, Daniel Ricardo} \vspace*{8ex}}
+\author{\textbf{Tutor:}}
+\affil{ \textbf{Dr. Parisi, Daniel Ricardo} \vspace*{8ex}}
 
-\date{\today} % Date for the report
+\date{\small{\today}} % Date for the report
 
-\author{\textbf{Instituto Tecnol\'ogico de Buenos Aires - ITBA} }
+\author{  \small{\textbf{Instituto Tecnol\'ogico de Buenos Aires - ITBA \\  INGENIER\'IA INFORM\'ATICA} }  }
 \affil{\vspace*{0ex}}
 \begin{document}
 
@@ -132,7 +159,7 @@
 Este proyecto tiene como objetivo crear una simulaci\'on y animaci\'on de un humano virtual, con las siguientes propiedades:
 \begin{itemize}[leftmargin=5.5mm]
 \item Biomec\'anica: que tanto su estructura (peso, altura y posici\'on de cada una de sus partes) como su interacci\'on con el entorno, respondan a comportamientos f\'isicos reales y exactos.
-\item Inteligencia Artificial: que aprenda a caminar por s\'i mismo, utilizando para ello m\'etodos de ``soft computing'' como Algoritmos Gen\'eticos.
+\item Inteligencia Artificial: que aprenda a caminar por s\'i mismo, utilizando para ello m\'etodos de \textit{soft computing} como Algoritmos Gen\'eticos.
 \end{itemize}
 
 \end{adjustwidth}
@@ -159,62 +186,61 @@ Una caracter\'istica muy importante de este trabajo es que, el humanoide no es f
 
 %\begin{adjustwidth}{1.2cm}{0cm}
 Se le llama motor f\'isico o \textit{physics engine} a un  ``software capaz de realizar simulaciones de ciertos sistemas f\'isicos, como la din\'amica del cuerpo r\'igido, el movimiento de un fluido y la elasticidad" \cite{wikiPhysicsEngine}. \\
-Actualmente, existen muchos motores f\'isicos: ya sea de c\'odigo propietario (PhysX, Havok), como open-source (Bullet Physics, Box2D, Newton, OGRE). Considerando an\'alisis relacionados \cite{Comparissons}\cite{Comparissons2}, y la necesidad de que el espacio simulado fuese en 3D, se decidi\'o que Bullet Physics\cite{LinkBullet} es el m\'as id\'oneo. Est\'a implementado en C++ y ha sido utilizado en varios juegos (Grand Theft Auto IV y V, etc); en los efectos especiales de pel\'iculas (Hancock, Bolt, etc.); y proyectos cient\'ificos, como la herramienta open-source Tensegrity Robotics Toolkit de la NASA\footnote{http://bulletphysics.org/Bullet/phpBB3/viewtopic.php?f=17\&t=9978}; entre otros.\\
-Si bien (como se ver\'a m\'as adelante) Bullet tiene problemas asociados con el coeficiente de restituci\'on, posee una muy buena performance en la detecci\'on de colisiones, la din\'amica y la resoluci\'on de constraints. Esto se debe, en parte, a diferentes algoritmos iterativos de orden lineal (donde el m\'as importante es Sequential Impulse), de caching y tambi\'en a la utilizaci\'on de un modelo de fricci\'on de Coulomb aproximado \cite{Catto}. Adem\'as, el motor f\'isico brinda la posibilidad de regular la precisi\'on requerida en estos c\'alculos (sin olvidar nunca que, con iguales recursos, a mayor precisi\'on, mayor capacidad de c\'omputo requerida y, ergo, mayor tiempo). Dado que la construcci\'on del humanoide implica definir caracter\'isticas y restricciones de movimiento de cada una de sus partes, lo antes mencionado fue crucial para la elecci\'on de Bullet Physics en este proyecto.
+Actualmente, existen muchos motores f\'isicos: ya sea de c\'odigo propietario (PhysX, Havok), como open-source (\textit{Bullet Physics}, \textit{Box2D}, Newton, OGRE). Considerando an\'alisis relacionados \cite{Comparissons}\cite{Comparissons2}, y la necesidad de que el espacio simulado fuese en 3D, se decidi\'o que \textit{Bullet Physics}\cite{LinkBullet} es el m\'as id\'oneo. Est\'a implementado en C++ y ha sido utilizado en varios juegos (\textit{Grand Theft Auto IV} y V, etc); en los efectos especiales de pel\'iculas (Hancock, Bolt, etc.); y proyectos cient\'ificos, como la herramienta open-source \textit{Tensegrity Robotics Toolkit} de la NASA\footnote{http://bulletphysics.org/Bullet/phpBB3/viewtopic.php?f=17\&t=9978}; entre otros.\\
+Si bien (como se ver\'a m\'as adelante) Bullet tiene problemas asociados con el coeficiente de restituci\'on, posee una muy buena performance en la detecci\'on de colisiones, la din\'amica y la resoluci\'on de constraints. Esto se debe, en parte, a diferentes algoritmos iterativos de orden lineal (donde el m\'as importante es \textit{Sequential Impulse}), de caching y tambi\'en a la utilizaci\'on de un modelo de fricci\'on de Coulomb aproximado \cite{Catto}. Adem\'as, el motor f\'isico brinda la posibilidad de regular la precisi\'on requerida en estos c\'alculos (sin olvidar que, con iguales recursos, a mayor precisi\'on, mayor capacidad de c\'omputo requerida y, ergo, mayor tiempo). Dado que la construcci\'on del humanoide implica definir caracter\'isticas y restricciones de movimiento de cada una de sus partes, lo antes mencionado fue crucial para la elecci\'on de \textit{Bullet Physics} en este proyecto.
 
 %\end{adjustwidth}
 \subsubsection{Modelo de fricci\'on utilizado y su verificaci\'on}
 
 %\begin{adjustwidth}{1.3cm}{0cm}
 Hay reglas f\'isicas relacionadas con el entorno y que son muy importantes para la caminata: el modelo de fricci\'on, con sus respectivos coeficientes de fricci\'on y restituci\'on.\\  
-En base a los modelos f\'isico-matem\'aticos utilizados  en los dos fen\'omenos en cuesti\'on (y que se explicar\'an a continuaci\'on), se llevaron a cabo dos experimentos para verificar que estuvieran en concordancia con los datos arrojados por Bullet:\\
+En base a los modelos f\'isico-matem\'aticos utilizados  en los dos fen\'omenos en cuesti\'on (y que se explicar\'an a continuaci\'on), se llevaron a cabo dos experimentos para verificar que estuvieran en concordancia con los datos arrojados por \textit{Bullet}:\\
 \begin{itemize}
-\item El primero simula un cubo con una rapidez constante en el eje horizontal, que gradualmente se detiene por acci\'on de la fricci\'on, hasta llegar al reposo. Se busc\'o determinar si el modelo utilizado por Bullet para simular las fuerzas resultantes sobre un cuerpo por acci\'on de la fricci\'on. \\
+\item El primero simula un cubo con una velocidad constante en el eje horizontal, que gradualmente se detiene por acci\'on de la fricci\'on, hasta llegar al reposo. Se busc\'o determinar si el modelo utilizado por \textit{Bullet} para simular las fuerzas resultantes sobre un cuerpo por acci\'on de la fricci\'on. \\
 Para este experimento se utiliz\'o el modelo matem\'atico que representa la posici\'on del cuerpo en el eje horizontal en funci\'on del tiempo, representado por la siguiente ecuaci\'on:
  
  \begin{equation}
   x(t) = x_i +v_i t+\frac{1}{2} at^2
 \end{equation}
-\\ En este caso, el cuerpo empieza su movimiento en el origen, por lo tanto la posici\'on inicial ($x_i$) es cero. La aceleraci\'on es generada por acci\'on de la fricci\'on y la segunda Ley de Newton.\\
- 
-\[
-  F = ma \qquad\text{}\qquad a=\frac{F}{m}
-\]
-\\Debido a la fricci\'on -representada por un coeficiente de fricci\'on din\'amico $\mu_d$-  entre el cuerpo y el suelo, se genera una fuerza de rozamiento en la misma direcci\'on que la velocidad del s\'olido y en sentido contrario. Dicha fuerza es proporcional a la magnitud de la fuerza normal ($F_N$) que act\'ua sobre la caja por acci\'on de la gravedad (g).
-\[
-  -F_{\mu_d} = \mu_d F_N \qquad\text{}\qquad F_N=mg
-\]
+\\ En este caso, el cuerpo empieza su movimiento en el origen, por lo tanto la posici\'on inicial ($x_i$) es cero.\\
+Debido a la fricci\'on entre el cuerpo y el suelo, se genera una fuerza de rozamiento $F_{\mu_{d}}$ en ec. (2) en la misma direcci\'on que la velocidad del s\'olido y en sentido contrario. \\
+\begin{equation}
+  -F_{\mu_d} = \mu_d F_N 
+\end{equation}
+\\donde $F_N=mg$ es la fuerza normal que act\'ua sobre la caja por acci\'on de la gravedad $g$, y $\mu_d$ es el coeficiente de fricci\'on din\'amico.
+
 Finalmente, se obtiene la aceleraci\'on:\\
  \begin{equation}
   a = \frac{F_{\mu_d}}{m}= \frac{-\mu_dF_N}{m} = \frac{-\mu_d mg}{m} = -\mu_dmg
 \end{equation}
-\\Considerando las ecuaciones (1) y (2), se puede obtener el modelo matem\'atico que predice el movimiento de la caja:\\
+\\Considerando las ecuaciones (1) y (3), se puede obtener el modelo matem\'atico que predice el movimiento de la caja:\\
  \begin{equation}
-  x(t) = x_i +v_i t+\frac{1}{2} \mu_d gt^2
+  x(t) = x_i +v_i t-\frac{1}{2} \mu_d gt^2
 \end{equation}
+\\Los resultados obtenidos -ver Fig. \ref{fig1}, \ref{fig2} y \ref{fig3}- exponen que posiblemente \textit{Bullet} utilice el modelo antes expuesto a la hora de simular. No obstante, vale aclarar que, cuanto mayor sea el paso de simulaci\'on  -o \textit{stepping}- empleado, mayor es la discrepancia entre la simulaci\'on y el modelo, posiblemente porque la precisi\'on es menor y eso lleva a cometer un error mayor. \\ 
 
 \begin{figure}[H] 
   \begin{subfigure}[b]{0.5\linewidth}
     \centering
     \includegraphics[width=0.75\linewidth]{image002.png} 
-    \caption{Con $\mu_d=0.25$} 
+    \caption{ } 
     \label{fig1:a} 
     \vspace{4ex}
   \end{subfigure}%% 
   \begin{subfigure}[b]{0.5\linewidth}
     \centering
     \includegraphics[width=0.75\linewidth]{image003.png} 
-    \caption{Con $\mu_d=0.50$} 
+    \caption{ } 
     \label{fig1:b} 
     \vspace{4ex}
   \end{subfigure} 
   \begin{subfigure}[b]{\linewidth}
     \centering
     \includegraphics[width=0.4\linewidth]{image001.png} 
-    \caption{Con $\mu_d=0.75$} 
+    \caption{ } 
     \label{fig1:c} 
   \end{subfigure}%%
-  \caption{Experimentos con $v_i = 10 \frac{m}{s}$}
+  \caption{ $v_i = 10 \frac{m}{s}$: \protect\subref*{fig1:a} $\mu_d=0.25$, \protect\subref*{fig1:b} $\mu_d=0.50$, y \protect\subref*{fig1:c} $\mu_d=0.75$}
   \label{fig1} 
   \vspace*{4ex}
 \end{figure}
@@ -223,24 +249,24 @@ Finalmente, se obtiene la aceleraci\'on:\\
   \begin{subfigure}[b]{0.5\linewidth}
     \centering
     \includegraphics[width=0.75\linewidth]{image009.png} 
-    \caption{Con $\mu_d=0.25$} 
+    \caption{ } 
     \label{fig2:a} 
     \vspace{4ex}
   \end{subfigure}%% 
   \begin{subfigure}[b]{0.5\linewidth}
     \centering
     \includegraphics[width=0.75\linewidth]{image007.png} 
-    \caption{Con $\mu_d=0.50$} 
+    \caption{ } 
     \label{fig2:b} 
     \vspace{4ex}
   \end{subfigure} 
   \begin{subfigure}[b]{\linewidth}
     \centering
     \includegraphics[width=0.4\linewidth]{image008.png} 
-    \caption{Con $\mu_d=0.75$} 
+    \caption{ } 
     \label{fig2:c} 
   \end{subfigure}%%
-  \caption{Experimentos con $v_i = 3 \frac{m}{s}$}
+  \caption{$v_i = 3 \frac{m}{s}$: \protect\subref*{fig2:a} $\mu_d=0.25$, \protect\subref*{fig2:b} $\mu_d=0.50$, y \protect\subref*{fig2:c} $\mu_d=0.75$}
   \label{fig2} 
   \vspace*{4ex}
 \end{figure}
@@ -249,30 +275,30 @@ Finalmente, se obtiene la aceleraci\'on:\\
   \begin{subfigure}[b]{0.5\linewidth}
     \centering
     \includegraphics[width=0.75\linewidth]{image004.png} 
-    \caption{Con $\mu_d=0.25$} 
+    \caption{ } 
     \label{fig3:a} 
     \vspace{4ex}
   \end{subfigure}%% 
   \begin{subfigure}[b]{0.5\linewidth}
     \centering
     \includegraphics[width=0.75\linewidth]{image005.png} 
-    \caption{Con $\mu_d=0.50$} 
+    \caption{ } 
     \label{fig3:b} 
     \vspace{4ex}
   \end{subfigure} 
   \begin{subfigure}[b]{\linewidth}
     \centering
     \includegraphics[width=0.4\linewidth]{image006.png} 
-    \caption{Con $\mu_d=0.75$} 
+    \caption{ } 
     \label{fig3:c} 
   \end{subfigure}%%
-  \caption{Experimentos con $v_i = 1 \frac{m}{s}$}
+  \caption{$v_i = 1 \frac{m}{s}$: \protect\subref*{fig3:a} $\mu_d=0.25$, \protect\subref*{fig3:b} $\mu_d=0.50$, y \protect\subref*{fig3:c} $\mu_d=0.75$  }
   \label{fig3} 
 \end{figure}
 
-Los resultados obtenidos -ver Fig. \ref{fig1}, \ref{fig2} y \ref{fig3}- exponen que posiblemente Bullet utilice el modelo antes expuesto a la hora de simular. No obstante, vale aclarar que, cuanto mayor sea el paso de simulaci\'on  -o \textit{stepping}- empleado, mayor es la discrepancia entre la simulaci\'on y el modelo, posiblemente porque la precisi\'on es menor y eso lleva a cometer un error mayor. \\ 
 
-\item El segundo simula una esfera a una altura determinada sobre el suelo, que tiene una rapidez constante en el eje perpendicular al piso y que eventualmente colisiona contra el mismo. Se desea comprobar que la colisi\'on entre el cuerpo y el suelo respete el modelo de colisiones el\'asticas y que la velocidad final de la esfera despu\'es del choque sea proporcional al coeficiente de restituci\'on de la misma.\\ 
+
+\item El segundo simula una esfera a una altura determinada sobre el suelo, que tiene una velocidad en el eje perpendicular al piso y que eventualmente colisiona contra el mismo. Se desea comprobar que la colisi\'on entre el cuerpo y el suelo respete que la velocidad final de la esfera despu\'es del choque sea proporcional a su coeficiente de restituci\'on $e$ dado por la ecuaci\'on:\\ 
  \begin{equation}
  \label{eq:restitution_coef}
   e = \frac{v_f}{v_i} 
@@ -295,7 +321,7 @@ Las siguientes tablas muestran los experimentos realizados. En ellos, se mantien
 	  		$\epsilon_{rel}$ & 0.997 & 0.999 & 0.997 \\
 	  		\hline
 		\end{tabular}
-		\caption{Experimentos con coeficiente de fricci\'on de 0.75 y $v_i = 1 \frac{m}{s}$ }
+		\caption{Coeficiente de fricci\'on de 0.75 }
 		\label{table:Exp1}
 	\end{center}
 \end{table}
@@ -315,7 +341,7 @@ Las siguientes tablas muestran los experimentos realizados. En ellos, se mantien
 	  		$\epsilon_{rel}$ & 1 & 1 & 0.893 \\
 	  		\hline
 		\end{tabular}
-		\caption{Experimentos con coeficiente de fricci\'on de 0.75 y $v_i = -3.5 \frac{m}{s}$}
+		\caption{Coeficiente de fricci\'on de 0.75 }
 		\label{table:Exp2}
 	\end{center}
 \end{table}
@@ -335,7 +361,7 @@ Las siguientes tablas muestran los experimentos realizados. En ellos, se mantien
 	  		$\epsilon_{rel}$ & 1 & 1 & 0.625 \\
 	  		\hline
 		\end{tabular}
-		\caption{Experimentos con coeficiente de fricci\'on de 0.75 y $v_i = -4 \frac{m}{s}$ }
+		\caption{Con coeficiente de fricci\'on de 0.75 }
 		\label{table:Exp3}
 	\end{center}
 \end{table}
@@ -355,7 +381,7 @@ Las siguientes tablas muestran los experimentos realizados. En ellos, se mantien
 	  		$\epsilon_{rel}$ & 0 & 0 & 0 \\
 	  		\hline
 		\end{tabular}
-		\caption{Experimentos con coeficiente de fricci\'on de 0.75 y $v_i = -5 \frac{m}{s}$ }
+		\caption{Con coeficiente de fricci\'on de 0.75 }
 		\label{table:Exp4}
 	\end{center}
 \end{table}
@@ -375,13 +401,13 @@ Las siguientes tablas muestran los experimentos realizados. En ellos, se mantien
 	  		$\epsilon_{rel}$ & 0 & 0 & 0 \\
 	  		\hline
 		\end{tabular}
-		\caption{Experimentos con coeficiente de fricci\'on de 0.75 y $v_i = -10 \frac{m}{s}$}
+		\caption{Con coeficiente de fricci\'on de 0.75 }
 		\label{table:Exp5}
 	\end{center}
 \end{table}
 
 Los resultados exponen una limitaci\'on del motor f\'isico: no representa correctamente las colisiones el\'asticas entre esferas y cuerpos r\'igidos, que ocurren a velocidades bajas. Esto queda en evidencia en las Tablas \ref{table:Exp1}, \ref{table:Exp2}, \ref{table:Exp3} y \ref{table:Exp4}. En cada una de ellas el error fue de casi el 100\%.\\
-La raz\'on por la que ocurre este hecho se debe a que Bullet utiliza un algoritmo de colisi\'on que frena la velocidad de un objeto que est\'a a punto de colisionar. Haciendo esto puede evitar que los s\'olidos se traspasen y de esta forma se pueden realizar c\'alculos de fuerza m\'as precisos. En el caso de los experimentos, las esferas poseen una rapidez muy baja, cuando est\'an a punto de colisionar Bullet reduce a\'un m\'as esta velocidad y eventualmente quedan con una velocidad tan baja que al chocar contra el suelo se aplica el efecto restitutivo a esta rapidez casi nula y se resuelve que la esfera debe quedar en reposo, cuando en realidad deber\'ia poseer una velocidad baja, pero no despreciable. \\
+La raz\'on por la que ocurre este hecho se debe a que \textit{Bullet} utiliza un algoritmo de colisi\'on que frena la velocidad de un objeto que est\'a a punto de colisionar. Haciendo esto puede evitar que los s\'olidos se traspasen y de esta forma se pueden realizar c\'alculos de fuerza m\'as precisos. En el caso de los experimentos, las esferas poseen una rapidez muy baja, cuando est\'an a punto de colisionar \textit{Bullet} reduce a\'un m\'as esta velocidad y eventualmente quedan con una velocidad tan baja que al chocar contra el suelo se aplica el efecto restitutivo a esta rapidez casi nula y se resuelve que la esfera debe quedar en reposo, cuando en realidad deber\'ia poseer una velocidad baja, pero no despreciable. \\
 
 \end{itemize}
 
@@ -421,8 +447,8 @@ Se podr\'ia haber implementado una librer\'ia propia; pero hubo que desestimarla
 \subsection{C\'odigo Fuente}
 
 %\begin{adjustwidth}{1.2cm}{0cm}
-Al estar Bullet implementado en C++, el c\'odigo fuente tambi\'en est\'a desarrollado en ese lenguaje. En Bullet, se define un World -o mundo f\'isico- en donde se puede insertar, entre otras cosas, cuerpos r\'igidos. En este caso en particular, el mundo consta de un plano  -el suelo- y  el humanoide encima -compuesto por cuerpos r\'igidos y otros elementos f\'isicos-. \\
-El programa incluye tanto la visualizaci\'on gr\'afica de la simulaci\'on f\'isica de Bullet del humanoide, as\'i como el algoritmo gen\'etico -y la definic\'on de los individuos, fitness, etc. y su integraci\'on con GaLib-.
+Al estar \textit{Bullet} implementado en C++, el c\'odigo fuente tambi\'en est\'a desarrollado en ese lenguaje. En \textit{Bullet}, se define un \textit{World} -o mundo f\'isico- en donde se puede insertar, entre otras cosas, cuerpos r\'igidos. En este caso en particular, el mundo consta de un plano  -el suelo- y  el humanoide encima -compuesto por cuerpos r\'igidos y otros elementos f\'isicos-. \\
+El programa incluye tanto la visualizaci\'on gr\'afica de la simulaci\'on f\'isica de \textit{Bullet} del humanoide, as\'i como el algoritmo gen\'etico -y la definic\'on de los individuos, fitness, etc. y su integraci\'on con GaLib-.
 \\El c\'odigo fuente se adjunta a esta presentaci\'on y una descripci\'on del mismo y modo de uso e instalaci\'on en el manual de usuario.
 
 %\end{adjustwidth}
@@ -435,14 +461,14 @@ El programa incluye tanto la visualizaci\'on gr\'afica de la simulaci\'on f\'isi
 
 %\begin{adjustwidth}{1.1cm}{0cm}
 Hay diversos modelos. Algunos son m\'as gen\'ericos \cite{flexibleMuscle} \cite{Wojtyra} y complejos.  Sin embargo, se procur\'o utilizar uno que fuera sencillo pero representativo a la vez.\\ 
-Se modela al cuerpo humano, con el motor Bullet Physics, como un conjunto de segmentos unidos por articulaciones. A cada uno de ellos se les aplica una fuerza en el centro de masa de cada segmento (denominada Actuador). Que la caminata se produzca o no, depende del tipo de actuador utilizado (la funci\'on utilizada para la fuerza), y de sus par\'ametros. El objetivo, entonces, se reduce a encontrar dichos par\'ametros. Para eso se usan los algoritmos gen\'eticos, un m\'etodo de Inteligencia Artificial. De este modo, se obtiene, de forma an\'aloga a la selecci\'on natural, los individuos que mejor se adapten a la caminata. Tanto los actuadores como el algoritmo gen\'etico se explicar\'an m\'as adelante. \\ 
+Se modela al cuerpo humano, con el motor \textit{Bullet Physics}, como un conjunto de segmentos unidos por articulaciones. A cada uno de ellos se les aplica una fuerza en el centro de masa de cada segmento (denominada Actuador). Que la caminata se produzca o no, depende del tipo de actuador utilizado (la funci\'on utilizada para la fuerza), y de sus par\'ametros. El objetivo, entonces, se reduce a encontrar dichos par\'ametros. Para eso se usan los algoritmos gen\'eticos, un m\'etodo de Inteligencia Artificial. De este modo, se obtiene, de forma an\'aloga a la selecci\'on natural, los individuos que mejor se adapten a la caminata. Tanto los actuadores como el algoritmo gen\'etico se explicar\'an m\'as adelante. \\ 
 
 \subsection{Composici\'on F\'isica del Humanoide}
 \textbf{No est\'a terminada a\'un} \\
-Como ya se dijo, el humanoide fue modelado en Bullet como un conjunto de segmentos, unidos por articulaciones. Los segmentos son cuerpos rig\'idos 
+Como ya se dijo, el humanoide fue modelado en \textit{Bullet} como un conjunto de segmentos, unidos por articulaciones. Los segmentos son cuerpos rig\'idos 
 
 Se dividi\'o al cuerpo humano en los siguientes segmentos: cabeza, tronco, miembro superior, pelvis y miembro inferior (muslo, pierna y pie). Considerar la mitad superior del cuerpo implicaba tener    Para la simplificaci\'on del problema \\ \\
-A continuaci\'on se presenta la composici\'on de cada segmento (de acuerdo a la biomec\'anica): 
+A continuaci\'on se presenta la composici\'on de cada segmento (de acuerdo a la biomec\'anica \cite{biomechanics}): 
 \begin {table}[ht]
 	\begin{center}
 		\begin{tabular}{ | c | c | c | c | c | c |}
@@ -524,10 +550,24 @@ f(t) =  \left\{
 \right. 
  \end{equation}
 
-\section{Funci\'on de Partida}
+\section{Condiciones iniciales y de contorno}
+Las funciones peri\'odicas mencionadas en los actuadores no son suficientes para lograr la caminata. 
+A los actuadores mencionados previamente, se le adosaron las funciones vistas a continuaci\'on. 
+\subsection{Funci\'on Partida}
+El andar del humanoide es c\'iclico. Sin embargo, por la posici\'on inicial del individuo, se requiere para el tiempo del primer paso, una funci\'on distinta a la del resto de la caminata. El tipo de funci\'on puede ser cualquiera de los actuadores vistos anteriormente (pero no necesariamente con los mismos valores de amplitud, frecuencia y fase asignados a las piernas). Empero, se utiliz\'o la funci\'on vista en el actuador gen\'erico. \\
+Por otra parte, para simplificar el modelo, se decidi\'o  que el tiempo considerado para el primer paso sea fijo, y de 0.7 segundos. Dicho valor fue extra\'ido de forma experimental.
 
+\subsection{Fase sincronizada}
+En una caminata, las piernas deben guardar simetr\'ia: mientras una va hacia adelante, la otra va hacia atr\'as (y viceversa). Esto, de acuerdo con  los actuadores definidos en la secci\'on anterior, implica que las funciones de movimiento de cada pierna est\'en desfasadas en medio ciclo ($\frac{\pi}{2}$):
+\begin{equation}
+f_{izquierda}(t) =  f(t)
+ \end{equation}
+ \begin{equation}
+f_{derecha}(t) =  f(t+\frac{\pi}{2})
+ \end{equation}
+siendo $f(t)$ la funci\'on de movimiento (o actuador) en el momento $t$.
 %\begin{adjustwidth}{1.1cm}{0cm}
-xxxxx
+
 %\end{adjustwidth}
 
 
@@ -671,16 +711,15 @@ xxxxxxxx
 
 \begin{thebibliography}{1}
 \bibitem{wikiPhysicsEngine} Wikipedia: $https://es.wikipedia.org/wiki/Physics\_engine$
-\bibitem{LinkBullet} Sitio web de Bullet Physics: $http://www.bulletphysics.org/$
-\bibitem{Cuadrupedo}
-Kevin Kenny, M\'aximo Videla y Axel Wassington, \emph{Simulaci\'on y Animaci\'on Biomec\'anica de un Cuadr\'upedo, 2014 | ITBA}
 \bibitem{Comparissons}
 Andreas Gerndt y otros, \emph{An Evaluation of Open Source Physics Engines for Use in Virtual Reality Assembly Simulations, Fecha de publicaci\'on: 2012}
 \bibitem{Comparissons2}
-Tom Erez y otros, \emph{Simulation Tools for Model-Based Robotics: Comparison of Bullet, Havok, MuJoCo, ODE and PhysX}
-
+Tom Erez y otros, \emph{Simulation Tools for Model-Based Robotics: Comparison of \textit{Bullet}, Havok, MuJoCo, ODE and PhysX}
+\bibitem{LinkBullet} Sitio web de Bullet Physics: $http://www.bulletphysics.org/$
 \bibitem{Catto}
 Erin Catto, \emph{Iterative Dynamic with Temporal Coherence, Fecha de publicaci\'on: 2005}
+\bibitem{Cuadrupedo}
+Kevin Kenny, M\'aximo Videla y Axel Wassington, \emph{Simulaci\'on y Animaci\'on Biomec\'anica de un Cuadr\'upedo, 2014 | ITBA}
 \bibitem{LinkGaLib} Sitio web de GaLib: $http://lancet.mit.edu/ga/$
 \bibitem{flexibleMuscle}
 Thomas Geijtenbeek, Michiel van de Panne y A. Frank van der Stappen, \emph{Flexible Muscle-Based Locomotion for Bipedal Creatures, 2013 }
