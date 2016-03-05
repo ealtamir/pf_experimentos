@@ -333,7 +333,7 @@ Acto seguido, se muestran los experimentos realizados. En ellos, $v_{i}= \{$ -0.
 	  		$\epsilon_{rel}$ & 0.997 & 0.999 & 0.997 \\
 	  		\hline
 		\end{tabular}
-		\caption{Coeficiente de fricci\'on de 0.75 }
+		\caption{Coeficientes de restituci\'on obtenidos de simular el sistema descripto en Fig. X }
 		\label{table:Exp1}
 	\end{center}
 \end{table}
@@ -353,7 +353,7 @@ Acto seguido, se muestran los experimentos realizados. En ellos, $v_{i}= \{$ -0.
 	  		$\epsilon_{rel}$ & 1 & 1 & 0.893 \\
 	  		\hline
 		\end{tabular}
-		\caption{Coeficiente de fricci\'on de 0.75 }
+		\caption{Coeficientes de restituci\'on obtenidos de simular el sistema descripto en Fig. X }
 		\label{table:Exp2}
 	\end{center}
 \end{table}
@@ -373,7 +373,7 @@ Acto seguido, se muestran los experimentos realizados. En ellos, $v_{i}= \{$ -0.
 	  		$\epsilon_{rel}$ & 1 & 1 & 0.625 \\
 	  		\hline
 		\end{tabular}
-		\caption{Coeficiente de fricci\'on de 0.75 }
+		\caption{Coeficientes de restituci\'on obtenidos de simular el sistema descripto en Fig. X }
 		\label{table:Exp3}
 	\end{center}
 \end{table}
@@ -393,7 +393,7 @@ Acto seguido, se muestran los experimentos realizados. En ellos, $v_{i}= \{$ -0.
 	  		$\epsilon_{rel}$ & 0 & 0 & 0 \\
 	  		\hline
 		\end{tabular}
-		\caption{Coeficiente de fricci\'on de 0.75 }
+		\caption{Coeficientes de restituci\'on obtenidos de simular el sistema descripto en Fig. X  }
 		\label{table:Exp4}
 	\end{center}
 \end{table}
@@ -413,7 +413,7 @@ Acto seguido, se muestran los experimentos realizados. En ellos, $v_{i}= \{$ -0.
 	  		$\epsilon_{rel}$ & 0 & 0 & 0 \\
 	  		\hline
 		\end{tabular}
-		\caption{Coeficiente de fricci\'on de 0.75 }
+		\caption{Coeficientes de restituci\'on obtenidos de simular el sistema descripto en Fig. X }
 		\label{table:Exp5}
 	\end{center}
 \end{table}
@@ -440,7 +440,8 @@ La raz\'on por la que ocurre este hecho se debe a que \textit{Bullet} utiliza un
 %\begin{adjustwidth}{1.3cm}{0cm}
 \begin{itemize}[leftmargin=5.5mm]
 \item Documentaci\'on poco clara y desordenada.
-\item Implementado en C++: al no formar este lenguaje parte de la expertise del equipo, fue m\'as dif\'icil de desarrollar.
+\item Emplea una f\'isica no determinista.
+\item Utilizar una librer\'ia gr\'afica (como \textit{OpenGL}) acoplada a una simulaci\'on  de \textit{Bullet} puede producir resultados distintos que si se utiliza un programa de visualizaci\'on externo (como OVITO).
 \\
 \end{itemize}
 %\end{adjustwidth}
@@ -451,7 +452,8 @@ La raz\'on por la que ocurre este hecho se debe a que \textit{Bullet} utiliza un
 \subsection{Librer\'ia de Algoritmos Gen\'eticos}
 
 %\begin{adjustwidth}{1.2cm}{0cm}
-Se utiliz\'o la conocida librer\'ia de Algoritmos Gen\'eticos para C++ GaLib, desarrollada por Matthew Wall del MIT \cite{LinkGaLib}.  Ofrece funcionalidades como: programaci\'on paralela, diversos m\'etodos de selecci\'on (elite, ruleta), estrategias de reemplazo (de padres, aleatorio, del peor), entre otras.\\
+Se utiliz\'o la conocida librer\'ia de Algoritmos Gen\'eticos para C++ GaLib, desarrollada por Matthew Wall del MIT \cite{LinkGaLib}. \\
+Ofrece funcionalidades como: programaci\'on paralela, diversos m\'etodos de selecci\'on (elite, ruleta), estrategias de reemplazo (de padres, aleatorio, del peor), entre otras.\\
 
 %\end{adjustwidth}
 
@@ -459,8 +461,8 @@ Se utiliz\'o la conocida librer\'ia de Algoritmos Gen\'eticos para C++ GaLib, de
 
 %\begin{adjustwidth}{1.2cm}{0cm}
 Al estar \textit{Bullet} implementado en C++, el c\'odigo fuente tambi\'en est\'a desarrollado en ese lenguaje. En \textit{Bullet}, se define un \textit{World} -o mundo f\'isico- en donde se puede insertar, entre otras cosas, cuerpos r\'igidos. En este caso en particular, el mundo consta de un plano  -el suelo- y  el humanoide encima -compuesto por cuerpos r\'igidos y otros elementos f\'isicos-. \\
-El programa incluye tanto la visualizaci\'on gr\'afica de la simulaci\'on f\'isica de \textit{Bullet} del humanoide, as\'i como el algoritmo gen\'etico -y la definic\'on de los individuos, fitness, etc. y su integraci\'on con GaLib-.
-\\El c\'odigo fuente se adjunta a esta presentaci\'on y una descripci\'on del mismo y modo de uso e instalaci\'on en el manual de usuario.
+El software creado incluye: creaci\'on del humanoide, siendo \'este capaz de desplazarse por medio de actuadores (que se ver\'an en la Secci\'on \ref{actuadores}); el desarrollo del algoritmo gen\'etico (la definici\'on de los individuos, la funci\'on de fitness, m\'etodos de selecci\'on, etc.); visualizaci\'on gr\'afica del mejor humanoide logrado por el algoritmo gen\'etico; y la posibilidad de realizar gr\'aficos referidos a la evoluci\'on del algoritmo gen\'etico (fitness por cada generaci\'on, etc.). \\
+Se acompa\~nan a esta presentaci\'on: el c\'odigo fuente y el manual de instalaci\'on y uso.
 
 %\end{adjustwidth}
 
@@ -478,7 +480,7 @@ Se modela al cuerpo humano, con el motor \textit{Bullet Physics}, como un conjun
 \textbf{No est\'a terminada a\'un} \\
 Como ya se dijo, el humanoide fue modelado en \textit{Bullet} como un conjunto de segmentos, unidos por articulaciones. Los segmentos son cuerpos rig\'idos 
 
-Se dividi\'o al cuerpo humano en los siguientes segmentos: cabeza, tronco, miembro superior, pelvis y miembro inferior (muslo, pierna y pie). Considerar la mitad superior del cuerpo implicaba tener    Para la simplificaci\'on del problema \\ \\
+Se dividi\'o al cuerpo humano en los siguientes segmentos: cabeza, tronco, miembro superior, pelvis y miembro inferior (muslo, pierna y pie). Considerar la mitad superior del cuerpo implicaba tener    \\ \\
 A continuaci\'on se presenta la composici\'on de cada segmento (de acuerdo a la biomec\'anica \cite{biomechanics}): 
 \begin {table}[ht]
 	\begin{center}
@@ -508,12 +510,13 @@ Tanto para la  \\
 Por otra parte, a la pelvis se le restringe todo tipo de rotaci\'on. 
 
 \section{Actuadores}
+\label{actuadores}
 %\begin{adjustwidth}{1.1cm}{0cm}
 
 Para representar la fuerza aplicada a cada uno de los segmentos, se utilizaron diferentes funciones (todas ellas peri\'odicas). A fin de simplificar el modelo, el humanoide tiene el mismo tipo de actuador aplicado en todos los segmentos.
 
 \subsection{Gen\'erico}
-Es el actuador m\'as sencillo (tanto matem\'atica como computacionalmente). No se consideraron las funciones trigonom\'etricas b\'asicas (es decir, solo $\sin$ o $\cos$), por los resultados obtenidos en el trabajo del Cuadr\'upedo, antes mencionado. La fase es la misma tanto en el seno como en el coseno, para evitar que se formen otro tipo de funciones no cíclicas ($f(t)=0$).
+Es el actuador m\'as sencillo (tanto matem\'atica como computacionalmente). No se consideraron las funciones trigonom\'etricas b\'asicas (es decir, solo $\sin$ o $\cos$), por los resultados obtenidos en \cite{Cuadrupedo}. La fase es la misma tanto en el seno como en el coseno, para evitar que se formen otro tipo de funciones no c\'iclicas ($f(t)=0$).
 \begin{equation}
   f(t) =  A_1 \sin(\omega_1t+\phi)+A_2 \cos(\omega_2t+\phi)+C
 \end{equation}
@@ -537,8 +540,10 @@ Es una extensi\'on del actuador anterior, pero con 9 t\'erminos. Por ser de mayo
 \end{equation}
 
 \subsection{Doble coseno}
-Su funci\'on est\'a dada por dividir a la función periódica en dos partes, cada una de ellas con funciones cosenoidales de frecuencias distintas.  
-\begin{equation}
+Esta funci\'on peri\'odica utiliza medio ciclo de una funci\'on sinusoidal, y medio ciclo de otra (ambas pueden tener frecuencias distintas). De esta manera, se consigue una caminata m\'as natural, y que no ocurre con los actuadores de Fourier, que producen una doble flexi\'on de las rodillas en cada ciclo.\\
+La idea es lograr una funci\'on peri\'odica a partir de una que no lo es (ya que $t$ es lineal). Para eso, se utiliza $\psi (t)$ -ec. \eqref{eq:phi}- que aplica una transformaci\'on a los n\'umeros reales, para que se encuentren dentro del rango del ciclo completo (con las dos frecuencias). $\omega$ es la frecuencia de $f(t)$ -ec. \eqref{eq:ft}-, que utiliza medio ciclo con frecuencia $\omega_1$ y medio ciclo con frecuencia $\omega_2$.
+\begin{equation} 
+\label{eq:phi}
 \begin{aligned}[c]
 \psi (t) = t+ \phi- \floor[\Bigg]{ \frac{t+\phi}{\pi/\omega_1+\pi/\omega_2} } (\pi/\omega_1+\pi/\omega_2) 
  \end{aligned}
@@ -546,13 +551,14 @@ Su funci\'on est\'a dada por dividir a la función periódica en dos partes, cada 
  \begin{aligned}[c]
  \psi: \mathbb{Re} \rightarrow \bigg[0, \frac{2\pi}{\omega}\bigg] 
  \end{aligned}
- \end{equation}
+\end{equation}
  \\
 \begin{equation}
 \omega = \frac{2\omega_1 \omega_2}{\omega_1+\omega_2} 
  \end{equation}
 \\
 \begin{equation}
+\label{eq:ft}
 f(t) =  \left\{
 \begin{array}{ll}
       A \cos(\omega_1 \psi(t))+C & \mbox{si $\omega_1 \psi(t) < \pi$}  \\
@@ -592,15 +598,15 @@ siendo $f(t)$ la funci\'on de movimiento (o actuador) en el momento $t$.
 \subsection{Individuo}
 
 %\begin{adjustwidth}{1.25cm}{0cm}
-Los algoritmos gen\'eticos, generalmente, suelen ser lentos: tardan mucho tiempo, y tambi\'en en converger a una soluci\'on \'optima (necesitan muchas generaciones para llegar a eso, y pasando por varios máximos locales). El manejo de un individuo debe ser eficiente y simple. Y eso se logra con estructuras sencillas y b\'asicas. Es por eso que el individuo, en este caso, est\'a compuesto por un array de n\'umeros, que identifican tanto los valores asociados a las fuerzas de los actuadores. 
+Es por eso que el individuo, en este caso, est\'a compuesto por un array de n\'umeros, que identifican tanto los valores asociados a las fuerzas de los actuadores. 
 %\end{adjustwidth}
 
 \subsection{Fitness}
 
 %\begin{adjustwidth}{1.25cm}{0cm}
-El papel de la funci\'on de fitness en un algoritmo gen\'etico es evaluar qu\'e tan bueno es un individuo. En este caso, est\'a definida como un producto de cinco m\'odulos o propiedades: altura, velocidad, direcci\'on, simetr\'ia y pies abajo:
+El papel de la funci\'on de fitness $F$ en un algoritmo gen\'etico es evaluar qu\'e tan bueno es un individuo. En este caso, est\'a definida como un producto de cinco m\'odulos o propiedades: altura, velocidad, direcci\'on, simetr\'ia y pies abajo:
 \begin{equation}
-  \text{fitness} = H * V *D * S *  PA
+  F = H * V *D * S *  PA
 \end{equation}
 Los cuatro tienen la misma importancia y, por eso, como se ver\'a a continuaci\'on, est\'an definidos de forma similar (con una funci\'on exponencial y pueden valer entre 0 y 1). Con todo esto, dado que el fitness est\'a pensado como un producto, basta con que uno de los m\'odulos sea muy chico para  ``anular'' al individuo -es decir, otorgarle un valor que tiende a cero-. Sin embargo, los diferentes m\'odulos no son completamente independientes entre s\'i: por ejemplo, si la altura es demasiado baja, posiblemente la velocidad y la direcci\'on no sean adecuadas. \\
 %\end{adjustwidth}
@@ -610,9 +616,9 @@ Los cuatro tienen la misma importancia y, por eso, como se ver\'a a continuaci\'
 %\begin{adjustwidth}{1.4cm}{0cm}
 Es un factor relacionado con la altura del individuo en toda la simulaci\'on, y se expresa:\\
 \begin{equation}
-  H = \frac{\sum_{n=0}^{T} {e^{-C( h_{t_{n}} - h_{t_{0}} )^2  }}}{\textit{simulation steps}}
+  H = \frac{\sum_{n=0}^{T} {e^{-C( h_{t_{n}} - h_{t_{0}} )^2  }}}{N}
 \end{equation}
-\\ donde $t_{0}$ es el tiempo inicial, $t_{T}$ el tiempo final, simulation\_steps la cantidad pasos de simulaci\'on y C una constante $C=5$.
+\\ donde $t_{0}$ es el tiempo inicial, $t_{T}$ el tiempo final, $N$ la cantidad pasos de simulaci\'on y $C$ una constante $C=5$.
 \\
 Se calcula a partir de la diferencia entre la altura en cada instante de la simulaci\'on, con su altura inicial -la altura est\'a definida como la posici\'on de la pelvis en el eje Z-. Cuanto mayor sea esa diferencia, m\'as r\'apido el individuo cae, y por eso este m\'odulo tiende a cero. Por el contrario, valdr\'a uno si la diferencia es \'infima -lo que significa que el humanoide mantiene su misma altura durante la caminata-.\\
 
@@ -623,9 +629,9 @@ Se calcula a partir de la diferencia entre la altura en cada instante de la simu
 %\begin{adjustwidth}{1.4cm}{0cm}
 Indica qu\'e tan cercana es la velocidad del individuo con respecto a una velocidad objetivo -en este caso, es de 1.2 m/h-, y se expresa de la siguiente forma:\\
 \begin{equation}
-  V = \frac{\sum_{n=0}^{T} {e^{-C( \|v_{t_{n}}\| - V_{O} )^2  }}}{\textit{simulation steps}}
+  V = \frac{\sum_{n=0}^{T} {e^{-C( \|v_{t_{n}}\| - V_{O} )^2  }}}{N}
 \end{equation}
-\\ donde $t_{0}$ es el tiempo inicial, $t_{T}$ el tiempo final, $V_{O}$ la velocidad objetivo en el eje Z -el eje de la caminata-, simulation\_steps la cantidad pasos de simulaci\'on y C es una constante adimensional que vale 5 (dato experimental).
+\\ donde $t_{0}$ es el tiempo inicial, $t_{T}$ el tiempo final y $V_{O}$ la velocidad objetivo en el eje Z -el eje de la caminata-.
 \\
 Sigue una l\'ogica y c\'alculo similares al factor de altura: a mayor discrepancia de la velocidad real del humanoide con $V_{O}$, menor -y m\'as cercano a cero- es el valor arrojado por el m\'odulo de velocidad. 
 
@@ -636,18 +642,18 @@ Sigue una l\'ogica y c\'alculo similares al factor de altura: a mayor discrepanc
 %\begin{adjustwidth}{1.4cm}{0cm}
 Se\~nala qu\'e tan similares son la direcci\'on objetivo -un vector unitario, que en este caso se encuentra en el eje Z- y la direcci\'on con la que camine el humanoide. Se calcula como sigue:\\
 \begin{equation}
- D = \frac{\sum_{n=0}^{T} {e^{-C( \vec{v_{t_{n}}} \cdot \vec{V_{O} } -1)^2 } } }{\textit{simulation steps}}
+ D = \frac{\sum_{n=0}^{T} {e^{-C( \vec{v_{t_{n}}} \cdot \vec{V_{O} } -1)^2 } } }{N}
 \end{equation}
-\\ donde $t_{0}$ es el tiempo inicial, $t_{T}$ el tiempo final, $\vec{v_{t_{n}}}$ el versor de la direcci\'on del humanoide en el momento $t_{n}$, $\vec{V_{O}}$ el versor de la direcci\'on objetivo, simulation\_steps la cantidad pasos de simulaci\'on y C es una constante adimensional que vale 5 (dato experimental).
+\\ donde $t_{0}$ es el tiempo inicial, $t_{T}$ el tiempo final, $\vec{v_{t_{n}}}$ el versor de la direcci\'on del humanoide en el momento $t_{n}$ y $\vec{V_{O}}$ el versor de la direcci\'on objetivo.
 \\ El producto escalar entre los versores responde a la Similitud Coseno: $\cos \theta = \frac{A \cdot B} {\|A\|\|B\| } $, donde A y B son vectores que no se encuentran normalizados, y $\theta$ es el \'angulo formado entre ellos. As\'i,  si $\cos \theta=1$, significa que los vectores est\'an paralelos entre s\'i -que es el efecto buscado en el caso de la direcci\'on-. 
 \\ Al producto escalar se le resta 1, para que el m\'odulo sea consistente con la funci\'on exponencial utilizada y que valga 1 cuando $\theta = 0$, y  0 cuando $\theta = \pi$. Cabe aclarar que se trata al \'angulo en forma sim\'etrica, ya que, por ejemplo $\cos(-\pi/6) = \cos(\pi/6)$.\\
 
 \subsubsection{Simetr\'ia}
 \label{simetria}
 Se\~nala qu\'e tan equidistantes se encuentran los pies de la cadera, a lo largo de la caminata. Aplicando solamente los m\'odulos antes mencionados, provocaba resultados en donde una pierna quedaba m\'as distante de la pelvis que la otra, lo que provocaba que el humanoide se terminara arrastrando (y posiblemente afectando a la velocidad).\\
-Para mayor simplicidad, la simetr\'ia se calcul\'o a partir de los pies (y no de las piernas). Se tomaron en cuenta s\'olo los ejes X y Z, porque son los relacionados a la velocidad y a la direcci'on, respectivamente.
+Para mayor simplicidad, la simetr\'ia $S$ se calcul\'o a partir de los pies (y no de las piernas). Se tomaron en cuenta s\'olo los ejes X y Z, porque son los relacionados a la velocidad y a la direcci\'on, respectivamente.
 \begin{equation}
- S = \frac{\sum_{n=0}^{T} { \frac{1}{2} [e^{-C( lfoot_{Z} + rfoot_{Z}| ^2) } + e^{-C( lfoot_{X} + rfoot_{X}| ^2) }]  } } {\textit{simulation steps}}
+ S = \frac{\sum_{n=0}^{T} { \frac{1}{2} [e^{-C( lfoot_{Z} + rfoot_{Z}| ^2) } + e^{-C( lfoot_{X} + rfoot_{X}| ^2) }]  } } {N}
 \end{equation}
 \\ donde $lfoot_{X} $ y $lfoot_{Z} $ es la distancia desde el pie izquierdo hasta la pelvis en los ejes X y Z, respectivamente; y  en donde $rfoot_{X} $ y $rfoot_{Z} $ es lo mismo, pero para el pie derecho. \\
 
@@ -656,7 +662,7 @@ Para mayor simplicidad, la simetr\'ia se calcul\'o a partir de los pies (y no de
 Con los m\'odulos señalados anteriormente, se resalta que el humanoide camine con una velocidad y direcci\'on determinadas, que no se caiga y que mantenga simetr\'ia mientras ejecuta sus movimientos. Pero, todo esto dar\'ia, en el mejor de los casos, una caminata estilo ``estrella". \\
 Sin embargo, una caracter\'istica fundamental en una caminata normal es que las piernas (ergo, los pies tambi\'en) no sobrepasen la cadera. Si bien \'esta es una propiedad negativa (expresa lo que no debe tener una caminata), y se puede correr el riesgo de restringir demasiado, su ausencia da resultados peores.
 \begin{equation}
- PA = \frac{\sum_{n=0}^{T} { \frac{1}{2} ( \alpha  [e^{-C( l\_diff\_foot ^2) } + e^{-C( r\_diff\_foot ^2) }]  } } {\textit{simulation steps}}
+ PA = \frac{\sum_{n=0}^{T} { \frac{1}{2} ( \alpha  [e^{-C( l\_diff\_foot ^2) } + e^{-C( r\_diff\_foot ^2) }]  } } {N}
 \end{equation}
 \\ donde  $\alpha = max(min(leftfoot,rightfoot)-hip,0),1) $ (es decir, vale 0 si la altura del pie izquierdo o derecho supera a la de la cadera, y 1 en otro caso); y $l\_diff\_foot $ y $r\_diff\_foot $ es la diferencia entre la posici\'on inicial de los pies y la altura en el momento $t_{n}$ de los pies izquierdo y derecho, respectivamente. \\
 %\end{adjustwidth}

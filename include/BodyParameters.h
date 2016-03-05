@@ -14,7 +14,7 @@
 #include "Actuator.h"
 
 #define     BODY_SCALE      1
-#define     STATIC_PELVIS   0 // 0 = no, 1 = yes
+#define     STATIC_PELVIS   1 // 0 = no, 1 = yes
 
 class BodyParameters {
     
