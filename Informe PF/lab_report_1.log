@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.11.6)  7 MAR 2016 10:17
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.11.6)  7 MAR 2016 10:26
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -859,8 +859,8 @@ Package caption Info: hyperref package is loaded.
 \sf@bottom=\skip116
 )
 (./lab_report_1.aux
-LaTeX Info: Redefining \. on input line 23.
-LaTeX Info: Redefining \% on input line 23.
+LaTeX Info: Redefining \. on input line 24.
+LaTeX Info: Redefining \% on input line 24.
 )
 \openout1 = `lab_report_1.aux'.
 
@@ -2007,10 +2007,10 @@ Package rerunfilecheck Info: File `lab_report_1.out' has not changed.
 (rerunfilecheck)             Checksum: 0073B6DCB4B8C9FBA20F701AC659ABBB;2287.
  ) 
 Here is how much of TeX's memory you used:
- 21014 strings out of 494501
- 365119 string characters out of 6167030
+ 21015 strings out of 494501
+ 365132 string characters out of 6167030
  491132 words of memory out of 5000000
- 23933 multiletter control sequences out of 15000+600000
+ 23934 multiletter control sequences out of 15000+600000
  16735 words of font info for 64 fonts, out of 8000000 for 9000
  319 hyphenation exceptions out of 8191
  61i,15n,96p,10414b,609s stack positions out of 5000i,500n,10000p,200000b,80000s
