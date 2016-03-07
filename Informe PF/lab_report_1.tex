@@ -661,10 +661,15 @@ Por otra parte, a la pelvis se le restringe todo tipo de rotaci\'on.
 \section{Actuadores}
 \label{actuadores}
 %\begin{adjustwidth}{1.1cm}{0cm}
-A cada uno de los segmentos se le aplica un torque en el centro de masa -ver figura-
-Para representar la fuerza aplicada a cada uno de los segmentos, se utilizaron diferentes funciones (todas ellas peri\'odicas). \\
-A fin de simplificar el modelo, el humanoide tiene el mismo tipo de actuador aplicado en todos los segmentos.
-
+A cada uno de los segmentos correspondientes al muslo y la pierna del b\'ipedo, se le aplica un torque -o actuador- en el eje X -perpendicular a la trayectoria-, como se ve en Fig \ref{fig:actuator}. As\'i, pueden moverse para arriba o para abajo -con respecto a la articulaci\'on a la que pertenecen-. A fin de simplificar el modelo, el humanoide tiene el mismo tipo de actuador utilizado en todos los segmentos.\\
+Que el torque se aplique en una sola dimensi\'on, contribuye a que la caminata producida sea plana -en 2D, y no en 3D, como deber\'ia ser en una caminata real-.\\ 
+Para indicar el m\'odulo de dicho torque, se dise\~naron diferentes funciones (todas ellas peri\'odicas), mencionadas en las siguientes subsecciones. \\
+\begin{figure}[H]%
+  \centering
+  \frame{\includegraphics[width=0.4\linewidth]{actuators.png}}
+    \caption{Aplicaci\'on de los actuadores en los segmentos del b\'ipedo}
+    \label{fig:actuator} 
+\end{figure} 
 \subsection{Gen\'erico}
 Es el actuador m\'as sencillo (tanto matem\'atica como computacionalmente). No se consideraron las funciones trigonom\'etricas b\'asicas (es decir, solo $\sin$ o $\cos$), por los resultados obtenidos en \cite{Cuadrupedo}. La fase es la misma tanto en el seno como en el coseno, para evitar que se formen otro tipo de funciones no c\'iclicas ($f(t)=0$).
 \begin{equation}
@@ -803,18 +808,18 @@ Se\~nala qu\'e tan similares son la direcci\'on objetivo -un vector unitario, qu
 Se\~nala qu\'e tan equidistantes se encuentran los pies de la cadera, a lo largo de la caminata. Aplicando solamente los m\'odulos antes mencionados, provocaba resultados en donde una pierna quedaba m\'as distante de la pelvis que la otra, lo que provocaba que el humanoide se terminara arrastrando (y posiblemente afectando a la velocidad).\\
 Para mayor simplicidad, la simetr\'ia $S$ se calcul\'o a partir de los pies (y no de las piernas). Se tomaron en cuenta s\'olo los ejes X y Z, porque son los relacionados a la velocidad y a la direcci\'on, respectivamente.
 \begin{equation}
- S = \frac{\sum_{n=0}^{T} { \frac{1}{2} [e^{-C( lfoot_{Z} + rfoot_{Z}| ^2) } + e^{-C( lfoot_{X} + rfoot_{X}| ^2) }]  } } {N}
+ S = \frac{\sum_{n=0}^{T} { \frac{1}{2} [e^{-C( lf_{Z} + rf_{Z}| ^2) } + e^{-C( lf_{X} + rf_{X}| ^2) }]  } } {N}
 \end{equation}
-\\ donde $lfoot_{X} $ y $lfoot_{Z} $ es la distancia desde el pie izquierdo hasta la pelvis en los ejes X y Z, respectivamente; y  en donde $rfoot_{X} $ y $rfoot_{Z} $ es lo mismo, pero para el pie derecho. \\
+\\ donde $lf_{X} $ y $lf_{Z} $ es la distancia desde el pie izquierdo hasta la pelvis en los ejes X y Z, respectivamente; y  en donde $rf_{X} $ y $rf_{Z} $ es lo mismo, pero para el pie derecho. \\
 
 \subsubsection{Pies abajo}
 \label{piesabajo}
 Con los m\'odulos señalados anteriormente, se resalta que el humanoide camine con una velocidad y direcci\'on determinadas, que no se caiga y que mantenga simetr\'ia mientras ejecuta sus movimientos. Pero, todo esto dar\'ia, en el mejor de los casos, una caminata estilo ``estrella". \\
 Sin embargo, una caracter\'istica fundamental en una caminata normal es que las piernas (ergo, los pies tambi\'en) no sobrepasen la cadera. Si bien \'esta es una propiedad negativa (expresa lo que no debe tener una caminata), y se puede correr el riesgo de restringir demasiado, su ausencia da resultados peores.
 \begin{equation}
- PA = \frac{\sum_{n=0}^{T} { \frac{1}{2} ( \alpha  [e^{-C( l\_diff\_foot ^2) } + e^{-C( r\_diff\_foot ^2) }]  } } {N}
+ PA = \frac{\sum_{n=0}^{T} { \frac{1}{2} ( \alpha  [e^{-C( ldf ^2) } + e^{-C( rdf ^2) }]  } } {N}
 \end{equation}
-\\ donde  $\alpha = max(min(leftfoot,rightfoot)-hip,0),1) $ (es decir, vale 0 si la altura del pie izquierdo o derecho supera a la de la cadera, y 1 en otro caso); y $l\_diff\_foot $ y $r\_diff\_foot $ es la diferencia entre la posici\'on inicial de los pies y la altura en el momento $t_{n}$ de los pies izquierdo y derecho, respectivamente. \\
+\\ donde  $\alpha = max(min(lf,rf)-hip,0),1) $ (es decir, vale 0 si la altura del pie izquierdo o derecho supera a la de la cadera, y 1 en otro caso); y $ldf $ y $rdf $ es la diferencia entre la posici\'on inicial de los pies y la altura en el momento $t_{n}$ de los pies izquierdo y derecho, respectivamente. \\
 %\end{adjustwidth}
 
 
