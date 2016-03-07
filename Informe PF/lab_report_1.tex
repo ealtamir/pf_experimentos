@@ -381,7 +381,10 @@ Se desea comprobar que la colisi\'on entre el cuerpo y el suelo respete que la v
   e = \frac{v_f}{v_i} 
 \end{equation}
 \\
-Para efectuar la colisi\'on con el suelo, se emple\'o una esfera s\'olida, cuya masa y radio son $m_{sphere} = 1\ kg$ y $r_{sphere}=1\ m$, respectivamente. En el ambiente utilizado no hay gravedad ($g = 0 \frac{m}{s}$), lo que posibilita utilizar la ecuaci\'on \eqref{eq:restitution_coef}. El intervalo de tiempo f\'isico (o \textit{timestep}) utilizado es $\Delta t=0.001 s$). El \textit{timestep} de animaci\'on (es decir, cada cu\'anto tiempo se guardan en un archivo los datos logrados) es $\Delta t' = 0.1\ s=100\Delta t$. El coeficiente de fricci\'on es $\mu = 0.75$.\\
+Para efectuar la colisi\'on con el suelo, se emple\'o una esfera s\'olida, cuya masa y radio son $m_{sphere} = 1\ kg$ y $r_{sphere}=1\ m$,
+respectivamente. En el ambiente utilizado no hay gravedad ($g = 0 \frac{m}{s}$), lo que posibilita utilizar la ecuaci\'on \eqref{eq:restitution_coef}.
+El intervalo de tiempo f\'isico (o \textit{timestep}) utilizado es $\Delta t=0.001 s$). El \textit{timestep} de animaci\'on (es decir,
+cada cu\'anto tiempo se guardan en un archivo los datos logrados) es $\Delta t' = 0.1$ y el tiempo de simulaci\'on es de $s=100\Delta t$. El coeficiente de fricci\'on es $\mu = 0.75$.\\
 El experimento tiene como par\'ametros de entrada: $v_{i}$ (velocidad inicial) y $e_{sim}$ (coeficiente de restituci\'on esperado). Por otro lado, se obtiene $v_{f}$ (velocidad de la esfera al finalizar la simulaci\'on); y se calculan $e_{medida}$ (coeficiente de restituci\'on obtenido a partir de \eqref{eq:restitution_coef}) y $\epsilon_{rel}$ (error relativo entre los coeficientes $e_{sim}$ y $e_{medida}$).  \\
 Acto seguido, se muestran los experimentos realizados. En ellos, $v_{i}= \{$ -0.5, -3.5 y -4$\} \frac{m}{s}$ y $e_{sim}= \{ $0.25, 0.5 y 0.8$\} $.\\
 
@@ -589,7 +592,7 @@ La raz\'on por la que ocurre este hecho se debe a que \textit{Bullet} utiliza un
 %\begin{adjustwidth}{1.3cm}{0cm}
 \begin{itemize}[leftmargin=5.5mm]
 \item Documentaci\'on poco clara y desordenada.
-\item Emplea una f\'isica no determinista.
+\item Debido a que la f\'isica se aproxima usando m\'etodos num\'ericos que contienen error, las simulaciones son no determin\'isticas.
 \item Utilizar una librer\'ia gr\'afica (como \textit{OpenGL}) acoplada a una simulaci\'on  de \textit{Bullet} puede producir resultados distintos que si se utiliza un programa de visualizaci\'on externo (como OVITO).
 \\
 \end{itemize}
@@ -759,7 +762,7 @@ Es por eso que el individuo, en este caso, est\'a compuesto por un array de n\'u
 \subsection{Fitness}
 
 %\begin{adjustwidth}{1.25cm}{0cm}
-El papel de la funci\'on de fitness $F$ en un algoritmo gen\'etico es evaluar qu\'e tan bueno es un individuo. En este caso, est\'a definida como un producto de cinco m\'odulos o propiedades: altura, velocidad, direcci\'on, simetr\'ia y pies abajo:
+El papel de la funci\'on de fitness $F$ en un algoritmo gen\'etico es evaluar qu\'e tan bueno es un individuo. En este caso, est\'a definida como un producto de cinco m\'odulos o propiedades: altura ($H$), velocidad ($V$), direcci\'on ($D$), simetr\'ia ($S$) y pies abajo ($PA$):
 \begin{equation}
   F = H * V *D * S *  PA
 \end{equation}
