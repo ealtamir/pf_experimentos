@@ -55,6 +55,7 @@
 \usepackage{amsmath} % Required for some math elements 
 \usepackage{mathtools}
 
+\usepackage{multirow}
 
 \DeclarePairedDelimiter{\ceil}{\lceil}{\rceil} %this is for ceil and floor symbols
 \DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor} %this is for ceil and floor symbols
@@ -183,9 +184,9 @@ Una caracter\'istica muy importante de este trabajo es que, el humanoide no es f
 \subsection{Motor F\'isico}
 
 %\begin{adjustwidth}{1.2cm}{0cm}
-Se le llama motor f\'isico o \textit{physics engine} a un  ``software capaz de realizar simulaciones de ciertos sistemas f\'isicos, como la din\'amica del cuerpo r\'igido, el movimiento de un fluido y la elasticidad" \cite{wikiPhysicsEngine}. \\
-Actualmente, existen muchos motores f\'isicos: ya sea de c\'odigo propietario (PhysX, Havok), como open-source (\textit{Bullet Physics}, \textit{Box2D}, Newton, OGRE). Considerando an\'alisis relacionados \cite{Comparissons}\cite{Comparissons2}, y la necesidad de que el espacio simulado fuese en 3D, se decidi\'o que \textit{Bullet Physics}\cite{LinkBullet} es el m\'as id\'oneo. Est\'a implementado en C++ y ha sido utilizado en varios juegos (\textit{Grand Theft Auto IV} y V, etc); en los efectos especiales de pel\'iculas (Hancock, Bolt, etc.); y proyectos cient\'ificos, como la herramienta open-source \textit{Tensegrity Robotics Toolkit} de la NASA\footnote{http://bulletphysics.org/Bullet/phpBB3/viewtopic.php?f=17\&t=9978}; entre otros.\\
-Si bien (como se ver\'a m\'as adelante) Bullet tiene problemas asociados con el coeficiente de restituci\'on, posee una muy buena performance en la detecci\'on de colisiones, la din\'amica y la resoluci\'on de constraints. Esto se debe, en parte, a diferentes algoritmos iterativos de orden lineal (donde el m\'as importante es \textit{Sequential Impulse}), de caching y tambi\'en a la utilizaci\'on de un modelo de fricci\'on de Coulomb aproximado \cite{Catto}. Adem\'as, el motor f\'isico brinda la posibilidad de regular la precisi\'on requerida en estos c\'alculos (sin olvidar que, con iguales recursos, a mayor precisi\'on, mayor capacidad de c\'omputo requerida y, ergo, mayor tiempo). Dado que la construcci\'on del humanoide implica definir caracter\'isticas y restricciones de movimiento de cada una de sus partes, lo antes mencionado fue crucial para la elecci\'on de \textit{Bullet Physics} en este proyecto.
+Se le llama motor f\'isico o \textit{physics engine} a un  ``\textit{software} capaz de realizar simulaciones de ciertos sistemas f\'isicos, como la din\'amica del cuerpo r\'igido, el movimiento de un fluido y la elasticidad" \cite{wikiPhysicsEngine}. \\
+Actualmente, existen muchos motores f\'isicos: ya sea de c\'odigo propietario (PhysX, Havok), como \textit{open-source} (\textit{Bullet Physics}, \textit{Box2D}, Newton, OGRE). Considerando an\'alisis relacionados \cite{Comparissons}\cite{Comparissons2}, y la necesidad de que el espacio simulado fuese en 3D, se decidi\'o que \textit{Bullet Physics}\cite{LinkBullet} es el m\'as id\'oneo. Est\'a implementado en C++ y ha sido utilizado en varios juegos (\textit{Grand Theft Auto IV} y V, etc); en los efectos especiales de pel\'iculas (Hancock, Bolt, etc.); y proyectos cient\'ificos, como la herramienta \textit{open-source} \textit{Tensegrity Robotics Toolkit} de la NASA\footnote{http://bulletphysics.org/Bullet/phpBB3/viewtopic.php?f=17\&t=9978}; entre otros.\\
+Si bien (como se ver\'a m\'as adelante) \textit{Bullet} tiene problemas asociados con el coeficiente de restituci\'on, posee una muy buena \textit{performance} en la detecci\'on de colisiones, la din\'amica y la resoluci\'on de \textit{constraints}. Esto se debe, en parte, a diferentes algoritmos iterativos de orden lineal (donde el m\'as importante es \textit{Sequential Impulse}), de \textit{caching} y tambi\'en a la utilizaci\'on de un modelo de fricci\'on de Coulomb aproximado \cite{Catto}. Adem\'as, el motor f\'isico brinda la posibilidad de regular la precisi\'on requerida en estos c\'alculos (sin olvidar que, con iguales recursos, a mayor precisi\'on, mayor capacidad de c\'omputo requerida y, ergo, mayor tiempo). Dado que la construcci\'on del humanoide implica definir caracter\'isticas y restricciones de movimiento de cada una de sus partes, lo antes mencionado fue crucial para la elecci\'on de \textit{Bullet Physics} en este proyecto.
 
 %\end{adjustwidth}
 \subsubsection{Modelo de fricci\'on utilizado y su verificaci\'on}
@@ -194,7 +195,8 @@ Si bien (como se ver\'a m\'as adelante) Bullet tiene problemas asociados con el 
 Hay reglas f\'isicas relacionadas con el entorno y que son muy importantes para la caminata: el modelo de fricci\'on, con sus respectivos coeficientes de fricci\'on y restituci\'on.\\  
 En base a los modelos f\'isico-matem\'aticos utilizados  en los dos fen\'omenos en cuesti\'on (y que se explicar\'an a continuaci\'on), y pensando en posibles futuras simulaciones de varios humanoides chocando e interactuando entre s\'i; se llevaron a cabo dos experimentos para verificar que estuvieran en concordancia con los datos arrojados por \textit{Bullet}.
 \begin{itemize}
-\item El primero simula un cubo con una velocidad constante en el eje horizontal, que gradualmente se detiene por acci\'on de la fricci\'on, hasta llegar al reposo. Se busc\'o determinar si el modelo utilizado por \textit{Bullet} para simular las fuerzas resultantes sobre un cuerpo por acci\'on de la fricci\'on.
+\item El primero simula un cubo, de $m_{cube}=1kg$ y $l_{box}=1m$, que tiene una velocidad inicial constante ($v_{i}$) en el eje horizontal, que gradualmente se detiene por acci\'on de la fricci\'on, hasta llegar al reposo -Fig. \ref{fig:translatingCube}-. Se busc\'o determinar el modelo utilizado por \textit{Bullet} para simular las fuerzas resultantes sobre un cuerpo por acci\'on de la fricci\'on.
+
 \begin{figure}[H]%
   \centering
   \frame{\includegraphics[width=0.4\linewidth]{translatingCube.png}}
@@ -208,7 +210,7 @@ Para este experimento se utiliz\'o el modelo matem\'atico que representa la posi
  \begin{equation}
   x(t) = x_i +v_i t+\frac{1}{2} at^2
 \end{equation}
-\\ En este caso, el cuerpo empieza su movimiento en el origen, por lo tanto la posici\'on inicial ($x_i$) es cero. Debido a la fricci\'on entre el cuerpo y el suelo, se genera una fuerza de rozamiento $F_{\mu_{d}}$ -ver ec. (2)- en la misma direcci\'on que la velocidad del s\'olido y en sentido contrario. \\
+\\ En este caso, el cuerpo empieza su movimiento en el origen, por lo tanto la posici\'on inicial ($x_i$) es cero. Debido a la fricci\'on entre el cuerpo y el suelo, se genera una fuerza de rozamiento $F_{\mu_{d}}$ -ec. (2)- en la misma direcci\'on que la velocidad del s\'olido y en sentido contrario. \\
 \begin{equation}
   -F_{\mu_d} = \mu_d F_N 
 \end{equation}
@@ -228,7 +230,7 @@ Considerando las ecuaciones (1) y (3), se puede obtener el modelo matem\'atico q
   \centering
   \subfloat[][]{
   	\centering
-	\includegraphics[width=0.6\linewidth]{image002.png} 
+	\includegraphics[width=0.6\linewidth]{image001.png} 
 	\label{fig1:a} 
   }%
   \\
@@ -240,7 +242,7 @@ Considerando las ecuaciones (1) y (3), se puede obtener el modelo matem\'atico q
   \\
   \subfloat[][]{
   	\centering
-	\includegraphics[width=0.6\linewidth]{image001.png} 
+	\includegraphics[width=0.6\linewidth]{image002.png} 
 	\label{fig1:c} 
   }
   \caption{$v_i = 10 \frac{m}{s}$: (\protect\subref*{fig1:a}) $\mu_d=$0.25, (\protect\subref*{fig1:b}) $\mu_d=$0.50, y (\protect\subref*{fig1:c}) $\mu_d=$0.75}%
@@ -280,13 +282,13 @@ Considerando las ecuaciones (1) y (3), se puede obtener el modelo matem\'atico q
   \\
   \subfloat[][]{
   	\centering
-	\includegraphics[width=0.6\linewidth]{image005.png} 
+	\includegraphics[width=0.6\linewidth]{image006.png} 
 	\label{fig3:b} 
   }
   \\
   \subfloat[][]{
   	\centering
-	\includegraphics[width=0.6\linewidth]{image006.png} 
+	\includegraphics[width=0.6\linewidth]{image005.png} 
 	\label{fig3:c} 
   }
   \caption{$v_i = 1 \frac{m}{s}$: (\protect\subref*{fig3:a}) $\mu_d=$0.25, (\protect\subref*{fig3:b}) $\mu_d=$0.50, y (\protect\subref*{fig3:c}) $\mu_d=$0.75}%
@@ -306,9 +308,9 @@ Se desea comprobar que la colisi\'on entre el cuerpo y el suelo respete que la v
 \\
 Para efectuar la colisi\'on con el suelo, se emple\'o una esfera s\'olida ubicada a 4 metros del suelo, cuya masa y radio son $m_{sphere} = 1\ kg$ y $r_{sphere}=1\ m$,
 respectivamente -ver Fig. \ref{fig:fallingBall}-. \\
-En el ambiente utilizado no hay gravedad ($g = 0 \frac{m}{s}$), lo que posibilita utilizar la ecuaci\'on \eqref{eq:restitution_coef}.
-El intervalo de tiempo f\'isico (o \textit{timestep}) utilizado es $\Delta t=0.001 s$). El \textit{timestep} de animaci\'on (es decir,
-cada cu\'anto tiempo se guardan en un archivo los datos logrados) es $\Delta t' = 0.1$ y el tiempo de simulaci\'on es de $s=100\Delta t$. El coeficiente de fricci\'on es $\mu = 0.75$.\\
+En el ambiente utilizado no hay gravedad ($g = 0 \frac{m}{s}$), lo que posibilita utilizar la ec. \eqref{eq:restitution_coef}.
+El intervalo de tiempo f\'isico (o \textit{timestep}) utilizado es $\Delta t=$0.001 $s$. El \textit{timestep} de animaci\'on (es decir,
+cada cu\'anto tiempo se guardan en un archivo los datos logrados) es $\Delta t' = $0.1 y el tiempo de simulaci\'on es de $s=100\Delta t$. El coeficiente de fricci\'on es $\mu = $0.75.\\
 
 \begin{figure}[H]%
   \centering
@@ -318,7 +320,7 @@ cada cu\'anto tiempo se guardan en un archivo los datos logrados) es $\Delta t' 
 \end{figure} 
 
 El experimento tiene como par\'ametros de entrada: $v_{i}$ (velocidad inicial) y $e_{sim}$ (coeficiente de restituci\'on esperado). Por otro lado, se obtiene $v_{f}$ (velocidad de la esfera al finalizar la simulaci\'on); y se calculan $e_{medida}$ (coeficiente de restituci\'on obtenido a partir de \eqref{eq:restitution_coef}) y $\epsilon_{rel}$ (error relativo entre los coeficientes $e_{sim}$ y $e_{medida}$).  \\
-Acto seguido, se muestran los experimentos realizados. En ellos, $v_{i}= \{$ -0.5, -3.5 y -4$\} \frac{m}{s}$ y $e_{sim}= \{ $0.25, 0.5 y 0.8$\} $.\\
+Acto seguido, se muestran los experimentos realizados. En ellos, $v_{i}= \{$ -0.5, -3.5, -4, -5 y -10$\} \frac{m}{s}$ y $e_{sim}= \{ $0.2, 0.5 y 0.8$\} $.\\
 
 \begin{table}[H]%
   \centering
@@ -397,7 +399,8 @@ Acto seguido, se muestran los experimentos realizados. En ellos, $v_{i}= \{$ -0.
 	  		\hline
 	\end{tabular}
   }
-  \caption{Coeficientes de restituci\'on obtenidos de simular el sistema descripto en Fig. \ref{fig:fallingBall}:  \\ (\protect\subref*{table1a}) $v_i = -0.5 \frac{m}{s}$, (\protect\subref*{table1b}) $v_i = -3.5 \frac{m}{s}$, (\protect\subref*{table1c}) $v_i = -4 \frac{m}{s}$, (\protect\subref*{table1d}) $v_i = -5 \frac{m}{s}$, y (\protect\subref*{table1e}) $v_i = -10 \frac{m}{s}$ }%
+  \captionsetup{justification=centering}
+  \caption{Coeficientes de restituci\'on obtenidos de simular el sistema descripto en Fig. \ref{fig:fallingBall}:  \\ (\protect\subref*{table1a}) $v_i = $-0.5 $\frac{m}{s}$, (\protect\subref*{table1b}) $v_i =$ -3.5 $\frac{m}{s}$, (\protect\subref*{table1c}) $v_i = -4 \frac{m}{s}$, (\protect\subref*{table1d}) $v_i = -5 \frac{m}{s}$, y (\protect\subref*{table1e}) $v_i = -10 \frac{m}{s}$ }%
   \label{table1}%
 \end{table}
 
@@ -412,7 +415,7 @@ La raz\'on por la que ocurre este hecho se debe a que \textit{Bullet} utiliza un
 \subsubsection{Ventajas}
 %\begin{adjustwidth}{1.3cm}{0cm}
 \begin{itemize}[leftmargin=5.5mm]
-\item C\'odigo abierto: mayor conocimiento sobre las f\'ormulas y m\'etodos implementados en el motor, a diferencia de lo acaecido en trabajos previos \cite{Cuadrupedo}, en donde al usar frameworks f\'isicos de c\'odigo cerrado, no se ten\'ia ni control ni conocimiento pleno de su funcionamiento.
+\item C\'odigo abierto: mayor conocimiento sobre las f\'ormulas y m\'etodos implementados en el motor, a diferencia de lo acaecido en trabajos previos \cite{Cuadrupedo}, en donde al usar \textit{frameworks} f\'isicos de c\'odigo cerrado, no se ten\'ia ni control ni conocimiento pleno de su funcionamiento.
 \item Soporte de la comunidad cientf\'ifica.
 \item Licencia libre.
 \\
@@ -436,7 +439,7 @@ La raz\'on por la que ocurre este hecho se debe a que \textit{Bullet} utiliza un
 
 %\begin{adjustwidth}{1.2cm}{0cm}
 Se utiliz\'o la conocida librer\'ia de Algoritmos Gen\'eticos para C++ GaLib, desarrollada por Matthew Wall del MIT \cite{LinkGaLib}. \\
-Ofrece funcionalidades como: programaci\'on paralela, diversos m\'etodos de selecci\'on (elite, ruleta), estrategias de reemplazo (de padres, aleatorio, del peor), entre otras.\\
+Ofrece funcionalidades como: programaci\'on paralela, diversos m\'etodos de selecci\'on (\textit{elite}, \textit{roulette}), estrategias de reemplazo (de padres, aleatorio, del peor), entre otras.\\
 
 %\end{adjustwidth}
 
@@ -444,7 +447,7 @@ Ofrece funcionalidades como: programaci\'on paralela, diversos m\'etodos de sele
 
 %\begin{adjustwidth}{1.2cm}{0cm}
 Al estar \textit{Bullet} implementado en C++, el c\'odigo fuente tambi\'en est\'a desarrollado en ese lenguaje. En \textit{Bullet}, se define un \textit{World} -o mundo f\'isico- en donde se puede insertar, entre otras cosas, cuerpos r\'igidos. En este caso en particular, el mundo consta de un plano  -el suelo- y  el humanoide encima -compuesto por cuerpos r\'igidos y otros elementos f\'isicos-. \\
-El software creado incluye: creaci\'on del humanoide, siendo \'este capaz de desplazarse por medio de actuadores (que se ver\'an en la Secci\'on \ref{actuadores}); el desarrollo del algoritmo gen\'etico (la definici\'on de los individuos, la funci\'on de fitness, m\'etodos de selecci\'on, etc.); visualizaci\'on gr\'afica del mejor humanoide logrado por el algoritmo gen\'etico; y la posibilidad de realizar gr\'aficos referidos a la evoluci\'on del algoritmo gen\'etico (fitness por cada generaci\'on, etc.). \\
+El \textit{software} creado incluye: creaci\'on del humanoide, siendo \'este capaz de desplazarse por medio de actuadores (que se ver\'an en la Secci\'on \ref{actuadores}); el desarrollo del algoritmo gen\'etico (la definici\'on de los individuos, la funci\'on de \textit{fitness}, m\'etodos de selecci\'on, etc.); visualizaci\'on gr\'afica del mejor humanoide logrado por el algoritmo gen\'etico; y la posibilidad de realizar gr\'aficos referidos a la evoluci\'on del algoritmo gen\'etico (\textit{fitness} por cada generaci\'on, etc.). \\
 Se acompa\~nan a esta presentaci\'on: el c\'odigo fuente y el manual de instalaci\'on y uso.
 
 %\end{adjustwidth}
@@ -521,9 +524,10 @@ Por otra parte, a la pelvis se le restringe todo tipo de rotaci\'on.
 \section{Actuadores}
 \label{actuadores}
 %\begin{adjustwidth}{1.1cm}{0cm}
-A cada uno de los segmentos correspondientes al muslo y la pierna del b\'ipedo, se le aplica un torque -o actuador- en el eje X -perpendicular a la trayectoria-, como se ve en Fig \ref{fig:actuator}. As\'i, pueden moverse para arriba o para abajo -con respecto a la articulaci\'on a la que pertenecen-. A fin de simplificar el modelo, el humanoide tiene el mismo tipo de actuador utilizado en todos los segmentos.\\
+A cada uno de los segmentos correspondientes al muslo y la pierna del b\'ipedo, se le aplica un torque -o actuador- en el eje X -perpendicular a la trayectoria-, como se ve en Fig \ref{fig:actuator}. As\'i, pueden moverse para arriba o para abajo -con respecto a la articulaci\'on a la que pertenecen-. \\
+A fin de simplificar el modelo, el humanoide tiene el mismo tipo de actuador utilizado en todos los segmentos.\\
 Que el torque se aplique en una sola dimensi\'on, contribuye a que la caminata producida sea plana -en 2D, y no en 3D, como deber\'ia ser en una caminata real-.\\ 
-Para indicar el m\'odulo de dicho torque, se dise\~naron diferentes funciones (todas ellas peri\'odicas), mencionadas en las siguientes subsecciones. \\
+Para indicar el m\'odulo de dicho torque, se dise\~naron diferentes funciones (todas ellas peri\'odicas), mencionadas en las subsecciones que siguen. \\
 \begin{figure}[H]%
   \centering
   \frame{\includegraphics[width=0.4\linewidth]{actuators.png}}
@@ -532,7 +536,7 @@ Para indicar el m\'odulo de dicho torque, se dise\~naron diferentes funciones (t
 \end{figure} 
 
 \subsection{Gen\'erico}
-Es el actuador m\'as sencillo (tanto matem\'atica como computacionalmente). No se consideraron las funciones trigonom\'etricas b\'asicas (es decir, solo $\sin$ o $\cos$), por los resultados obtenidos en \cite{Cuadrupedo}. La fase es la misma tanto en el seno como en el coseno, para evitar que se formen otro tipo de funciones no c\'iclicas ($f(t)=0$).
+Es el actuador m\'as sencillo (tanto matem\'atica como computacionalmente). No se consideraron las funciones trigonom\'etricas b\'asicas (es decir, solo $\sin$ o $\cos$), por los resultados obtenidos en \cite{Cuadrupedo}. La fase es la misma tanto en el seno como en el coseno, para evitar que se formen otro tipo de funciones no c\'iclicas.
 \begin{equation}
   f(t) =  A_1 \sin(\omega_1t+\phi)+A_2 \cos(\omega_2t+\phi)+C
 \end{equation}
@@ -585,7 +589,7 @@ f(t) =  \left\{
 
 \section{Condiciones iniciales y de contorno}
 Las funciones peri\'odicas mencionadas en los actuadores no son suficientes para lograr la caminata. 
-A los actuadores mencionados previamente, se le adosaron las funciones vistas a continuaci\'on. 
+A los actuadores mencionados previamente, se le adosaron las siguientes funciones: 
 \subsection{Funci\'on Partida}
 El andar del humanoide es c\'iclico. Sin embargo, por la posici\'on inicial del individuo, se requiere para el tiempo del primer paso, una funci\'on distinta a la del resto de la caminata. El tipo de funci\'on puede ser cualquiera de los actuadores vistos anteriormente (pero no necesariamente con los mismos valores de amplitud, frecuencia y fase asignados a las piernas). Empero, se utiliz\'o la funci\'on vista en el actuador gen\'erico. \\
 Por otra parte, para simplificar el modelo, se decidi\'o  que el tiempo considerado para el primer paso sea fijo, y de 0.7 segundos. Dicho valor fue extra\'ido de forma experimental.
@@ -614,17 +618,79 @@ siendo $f(t)$ la funci\'on de movimiento (o actuador) en el momento $t$.
 \subsection{Individuo}
 
 %\begin{adjustwidth}{1.25cm}{0cm}
-Es por eso que el individuo, en este caso, est\'a compuesto por un array de n\'umeros, que identifican tanto los valores asociados a las fuerzas de los actuadores. 
-%\end{adjustwidth}
+
+El individuo, en este caso, est\'a compuesto por un array de n\'umeros, que identifican tanto los valores asociados a las fuerzas de los actuadores. 
+
+\subsubsection{Par\'ametros}
+
+\subsubsection{Valores}
+
+Cada uno de los segmentos tiene propiedades f\'isicas distintas -masa, largo, etc.-, raz\'on por la cual no necesariamente sus genes deban tener los mismos rangos de valores.
+\begin{table}[H]%
+  \centering
+  	\begin{tabular}{ | c | c | c || c | c | }
+	  		\hline
+	  		\textbf{Actuador} & \textbf{Segmento} & \textbf{Tipo de gen} & \textbf{M\'inimo} & \textbf{M\'aximo} \\
+			\hline 
+			\hline
+			\multirow{5}{*}{Gen\'erico} & Muslo & Amplitud & -30 & 30\\ \cline{2-5}
+								&Pierna & Amplitud & -60 & 60\\ \cline{2-5}
+	  							& Muslo y Pierna & Frecuencia & 0.01 & 10 \\ \cline{2-5}
+	  							&Muslo y Pierna & Fase & $-\pi$ & $\pi$ \\ \cline{2-5}
+								& Muslo y Pierna & T\'ermino independiente & -10 & 10 \\ 
+	  		\hline 
+			\hline
+			\multirow{5}{*}{Fourier} & Muslo & Amplitud & -60 & 60\\ \cline{2-5}
+	  							&Pierna & Amplitud & -30 & 30 \\ \cline{2-5}
+								& Muslo y Pierna & Frecuencia & 0.01 & 10 \\ \cline{2-5}
+	  							&Muslo y Pierna & Fase & $-\pi$ & $\pi$ \\ \cline{2-5}
+								& Muslo y Pierna & T\'ermino independiente & -10 & 10 \\
+	  		\hline
+			\hline
+			\multirow{4}{*}{Extra Fourier} & Muslo y Pierna & Amplitud & -60 & 60\\ \cline{2-5}
+	  							& Muslo y Pierna & Frecuencia & 0.1 & 2 \\ \cline{2-5}
+	  							&Muslo y Pierna & Fase & $-\pi$ & $\pi$ \\ \cline{2-5}
+								& Muslo y Pierna & T\'ermino independiente & -10 & 10 \\
+	  		\hline
+			\hline
+			\multirow{5}{*}{Doble Coseno} & Muslo y Pierna & Amplitud & -100 & 100\\ \cline{2-5}
+	  							& Muslo y Pierna & Frecuencia & 0.01 & 10 \\ \cline{2-5}
+	  							&Muslo y Pierna & Fase & $-\pi$ & $\pi$ \\ \cline{2-5}
+								& Muslo & T\'ermino independiente & -50 & 50 \\ \cline{2-5}
+			 					&Pierna & T\'ermino independiente & -100 & 100\\
+			\hline
+	\end{tabular}
+  \captionsetup{justification=centering}
+  \caption{Rango de valores que puede tomar cada gen, seg\'un el tipo de actuador }%
+  \label{table3}%
+\end{table}
+
+\subsubsection{Implementaciones de individuos}
+\begin{table}[H]%
+  \centering
+  	\begin{tabular}{ | c || c | c | c | c | }
+	  		\hline
+	  		\textbf{Tipo de Individuo} & \textbf{Actuador} & \textbf{Funci\'on Partida} & \textbf{Fase sincronizada} & \textbf{Riel} \\
+			\hline 
+			\hline
+			1 & Gen\'erico & S\'i & S\'i & S\'i\\ 
+	  		\hline 
+	\end{tabular}
+  \captionsetup{justification=centering}
+  \caption{Tipos de humanoide }%
+  \label{table4}%
+\end{table}
+
+\subsubsection{Constituci\'on del cromosoma}
 
 \subsection{Fitness}
 
 %\begin{adjustwidth}{1.25cm}{0cm}
-El papel de la funci\'on de fitness $F$ en un algoritmo gen\'etico es evaluar qu\'e tan bueno es un individuo. En este caso, est\'a definida como un producto de cinco m\'odulos o propiedades: altura ($H$), velocidad ($V$), direcci\'on ($D$), simetr\'ia ($S$) y pies abajo ($PA$):
+El papel de la funci\'on de \textit{fitness} $F$ en un algoritmo gen\'etico es evaluar qu\'e tan bueno es un individuo. En este caso, est\'a definida como un producto de cinco m\'odulos o propiedades: altura ($H$), velocidad ($V$), direcci\'on ($D$), simetr\'ia ($S$) y pies abajo ($PA$):
 \begin{equation}
   F = H * V *D * S *  PA
 \end{equation}
-Los cuatro tienen la misma importancia y, por eso, como se ver\'a a continuaci\'on, est\'an definidos de forma similar (con una funci\'on exponencial y pueden valer entre 0 y 1). Con todo esto, dado que el fitness est\'a pensado como un producto, basta con que uno de los m\'odulos sea muy chico para  ``anular'' al individuo -es decir, otorgarle un valor que tiende a cero-. Sin embargo, los diferentes m\'odulos no son completamente independientes entre s\'i: por ejemplo, si la altura es demasiado baja, posiblemente la velocidad y la direcci\'on no sean adecuadas. \\
+Los cuatro tienen la misma importancia y, por eso, como se ver\'a a continuaci\'on, est\'an definidos de forma similar (con una funci\'on exponencial y pueden valer entre 0 y 1). Con todo esto, dado que el \textit{fitness} est\'a pensado como un producto, basta con que uno de los m\'odulos sea muy chico para  ``anular'' al individuo -es decir, otorgarle un valor que tiende a cero-. Sin embargo, los diferentes m\'odulos no son completamente independientes entre s\'i: por ejemplo, si la altura es demasiado baja, posiblemente la velocidad y la direcci\'on no sean adecuadas. \\
 %\end{adjustwidth}
 
 \subsubsection{Altura}
@@ -747,19 +813,19 @@ xxxxxxxx
 \begin{thebibliography}{1}
 \bibitem{wikiPhysicsEngine} Wikipedia: $https://es.wikipedia.org/wiki/Physics\_engine$
 \bibitem{Comparissons}
-Andreas Gerndt y otros, \emph{An Evaluation of Open Source Physics Engines for Use in Virtual Reality Assembly Simulations, Fecha de publicaci\'on: 2012}
+Andreas Gerndt y otros, \emph{An Evaluation of Open Source Physics Engines for Use in Virtual Reality Assembly Simulations. Fecha de publicaci\'on: 2012}
 \bibitem{Comparissons2}
 Tom Erez y otros, \emph{Simulation Tools for Model-Based Robotics: Comparison of \textit{Bullet}, Havok, MuJoCo, ODE and PhysX}
 \bibitem{LinkBullet} Sitio web de Bullet Physics: $http://www.bulletphysics.org/$
 \bibitem{Catto}
-Erin Catto, \emph{Iterative Dynamic with Temporal Coherence, Fecha de publicaci\'on: 2005}
+Erin Catto, \emph{Iterative Dynamic with Temporal Coherence. Fecha de publicaci\'on: 2005}
 \bibitem{Cuadrupedo}
-Kevin Kenny, M\'aximo Videla y Axel Wassington, \emph{Proyecto Final para la obtenci\'on del t\'itulo: Ingeniero en Inform\'atica, 2014 - ITBA}
+Kevin Kenny, M\'aximo Videla y Axel Wassington, \emph{Proyecto Final para la obtenci\'on del t\'itulo: Ingeniero en Inform\'atica - ITBA, 2014}
 \bibitem{LinkGaLib} Sitio web de GaLib: $http://lancet.mit.edu/ga/$
 \bibitem{flexibleMuscle}
 Thomas Geijtenbeek, Michiel van de Panne y A. Frank van der Stappen, \emph{Flexible Muscle-Based Locomotion for Bipedal Creatures, 2013 }
 \bibitem{Wojtyra}
-Marek Wojtyra, \emph{Multibody Simulation Model of Human Walking, 2003 - Warsaw University of Technology}
+Marek Wojtyra, \emph{Multibody Simulation Model of Human Walking - Warsaw University of Technology, 2003}
 \bibitem{biomechanics} $http://www.exrx.net/Kinesiology/Segments.html$
 \end{thebibliography}
 
