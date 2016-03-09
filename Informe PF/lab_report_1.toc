@@ -21,6 +21,7 @@
 \contentsline {subsection}{\numberline {5.2}Fase sincronizada}{14}{subsection.5.2}
 \contentsline {section}{\numberline {6}Algoritmo Gen\'etico}{14}{section.6}
 \contentsline {subsection}{\numberline {6.1}Individuo}{14}{subsection.6.1}
+\contentsline {subsubsection}{\numberline {6.1.1}Valores}{14}{subsubsection.6.1.1}
 \contentsline {subsection}{\numberline {6.2}Fitness}{14}{subsection.6.2}
 \contentsline {subsubsection}{\numberline {6.2.1}Altura}{14}{subsubsection.6.2.1}
 \contentsline {subsubsection}{\numberline {6.2.2}Velocidad}{15}{subsubsection.6.2.2}

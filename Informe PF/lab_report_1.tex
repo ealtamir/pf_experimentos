@@ -398,6 +398,7 @@ Acto seguido, se muestran los experimentos realizados. En ellos, $v_{i}= \{$ -0.
 	  		\hline
 	\end{tabular}
   }
+  \captionsetup{justification=centering}
   \caption{Coeficientes de restituci\'on obtenidos de simular el sistema descripto en Fig. \ref{fig:fallingBall}:  \\ (\protect\subref*{table1a}) $v_i = $-0.5 $\frac{m}{s}$, (\protect\subref*{table1b}) $v_i =$ -3.5 $\frac{m}{s}$, (\protect\subref*{table1c}) $v_i = -4 \frac{m}{s}$, (\protect\subref*{table1d}) $v_i = -5 \frac{m}{s}$, y (\protect\subref*{table1e}) $v_i = -10 \frac{m}{s}$ }%
   \label{table1}%
 \end{table}
@@ -534,7 +535,7 @@ Para indicar el m\'odulo de dicho torque, se dise\~naron diferentes funciones (t
 \end{figure} 
 
 \subsection{Gen\'erico}
-Es el actuador m\'as sencillo (tanto matem\'atica como computacionalmente). No se consideraron las funciones trigonom\'etricas b\'asicas (es decir, solo $\sin$ o $\cos$), por los resultados obtenidos en \cite{Cuadrupedo}. La fase es la misma tanto en el seno como en el coseno, para evitar que se formen otro tipo de funciones no c\'iclicas ($f(t)=0$).
+Es el actuador m\'as sencillo (tanto matem\'atica como computacionalmente). No se consideraron las funciones trigonom\'etricas b\'asicas (es decir, solo $\sin$ o $\cos$), por los resultados obtenidos en \cite{Cuadrupedo}. La fase es la misma tanto en el seno como en el coseno, para evitar que se formen otro tipo de funciones no c\'iclicas.
 \begin{equation}
   f(t) =  A_1 \sin(\omega_1t+\phi)+A_2 \cos(\omega_2t+\phi)+C
 \end{equation}
@@ -616,8 +617,10 @@ siendo $f(t)$ la funci\'on de movimiento (o actuador) en el momento $t$.
 \subsection{Individuo}
 
 %\begin{adjustwidth}{1.25cm}{0cm}
+
 Es por eso que el individuo, en este caso, est\'a compuesto por un array de n\'umeros, que identifican tanto los valores asociados a las fuerzas de los actuadores. 
-%\end{adjustwidth}
+\subsubsection{Valores}
+
 
 \subsection{Fitness}
 
