@@ -188,6 +188,12 @@ Se le llama motor f\'isico o \textit{physics engine} a un  ``\textit{software} c
 Actualmente, existen muchos motores f\'isicos: ya sea de c\'odigo propietario (PhysX, Havok), como \textit{open-source} (\textit{Bullet Physics}, \textit{Box2D}, Newton, OGRE). Considerando an\'alisis relacionados \cite{Comparissons}\cite{Comparissons2}, y la necesidad de que el espacio simulado fuese en 3D, se decidi\'o que \textit{Bullet Physics}\cite{LinkBullet} es el m\'as id\'oneo. Est\'a implementado en C++ y ha sido utilizado en varios juegos (\textit{Grand Theft Auto IV} y V, etc); en los efectos especiales de pel\'iculas (Hancock, Bolt, etc.); y proyectos cient\'ificos, como la herramienta \textit{open-source} \textit{Tensegrity Robotics Toolkit} de la NASA\footnote{http://bulletphysics.org/Bullet/phpBB3/viewtopic.php?f=17\&t=9978}; entre otros.\\
 Si bien (como se ver\'a m\'as adelante) \textit{Bullet} tiene problemas asociados con el coeficiente de restituci\'on, posee una muy buena \textit{performance} en la detecci\'on de colisiones, la din\'amica y la resoluci\'on de \textit{constraints}. Esto se debe, en parte, a diferentes algoritmos iterativos de orden lineal (donde el m\'as importante es \textit{Sequential Impulse}), de \textit{caching} y tambi\'en a la utilizaci\'on de un modelo de fricci\'on de Coulomb aproximado \cite{Catto}. Adem\'as, el motor f\'isico brinda la posibilidad de regular la precisi\'on requerida en estos c\'alculos (sin olvidar que, con iguales recursos, a mayor precisi\'on, mayor capacidad de c\'omputo requerida y, ergo, mayor tiempo). Dado que la construcci\'on del humanoide implica definir caracter\'isticas y restricciones de movimiento de cada una de sus partes, lo antes mencionado fue crucial para la elecci\'on de \textit{Bullet Physics} en este proyecto.
 
+\subsubsection{Funcionamiento}
+El motor físico se encarga de la simulación de cuerpos rígidos y la interacción entre los mismos, en particular, debe calcular el resultado de colisiones, arreglar los solapamiento
+de los cuerpos en el espacio de simulación, estimar las fuerzas producidas debido a la fricción y mantener el cumplimiento de restricciones que puedan existir entre los cuerpos 
+(por ejemplo, un vínculo para formar una articulación).
+
+
 %\end{adjustwidth}
 \subsubsection{Modelo de fricci\'on utilizado y su verificaci\'on}
 
