@@ -471,9 +471,9 @@ Se modela al cuerpo humano, con el motor \textit{Bullet Physics}, como un conjun
 
 \subsection{Composici\'on F\'isica del Humanoide}
 \textbf{No est\'a terminada a\'un} \\
-Como ya se dijo, el humanoide fue modelado en \textit{Bullet} como un conjunto de segmentos, unidos por articulaciones. Los segmentos son cuerpos rig\'idos 
+Como ya se dijo, el humanoide fue modelado en \textit{Bullet} como un conjunto de segmentos, unidos por articulaciones -ver Fig. \ref{fig:seg_and_art}-. Los segmentos son cuerpos rig\'idos.
 
-Se dividi\'o al cuerpo humano en los siguientes segmentos: cabeza, tronco, miembro superior, pelvis y miembro inferior (muslo, pierna y pie). Considerar la mitad superior del cuerpo implicaba tener -ver Fig. \ref{fig:seg_and_art}-.    \\ \\
+Se dividi\'o al cuerpo humano en: cabeza, tronco, miembro superior, pelvis y miembro inferior (muslo, pierna y pie). Considerar la mitad superior del cuerpo implicaba mayor complejidad (manejo de equilibrio, humanoide m\'as pesado y con mayor volumen, etc.). Ergo, solo se tom\'o la pelvis y el miembro inferior.    \\ \\
 A continuaci\'on se presenta la composici\'on de cada segmento (de acuerdo a la biomec\'anica \cite{biomechanics}): 
 \begin {table}[ht]
 	\begin{center}
@@ -517,8 +517,8 @@ A continuaci\'on se presenta la composici\'on de cada segmento (de acuerdo a la 
 
 \subsection{Articulaciones}
 \textbf{No est\'a terminada a\'un} \\
-Para unir los distintos segmentos entre s\'i, se utilizaron articulaciones bisagra con 1 grados de libertad: en el eje Z -en donde ocurre la caminata- y en el eje Y -el perpendicular al piso-. Adem\'as, para cada caso en particular, se definieron cotas para los \'angulos que pueden existir entre los segmentos. Esto es muy importante, no s\'olo porque se adec\'ua a datos biol\'ogicos, sino porque, de otro modo la caminata no podr\'ia lograrse: si los \'angulos son demasiado altos, la caminata se produce girando las piernas por encima de la pelvis; si por el contrario, son demasiado bajos, las piernas van a estar muy r\'igidas, originando pocos pasos y muy cortos. 
-Tanto para la  \\
+Para unir los distintos segmentos entre s\'i, se utilizaron articulaciones bisagra con 1 grado de libertad: en el eje Z -en donde ocurre la caminata- y en el eje Y -el perpendicular al piso-. Adem\'as, para cada caso en particular, se definieron cotas para los \'angulos que pueden existir entre los segmentos. Esto es muy importante, no s\'olo porque se adec\'ua a datos biol\'ogicos, sino porque, de otro modo la caminata no podr\'ia lograrse: si los \'angulos son demasiado altos, la caminata se produce girando las piernas por encima de la pelvis; si por el contrario, son demasiado bajos, las piernas van a estar muy r\'igidas, originando pocos pasos y muy cortos.\\
+
 Por otra parte, a la pelvis se le restringe todo tipo de rotaci\'on. 
 
 \section{Actuadores}
@@ -608,7 +608,7 @@ siendo $f(t)$ la funci\'on de movimiento (o actuador) en el momento $t$, y $f_{i
 Los seres humanos aplican fuerzas constantemente en el eje perpendicular a la tierra para mantenerse erguidos. An\'alogamente, este comportamiento puede favorecer a que el b\'ipedo se mantenga de pie. Para eso, se consider\'o un sistema de control en el que la pelvis est\'e sujeta a un resorte imaginario, que se traslada con ella pero ubicado a una altura determinada. Cuanto mayor sea la diferencia de la altura, mayor ser\'a la fuerza aplicada por el resorte.\\
 De esta manera, se le puede aplicar a la pelvis, en cada paso de la simulaci\'on, un resorte en el eje Y de la forma:
 \begin{equation}
-f_{r}(t) =  -k(h-Q h_{0})
+f_{r}(h) =  -k(h-Q h_{0})
  \end{equation}
  donde $k$ es la constante el\'astica del resorte, $h$ es la altura actual del humanoide, $h_{0}$ su altura inicial, y $Q=$1.15. El t\'ermino $Q h_{0}$ indica la altura del resorte.\\
  Como contrapartida, esto imposibilita que el humanoide caiga de forma natural, ya que nunca puede caer. \'Este es uno de los factores por el cual la caminata se realiza en 2D.
@@ -623,12 +623,12 @@ f_{r}(t) =  -k(h-Q h_{0})
 \subsection{Individuo}
 
 %\begin{adjustwidth}{1.25cm}{0cm}
-La informaci\'on gen\'etica de cada individuo, est\'a compuesta por tres partes: funci\'on partida, par\'ametros asociados a los actuadores, y el riel. 
+La informaci\'on gen\'etica de cada individuo, est\'a compuesta por tres partes: funci\'on partida (optativa), par\'ametros asociados a los actuadores (obligatorios), y el riel (optativo). 
 
 \subsubsection{Par\'ametros}
 Tanto la funci\'on partida, como los actuadores, tienen como par\'ametros: amplitud ($A$ o $B$); fase($\phi$), que indica d\'onde comienza el paso y se mide en radianes; frecuencia ($\omega$) ; y t\'ermino independiente ($C$).
 
-Con respecto al riel, el \'unico par\'ametro es la constante el\'astica $k$.
+Con respecto al riel, el \'unico par\'ametro es la constante el\'astica ($k$), medida en $\frac{N}{m}$.
 
 \subsubsection{Valores}
 
@@ -672,7 +672,31 @@ Cada uno de los segmentos tiene propiedades f\'isicas distintas -masa, largo, et
   \label{table3}%
 \end{table}
 
+\begin{table}[H]%
+  \centering
+  	\begin{tabular}{ | c | c || c | c | }
+	  		\hline
+	  		\textbf{Segmento} & \textbf{Tipo de gen} & \textbf{M\'inimo} & \textbf{M\'aximo} \\
+			\hline 
+			\hline
+			Muslo & Amplitud & -30 & 30\\
+			\hline
+			Pierna & Amplitud & -60 & 60\\ 
+			\hline
+	  		Muslo y Pierna & Frecuencia & 0.01 & 10 \\ 
+	  		\hline
+			Muslo y Pierna & Fase & $-\pi$ & $\pi$ \\ 
+			\hline
+			Muslo y Pierna & T\'ermino independiente & -10 & 10 \\ 
+			\hline
+	\end{tabular}
+  \captionsetup{justification=centering}
+  \caption{Rango de valores que puede tomar cada gen, para la funci\'on partida}%
+  \label{table4}%
+\end{table}
+Por otra parte, el par\'ametro $k$ del riel puede tomar valores que oscilan entre 700 y 1600.
 \subsubsection{Implementaciones de individuos}
+Para favorecer el an\'alisis de las distintas caracter\'isticas antes implementadas, se implementaron los siguientes individuos:
 \begin{table}[H]%
   \centering
   	\begin{tabular}{ | c || c | c | c | c | }
@@ -695,10 +719,12 @@ Cada uno de los segmentos tiene propiedades f\'isicas distintas -masa, largo, et
 	\end{tabular}
   \captionsetup{justification=centering}
   \caption{Tipos de humanoide }%
-  \label{table4}%
+  \label{table5}%
 \end{table}
 
 \subsubsection{Constituci\'on del cromosoma}
+En la Tabla \ref{table6} se presenta la composici\'on del cromosoma de cada individuo. \\
+Vale aclarar que la funci\'on partida se especifica para cada segmento (las dos piernas y los dos muslos). En cambio, para los actuadores, s\'olo se definen dos (uno para las piernas y otro para los muslos).
 \begin{table}[H]%
   \centering
   	\begin{tabular}{ | c || c | c | c | c | c |}
@@ -721,7 +747,7 @@ Cada uno de los segmentos tiene propiedades f\'isicas distintas -masa, largo, et
 	\end{tabular}
   \captionsetup{justification=centering}
   \caption{Distribuci\'on de par\'ametros seg\'un tipo de individuo }%
-  \label{table5}%
+  \label{table6}%
 \end{table}
 
 \subsection{Fitness}
