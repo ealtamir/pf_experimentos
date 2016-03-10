@@ -19,22 +19,23 @@
 \contentsline {section}{\numberline {5}Condiciones iniciales y de contorno}{14}{section.5}
 \contentsline {subsection}{\numberline {5.1}Funci\'on Partida}{14}{subsection.5.1}
 \contentsline {subsection}{\numberline {5.2}Fase sincronizada}{15}{subsection.5.2}
+\contentsline {subsection}{\numberline {5.3}Riel}{15}{subsection.5.3}
 \contentsline {section}{\numberline {6}Algoritmo Gen\'etico}{15}{section.6}
 \contentsline {subsection}{\numberline {6.1}Individuo}{15}{subsection.6.1}
 \contentsline {subsubsection}{\numberline {6.1.1}Par\'ametros}{15}{subsubsection.6.1.1}
-\contentsline {subsubsection}{\numberline {6.1.2}Valores}{15}{subsubsection.6.1.2}
+\contentsline {subsubsection}{\numberline {6.1.2}Valores}{16}{subsubsection.6.1.2}
 \contentsline {subsubsection}{\numberline {6.1.3}Implementaciones de individuos}{16}{subsubsection.6.1.3}
-\contentsline {subsubsection}{\numberline {6.1.4}Constituci\'on del cromosoma}{16}{subsubsection.6.1.4}
-\contentsline {subsection}{\numberline {6.2}Fitness}{16}{subsection.6.2}
+\contentsline {subsubsection}{\numberline {6.1.4}Constituci\'on del cromosoma}{17}{subsubsection.6.1.4}
+\contentsline {subsection}{\numberline {6.2}Fitness}{17}{subsection.6.2}
 \contentsline {subsubsection}{\numberline {6.2.1}Altura}{17}{subsubsection.6.2.1}
-\contentsline {subsubsection}{\numberline {6.2.2}Velocidad}{17}{subsubsection.6.2.2}
-\contentsline {subsubsection}{\numberline {6.2.3}Direcci\'on}{17}{subsubsection.6.2.3}
+\contentsline {subsubsection}{\numberline {6.2.2}Velocidad}{18}{subsubsection.6.2.2}
+\contentsline {subsubsection}{\numberline {6.2.3}Direcci\'on}{18}{subsubsection.6.2.3}
 \contentsline {subsubsection}{\numberline {6.2.4}Simetr\'ia}{18}{subsubsection.6.2.4}
-\contentsline {subsubsection}{\numberline {6.2.5}Pies abajo}{18}{subsubsection.6.2.5}
-\contentsline {subsection}{\numberline {6.3}Par\'ametros del Algoritmo}{18}{subsection.6.3}
-\contentsline {subsubsection}{\numberline {6.3.1}M\'etodos de selecci\'on}{18}{subsubsection.6.3.1}
-\contentsline {subsubsection}{\numberline {6.3.2}M\'etodos de cruza}{18}{subsubsection.6.3.2}
+\contentsline {subsubsection}{\numberline {6.2.5}Pies abajo}{19}{subsubsection.6.2.5}
+\contentsline {subsection}{\numberline {6.3}Par\'ametros del Algoritmo}{19}{subsection.6.3}
+\contentsline {subsubsection}{\numberline {6.3.1}M\'etodos de selecci\'on}{19}{subsubsection.6.3.1}
+\contentsline {subsubsection}{\numberline {6.3.2}M\'etodos de cruza}{19}{subsubsection.6.3.2}
 \contentsline {subsubsection}{\numberline {6.3.3}Mutaci\'on}{19}{subsubsection.6.3.3}
-\contentsline {section}{\numberline {7}Resultados Obtenidos}{19}{section.7}
-\contentsline {section}{\numberline {8}Conclusiones}{19}{section.8}
-\contentsline {section}{Referencias}{19}{section.8}
+\contentsline {section}{\numberline {7}Resultados Obtenidos}{20}{section.7}
+\contentsline {section}{\numberline {8}Conclusiones}{20}{section.8}
+\contentsline {section}{Referencias}{20}{section.8}
