@@ -189,9 +189,23 @@ Actualmente, existen muchos motores f\'isicos: ya sea de c\'odigo propietario (P
 Si bien (como se ver\'a m\'as adelante) \textit{Bullet} tiene problemas asociados con el coeficiente de restituci\'on, posee una muy buena \textit{performance} en la detecci\'on de colisiones, la din\'amica y la resoluci\'on de \textit{constraints}. Esto se debe, en parte, a diferentes algoritmos iterativos de orden lineal (donde el m\'as importante es \textit{Sequential Impulse}), de \textit{caching} y tambi\'en a la utilizaci\'on de un modelo de fricci\'on de Coulomb aproximado \cite{Catto}. Adem\'as, el motor f\'isico brinda la posibilidad de regular la precisi\'on requerida en estos c\'alculos (sin olvidar que, con iguales recursos, a mayor precisi\'on, mayor capacidad de c\'omputo requerida y, ergo, mayor tiempo). Dado que la construcci\'on del humanoide implica definir caracter\'isticas y restricciones de movimiento de cada una de sus partes, lo antes mencionado fue crucial para la elecci\'on de \textit{Bullet Physics} en este proyecto.
 
 \subsubsection{Funcionamiento}
-El motor físico se encarga de la simulación de cuerpos rígidos y la interacción entre los mismos, en particular, debe calcular el resultado de colisiones, arreglar los solapamiento
-de los cuerpos en el espacio de simulación, estimar las fuerzas producidas debido a la fricción y mantener el cumplimiento de restricciones que puedan existir entre los cuerpos 
-(por ejemplo, un vínculo para formar una articulación).
+El motor f\'isico se encarga de la simulaci\'on de cuerpos r\'igidos y la interacci\'on entre los mismos,
+en particular, debe calcular el resultado de colisiones, arreglar los solapamiento
+de los cuerpos en el espacio de simulaci\'on, estimar las fuerzas producidas debido a la fricci\'on 
+y mantener el cumplimiento de restricciones que puedan existir entre los cuerpos 
+(por ejemplo, un v\'inculo para formar una articulaci\'on).\\
+Para lograr todo esto, el simulador modela a partir de un conjunto de ecuaciones las distintas
+restricciones que deben ser respetadas. Estos modelos reciben como dato la velocidad lineal
+y angular de cada objeto, as\'i como también las fuerzas que act\'uan sobre los mismos. Dada esta
+informaci\'on, el simulador debe resolver un sistema de ecuaciones cuya soluci\'on representa
+las magnitudes de las fuerzas a accionar sobre el mismo a fin de satisfacer todas las
+restricciones. Para encontrar esta soluci\'on entran en juego los distintos m\'etodos de
+complejidad lineal mencionados en la secci\'on anterior. \\
+Este procedimiento, se lleva a cabo cada \textit{timestep} de la simulaci\'on; donde un \textit{timestep}
+es el intervalo de tiempo que transcurre entre un cálculo de magnitudes y otro. Mientras 
+menor sea el \textit{timestep} el simulador será más preciso pero tambi\'en consumir\'a m\'as tiempo
+de c\'omputo.
+
 
 
 %\end{adjustwidth}
