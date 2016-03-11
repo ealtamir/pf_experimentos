@@ -173,8 +173,9 @@ Este proyecto tiene como objetivo crear una simulaci\'on y animaci\'on de un hum
 \section{Introducci\'on}
 
 %\begin{adjustwidth}{1cm}{0cm}
-\textbf{No est\'a terminada a\'un} \\Siempre ha sido de inter\'es la simulaci\'on biomec\'anica de seres vivos, especialmente en las ciencias naturales (zoolog\'ia, medicina, etc.). Pero \'ultimamente se ha incrementado el inter\'es en otras \'areas de aplicaci\'on, como los videojuegos.
+Siempre ha sido de inter\'es la simulaci\'on biomec\'anica de seres vivos, especialmente en las ciencias naturales (zoolog\'ia, medicina, etc.). Pero \'ultimamente se ha incrementado el inter\'es en otras \'areas de aplicaci\'on, como los videojuegos.
 Una caracter\'istica muy importante de este trabajo es que, el humanoide no es fruto de una animaci\'on, sino  un objeto compuesto de segmentos f\'isicos, que interaccionan. 
+\textbf{No est\'a terminada a\'un} 
 %\end{adjustwidth}
 
 
@@ -189,21 +190,21 @@ Actualmente, existen muchos motores f\'isicos: ya sea de c\'odigo propietario (P
 Si bien (como se ver\'a m\'as adelante) \textit{Bullet} tiene problemas asociados con el coeficiente de restituci\'on, posee una muy buena \textit{performance} en la detecci\'on de colisiones, la din\'amica y la resoluci\'on de \textit{constraints}. Esto se debe, en parte, a diferentes algoritmos iterativos de orden lineal (donde el m\'as importante es \textit{Sequential Impulse}), de \textit{caching} y tambi\'en a la utilizaci\'on de un modelo de fricci\'on de Coulomb aproximado \cite{Catto}. Adem\'as, el motor f\'isico brinda la posibilidad de regular la precisi\'on requerida en estos c\'alculos (sin olvidar que, con iguales recursos, a mayor precisi\'on, mayor capacidad de c\'omputo requerida y, ergo, mayor tiempo). Dado que la construcci\'on del humanoide implica definir caracter\'isticas y restricciones de movimiento de cada una de sus partes, lo antes mencionado fue crucial para la elecci\'on de \textit{Bullet Physics} en este proyecto.
 
 \subsubsection{Funcionamiento}
-El motor f\'isico se encarga de la simulaci\'on de cuerpos r\'igidos y la interacci\'on entre los mismos,
-en particular, debe calcular el resultado de colisiones, arreglar los solapamiento
+El motor f\'isico se encarga de la simulaci\'on de cuerpos r\'igidos y la interacci\'on entre los mismos.
+En particular debe: calcular el resultado de colisiones, arreglar el solapamiento
 de los cuerpos en el espacio de simulaci\'on, estimar las fuerzas producidas debido a la fricci\'on 
 y mantener el cumplimiento de restricciones que puedan existir entre los cuerpos 
-(por ejemplo, un v\'inculo para formar una articulaci\'on).\\
-Para lograr todo esto, el simulador modela a partir de un conjunto de ecuaciones las distintas
-restricciones que deben ser respetadas. Estos modelos reciben como dato la velocidad lineal
-y angular de cada objeto, as\'i como también las fuerzas que act\'uan sobre los mismos. Dada esta
-informaci\'on, el simulador debe resolver un sistema de ecuaciones cuya soluci\'on representa
-las magnitudes de las fuerzas a accionar sobre el mismo a fin de satisfacer todas las
+(por ejemplo, un v\'inculo para formar una articulaci\'on). Para lograrlo, \textit{Bullet} modela, 
+a partir de un conjunto de ecuaciones, las distintas restricciones que deben ser respetadas. \\ 
+Estos modelos reciben como dato la velocidad lineal
+y angular de cada objeto, y las fuerzas que act\'uan sobre los mismos. Dada esta
+informaci\'on, se resuelve el sistema de ecuaciones, cuya soluci\'on representa
+las magnitudes de las fuerzas a accionar sobre el mismo, a fin de satisfacer todas las
 restricciones. Para encontrar esta soluci\'on entran en juego los distintos m\'etodos de
-complejidad lineal mencionados en la secci\'on anterior. \\
+complejidad lineal mencionados en la subsecci\'on anterior. \\
 Este procedimiento, se lleva a cabo cada \textit{timestep} de la simulaci\'on; donde un \textit{timestep}
-es el intervalo de tiempo que transcurre entre un cálculo de magnitudes y otro. Mientras 
-menor sea el \textit{timestep} el simulador será más preciso pero tambi\'en consumir\'a m\'as tiempo
+es el intervalo de tiempo que transcurre entre un c\'alculo de magnitudes y otro. Mientras 
+menor sea el \textit{timestep}, el simulador ser\'a m\'as preciso pero tambi\'en consumir\'a m\'as tiempo
 de c\'omputo.
 
 
@@ -420,12 +421,12 @@ Acto seguido, se muestran los experimentos realizados. En ellos, $v_{i}= \{$ -0.
 	\end{tabular}
   }
   \captionsetup{justification=centering}
-  \caption{Coeficientes de restituci\'on obtenidos de simular el sistema descripto en Fig. \ref{fig:fallingBall}:  \\ (\protect\subref*{table1a}) $v_i = $-0.5 $\frac{m}{s}$, (\protect\subref*{table1b}) $v_i =$ -3.5 $\frac{m}{s}$, (\protect\subref*{table1c}) $v_i = -4 \frac{m}{s}$, (\protect\subref*{table1d}) $v_i = -5 \frac{m}{s}$, y (\protect\subref*{table1e}) $v_i = -10 \frac{m}{s}$ }%
+  \caption{Coeficientes de restituci\'on obtenidos de simular el sistema descripto en Fig. \ref{fig:fallingBall}:  \\ (\protect\subref*{table1a}) $v_i = $-0.5 $\frac{m}{s}$, (\protect\subref*{table1b}) $v_i =$ -3.5 $\frac{m}{s}$, (\protect\subref*{table1c}) $v_i =$ -4 $\frac{m}{s}$, (\protect\subref*{table1d}) $v_i =$ -5 $\frac{m}{s}$, y (\protect\subref*{table1e}) $v_i =$ -10 $\frac{m}{s}$ }%
   \label{table1}%
 \end{table}
 
 Los resultados exponen una limitaci\'on del motor f\'isico: no representa correctamente las colisiones el\'asticas entre esferas y cuerpos r\'igidos, que ocurren a velocidades bajas. Esto queda en evidencia en la Tabla \ref{table1}. En cada una de ellas el error fue de casi el 100\%.\\
-La raz\'on por la que ocurre este hecho se debe a que \textit{Bullet} utiliza un algoritmo de colisi\'on que frena la velocidad de un objeto que est\'a a punto de colisionar. Haciendo esto puede evitar que los s\'olidos se traspasen y de esta forma se pueden realizar c\'alculos de fuerza m\'as precisos. En el caso de los experimentos, las esferas poseen una velocidad muy baja, cuando est\'an a punto de colisionar \textit{Bullet} reduce a\'un m\'as esta velocidad y eventualmente quedan con una velocidad tan baja que al chocar contra el suelo se aplica el efecto restitutivo a esta velocidad casi nula y se resuelve que la esfera debe quedar en reposo, cuando en realidad deber\'ia poseer una velocidad baja, pero no despreciable. \\
+La raz\'on por la que ocurre este hecho se debe a que \textit{Bullet} utiliza un algoritmo de colisi\'on que frena la velocidad de un objeto que est\'a a punto de colisionar. Haciendo esto puede evitar que los s\'olidos se traspasen y de esta forma se pueden realizar c\'alculos de fuerza m\'as precisos. En el caso de los experimentos, las esferas poseen una velocidad muy baja, cuando est\'an a punto de colisionar \textit{Bullet} reduce a\'un m\'as esta velocidad y eventualmente quedan con una velocidad tan baja que al chocar contra el suelo se aplica el efecto restitutivo a esta velocidad casi nula y se resuelve que la esfera debe quedar en reposo, cuando en realidad deber\'ia poseer una velocidad baja, pero no despreciable.
 
 \end{itemize}
 
@@ -438,7 +439,6 @@ La raz\'on por la que ocurre este hecho se debe a que \textit{Bullet} utiliza un
 \item C\'odigo abierto: mayor conocimiento sobre las f\'ormulas y m\'etodos implementados en el motor, a diferencia de lo acaecido en trabajos previos \cite{Cuadrupedo}, en donde al usar \textit{frameworks} f\'isicos de c\'odigo cerrado, no se ten\'ia ni control ni conocimiento pleno de su funcionamiento.
 \item Soporte de la comunidad cientf\'ifica.
 \item Licencia libre.
-\\
 \end{itemize}
 %\end{adjustwidth}
 
@@ -447,7 +447,7 @@ La raz\'on por la que ocurre este hecho se debe a que \textit{Bullet} utiliza un
 \begin{itemize}[leftmargin=5.5mm]
 \item Documentaci\'on poco clara y desordenada.
 \item Debido a que la f\'isica se aproxima usando m\'etodos num\'ericos que contienen error, las simulaciones son no determin\'isticas.
-\item Utilizar una librer\'ia gr\'afica (como \textit{OpenGL}) acoplada a una simulaci\'on  de \textit{Bullet} puede producir resultados distintos que si se utiliza un programa de visualizaci\'on externo (como OVITO).
+\item Utilizar una librer\'ia gr\'afica (como \textit{OpenGL}) acoplada a una simulaci\'on  de \textit{Bullet} puede producir resultados distintos, que si se usa un programa de visualizaci\'on externo (como OVITO).
 \\
 \end{itemize}
 %\end{adjustwidth}
@@ -490,10 +490,8 @@ Se modela al cuerpo humano, con el motor \textit{Bullet Physics}, como un conjun
 \end{figure} 
 
 \subsection{Composici\'on F\'isica del Humanoide}
-\textbf{No est\'a terminada a\'un} \\
-Como ya se dijo, el humanoide fue modelado en \textit{Bullet} como un conjunto de segmentos, unidos por articulaciones -ver Fig. \ref{fig:seg_and_art}-. Los segmentos son cuerpos rig\'idos.
-
-Se dividi\'o al cuerpo humano en: cabeza, tronco, miembro superior, pelvis y miembro inferior (muslo, pierna y pie). Considerar la mitad superior del cuerpo implicaba mayor complejidad (manejo de equilibrio, humanoide m\'as pesado y con mayor volumen, etc.). Ergo, solo se tom\'o la pelvis y el miembro inferior.    \\ \\
+Como ya se expres\'o, el humanoide fue modelado en \textit{Bullet} como un conjunto de segmentos (cuerpos r\'igidos), unidos por articulaciones -ver Fig. \ref{fig:seg_and_art}-. \\
+Se dividi\'o al cuerpo humano en: cabeza, tronco, miembro superior, pelvis y miembro inferior (muslo, pierna y pie). Considerar la mitad superior del cuerpo implicaba mayor complejidad (manejo de equilibrio, humanoide m\'as pesado y con mayor volumen, etc.). Ergo, solo se tom\'o la pelvis y el miembro inferior.\\
 A continuaci\'on se presenta la composici\'on de cada segmento (de acuerdo a la biomec\'anica \cite{biomechanics}): 
 \begin {table}[ht]
 	\begin{center}
@@ -515,6 +513,13 @@ A continuaci\'on se presenta la composici\'on de cada segmento (de acuerdo a la 
 	\end{center}
 \end{table}
 
+%\end{adjustwidth}
+
+\subsection{Articulaciones}
+Para unir los distintos segmentos entre s\'i, se utilizaron articulaciones bisagra con 1 grado de libertad: en el eje Z, donde ocurre la caminata; y en el eje Y, perpendicular al piso -ver Fig. \ref{fig:seg_and_art}-. \\
+Asimismo, para cada caso en particular, se definieron cotas para los \'angulos que pueden existir entre los segmentos. Esto es muy importante, no s\'olo porque se adec\'ua a datos biol\'ogicos, sino porque, de otro modo la caminata no podr\'ia lograrse: si los \'angulos son demasiado altos, la caminata se produce girando las piernas por encima de la pelvis; si por el contrario, son demasiado bajos, las piernas van a estar muy r\'igidas, originando pocos pasos y muy cortos.\\
+Por otra parte, a la pelvis se le restringe todo tipo de rotaci\'on. 
+
 \begin{figure}[H]%
   \centering
   \subfloat[][]{
@@ -532,15 +537,6 @@ A continuaci\'on se presenta la composici\'on de cada segmento (de acuerdo a la 
   \label{fig:seg_and_art} %
 \end{figure}
 
-
-%\end{adjustwidth}
-
-\subsection{Articulaciones}
-\textbf{No est\'a terminada a\'un} \\
-Para unir los distintos segmentos entre s\'i, se utilizaron articulaciones bisagra con 1 grado de libertad: en el eje Z -en donde ocurre la caminata- y en el eje Y -el perpendicular al piso-. Adem\'as, para cada caso en particular, se definieron cotas para los \'angulos que pueden existir entre los segmentos. Esto es muy importante, no s\'olo porque se adec\'ua a datos biol\'ogicos, sino porque, de otro modo la caminata no podr\'ia lograrse: si los \'angulos son demasiado altos, la caminata se produce girando las piernas por encima de la pelvis; si por el contrario, son demasiado bajos, las piernas van a estar muy r\'igidas, originando pocos pasos y muy cortos.\\
-
-Por otra parte, a la pelvis se le restringe todo tipo de rotaci\'on. 
-
 \section{Actuadores}
 \label{actuadores}
 %\begin{adjustwidth}{1.1cm}{0cm}
@@ -556,7 +552,7 @@ Para indicar el m\'odulo de dicho torque, se dise\~naron diferentes funciones (t
 \end{figure} 
 
 \subsection{Gen\'erico}
-Es el actuador m\'as sencillo (tanto matem\'atica como computacionalmente). No se consideraron las funciones trigonom\'etricas b\'asicas (es decir, solo $\sin$ o $\cos$), por los resultados obtenidos en \cite{Cuadrupedo}. La fase es la misma tanto en el seno como en el coseno, para evitar que se formen otro tipo de funciones no c\'iclicas.
+Es el actuador m\'as sencillo, tanto matem\'atica como computacionalmente. La fase es la misma tanto en el seno como en el coseno, para evitar que se formen otro tipo de funciones no c\'iclicas.
 \begin{equation}
   f(t) =  A_1 \sin(\omega_1t+\phi)+A_2 \cos(\omega_2t+\phi)+C
 \end{equation}
@@ -646,7 +642,7 @@ f_{r}(h) =  -k(h-Q h_{0})
 La informaci\'on gen\'etica de cada individuo, est\'a compuesta por tres partes: funci\'on partida (optativa), par\'ametros asociados a los actuadores (obligatorios), y el riel (optativo). 
 
 \subsubsection{Par\'ametros}
-Tanto la funci\'on partida, como los actuadores, tienen como par\'ametros: amplitud ($A$ o $B$); fase($\phi$), que indica d\'onde comienza el paso y se mide en radianes; frecuencia ($\omega$) ; y t\'ermino independiente ($C$).
+Tanto la funci\'on partida, como los actuadores, tienen como par\'ametros: amplitud ($A$ o $B$); fase ($\phi$), que indica d\'onde comienza el paso y se mide en radianes; frecuencia ($\omega$); y t\'ermino independiente ($C$).
 
 Con respecto al riel, el \'unico par\'ametro es la constante el\'astica ($k$), medida en $\frac{N}{m}$.
 
@@ -724,17 +720,17 @@ Para favorecer el an\'alisis de las distintas caracter\'isticas antes implementa
 	  		\textbf{Tipo de Individuo} & \textbf{Actuador} & \textbf{Funci\'on Partida} & \textbf{Fase sincronizada} & \textbf{Riel} \\
 			\hline 
 			\hline
-			1 & Gen\'erico & S\'i & No & No\\ 
+			1 & Gen\'erico & S\'i & No & S\'i\\ 
 	  		\hline 
-			2 & Gen\'erico & S\'i & S\'i & No\\ 
+			2 & Gen\'erico & No & S\'i & S\'i\\ 
 	  		\hline 
-			3 & Gen\'erico & S\'i & S\'i & S\'i\\ 
+			3 & Gen\'erico & S\'i & S\'i & No\\ 
 	  		\hline 
-			4 & Fourier & S\'i & S\'i & S\'i\\ 
+			4 & Fourier & S\'i & S\'i & No\\ 
 	  		\hline 
-			5 & Extra Fourier & S\'i & S\'i & S\'i\\ 
+			5 & Extra Fourier & S\'i & S\'i & No\\ 
 	  		\hline 
-			6 & Doble coseno & S\'i & S\'i & S\'i\\ 
+			6 & Doble coseno & S\'i & S\'i & No\\ 
 	  		\hline 
 	\end{tabular}
   \captionsetup{justification=centering}
@@ -752,17 +748,17 @@ Vale aclarar que la funci\'on partida se especifica para cada segmento (las dos 
 	  		\textbf{Individuo} & \textbf{Amplitud} & \textbf{Frecuencia} & \textbf{Fase} & \textbf{T\'ermino independiente} &  \textbf{Riel}\\
 			\hline 
 			\hline
-			1 & 12 & 6 & 6 & 6 & 0\\ 
+			1 & 12 & 6 & 6 & 6 & 1\\ 
 	  		\hline 
-			2 &  12 & 6 & 6 & 6 & 0\\ 
+			2 &  12 & 2 & 2 & 2 & 1\\ 
 	  		\hline 
-			3 & 12 & 6 & 6 & 6 & 1\\ 
+			3 & 12 & 6 & 6 & 6 & 0\\ 
 	  		\hline 
-			4 & 16 & 6 & 6 & 6 & 1\\ 
+			4 & 16 & 6 & 6 & 6 & 0\\ 
 	  		\hline 
-			5 & 44 & 6 & 6 & 6 & 1\\ 
+			5 & 44 & 6 & 6 & 6 & 0\\ 
 	  		\hline 
-			6 & 8 & 8 & 6 & 6 & 1\\ 
+			6 & 8 & 8 & 6 & 6 & 0\\ 
 	  		\hline 
 	\end{tabular}
   \captionsetup{justification=centering}
@@ -861,8 +857,8 @@ La probabilidad de que este proceso ocurra es de 0.9.
 \subsubsection{Mutaci\'on}
 \label{mutacion}
 %\begin{adjustwidth}{1.4cm}{0cm}
-En el caso de la mutaci\'on, se selecciona cada gen del individuo, y se elige aleatoriamente -como una moneda- los bits que se modifican y los que no.\\
-La probabilidad de que ocurra una mutaci\'on es de 0.3.
+En el caso de la mutaci\'on, para cada gen del individuo, se decide con cierta probabilidad si se lo muta o no. En caso afirmativo, se cambia ese gen por un valor aleatorio (que est\'e dentro de su rango definido).\\
+Dicha probabilidad de mutaci\'on es de 0.3.
 %\end{adjustwidth}
 
 
