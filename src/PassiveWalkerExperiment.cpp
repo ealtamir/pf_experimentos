@@ -56,7 +56,7 @@ float PassiveWalkerExperiment::getFitness(const std::vector<double> vals) {
         experiment->setConstantRiel(vals.at(vals.size()-1));
     }
     experiment->simulate();
-    fitness = experiment->getHeight() * experiment->getDirection() *
+    fitness = experiment->getHeight() * 1 *//experiment->getDirection() *
               experiment->getVelocity() * experiment->feet_symmetry *
               experiment->feet_hip_treshold;
     return fitness;
@@ -90,38 +90,19 @@ void PassiveWalkerExperiment::initObjects() {
 }
 
 void PassiveWalkerExperiment::worldStep() {
-    //int k=100;
-//    cout << selectedBody->getHeight() << endl;
-//    if (timeCount > 10)
-//        return;
+
     btDynamicsWorld* w = getDynamicsWorld();
     w->stepSimulation(1 / 60.f, 10, 1 / 480.);
     int stageValue = 0;
     if(timeCount <= FIRST_STEP_TIME) {
         stageValue = 0;
         
-        //empujon en la pelvis
-//        if(PELVIS_EMPUJON){
-//            btRigidBody* rb = selectedBody->getHip()->getRigidBody();
-//            rb->applyForce(btVector3(0, 0, -100), btVector3(0, 0, 0));
-//        }
     } else {
         stageValue = 1;
     }
 
     selectedBody->actuate(timeCount, stageValue);
     
-//    if(initialHeight < 0){
-//        initialHeight= selectedBody->getHeight();
-//    } else {
-//        
-//        btRigidBody* rb = selectedBody->getHip()->getRigidBody();
-//        double delta_l = (selectedBody->getHeight()-initialHeight*1.15);
-//        rb->applyForce(btVector3(0, -constantRiel * delta_l, 0), btVector3(0, 0, 0));
-//    }
-    
-    
-//    cout << selectedBody->getHeight() << endl;;
     timeCount += 1. / 60.;
 }
 
@@ -274,10 +255,10 @@ void PassiveWalkerExperiment::simulate() {
         acum_velocity += getVelocityCoefficient(current_velocity,
                                                 TARGET_SPEED);
         // Angle Fitness
-        if (current_velocity != btVector3(0, 0, 0)) {
-            current_velocity.normalize();
-            acum_direction += getAngleCoefficient(current_velocity);
-        }
+//        if (current_velocity != btVector3(0, 0, 0)) {
+//            current_velocity.normalize();
+//            acum_direction += getAngleCoefficient(current_velocity);
+//        }
 
         acum_feet_symmetry += getFeetSimmetry();
         temp = getFeetBelowHipCoefficient(initial_foot_position, initial_height);
@@ -290,7 +271,7 @@ void PassiveWalkerExperiment::simulate() {
     
     max_height = acum_height / SIMULATION_STEPS;
     average_velocity = acum_velocity / SIMULATION_STEPS;
-    direction = acum_direction / SIMULATION_STEPS;
+//    direction = acum_direction / SIMULATION_STEPS;
     feet_symmetry = acum_feet_symmetry / SIMULATION_STEPS;
     
     feet_hip_treshold = feet_val / SIMULATION_STEPS;
