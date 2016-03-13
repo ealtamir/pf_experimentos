@@ -14,7 +14,7 @@
 #include "Actuator.h"
 
 #define     BODY_SCALE      1
-#define     STATIC_PELVIS   1 // 0 = no, 1 = yes
+#define     STATIC_PELVIS   0 // 0 = no, 1 = yes
 
 class BodyParameters {
     
@@ -253,8 +253,10 @@ public:
                                         btScalar(0.),
                                         btScalar(0.));
     
-    btVector3 leftHipAngularUpperLimit = btVector3(SIMD_HALF_PI * 0.25, 0., 0.);
-    btVector3 leftHipAngularLowerLimit = btVector3(-SIMD_HALF_PI* 0.25, 0., 0.);
+    //btVector3 leftHipAngularUpperLimit = btVector3(SIMD_HALF_PI * 0.25, 0., 0.);
+    btVector3 leftHipAngularUpperLimit = btVector3(SIMD_HALF_PI , 0., 0.);
+    btVector3 leftHipAngularLowerLimit = btVector3(-SIMD_HALF_PI, 0., 0.);
+    //btVector3 leftHipAngularLowerLimit = btVector3(-SIMD_HALF_PI* 0.25, 0., 0.);
     
     
     // RIGHT HIP
