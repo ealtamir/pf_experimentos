@@ -349,10 +349,10 @@ int main(int argc,char* argv[]) {
         body->setActuatorValues(vals);
         experiment->setConstantRiel(vals.at(vals.size()-1));
         float aux = experiment->getFitness(vals);
-        cout << "fitness: " <<  aux << endl;
-        for (int i = 0; i < vals.size(); i++) {
+        //cout << "fitness: " <<  aux << endl;
+        /*for (int i = 0; i < vals.size(); i++) {
             std::cout << "Values: " << vals[i] << std::endl;
-        }
+        }*/
         return glutmain(argc, argv, 800, 600, "Experiment", experiment);
     }
 }

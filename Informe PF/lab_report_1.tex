@@ -145,6 +145,7 @@
 \thispagestyle{empty} %Page without number
 
 \newpage
+\vspace*{0.1pt}
 \tableofcontents
 \newpage
 
@@ -166,7 +167,7 @@ Este proyecto tiene como objetivo crear una simulaci\'on y animaci\'on de un hum
  \end{abstract}
 
 %----------------------------------------------------------------------------------------
-%	SECTION 1
+%	SECTION 1 - INTRODUCCION
 %----------------------------------------------------------------------------------------
 
 
@@ -182,6 +183,11 @@ El presente informe, describe y analiza pormenorizadamente: en la secci\'on 2, l
 %\end{adjustwidth}
 
 \newpage
+
+%----------------------------------------------------------------------------------------
+%	SECTION 2 - HERRAMIENTAS
+%----------------------------------------------------------------------------------------
+
 \section{Herramientas}
 
 %\begin{adjustwidth}{1cm}{0cm}
@@ -421,7 +427,7 @@ Acto seguido, se muestran los experimentos realizados. En ellos, $v_{i}= \{$ -0.
 	\end{tabular}
   }
   \captionsetup{justification=centering}
-  \caption{Coeficientes de restituci\'on obtenidos de simular el sistema descripto en Fig. \ref{fig:fallingBall}: (\protect\subref*{table1a}) $v_i = $-0.5 $\frac{m}{s}$, (\protect\subref*{table1b}) $v_i =$ -3.5 $\frac{m}{s}$, (\protect\subref*{table1c}) $v_i =$ -4 $\frac{m}{s}$, (\protect\subref*{table1d}) $v_i =$ -5 $\frac{m}{s}$, y (\protect\subref*{table1e}) $v_i =$ -10 $\frac{m}{s}$ }%
+  \caption{Coeficientes de restituci\'on obtenidos de simular el sistema descripto en Fig. \ref{fig:fallingBall}: \\ (\protect\subref*{table1a}) $v_i = $-0.5 $\frac{m}{s}$, (\protect\subref*{table1b}) $v_i =$ -3.5 $\frac{m}{s}$, (\protect\subref*{table1c}) $v_i =$ -4 $\frac{m}{s}$, (\protect\subref*{table1d}) $v_i =$ -5 $\frac{m}{s}$, y (\protect\subref*{table1e}) $v_i =$ -10 $\frac{m}{s}$ }%
   \label{table1}%
 \end{table}
 
@@ -475,6 +481,9 @@ Se acompa\~nan a esta presentaci\'on: el c\'odigo fuente y el manual de instalac
 %\end{adjustwidth}
 
 
+%----------------------------------------------------------------------------------------
+%	SECTION 3 - MODELO UTILIZADO
+%----------------------------------------------------------------------------------------
 
 \section{Modelo Utilizado}
 
@@ -493,7 +502,7 @@ Se modela al cuerpo humano, con el motor \textit{Bullet Physics}, como un conjun
 Como ya se expres\'o, el humanoide fue modelado en \textit{Bullet} como un conjunto de segmentos (cuerpos r\'igidos), unidos por articulaciones -ver Fig. \ref{fig:seg_and_art}-. \\
 Se dividi\'o al cuerpo humano en: cabeza, tronco, miembro superior, pelvis y miembro inferior (muslo, pierna y pie). Considerar la mitad superior del cuerpo implicaba mayor complejidad (manejo de equilibrio, humanoide m\'as pesado y con mayor volumen, etc.). Ergo, solo se tom\'o la pelvis y el miembro inferior.\\
 A continuaci\'on se presenta la composici\'on de cada segmento (de acuerdo a la biomec\'anica \cite{biomechanics}): 
-\begin {table}[ht]
+\begin {table}[H]
 	\begin{center}
 		\begin{tabular}{ | c | c | c | c | c | c |}
 	  		 \hline
@@ -536,6 +545,10 @@ Por otra parte, a la pelvis se le restringe todo tipo de rotaci\'on.
   \caption{Humanoide dise\~nado: (\protect\subref*{fig7:a}) segmentos, y (\protect\subref*{fig7:b}) articulaciones}%
   \label{fig:seg_and_art} %
 \end{figure}
+
+%----------------------------------------------------------------------------------------
+%	SECTION 4 - ACTUADORES
+%----------------------------------------------------------------------------------------
 
 \section{Actuadores}
 \label{actuadores}
@@ -603,6 +616,10 @@ f(t) =  \left\{
 \right. 
  \end{equation}
 
+%----------------------------------------------------------------------------------------
+%	SECTION 5 - CONDICIONES INICIALES Y DE CONTORNO
+%----------------------------------------------------------------------------------------
+
 \section{Condiciones iniciales y de contorno}
 Las funciones peri\'odicas mencionadas en los actuadores no son suficientes para lograr la caminata. 
 A los actuadores se\~nalados previamente, se le adosaron las siguientes funciones: 
@@ -630,7 +647,7 @@ f_{r}(h) =  -k(h-Q h_{0})
  Como contrapartida, esto imposibilita que el humanoide caiga de forma natural, ya que nunca puede caer. \'Este es uno de los factores por el cual la caminata se realiza en 2D.
 
 %----------------------------------------------------------------------------------------
-%	SECTION 2
+%	SECTION 6 - ALGORITMO GENETICO
 %----------------------------------------------------------------------------------------
 
 \section{Algoritmo Gen\'etico}
@@ -722,17 +739,15 @@ Para favorecer el an\'alisis de las distintas caracter\'isticas antes implementa
 	  		\textbf{Tipo de Individuo} & \textbf{Actuador} & \textbf{Funci\'on Partida} & \textbf{Fase sincronizada} & \textbf{Riel} \\
 			\hline 
 			\hline
-			1 & Gen\'erico & S\'i & No & S\'i\\ 
+			1 & Gen\'erico & No & S\'i & S\'i\\ 
 	  		\hline 
-			2 & Gen\'erico & No & S\'i & S\'i\\ 
+			2 & Gen\'erico & S\'i & S\'i & No\\ 
 	  		\hline 
-			3 & Gen\'erico & S\'i & S\'i & No\\ 
+			3 & Fourier & S\'i & S\'i & No\\ 
 	  		\hline 
-			4 & Fourier & S\'i & S\'i & No\\ 
+			4 & Extra Fourier & S\'i & S\'i & No\\ 
 	  		\hline 
-			5 & Extra Fourier & S\'i & S\'i & No\\ 
-	  		\hline 
-			6 & Doble coseno & S\'i & S\'i & No\\ 
+			5 & Doble coseno & S\'i & S\'i & No\\ 
 	  		\hline 
 	\end{tabular}
   \captionsetup{justification=centering}
@@ -750,17 +765,15 @@ Vale aclarar que la funci\'on partida se especifica para cada segmento (las dos 
 	  		\textbf{Individuo} & \textbf{Amplitud} & \textbf{Frecuencia} & \textbf{Fase} & \textbf{T\'ermino independiente} &  \textbf{Riel}\\
 			\hline 
 			\hline
-			1 & 12 & 6 & 6 & 6 & 1\\ 
+			1 &  12 & 2 & 2 & 2 & 1\\ 
 	  		\hline 
-			2 &  12 & 2 & 2 & 2 & 1\\ 
+			2 & 12 & 6 & 6 & 6 & 0\\ 
 	  		\hline 
-			3 & 12 & 6 & 6 & 6 & 0\\ 
+			3 & 16 & 6 & 6 & 6 & 0\\ 
 	  		\hline 
-			4 & 16 & 6 & 6 & 6 & 0\\ 
+			4 & 44 & 6 & 6 & 6 & 0\\ 
 	  		\hline 
-			5 & 44 & 6 & 6 & 6 & 0\\ 
-	  		\hline 
-			6 & 8 & 8 & 6 & 6 & 0\\ 
+			5 & 8 & 8 & 6 & 6 & 0\\ 
 	  		\hline 
 	\end{tabular}
   \captionsetup{justification=centering}
@@ -835,11 +848,6 @@ Sin embargo, una caracter\'istica fundamental en una caminata normal es que las 
 %\end{adjustwidth}
 
 
-
-%----------------------------------------------------------------------------------------
-%	SECTION 3
-%----------------------------------------------------------------------------------------
-
 \subsection{Par\'ametros del Algoritmo}
 
 \subsubsection{M\'etodos de selecci\'on}
@@ -866,23 +874,53 @@ Dicha probabilidad de mutaci\'on es de 0.3.
 
 
 %----------------------------------------------------------------------------------------
-%	SECTION 4
+%	SECTION 7 - RESULTADOS OBTENIDOS
 %----------------------------------------------------------------------------------------
 
 \section{Resultados Obtenidos}
-%\begin{adjustwidth}{1.1cm}{0cm}
-cccccccvvvvv
+Considerando los individuos definidos en el punto xx, se realizaron experimentos, corriendo el algoritmo gen\'etico, y evaluando el resultado obtenido posteriormente (ya sea num\'erica o gr\'aficamente). A continuaci\'on se analizan distintos aspectos relevantes. 
 
-\begin{figure}[h]
-\begin{center}
-\includegraphics[width=0.65\textwidth]{placeholder} % Include the image placeholder.png
-\caption{Figure caption.}
-\end{center}
+\subsection{Evoluci\'on del \textit{fitness} seg\'un tipo de individuo}
+En el caso del individuo de tipo 2, puede observarse que, aun cuando el \textit{fitness} llega a 0.6 (y no a 1, su cota superior), tiene un buen rendimiento, ya que, suponiendo que cada uno de los m\'odulos del \textit{fitness} est\'an al 90\%, se tendr\'ia que 0.9$^5 =$ 0.59.
+
+\begin{figure}[H]%
+  \centering
+  \frame{\includegraphics[width=0.75\linewidth]{resultados_001.png}} 
+  \caption{Evoluci\'on del \textit{fitness} seg\'un tipo de individuo}%
+  \label{fig:resultados_fitness} %
 \end{figure}
-%\end{adjustwidth}
+
+\subsection{Velocidad seg\'un tipo de individuo}
+A continuaci\'on, se muestra, para cada individuo, su velocidad instant\'anea a lo largo del tiempo.
+\begin{figure}[H]%
+  \centering
+  \frame{\includegraphics[width=0.75\linewidth]{resultados_003.png}} 
+  \caption{Velocidad seg\'un tipo de individuo}%
+  \label{fig:resultados_velocidad} %
+\end{figure}
+Como puede observarse en el caso de los individuos 3, 4 y 5 (Fourier, Extra Fourier y Doble Coseno, respectivamente), se producen picos altos y pronunciados en la velocidad. Eso repercute en que la velocidad media no sea 1.3 $\frac{m}{s}$ (que es la velocidad objetivo), y ergo, en el m\'odulo de velocidad del \textit{fitness} (provocando que \'este sea m\'as bajo).\\
+En el caso de los individuos 1 y 2, la velocidad instant\'anea oscila de forma suave.  
+
+\subsection{Altura seg\'un tipo de individuo}
+Como puede identificarse en la figura \ref{fig:resultados_altura}, la altura de los individuos es otra caracter\'istica para diferenciarlos en su rendimiento.\\ 
+En efecto, los individuos de tipo 3 y 4 (que utilizan actuadores de Fourier y Extra Fourier, respectivamente), son los que caen de forma m\'as abrupta, y aunque intentan levantarse, vuelven a caer con la misma intensidad. \\
+Por su parte, el individuo de tipo 1 es el que mantiene la altura constante, a causa del riel que tiene activado (que le hace mantener la altura).  El individuo de tipo 2, con actuadores gen\'ericos y funci\'on partida, logra mantener la altura, hasta que cae. Considerando que no tiene el riel activado, y que cuando cae no vuelve a levantarse (ya que en ese movimiento suelen emplearse los brazos y manos), tiene un comportamiento similar a una caminata real. \\
+En lo que respecta al individuo de tipo 5, que utiliza como actuadores la funci\'on de doble coseno, se cae y levanta repetidamente, pero de forma m\'as suave que los que utilizan Fourier y Extra Fourier.
+\begin{figure}[H]%
+  \centering
+  \frame{\includegraphics[width=0.75\linewidth]{resultados_002.png}} 
+  \caption{Altura (posici\'on de la pelvis) seg\'un tipo de individuo}%
+  \label{fig:resultados_altura} %
+\end{figure}
+
+\subsection{Comparaci\'on de tipos de individuo}
+
+\subsection{Video}
+¿Ac\'a ir\'ia el link del video?
+
 
 %----------------------------------------------------------------------------------------
-%	SECTION 5
+%	SECTION 8 - CONCLUSIONES
 %----------------------------------------------------------------------------------------
 
 \section{Conclusiones}
