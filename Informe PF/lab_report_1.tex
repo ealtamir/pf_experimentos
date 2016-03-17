@@ -79,6 +79,10 @@
 
 \usepackage{subfig}% http://ctan.org/pkg/subfig
 
+\usepackage{lineno} %required to line number
+\linenumbers
+
+
 
 \pagestyle{fancy}
 \fancyheadoffset{0cm} %Used for heading without margins
@@ -166,7 +170,7 @@ Este proyecto tiene como objetivo crear una simulaci\'on y animaci\'on de un hum
 
  \end{abstract}
 
-%----------------------------------------------------------------------------------------
+%(---------------------------------------------------------------------------------------
 %	SECTION 1 - INTRODUCCION
 %----------------------------------------------------------------------------------------
 
@@ -174,8 +178,9 @@ Este proyecto tiene como objetivo crear una simulaci\'on y animaci\'on de un hum
 \section{Introducci\'on}
 
 %\begin{adjustwidth}{1cm}{0cm}
-Siempre ha sido de inter\'es la simulaci\'on biomec\'anica de seres vivos, especialmente en las ciencias naturales (zoolog\'ia, medicina, etc.). Ahora bien, \'ultimamente se ha incrementado el inter\'es en otras \'areas de aplicaci\'on, como los videojuegos -creaci\'on de personajes con reacciones m\'as reales-, y la ingenier\'ia -verbigracia: dise\~no de espacios cerrados, con mayores medidas de seguridad-.\\
-Una caracter\'istica muy importante de este trabajo es que, el humanoide no es fruto de una animaci\'on, sino un objeto compuesto de segmentos f\'isicos, que interaccionan entre s\'i y con el entorno, por medio de las leyes f\'isicas; agregando as\'i realismo a la situaci\'on simulada.  La otra propiedad es que el b\'ipedo aprenda -por s\'i solo- a caminar en l\'inea recta, sin tener en su trayectoria ning\'un obst\'aculo.\\
+Siempre ha sido de inter\'es la simulaci\'on biomec\'anica de seres vivos, especialmente en las ciencias naturales (zoolog\'ia, medicina, etc.). \\
+Ahora bien, \'ultimamente se ha incrementado el inter\'es en otras \'areas de aplicaci\'on, como los videojuegos (creaci\'on de personajes con reacciones m\'as reales), y la ingenier\'ia (verbigracia: dise\~no de espacios cerrados, con mayores medidas de seguridad).\\
+Una caracter\'istica muy importante de este trabajo es que, el humanoide no es fruto de una animaci\'on, sino un objeto compuesto de segmentos f\'isicos, que interaccionan entre s\'i y con el entorno, por medio de las leyes f\'isicas; agregando as\'i realismo a la situaci\'on simulada.  La otra propiedad es que el b\'ipedo aprenda (por s\'i solo) a caminar en l\'inea recta, sin tener en su trayectoria ning\'un obst\'aculo.\\
 Este problema se puede abordar de diversas maneras, involucrando: redes neuronales\footnote{Una red neuronal es un paradigma de aprendizaje autom\'atico. Se trata de un sistema de interconexi\'on de neuronas que colaboran entre s\'i, para producir un est\'imulo de salida. Dada una entrada del sistema, se produce una salida, originada por varias transformaciones intermedias.}, sistemas de control (\textit{passive walkers}\footnote{Un \textit{passive walker} utiliza el movimiento natural (\textit{swinging}) de las piernas para ahorrar energ\'ia usada por motores. Para caminar, calcula la posici\'on de ciertos puntos (las articulaciones, mayormente).}), algoritmos gen\'eticos, entre otras. Pero varios de ellos implican modelos te\'oricos complejos de humanoide (considerando m\'usculos con distintos materiales, etc.). \\ 
 En este trabajo se busc\'o aplicar algoritmos gen\'eticos, y lograr la caminata usando un modelo de humanoide basado en cuerpos r\'igidos, unidos por articulaciones, y cuyo desplazamiento depende de torques aplicados a dichos cuerpos. \\
 El presente informe, describe y analiza pormenorizadamente: en la secci\'on 2, las herramientas aplicadas; en la 3, el modelo del humanoide utilizado; en la 4 y 5, los diferentes tipos de actuadores y funciones de partida y contorno; en la 6, el algoritmo gen\'etico; y en la 7 y 8, los resultados obtenidos con sus respectivas conclusiones.
@@ -201,7 +206,7 @@ Si bien (como se ver\'a m\'as adelante) \textit{Bullet} tiene problemas asociado
 \subsubsection{Funcionamiento}
 El motor f\'isico se encarga de la simulaci\'on de cuerpos r\'igidos y la interacci\'on entre los mismos.
 En particular debe: calcular el resultado de colisiones, arreglar el solapamiento
-de los cuerpos en el espacio de simulaci\'on, estimar las fuerzas producidas debido a la fricci\'on 
+de los cuerpos en el espacio de simulaci\'on, estimar las fuerzas producidas debido a la fricci\'on, 
 y mantener el cumplimiento de restricciones que puedan existir entre los cuerpos 
 (por ejemplo, un v\'inculo para formar una articulaci\'on). Para lograrlo, \textit{Bullet} modela, 
 a partir de un conjunto de ecuaciones, las distintas restricciones que deben ser respetadas. \\ 
@@ -209,7 +214,7 @@ Estos modelos reciben como dato la velocidad lineal
 y angular de cada objeto, y las fuerzas que act\'uan sobre los mismos. Dada esta
 informaci\'on, se resuelve el sistema de ecuaciones, cuya soluci\'on representa
 las magnitudes de las fuerzas a accionar sobre el mismo, a fin de satisfacer todas las
-restricciones. Para encontrar esta soluci\'on entran en juego los distintos m\'etodos de
+restricciones. Para encontrar esta soluci\'on, entran en juego los distintos m\'etodos de
 complejidad lineal mencionados en la subsecci\'on anterior. \\
 Este procedimiento, se lleva a cabo en cada \textit{timestep} de la simulaci\'on; donde un \textit{timestep}
 es el intervalo de tiempo que transcurre entre un c\'alculo de magnitudes y otro. Mientras 
@@ -225,12 +230,12 @@ de c\'omputo.
 Hay reglas f\'isicas relacionadas con el entorno y que son muy importantes para la caminata: el modelo de fricci\'on, con sus respectivos coeficientes de fricci\'on y restituci\'on.\\  
 \\\\En base a los modelos f\'isico-matem\'aticos utilizados  en los dos fen\'omenos en cuesti\'on (y que se explicar\'an a continuaci\'on), y pensando en posibles futuras simulaciones de varios humanoides chocando e interactuando entre s\'i; se llevaron a cabo dos experimentos para verificar que estuvieran en concordancia con los datos arrojados por \textit{Bullet}.
 \begin{itemize}
-\item El primero simula un cubo, de $m_{cube}=1kg$ y $l_{box}=1m$, que tiene una velocidad inicial constante ($v_{i}$) en el eje horizontal, que gradualmente se detiene por acci\'on de la fricci\'on, hasta llegar al reposo -Fig. \ref{fig:translatingCube}-. Se busc\'o determinar el modelo utilizado por \textit{Bullet} para simular las fuerzas resultantes sobre un cuerpo por acci\'on de la fricci\'on.
+\item El primero simula un cubo, de $m_{cube}=1kg$ y $l_{box}=1m$, que tiene una velocidad inicial constante ($v_{i}$) en el eje horizontal, que gradualmente se detiene por acci\'on de la fricci\'on, hasta llegar al reposo (Fig. \ref{fig:translatingCube}). Se busc\'o determinar el modelo utilizado por \textit{Bullet} para simular las fuerzas resultantes sobre un cuerpo por acci\'on de la fricci\'on.
 
 \begin{figure}[H]%
   \centering
   \frame{\includegraphics[width=0.4\linewidth]{translatingCube.png}}
-    \caption{Esquema del primer experimento}
+    \caption{RENOMBRAR FIGURA}
     \label{fig:translatingCube} 
 \end{figure} 
 
@@ -240,21 +245,21 @@ Para este experimento se utiliz\'o el modelo matem\'atico que representa la posi
  \begin{equation}
   x(t) = x_i +v_i t+\frac{1}{2} at^2
 \end{equation}
-\\ En este caso, el cuerpo empieza su movimiento en el origen, por lo tanto la posici\'on inicial ($x_i$) es cero. Debido a la fricci\'on entre el cuerpo y el suelo, se genera una fuerza de rozamiento $F_{\mu_{d}}$ -ec. (2)- en la misma direcci\'on que la velocidad del s\'olido y en sentido contrario. \\
+\\ En este caso, el cuerpo empieza su movimiento en el origen, por lo tanto la posici\'on inicial ($x_i$) es cero. Debido a la fricci\'on entre el cuerpo y el suelo, se genera una fuerza de rozamiento $F_{\mu_{d}}$ (ec. (2)) en la misma direcci\'on que la velocidad del s\'olido y en sentido contrario. \\
 \begin{equation}
-  -F_{\mu_d} = \mu_d F_N 
+  (F_{\mu_d} = \mu_d F_N 
 \end{equation}
 donde $F_N=mg$ es la fuerza normal que act\'ua sobre la caja por acci\'on de la gravedad $g$, y $\mu_d$ es el coeficiente de fricci\'on din\'amico.\\
 
 Finalmente, se obtiene la aceleraci\'on:
  \begin{equation}
-  a = \frac{F_{\mu_d}}{m}= \frac{-\mu_dF_N}{m} = \frac{-\mu_d mg}{m} = -\mu_dmg
+  a = \frac{F_{\mu_d}}{m}= \frac{-\mu_dF_N}{m} = \frac{-\mu_d mg}{m} = (\mu_dmg
 \end{equation}
 Considerando las ec. (1) y (3), se puede obtener el modelo matem\'atico que predice el movimiento de la caja:
  \begin{equation}
   x(t) = x_i +v_i t-\frac{1}{2} \mu_d gt^2
 \end{equation}
-\\Los resultados obtenidos -ver Fig. \ref{fig1}, \ref{fig2} y \ref{fig3}- exponen que posiblemente \textit{Bullet} utilice el modelo antes expuesto a la hora de simular. No obstante, vale aclarar que, cuanto mayor sea el paso de simulaci\'on  -o \textit{stepping}- empleado, mayor es la discrepancia entre la simulaci\'on y el modelo, posiblemente porque la precisi\'on es menor y eso lleva a cometer un error mayor.
+\\Los resultados obtenidos (ver Fig. \ref{fig1}, \ref{fig2} y \ref{fig3}) exponen que posiblemente \textit{Bullet} utilice el modelo antes expuesto a la hora de simular. No obstante, vale aclarar que, cuanto mayor sea el paso de simulaci\'on  (o \textit{timestep}) empleado, mayor es la discrepancia entre la simulaci\'on y el modelo, posiblemente porque la precisi\'on es menor y eso lleva a cometer un error mayor.
 
 \begin{figure}[H]%
   \centering
@@ -335,103 +340,60 @@ Se desea comprobar que la colisi\'on entre el cuerpo y el suelo respete que la v
 \end{equation}
 \\
 Para efectuar la colisi\'on con el suelo, se emple\'o una esfera s\'olida ubicada a 4 metros del suelo, cuya masa y radio son $m_{sphere} = 1\ kg$ y $r_{sphere}=1\ m$,
-respectivamente -ver Fig. \ref{fig:fallingBall}-. \\
-En el ambiente utilizado no hay gravedad ($g = 0 \frac{m}{s}$), lo que posibilita utilizar la ec. \eqref{eq:restitution_coef}.
+respectivamente (ver Fig. \ref{fig:fallingBall}).  A la esfera se le asigna, adem\'as, un coeficiente de restituci\'on determinado.\\
+Se eligi\'o un ambiente sin gravedad ($g = 0 \frac{m}{s^2}$). De esta forma, se podr\'a tener en cuenta s\'olo la velocidad inicial ($v_{i}$) y la velocidad final ($v_{f}$) para el c\'alculo del coeficiente de restituci\'on ($e$) (ver ec. \eqref{eq:restitution_coef}).\\
 El intervalo de tiempo f\'isico (o \textit{timestep}) utilizado es $\Delta t=$0.001 $s$. El \textit{timestep} de animaci\'on (es decir,
-cada cu\'anto tiempo se guardan en un archivo los datos logrados) es $\Delta t' = $0.1 y el tiempo de simulaci\'on es de $s=100\Delta t$. El coeficiente de fricci\'on es $\mu = $0.75.
+cada cu\'anto tiempo se guardan en un archivo los datos logrados) es $\Delta t' = $0.1 y el tiempo de simulaci\'on es de $s=100\Delta t$. El coeficiente de fricci\'on es $\mu = $0.75. \\
 \begin{figure}[H]%
   \centering
   \frame{\includegraphics[width=0.4\linewidth]{fallingBall.png}}
-    \caption{Esquema del segundo experimento}
+    \caption{RENOMBRAR FIGURA}
     \label{fig:fallingBall} 
 \end{figure} 
-El experimento tiene como par\'ametros de entrada: $v_{i}$ (velocidad inicial) y $e_{sim}$ (coeficiente de restituci\'on esperado). Por otro lado, se obtiene $v_{f}$ (velocidad de la esfera al finalizar la simulaci\'on); y se calculan $e_{medida}$ (coeficiente de restituci\'on obtenido a partir de la ec. \eqref{eq:restitution_coef}) y $\epsilon_{rel}$ (error relativo entre los coeficientes $e_{sim}$ y $e_{medida}$). 
-Acto seguido, se muestran los experimentos realizados. En ellos, $v_{i}= \{$ -0.5, -3.5, -4, -5 y -10$\} \frac{m}{s}$ y $e_{sim}= \{ $0.2, 0.5 y 0.8$\} $.
+El ensayo tiene como par\'ametros de entrada: $v_{i}$ (velocidad inicial) y $e_{sim}$ (coeficiente de restituci\'on esperado). Por otro lado, se obtiene $v_{f}$ (velocidad de la esfera al finalizar la simulaci\'on); y se calculan $e_{medida}$ (coeficiente de restituci\'on obtenido a partir de la ec. \eqref{eq:restitution_coef}) y $\epsilon_{rel}$, que es el error relativo entre los coeficientes $e_{sim}$ y $e_{medida}$, calculado de la siguiente manera: \\
+ \begin{equation}
+  \epsilon_{rel} = \frac{e_{sim}-e_{medida}}{e_{sim}}
+\end{equation}
+
+Se muestran los experimentos num\'ericos realizados. En ellos, $v_{i}= \{$ -0.5, -3.5, -4, -5 y -10$\} \frac{m}{s}$ y $e_{sim}= \{ $0.2, 0.5 y 0.8$\} $.
 \begin{table}[H]%
   \centering
-  \subfloat[][]{
-  	\label{table1a}
-  	\begin{tabular}{ | c || c | c | c | }
+  	\begin{tabular}{ | c | c || c | c | c | }
 	  		\hline
-	  		$e_{sim}$ & 0.2 & 0.5 &  0.8 \\
+	  		$\boldsymbol{v_{i}}$ & $\boldsymbol{e_{sim}}$ & $\boldsymbol{v_{f}}$ & $\boldsymbol{e_{medida}}$ & $\boldsymbol{\epsilon_{rel}}$ \\
 			\hline 
-	  		$v_{f}$ & 0.000249  $\frac{m}{s}$& 0.000219  $\frac{m}{s}$& 0.001037  $\frac{m}{s}$\\
+			\hline
+			\multirow{3}{*}{-0.5 $\frac{m}{s}$} & 0.2 & 0.000249 $\frac{m}{s}$& 0.000498 & 0.997\\ \cline{2-5}
+								& 0.5 & 0.000219 $\frac{m}{s}$ & 0.000438 & 0.999\\ \cline{2-5}
+	  							& 0.8 & 0.001037 $\frac{m}{s}$ & 0.002074 & 0.997 \\ \cline{2-5}
+	  		\hline 
+			\hline
+			\multirow{3}{*}{-3.5 $\frac{m}{s}$} & 0.2 & 0.000057 $\frac{m}{s}$ & 0 & 1\\ \cline{2-5}
+	  							& 0.5 & 0.000018 $\frac{m}{s}$ & 0 & 1 \\ \cline{2-5}
+								& 0.8 & 0.3 $\frac{m}{s}$ & 0.0857 & 0.893 \\ \cline{2-5}
 	  		\hline
-	  		$e_{medida}$ & 0.000498 & 0.000438 & 0.002074 \\
+			\hline
+			\multirow{3}{*}{-4 $\frac{m}{s}$} & 0.2 & 0.000473 $\frac{m}{s}$ & 0.00012 & 1\\ \cline{2-5}
+	  							& 0.5 & 0.000424 $\frac{m}{s}$ & 0.00011 & 1 \\ \cline{2-5}
+	  							& 0.8 & 1.23 $\frac{m}{s}$ & 0.3 & 0.625 \\ \cline{2-5}
 	  		\hline
-	  		$\epsilon_{rel}$ & 0.997 & 0.999 & 0.997 \\
-	  		\hline
+			\hline
+			\multirow{3}{*}{-5 $\frac{m}{s}$} & 0.2 & 1 $\frac{m}{s}$ & 0.2 & 0 \\ \cline{2-5}
+	  							& 0.5 & 2.5 $\frac{m}{s}$ & 0.5 & 0 \\ \cline{2-5}
+	  							& 0.8 & 4 $\frac{m}{s}$ & 0.8 & 0 \\ \cline{2-5}
+			\hline
+			\hline
+			\multirow{3}{*}{-10 $\frac{m}{s}$} & 0.2 & 2 $\frac{m}{s}$ & 0.2 & 0\\ \cline{2-5}
+	  							& 0.5 & 5 $\frac{m}{s}$ & 0.5 & 0 \\ \cline{2-5}
+	  							& 0.8 & 8 $\frac{m}{s}$ & 0.8 & 0 \\ \cline{2-5}
+			\hline
 	\end{tabular}
-  }%
-  \qquad
-  \subfloat[][]{
-  	\label{table1b}
-	\begin{adjustbox}{max width=45ex}
-  	\begin{tabular}{ | c || c | c | c | }
-	  		\hline
-	  		$e_{sim}$ & 0.2 & 0.5 &  0.8 \\
-			\hline 
-	  		$v_{f}$ & 0.000057  $\frac{m}{s}$ & 0.000018  $\frac{m}{s}$ & 0.3  $\frac{m}{s}$\\
-	  		\hline
-	  		$e_{medida}$ & 0 & 0 & 0.0857 \\
-	  		\hline
-	  		$\epsilon_{rel}$ & 1 & 1 & 0.893 \\
-	  		\hline
-	\end{tabular}
-  	\end{adjustbox}
-  }
-  \subfloat[][]{
-  	\label{table1c}
-	\begin{adjustbox}{max width=45ex}
-  	\begin{tabular}{ | c || c | c | c | }
-	  		\hline
-	  		$e_{sim}$ & 0.2 & 0.5 & 0.8 \\
-			\hline 
-	  		$v_{f}$ & 0.000473  $\frac{m}{s}$ & 0.000424   $\frac{m}{s}$& 1.23  $\frac{m}{s}$\\
-	  		\hline
-	  		$e_{medida}$ & 0.00012 & 0.00011 & 0.3 \\
-	  		\hline
-	  		$\epsilon_{rel}$ & 1 & 1 & 0.625 \\
-	  		\hline
-	\end{tabular}
-	\end{adjustbox}
-  }
-  \\
-  \subfloat[][]{
-	\label{table1d}
-  	\begin{tabular}{ | c || c | c | c | }
-	  		\hline
-	  		$e_{sim}$ & 0.2 & 0.5 & 0.8 \\
-			\hline 
-	  		$v_{f}$ & 1  $\frac{m}{s}$& 2.5  $\frac{m}{s}$& 4  $\frac{m}{s}$\\
-	  		\hline
-	  		$e_{medida}$ & 0.2 & 0.5 & 0.8 \\
-	  		\hline
-	  		$\epsilon_{rel}$ & 0 & 0 & 0 \\
-	  		\hline
-	\end{tabular}
-  }
-  \qquad
-  \subfloat[][]{
-  	\label{table1e}
-  	\begin{tabular}{ | c || c | c | c | }
-	  		\hline
-	  		$e_{sim}$ & 0.2 & 0.5 & 0.8 \\
-			\hline 
-	  		$v_{f}$ & 2  $\frac{m}{s}$& 5  $\frac{m}{s}$& 8  $\frac{m}{s}$\\
-	  		\hline
-	  		$e_{medida}$ & 0.2 & 0.5 & 0.8 \\
-	  		\hline
-	  		$\epsilon_{rel}$ & 0 & 0 & 0 \\
-	  		\hline
-	\end{tabular}
-  }
   \captionsetup{justification=centering}
-  \caption{Coeficientes de restituci\'on obtenidos de simular el sistema descripto en Fig. \ref{fig:fallingBall}: \\ (\protect\subref*{table1a}) $v_i = $-0.5 $\frac{m}{s}$, (\protect\subref*{table1b}) $v_i =$ -3.5 $\frac{m}{s}$, (\protect\subref*{table1c}) $v_i =$ -4 $\frac{m}{s}$, (\protect\subref*{table1d}) $v_i =$ -5 $\frac{m}{s}$, y (\protect\subref*{table1e}) $v_i =$ -10 $\frac{m}{s}$ }%
+  \caption{Coeficientes de restituci\'on obtenidos de simular el sistema descripto en Fig. \ref{fig:fallingBall} }%
   \label{table1}%
 \end{table}
 
-Los resultados exponen una limitaci\'on del motor f\'isico: no representa correctamente las colisiones el\'asticas entre esferas y cuerpos r\'igidos, que ocurren a velocidades bajas. Esto queda en evidencia en la Tabla \ref{table1}. En cada una de ellas el error fue de casi el 100\%.\\
+Los resultados exponen una limitaci\'on del motor f\'isico: no representa correctamente las colisiones el\'asticas entre esferas y cuerpos r\'igidos, que ocurren a velocidades bajas. Esto queda en evidencia en la Tabla \ref{table1}. En cada una de ellas el error fue de casi 1.\\
 La raz\'on por la que ocurre este hecho se debe a que \textit{Bullet} utiliza un algoritmo de colisi\'on que frena la velocidad de un objeto que est\'a a punto de colisionar. Haciendo esto puede evitar que los s\'olidos se traspasen y de esta forma se pueden realizar c\'alculos de fuerza m\'as precisos. En el caso de los experimentos, las esferas poseen una velocidad muy baja, cuando est\'an a punto de colisionar \textit{Bullet} reduce a\'un m\'as esta velocidad y eventualmente quedan con una velocidad tan baja que al chocar contra el suelo se aplica el efecto restitutivo a esta velocidad casi nula y se resuelve que la esfera debe quedar en reposo, cuando en realidad deber\'ia poseer una velocidad baja, pero no despreciable.
 
 \end{itemize}
@@ -440,25 +402,22 @@ La raz\'on por la que ocurre este hecho se debe a que \textit{Bullet} utiliza un
 %\end{adjustwidth}
 
 \subsubsection{Ventajas}
-%\begin{adjustwidth}{1.3cm}{0cm}
+Las ventajas del motor f\'isico son:
 \begin{itemize}[leftmargin=5.5mm]
-\item C\'odigo abierto: mayor conocimiento sobre las f\'ormulas y m\'etodos implementados en el motor, a diferencia de lo acaecido en trabajos previos \cite{Cuadrupedo}, en donde al usar \textit{frameworks} f\'isicos de c\'odigo cerrado, no se ten\'ia ni control ni conocimiento pleno de su funcionamiento.
-\item Soporte de la comunidad cientf\'ifica.
+\item C\'odigo abierto: mayor conocimiento sobre las f\'ormulas y m\'etodos implementados en el motor.
+\item Soporte de la comunidad cient\'ifica.
 \item Licencia libre.
 \end{itemize}
-%\end{adjustwidth}
+
 
 \subsubsection{Desventajas}
-%\begin{adjustwidth}{1.3cm}{0cm}
+Como toda herramienta, \textit{Bullet} tiene aspectos negativos, entre los que se encuentran: 
 \begin{itemize}[leftmargin=5.5mm]
 \item Documentaci\'on poco clara y desordenada.
 \item Debido a que la f\'isica se aproxima usando m\'etodos num\'ericos que contienen error, las simulaciones son no determin\'isticas.
 \item Utilizar una librer\'ia gr\'afica (como \textit{OpenGL}) acoplada a una simulaci\'on  de \textit{Bullet} puede producir resultados distintos, que si se usa un programa de visualizaci\'on externo (como OVITO).
 \\
 \end{itemize}
-%\end{adjustwidth}
-
-
 
 
 \subsection{Librer\'ia de Algoritmos Gen\'eticos}
@@ -472,7 +431,7 @@ Ofrece funcionalidades como: programaci\'on paralela, diversos m\'etodos de sele
 \subsection{C\'odigo Fuente}
 
 %\begin{adjustwidth}{1.2cm}{0cm}
-Al estar \textit{Bullet} implementado en C++, el c\'odigo fuente tambi\'en est\'a desarrollado en ese lenguaje. En \textit{Bullet}, se define un \textit{World} -o mundo f\'isico- en donde se puede insertar, entre otras cosas, cuerpos r\'igidos. En este caso en particular, el mundo consta de un plano  -el suelo- y  el humanoide encima -compuesto por cuerpos r\'igidos y otros elementos f\'isicos-. \\
+Al estar \textit{Bullet} implementado en C++, el c\'odigo fuente tambi\'en est\'a desarrollado en ese lenguaje. En \textit{Bullet}, se define un \textit{World} (o mundo f\'isico) en donde se puede insertar, entre otras cosas, cuerpos r\'igidos. En este caso en particular, el mundo consta de un plano  (el suelo) y  el humanoide encima (compuesto por cuerpos r\'igidos y otros elementos f\'isicos). \\
 El \textit{software} creado incluye: creaci\'on del humanoide, siendo \'este capaz de desplazarse por medio de actuadores (que se ver\'an en la Secci\'on \ref{actuadores}); el desarrollo del algoritmo gen\'etico (la definici\'on de los individuos, la funci\'on de \textit{fitness}, m\'etodos de selecci\'on, etc.); visualizaci\'on gr\'afica del mejor humanoide logrado por el algoritmo gen\'etico; y la posibilidad de realizar gr\'aficos referidos a la evoluci\'on del algoritmo gen\'etico (\textit{fitness} por cada generaci\'on, etc.). \\
 Se acompa\~nan a esta presentaci\'on: el c\'odigo fuente y el manual de instalaci\'on y uso.
 
@@ -489,7 +448,7 @@ Se acompa\~nan a esta presentaci\'on: el c\'odigo fuente y el manual de instalac
 
 %\begin{adjustwidth}{1.1cm}{0cm}
 Hay diversos modelos. Algunos son m\'as gen\'ericos \cite{flexibleMuscle} \cite{Wojtyra} y complejos.  Sin embargo, se procur\'o utilizar uno que fuera sencillo pero representativo a la vez.\\ 
-Se modela al cuerpo humano, con el motor \textit{Bullet Physics}, como un conjunto de segmentos unidos por articulaciones. A cada uno de ellos se les aplica una fuerza en el centro de masa de cada segmento (denominada Actuador). Que la caminata se produzca o no, depende del tipo de actuador utilizado (la funci\'on utilizada para la fuerza), y de sus par\'ametros. El objetivo, entonces, se reduce a encontrar dichos par\'ametros. Para eso se usan los algoritmos gen\'eticos, un m\'etodo de Inteligencia Artificial. De este modo, se obtiene, de forma an\'aloga a la selecci\'on natural, los individuos que mejor se adapten a la caminata. Tanto los actuadores como el algoritmo gen\'etico se explicar\'an m\'as adelante. \\ 
+Se modela al cuerpo humano, con el motor \textit{Bullet Physics}, como un conjunto de segmentos unidos por articulaciones (Fig. \ref{fig:humanoid}). A cada uno de ellos se les aplica una fuerza en el centro de masa de cada segmento (denominada Actuador). Que la caminata se produzca o no, depende del tipo de actuador utilizado (la funci\'on utilizada para la fuerza), y de sus par\'ametros. El objetivo, entonces, se reduce a encontrar dichos par\'ametros. Para eso se usan los algoritmos gen\'eticos, un m\'etodo de Inteligencia Artificial. De este modo, se obtiene, de forma an\'aloga a la selecci\'on natural, los individuos que mejor se adapten a la caminata. Tanto los actuadores como el algoritmo gen\'etico se explicar\'an m\'as adelante. \\ 
 
 \begin{figure}[H]%
   \centering
@@ -499,14 +458,14 @@ Se modela al cuerpo humano, con el motor \textit{Bullet Physics}, como un conjun
 \end{figure} 
 
 \subsection{Composici\'on F\'isica del Humanoide}
-Como ya se expres\'o, el humanoide fue modelado en \textit{Bullet} como un conjunto de segmentos (cuerpos r\'igidos), unidos por articulaciones -ver Fig. \ref{fig:seg_and_art}-. \\
+Como ya se expres\'o, el humanoide fue modelado en \textit{Bullet} como un conjunto de segmentos (cuerpos r\'igidos), unidos por articulaciones (ver Fig. \ref{fig:seg_and_art}). \\
 Se dividi\'o al cuerpo humano en: cabeza, tronco, miembro superior, pelvis y miembro inferior (muslo, pierna y pie). Considerar la mitad superior del cuerpo implicaba mayor complejidad (manejo de equilibrio, humanoide m\'as pesado y con mayor volumen, etc.). Ergo, solo se tom\'o la pelvis y el miembro inferior.\\
 A continuaci\'on se presenta la composici\'on de cada segmento (de acuerdo a la biomec\'anica \cite{biomechanics}): 
 \begin {table}[H]
 	\begin{center}
 		\begin{tabular}{ | c | c | c | c | c | c |}
 	  		 \hline
-	  		Parte & Cantidad & Forma & Largo (en m) & Peso (en kg) & Uniones\\
+	  		\textbf{Parte} & \textbf{Cantidad} & \textbf{Forma} & \textbf{Largo (en m)} & \textbf{Peso (en kg)} & \textbf{Uniones}\\
 	  		\hline 
 	  		\hline
 	  		Pelvis & 1 & esf\'erico & 0.08655 & 9.9718 & Cadera\\
@@ -525,7 +484,7 @@ A continuaci\'on se presenta la composici\'on de cada segmento (de acuerdo a la 
 %\end{adjustwidth}
 
 \subsection{Articulaciones}
-Para unir los distintos segmentos entre s\'i, se utilizaron articulaciones bisagra con 1 grado de libertad: en el eje Z, donde ocurre la caminata; y en el eje Y, perpendicular al piso -ver Fig. \ref{fig:seg_and_art}-. \\
+Para unir los distintos segmentos entre s\'i, se utilizaron articulaciones bisagra con 1 grado de libertad: en el eje Z, donde ocurre la caminata; y en el eje Y, perpendicular al piso (ver Fig. \ref{fig:seg_and_art}). \\
 Asimismo, para cada caso en particular, se definieron cotas para los \'angulos que pueden existir entre los segmentos. Esto es muy importante, no s\'olo porque se adec\'ua a datos biol\'ogicos, sino porque, de otro modo la caminata no podr\'ia lograrse: si los \'angulos son demasiado altos, la caminata se produce girando las piernas por encima de la pelvis; si por el contrario, son demasiado bajos, las piernas van a estar muy r\'igidas, originando pocos pasos y muy cortos.\\
 Por otra parte, a la pelvis se le restringe todo tipo de rotaci\'on. 
 
@@ -553,9 +512,9 @@ Por otra parte, a la pelvis se le restringe todo tipo de rotaci\'on.
 \section{Actuadores}
 \label{actuadores}
 %\begin{adjustwidth}{1.1cm}{0cm}
-A cada uno de los segmentos correspondientes al muslo y la pierna del b\'ipedo, se le aplica un torque -o actuador- en el eje X -perpendicular a la trayectoria-, como se ve en Fig \ref{fig:actuator}. As\'i, pueden moverse para arriba o para abajo -con respecto a la articulaci\'on a la que pertenecen-. \\
+A cada uno de los segmentos correspondientes al muslo y la pierna del b\'ipedo, se le aplica un torque (o actuador) en el eje X (perpendicular a la trayectoria), como se ve en Fig \ref{fig:actuator}. As\'i, pueden moverse para arriba o para abajo (con respecto a la articulaci\'on a la que pertenecen). \\
 A fin de simplificar el modelo, el humanoide tiene el mismo tipo de actuador utilizado en todos los segmentos.\\
-Que el torque se aplique en una sola dimensi\'on, contribuye a que la caminata producida sea plana -en 2D, y no en 3D, como deber\'ia ser en una caminata real-.\\ 
+Que el torque se aplique en una sola dimensi\'on, contribuye a que la caminata producida sea plana (en 2D, y no en 3D, como deber\'ia ser en una caminata real).\\ 
 Para indicar el m\'odulo de dicho torque, se dise\~naron diferentes funciones (todas ellas peri\'odicas), mencionadas en las subsecciones que siguen. \\
 \begin{figure}[H]%
   \centering
@@ -590,7 +549,7 @@ Es una extensi\'on del actuador anterior, pero con 9 t\'erminos. Por ser de mayo
 
 \subsection{Doble coseno}
 Esta funci\'on peri\'odica utiliza medio ciclo de una funci\'on sinusoidal, y medio ciclo de otra (ambas pueden tener frecuencias distintas). De esta manera, se consigue una caminata m\'as natural, y que no ocurre con los actuadores de Fourier, que producen una doble flexi\'on de las rodillas en cada ciclo.\\
-La idea es lograr una funci\'on peri\'odica a partir de una que no lo es (ya que $t$ es lineal). Para eso, se utiliza $\psi (t)$ -ec. \eqref{eq:phi}- que aplica una transformaci\'on a los n\'umeros reales, para que se encuentren dentro del rango del ciclo completo (con las dos frecuencias). $\omega$ es la frecuencia de $f(t)$ -ec. \eqref{eq:ft}-, que utiliza medio ciclo con frecuencia $\omega_1$ y medio ciclo con frecuencia $\omega_2$.
+La idea es lograr una funci\'on peri\'odica a partir de una que no lo es (ya que $t$ es lineal). Para eso, se utiliza $\psi (t)$ (ec. \eqref{eq:phi}) que aplica una transformaci\'on a los n\'umeros reales, para que se encuentren dentro del rango del ciclo completo (con las dos frecuencias). $\omega$ es la frecuencia de $f(t)$ (ec. \eqref{eq:ft}), que utiliza medio ciclo con frecuencia $\omega_1$ y medio ciclo con frecuencia $\omega_2$.
 \begin{equation} 
 \label{eq:phi}
 \begin{aligned}[c]
@@ -621,8 +580,7 @@ f(t) =  \left\{
 %----------------------------------------------------------------------------------------
 
 \section{Condiciones iniciales y de contorno}
-Las funciones peri\'odicas mencionadas en los actuadores no son suficientes para lograr la caminata. 
-A los actuadores se\~nalados previamente, se le adosaron las siguientes funciones: 
+Como las funciones peri\'odicas se\~naladas en los actuadores, no son suficientes para lograr la caminata, se le adosaron las funciones que se detallan seguidamente. 
 \subsection{Funci\'on Partida}
 El andar del humanoide es c\'iclico. Sin embargo, por la posici\'on inicial del individuo, se requiere para el tiempo del primer paso, una funci\'on distinta a la del resto de la caminata. El tipo de funci\'on puede ser cualquiera de los actuadores vistos anteriormente (pero no necesariamente con los mismos valores de amplitud, frecuencia y fase asignados a las piernas). Empero, se utiliz\'o la funci\'on vista en el actuador gen\'erico. \\
 Por otra parte, para simplificar el modelo, se decidi\'o  que el tiempo considerado para el primer paso sea fijo, y de 0.7 segundos. Dicho valor fue extra\'ido de forma experimental.
@@ -665,7 +623,7 @@ Con respecto al riel, el \'unico par\'ametro es la constante el\'astica ($k$), m
 
 \subsubsection{Valores}
 
-Cada uno de los segmentos tiene propiedades f\'isicas distintas -masa, largo, etc.-, raz\'on por la cual no necesariamente sus genes deban tener los mismos rangos de valores.
+Cada uno de los segmentos tiene propiedades f\'isicas distintas (masa, largo, etc.), raz\'on por la cual no necesariamente sus genes deban tener los mismos rangos de valores.
 \begin{table}[H]%
   \centering
   	\begin{tabular}{ | c | c || c | c | }
@@ -788,7 +746,7 @@ El papel de la funci\'on de \textit{fitness} $F$ en un algoritmo gen\'etico es e
 \begin{equation}
   F = H * V *D * S *  PA
 \end{equation}
-Los cuatro tienen la misma importancia y, por eso, como se ver\'a a continuaci\'on, est\'an definidos de forma similar (con una funci\'on exponencial y pueden valer entre 0 y 1). Con todo esto, dado que el \textit{fitness} est\'a pensado como un producto, basta con que uno de los m\'odulos sea muy chico para  ``anular'' al individuo -es decir, otorgarle un valor que tiende a cero-. Sin embargo, los diferentes m\'odulos no son completamente independientes entre s\'i: por ejemplo, si la altura es demasiado baja, posiblemente la velocidad y la direcci\'on no sean adecuadas. \\
+Los cuatro tienen la misma importancia y, por eso, como se ver\'a a continuaci\'on, est\'an definidos de forma similar (con una funci\'on exponencial y pueden valer entre 0 y 1). Con todo esto, dado que el \textit{fitness} est\'a pensado como un producto, basta con que uno de los m\'odulos sea muy chico para  ``anular'' al individuo (es decir, otorgarle un valor que tiende a cero). Sin embargo, los diferentes m\'odulos no son completamente independientes entre s\'i: por ejemplo, si la altura es demasiado baja, posiblemente la velocidad y la direcci\'on no sean adecuadas. \\
 %\end{adjustwidth}
 
 \subsubsection{Altura}
@@ -800,32 +758,32 @@ Es un factor relacionado con la altura del individuo en toda la simulaci\'on, y 
 \end{equation}
 \\ donde $t_{0}$ es el tiempo inicial, $t_{T}$ el tiempo final, $N$ la cantidad pasos de simulaci\'on y $C$ una constante $C=5$.
 \\
-Se calcula a partir de la diferencia entre la altura en cada instante de la simulaci\'on, con su altura inicial -la altura est\'a definida como la posici\'on de la pelvis en el eje Z-. Cuanto mayor sea esa diferencia, m\'as r\'apido el individuo cae, y por eso este m\'odulo tiende a cero. Por el contrario, valdr\'a uno si la diferencia es \'infima -lo que significa que el humanoide mantiene su misma altura durante la caminata-.\\
+Se calcula a partir de la diferencia entre la altura en cada instante de la simulaci\'on, con su altura inicial (la altura est\'a definida como la posici\'on de la pelvis en el eje Z). Cuanto mayor sea esa diferencia, m\'as r\'apido el individuo cae, y por eso este m\'odulo tiende a cero. Por el contrario, valdr\'a uno si la diferencia es \'infima (lo que significa que el humanoide mantiene su misma altura durante la caminata).\\
 
 %\end{adjustwidth}
 
 \subsubsection{Velocidad}
 \label{velocidad}
 %\begin{adjustwidth}{1.4cm}{0cm}
-Indica qu\'e tan cercana es la velocidad del individuo con respecto a una velocidad objetivo -en este caso, es de 1.2 m/h-, y se expresa de la siguiente forma:\\
+Indica qu\'e tan cercana es la velocidad del individuo con respecto a una velocidad objetivo (en este caso, es de 1.2 m/h), y se expresa de la siguiente forma:\\
 \begin{equation}
   V = \frac{\sum_{n=0}^{T} {e^{-C( \|v_{t_{n}}\| - V_{O} )^2  }}}{N}
 \end{equation}
-\\ donde $t_{0}$ es el tiempo inicial, $t_{T}$ el tiempo final y $V_{O}$ la velocidad objetivo en el eje Z -el eje de la caminata-.
+\\ donde $t_{0}$ es el tiempo inicial, $t_{T}$ el tiempo final y $V_{O}$ la velocidad objetivo en el eje Z (el eje de la caminata).
 \\
-Sigue una l\'ogica y c\'alculo similares al factor de altura: a mayor discrepancia de la velocidad real del humanoide con $V_{O}$, menor -y m\'as cercano a cero- es el valor arrojado por el m\'odulo de velocidad. 
+Sigue una l\'ogica y c\'alculo similares al factor de altura: a mayor discrepancia de la velocidad real del humanoide con $V_{O}$, menor (y m\'as cercano a cero) es el valor arrojado por el m\'odulo de velocidad. 
 
 %\end{adjustwidth}
 
 \subsubsection{Direcci\'on}
 \label{direccion}
 %\begin{adjustwidth}{1.4cm}{0cm}
-Se\~nala qu\'e tan similares son la direcci\'on objetivo -un vector unitario, que en este caso se encuentra en el eje Z- y la direcci\'on con la que camine el humanoide. Se calcula como sigue:\\
+Se\~nala qu\'e tan similares son la direcci\'on objetivo (un vector unitario, que en este caso se encuentra en el eje Z) y la direcci\'on con la que camine el humanoide. Se calcula como sigue:\\
 \begin{equation}
  D = \frac{\sum_{n=0}^{T} {e^{-C( \vec{v_{t_{n}}} \cdot \vec{V_{O} } -1)^2 } } }{N}
 \end{equation}
 \\ donde $t_{0}$ es el tiempo inicial, $t_{T}$ el tiempo final, $\vec{v_{t_{n}}}$ el versor de la direcci\'on del humanoide en el momento $t_{n}$ y $\vec{V_{O}}$ el versor de la direcci\'on objetivo.
-\\ El producto escalar entre los versores responde a la Similitud Coseno: $\cos \theta = \frac{A \cdot B} {\|A\|\|B\| } $, donde A y B son vectores que no se encuentran normalizados, y $\theta$ es el \'angulo formado entre ellos. As\'i,  si $\cos \theta=1$, significa que los vectores est\'an paralelos entre s\'i -que es el efecto buscado en el caso de la direcci\'on-. 
+\\ El producto escalar entre los versores responde a la Similitud Coseno: $\cos \theta = \frac{A \cdot B} {\|A\|\|B\| } $, donde A y B son vectores que no se encuentran normalizados, y $\theta$ es el \'angulo formado entre ellos. As\'i,  si $\cos \theta=1$, significa que los vectores est\'an paralelos entre s\'i (que es el efecto buscado en el caso de la direcci\'on). 
 \\ Al producto escalar se le resta 1, para que el m\'odulo sea consistente con la funci\'on exponencial utilizada y que valga 1 cuando $\theta = 0$, y  0 cuando $\theta = \pi$. Cabe aclarar que se trata al \'angulo en forma sim\'etrica, ya que, por ejemplo $\cos(-\pi/6) = \cos(\pi/6)$.\\
 
 \subsubsection{Simetr\'ia}
@@ -853,13 +811,13 @@ Sin embargo, una caracter\'istica fundamental en una caminata normal es que las 
 \subsubsection{M\'etodos de selecci\'on}
 \label{metodos de seleccion}
 %\begin{adjustwidth}{1.4cm}{0cm}
-De la vasta cantidad de m\'etodos de selecci\'on que existen, se utilizaron: \textbf{\textit{Elite}} -en donde se selecciona el individuo con mayor aptitud de la poblaci\'on-; y \textbf{\textit{Roulette}} -m\'etodo probabil\'istico, que selecciona un individuo de la poblaci\'on total al azar, con una probabilidad proporcional a su \textit{fitness}-.
+De la vasta cantidad de m\'etodos de selecci\'on que existen, se utilizaron: \textbf{\textit{Elite}} (en donde se selecciona el individuo con mayor aptitud de la poblaci\'on-; y \textbf{\textit{Roulette}} (m\'etodo probabil\'istico, que selecciona un individuo de la poblaci\'on total al azar, con una probabilidad proporcional a su \textit{fitness}).
 %\end{adjustwidth}
 
 \subsubsection{M\'etodos de cruza}
 \label{metodos de cruza}
 %\begin{adjustwidth}{1.4cm}{0cm}
-El m\'etodo de cruza -o \textit{crossover}- utilizado es el siguiente: De dos individuos -los padres-, se originan dos nuevos individuos -los hijos-. Se toma cada uno de los genes de los padres y se elige, con una probabilidad uniforme, uno de ellos para un hijo y el otro para el otro hijo.\\
+El m\'etodo de cruza (o \textit{crossover}) utilizado es el siguiente: De dos individuos (los padres), se originan dos nuevos individuos (los hijos). Se toma cada uno de los genes de los padres y se elige, con una probabilidad uniforme, uno de ellos para un hijo y el otro para el otro hijo.\\
 La probabilidad de que este proceso ocurra es de 0.9.
 
 %\end{adjustwidth}
