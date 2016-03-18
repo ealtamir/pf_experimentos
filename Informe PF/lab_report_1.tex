@@ -103,7 +103,7 @@
 \sectionfont{\color{cyan}} % Changing color to section headers
 \subsectionfont{\color{cyan}} % Changing color to subsection headers
 \subsubsectionfont{\color{cyan}} % Changing color to subsubsection headers
-
+\paragraphfont{\color{cyan}} % Changing color to subsubsubsection headers
 %\setlength\parindent{0pt} % Removes all indentation from paragraphs
 
 \renewcommand{\labelitemi}{$-$}
@@ -114,6 +114,9 @@
 
 \let\datespanish\relax
 \newdateformat{datespanish}{\Monthname[\THEMONTH] \THEYEAR}
+
+\setcounter{secnumdepth}{4} % Enabling subsubsubsections (in \paragraph keyword)
+\setcounter{tocdepth}{4} % Table of contents with level 4
 
 %\usepackage{times} % Uncomment to use the Times New Roman font
 
@@ -180,7 +183,7 @@ Este proyecto tiene como objetivo crear una simulaci\'on y animaci\'on de un hum
 %\begin{adjustwidth}{1cm}{0cm}
 Siempre ha sido de inter\'es la simulaci\'on biomec\'anica de seres vivos, especialmente en las ciencias naturales (zoolog\'ia, medicina, etc.). \\
 Ahora bien, \'ultimamente se ha incrementado el inter\'es en otras \'areas de aplicaci\'on, como los videojuegos (creaci\'on de personajes con reacciones m\'as reales), y la ingenier\'ia (verbigracia: dise\~no de espacios cerrados, con mayores medidas de seguridad).\\
-Una caracter\'istica muy importante de este trabajo es que, el humanoide no es fruto de una animaci\'on, sino un objeto compuesto de segmentos f\'isicos, que interaccionan entre s\'i y con el entorno, por medio de las leyes f\'isicas; agregando as\'i realismo a la situaci\'on simulada.  La otra propiedad es que el b\'ipedo aprenda (por s\'i solo) a caminar en l\'inea recta, sin tener en su trayectoria ning\'un obst\'aculo.\\
+Una caracter\'istica muy importante de este trabajo es que el humanoide no es fruto de una animaci\'on, sino un objeto compuesto de segmentos f\'isicos, que interaccionan entre s\'i y con el entorno, por medio de las leyes f\'isicas; agregando as\'i realismo a la situaci\'on simulada.  La otra propiedad es que el b\'ipedo aprenda (por s\'i solo) a caminar en l\'inea recta, sin tener en su trayectoria ning\'un obst\'aculo.\\
 Este problema se puede abordar de diversas maneras, involucrando: redes neuronales\footnote{Una red neuronal es un paradigma de aprendizaje autom\'atico. Se trata de un sistema de interconexi\'on de neuronas que colaboran entre s\'i, para producir un est\'imulo de salida. Dada una entrada del sistema, se produce una salida, originada por varias transformaciones intermedias.}, sistemas de control (\textit{passive walkers}\footnote{Un \textit{passive walker} utiliza el movimiento natural (\textit{swinging}) de las piernas para ahorrar energ\'ia usada por motores. Para caminar, calcula la posici\'on de ciertos puntos (las articulaciones, mayormente).}), algoritmos gen\'eticos, entre otras. Pero varios de ellos implican modelos te\'oricos complejos de humanoide (considerando m\'usculos con distintos materiales, etc.). \\ 
 En este trabajo se busc\'o aplicar algoritmos gen\'eticos, y lograr la caminata usando un modelo de humanoide basado en cuerpos r\'igidos, unidos por articulaciones, y cuyo desplazamiento depende de torques aplicados a dichos cuerpos. \\
 El presente informe, describe y analiza pormenorizadamente: en la secci\'on 2, las herramientas aplicadas; en la 3, el modelo del humanoide utilizado; en la 4 y 5, los diferentes tipos de actuadores y funciones de partida y contorno; en la 6, el algoritmo gen\'etico; y en la 7 y 8, los resultados obtenidos con sus respectivas conclusiones.
@@ -229,8 +232,10 @@ de c\'omputo.
 %\begin{adjustwidth}{1.3cm}{0cm}
 Hay reglas f\'isicas relacionadas con el entorno y que son muy importantes para la caminata: el modelo de fricci\'on, con sus respectivos coeficientes de fricci\'on y restituci\'on.\\  
 \\\\En base a los modelos f\'isico-matem\'aticos utilizados  en los dos fen\'omenos en cuesti\'on (y que se explicar\'an a continuaci\'on), y pensando en posibles futuras simulaciones de varios humanoides chocando e interactuando entre s\'i; se llevaron a cabo dos experimentos para verificar que estuvieran en concordancia con los datos arrojados por \textit{Bullet}.
-\begin{itemize}
-\item El primero simula un cubo, de $m_{cube}=1kg$ y $l_{box}=1m$, que tiene una velocidad inicial constante ($v_{i}$) en el eje horizontal, que gradualmente se detiene por acci\'on de la fricci\'on, hasta llegar al reposo (Fig. \ref{fig:translatingCube}). Se busc\'o determinar el modelo utilizado por \textit{Bullet} para simular las fuerzas resultantes sobre un cuerpo por acci\'on de la fricci\'on.
+
+\paragraph{Verificaci\'on del coeficiente de fricci\'on\\}
+
+El primero simula un cubo, de $m_{cube}=1kg$ y $l_{box}=1m$, que tiene una velocidad inicial constante ($v_{i}$) en el eje horizontal, que gradualmente se detiene por acci\'on de la fricci\'on, hasta llegar al reposo (Fig. \ref{fig:translatingCube}). Se busc\'o determinar el modelo utilizado por \textit{Bullet} para simular las fuerzas resultantes sobre un cuerpo por acci\'on de la fricci\'on.
 
 \begin{figure}[H]%
   \centering
@@ -259,7 +264,7 @@ Considerando las ec. (1) y (3), se puede obtener el modelo matem\'atico que pred
  \begin{equation}
   x(t) = x_i +v_i t-\frac{1}{2} \mu_d gt^2
 \end{equation}
-\\Los resultados obtenidos (ver Fig. \ref{fig1}, \ref{fig2} y \ref{fig3}) exponen que posiblemente \textit{Bullet} utilice el modelo antes expuesto a la hora de simular. No obstante, vale aclarar que, cuanto mayor sea el paso de simulaci\'on  (o \textit{timestep}) empleado, mayor es la discrepancia entre la simulaci\'on y el modelo, posiblemente porque la precisi\'on es menor y eso lleva a cometer un error mayor.
+
 
 \begin{figure}[H]%
   \centering
@@ -280,7 +285,8 @@ Considerando las ec. (1) y (3), se puede obtener el modelo matem\'atico que pred
 	\includegraphics[width=0.6\linewidth]{image002.png} 
 	\label{fig1:c} 
   }
-  \caption{$v_i = 10 \frac{m}{s}$: (\protect\subref*{fig1:a}) $\mu_d=$0.25, (\protect\subref*{fig1:b}) $\mu_d=$0.50, y (\protect\subref*{fig1:c}) $\mu_d=$0.75}%
+  \captionsetup{justification=centering}
+  \caption{Resultados logrados de simular el sistema descripto en Fig. \ref{fig:translatingCube}, usando $v_i = 10 \frac{m}{s}$ y: \\ (\protect\subref*{fig1:a}) $\mu_d=$0.25, (\protect\subref*{fig1:b}) $\mu_d=$0.50, y (\protect\subref*{fig1:c}) $\mu_d=$0.75}%
   \label{fig1} %
 \end{figure}
 
@@ -303,7 +309,8 @@ Considerando las ec. (1) y (3), se puede obtener el modelo matem\'atico que pred
 	\includegraphics[width=0.6\linewidth]{image008.png} 
 	\label{fig2:c} 
   }
-  \caption{$v_i = 3 \frac{m}{s}$: (\protect\subref*{fig2:a}) $\mu_d=$0.25, (\protect\subref*{fig2:b}) $\mu_d=$0.50, y (\protect\subref*{fig2:c}) $\mu_d=$0.75}%
+   \captionsetup{justification=centering}
+  \caption{Resultados logrados de simular el sistema descripto en Fig. \ref{fig:translatingCube}, usando $v_i = 3 \frac{m}{s}$ y:\\ (\protect\subref*{fig2:a}) $\mu_d=$0.25, (\protect\subref*{fig2:b}) $\mu_d=$0.50, y (\protect\subref*{fig2:c}) $\mu_d=$0.75}%
   \label{fig2} %
 \end{figure}
 
@@ -326,13 +333,20 @@ Considerando las ec. (1) y (3), se puede obtener el modelo matem\'atico que pred
 	\includegraphics[width=0.6\linewidth]{image005.png} 
 	\label{fig3:c} 
   }
-  \caption{$v_i = 1 \frac{m}{s}$: (\protect\subref*{fig3:a}) $\mu_d=$0.25, (\protect\subref*{fig3:b}) $\mu_d=$0.50, y (\protect\subref*{fig3:c}) $\mu_d=$0.75}%
+   \captionsetup{justification=centering}
+  \caption{Resultados logrados de simular el sistema descripto en Fig. \ref{fig:translatingCube}, usando $v_i = 1 \frac{m}{s}$ y: \\ (\protect\subref*{fig3:a}) $\mu_d=$0.25, (\protect\subref*{fig3:b}) $\mu_d=$0.50, y (\protect\subref*{fig3:c}) $\mu_d=$0.75}%
   \label{fig3} %
   \vspace*{0ex}
 \end{figure}
 
 
-\item El segundo simula una esfera a una altura determinada sobre el suelo, que tiene una velocidad en el eje perpendicular al piso y que eventualmente colisiona contra el mismo.
+Los gr\'aficos (Fig. \ref{fig1}, \ref{fig2} y \ref{fig3}) muestran que los resultados de las pruebas fueron favorables. Los valores obtenidos a partir de la simulaci\'on se corresponden con los obtenidos a partir del modelo matem\'atico. Esto es un indicador de que \textit{Bullet} debe estar usando dichos modelos para ejecutar las simulaciones.\\
+Cabe destacar que los gr\'aficos que corresponden a la Fig. \ref{fig3}, presentan una discrepancia mayor entre la simulaci\'on y el modelo. Este hecho puede deberse a que dicha prueba tiene una cantidad relativamente baja de puntos, por lo tanto la resoluci\'on de la simulaci\'on no es lo suficientemente buena y el simulador tiende a cometer un mayor error.
+%Los resultados obtenidos (ver Fig. \ref{fig1}, \ref{fig2} y \ref{fig3}) exponen que posiblemente \textit{Bullet} utilice el modelo antes expuesto a la hora de simular. No obstante, vale aclarar que, cuanto mayor sea el paso de simulaci\'on  (o \textit{timestep}) empleado, mayor es la discrepancia entre la simulaci\'on y el modelo, posiblemente porque la precisi\'on es menor y eso lleva a cometer un error mayor.
+
+\paragraph{Verificaci\'on del coeficiente de restituci\'on\\}
+
+El segundo ensayo simula una esfera a una altura determinada sobre el suelo, que tiene una velocidad en el eje perpendicular al piso y que eventualmente colisiona contra el mismo.
 Se desea comprobar que la colisi\'on entre el cuerpo y el suelo respete que la velocidad final de la esfera despu\'es del choque sea proporcional a su coeficiente de restituci\'on $e$ dado por la ecuaci\'on:\\ 
  \begin{equation}
  \label{eq:restitution_coef}
@@ -393,13 +407,9 @@ Se muestran los experimentos num\'ericos realizados. En ellos, $v_{i}= \{$ -0.5,
   \label{table1}%
 \end{table}
 
-Los resultados exponen una limitaci\'on del motor f\'isico: no representa correctamente las colisiones el\'asticas entre esferas y cuerpos r\'igidos, que ocurren a velocidades bajas. Esto queda en evidencia en la Tabla \ref{table1}. En cada una de ellas el error fue de casi 1.\\
-La raz\'on por la que ocurre este hecho se debe a que \textit{Bullet} utiliza un algoritmo de colisi\'on que frena la velocidad de un objeto que est\'a a punto de colisionar. Haciendo esto puede evitar que los s\'olidos se traspasen y de esta forma se pueden realizar c\'alculos de fuerza m\'as precisos. En el caso de los experimentos, las esferas poseen una velocidad muy baja, cuando est\'an a punto de colisionar \textit{Bullet} reduce a\'un m\'as esta velocidad y eventualmente quedan con una velocidad tan baja que al chocar contra el suelo se aplica el efecto restitutivo a esta velocidad casi nula y se resuelve que la esfera debe quedar en reposo, cuando en realidad deber\'ia poseer una velocidad baja, pero no despreciable.
+Los resultados exponen una limitaci\'on del motor f\'isico: no representa correctamente las colisiones el\'asticas entre esferas y cuerpos r\'igidos, que ocurren a velocidades bajas. Esto queda en evidencia en la Tabla \ref{table1}. En cada una de ellas el error fue de casi 1.La raz\'on por la que ocurre este hecho se debe a que \textit{Bullet} utiliza un algoritmo de colisi\'on que frena la velocidad de un objeto que est\'a a punto de colisionar. Haciendo esto puede evitar que los s\'olidos se traspasen y de esta forma se pueden realizar c\'alculos de fuerza m\'as precisos. \\
+En el caso de los ensayos, las esferas poseen una velocidad muy baja, cuando est\'an a punto de colisionar \textit{Bullet} reduce a\'un m\'as esta velocidad y eventualmente quedan con una velocidad tan baja que al chocar contra el suelo se aplica el efecto restitutivo a esta velocidad casi nula y se resuelve que la esfera debe quedar en reposo, cuando en realidad deber\'ia poseer una velocidad baja, pero no despreciable.
 
-\end{itemize}
-
-
-%\end{adjustwidth}
 
 \subsubsection{Ventajas}
 Las ventajas del motor f\'isico son:
@@ -416,7 +426,6 @@ Como toda herramienta, \textit{Bullet} tiene aspectos negativos, entre los que s
 \item Documentaci\'on poco clara y desordenada.
 \item Debido a que la f\'isica se aproxima usando m\'etodos num\'ericos que contienen error, las simulaciones son no determin\'isticas.
 \item Utilizar una librer\'ia gr\'afica (como \textit{OpenGL}) acoplada a una simulaci\'on  de \textit{Bullet} puede producir resultados distintos, que si se usa un programa de visualizaci\'on externo (como OVITO).
-\\
 \end{itemize}
 
 
@@ -424,7 +433,8 @@ Como toda herramienta, \textit{Bullet} tiene aspectos negativos, entre los que s
 
 %\begin{adjustwidth}{1.2cm}{0cm}
 Se utiliz\'o la conocida librer\'ia de Algoritmos Gen\'eticos para C++ GaLib, desarrollada por Matthew Wall del MIT \cite{LinkGaLib}. \\
-Ofrece funcionalidades como: programaci\'on paralela, diversos m\'etodos de selecci\'on (\textit{elite}, \textit{roulette}), estrategias de reemplazo (de padres, aleatorio, del peor), entre otras.\\
+Ofrece funcionalidades como: programaci\'on paralela, diversos m\'etodos de selecci\'on (\textit{elite}, \textit{roulette}), estrategias de reemplazo (de padres, aleatorio, del peor), entre otras.
+
 
 %\end{adjustwidth}
 
@@ -595,14 +605,6 @@ f_{d}(t) =  f(t+\frac{\pi}{2})
  \end{equation}
 siendo $f(t)$ la funci\'on de movimiento (o actuador) en el momento $t$, y $f_{i}$ y $f_{d}$ las funciones de la pierna izquierda y derecha, respectivamente.
 
-\subsection{Riel}
-Los seres humanos aplican fuerzas constantemente en el eje perpendicular a la tierra para mantenerse erguidos. An\'alogamente, este comportamiento puede favorecer a que el b\'ipedo se mantenga de pie. Para eso, se consider\'o un sistema de control en el que la pelvis est\'e sujeta a un resorte imaginario, que se traslada con ella pero ubicado a una altura determinada. Cuanto mayor sea la diferencia de la altura, mayor ser\'a la fuerza aplicada por el resorte.\\
-De esta manera, se le puede aplicar a la pelvis, en cada paso de la simulaci\'on, un resorte en el eje Y de la forma:
-\begin{equation}
-f_{r}(h) =  -k(h-Q h_{0})
- \end{equation}
- donde $k$ es la constante el\'astica del resorte, $h$ es la altura actual del humanoide, $h_{0}$ su altura inicial, y $Q=$1.15. El t\'ermino $Q h_{0}$ indica la altura del resorte.\\
- Como contrapartida, esto imposibilita que el humanoide caiga de forma natural, ya que nunca puede caer. \'Este es uno de los factores por el cual la caminata se realiza en 2D.
 
 %----------------------------------------------------------------------------------------
 %	SECTION 6 - ALGORITMO GENETICO
@@ -614,12 +616,11 @@ f_{r}(h) =  -k(h-Q h_{0})
 \subsection{Individuo}
 
 %\begin{adjustwidth}{1.25cm}{0cm}
-La informaci\'on gen\'etica de cada individuo, est\'a compuesta por tres partes: funci\'on partida (optativa), par\'ametros asociados a los actuadores (obligatorios), y el riel (optativo). 
+La informaci\'on gen\'etica de cada individuo, est\'a compuesta por dos partes: funci\'on partida (optativa) y los par\'ametros asociados a los actuadores (obligatorios). 
 
 \subsubsection{Par\'ametros}
 Tanto la funci\'on partida, como los actuadores, tienen como par\'ametros: amplitud ($A$ o $B$); fase ($\phi$), que indica d\'onde comienza el paso y se mide en radianes; frecuencia ($\omega$); y t\'ermino independiente ($C$).
 
-Con respecto al riel, el \'unico par\'ametro es la constante el\'astica ($k$), medida en $\frac{N}{m}$.
 
 \subsubsection{Valores}
 
@@ -687,25 +688,24 @@ Cada uno de los segmentos tiene propiedades f\'isicas distintas (masa, largo, et
 \end{table}
 
 
-Por otra parte, el par\'ametro $k$ del riel puede tomar valores que oscilan entre 700 y 1600.
 \subsubsection{Implementaciones de individuos}
 Para favorecer el an\'alisis de las distintas caracter\'isticas antes implementadas, se implementaron los siguientes individuos:
 \begin{table}[H]%
   \centering
-  	\begin{tabular}{ | c || c | c | c | c | }
+  	\begin{tabular}{ | c || c | c | c | }
 	  		\hline
-	  		\textbf{Tipo de Individuo} & \textbf{Actuador} & \textbf{Funci\'on Partida} & \textbf{Fase sincronizada} & \textbf{Riel} \\
+	  		\textbf{Tipo de Individuo} & \textbf{Actuador} & \textbf{Funci\'on Partida} & \textbf{Fase sincronizada} \\
 			\hline 
 			\hline
-			1 & Gen\'erico & No & S\'i & S\'i\\ 
+			1 & Gen\'erico & No & S\'i\\ 
 	  		\hline 
-			2 & Gen\'erico & S\'i & S\'i & No\\ 
+			2 & Gen\'erico & S\'i & S\'i\\ 
 	  		\hline 
-			3 & Fourier & S\'i & S\'i & No\\ 
+			3 & Fourier & S\'i & S\'i\\ 
 	  		\hline 
-			4 & Extra Fourier & S\'i & S\'i & No\\ 
+			4 & Extra Fourier & S\'i & S\'i\\ 
 	  		\hline 
-			5 & Doble coseno & S\'i & S\'i & No\\ 
+			5 & Doble coseno & S\'i & S\'i\\ 
 	  		\hline 
 	\end{tabular}
   \captionsetup{justification=centering}
@@ -720,22 +720,22 @@ Vale aclarar que la funci\'on partida se especifica para cada segmento (las dos 
   \centering
   	\begin{tabular}{ | c || c | c | c | c | c |}
 	  		\hline
-	  		\textbf{Individuo} & \textbf{Amplitud} & \textbf{Frecuencia} & \textbf{Fase} & \textbf{T\'ermino independiente} &  \textbf{Riel}\\
+	  		\textbf{Individuo} & Tipo 1 & Tipo 2 & Tipo 3 & Tipo 4 & Tipo 5\\
 			\hline 
 			\hline
-			1 &  12 & 2 & 2 & 2 & 1\\ 
+			\textbf{Amplitud} &  12 & 12 & 16 & 44 & 8\\ 
 	  		\hline 
-			2 & 12 & 6 & 6 & 6 & 0\\ 
+			\textbf{Frecuencia} & 2 & 6 & 6 & 6 & 8\\ 
 	  		\hline 
-			3 & 16 & 6 & 6 & 6 & 0\\ 
+			\textbf{Fase} & 2 & 6 & 6 & 6 & 6\\ 
 	  		\hline 
-			4 & 44 & 6 & 6 & 6 & 0\\ 
+			\textbf{T\'ermino independiente}  & 2 & 6 & 6 & 6 & 6\\ 
 	  		\hline 
-			5 & 8 & 8 & 6 & 6 & 0\\ 
+			\textbf{Longitud del cromosoma} & 18 & 30 & 34 & 62 & 28\\ 
 	  		\hline 
 	\end{tabular}
   \captionsetup{justification=centering}
-  \caption{Distribuci\'on de par\'ametros seg\'un tipo de individuo }%
+  \caption{Cantidad de par\'ametros seg\'un tipo de individuo }%
   \label{table6}%
 \end{table}
 
