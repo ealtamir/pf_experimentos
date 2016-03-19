@@ -525,6 +525,8 @@ Por otra parte, a la pelvis se le restringe todo tipo de rotaci\'on. \\
 A cada uno de los segmentos correspondientes al muslo y la pierna del b\'ipedo, se le aplica un torque (o actuador) en el eje X (perpendicular a la trayectoria), como se ve en Fig \ref{fig:actuator}. As\'i, pueden moverse para arriba o para abajo (con respecto a la articulaci\'on a la que pertenecen). \\
 A fin de simplificar el modelo, el humanoide tiene el mismo tipo de actuador utilizado en todos los segmentos.\\
 Es necesario aclarar que la caminata producida por el humanoide es plana (en 2D y no en 3D, como deber\'ia ser en una caminata real). Esto se debe a que la trayectoria pensada para el b\'ipedo es una l\'inea recta, y logrando que los segmentos se muevan en un solo eje es suficiente para cumplir con dicha trayectoria. Tambi\'en contribuye el hecho de que el torque se aplique en una sola dimensi\'on.\\ 
+La razon de no ser en 3D es que el movimiento que correspenderia al torque en el eje z de las articulaciones no corresponde con un actuador ciclico sino que corresponderia con un actuador
+reactivo.\\
 Para indicar el m\'odulo de dicho torque, se dise\~naron diferentes funciones (todas ellas peri\'odicas), mencionadas en las subsecciones que siguen. \\
 \begin{figure}[H]%
   \centering
