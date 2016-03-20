@@ -202,7 +202,7 @@ El presente informe, describe y analiza pormenorizadamente: en la secci\'on 2, l
 
 %\begin{adjustwidth}{1.2cm}{0cm}
 Se le llama motor f\'isico o \textit{physics engine} a un  ``\textit{software} capaz de realizar simulaciones de ciertos sistemas f\'isicos, como la din\'amica del cuerpo r\'igido, el movimiento de un fluido y la elasticidad" \cite{wikiPhysicsEngine}. \\
-Actualmente, existen muchos motores f\'isicos: ya sea de c\'odigo propietario (PhysX, Havok), como \textit{open-source} (\textit{Bullet Physics}, \textit{Box2D}, Newton, OGRE). Considerando an\'alisis relacionados \cite{Comparissons}\cite{Comparissons2}, y la necesidad de que el espacio simulado fuese en 3D, se decidi\'o que \textit{Bullet Physics}\cite{LinkBullet} es el m\'as id\'oneo. Est\'a implementado en C++ y ha sido utilizado en varios juegos (\textit{Grand Theft Auto IV} y V, etc); en los efectos especiales de pel\'iculas (Hancock, Bolt, etc.); y proyectos cient\'ificos, como la herramienta \textit{open-source} \textit{Tensegrity Robotics Toolkit} de la NASA\footnote{http://bulletphysics.org/Bullet/phpBB3/viewtopic.php?f=17\&t=9978}; entre otros.\\
+Actualmente, existen muchos motores f\'isicos: ya sea de c\'odigo propietario (\textit{PhysX}, \textit{Havok}), como \textit{open-source} (\textit{Bullet Physics}, \textit{Box2D}, \textit{Newton}, \textit{OGRE}). Considerando an\'alisis relacionados \cite{Comparissons}\cite{Comparissons2}, y el hecho de que el espacio simulado fuese en 3D, se decidi\'o que \textit{Bullet Physics}\cite{LinkBullet} es el m\'as id\'oneo. Est\'a implementado en C++ y ha sido utilizado en varios juegos (\textit{Grand Theft Auto IV} y \textit{V}, etc); en los efectos especiales de pel\'iculas (\textit{Hancock}, \textit{Bolt}, etc.); y proyectos cient\'ificos, como la herramienta \textit{open-source} \textit{Tensegrity Robotics Toolkit} de la NASA\footnote{http://bulletphysics.org/Bullet/phpBB3/viewtopic.php?f=17\&t=9978}; entre otros.\\
 Si bien (como se ver\'a m\'as adelante) \textit{Bullet} tiene problemas asociados con el coeficiente de restituci\'on, posee una muy buena \textit{performance} en la detecci\'on de colisiones, la din\'amica y la resoluci\'on de \textit{constraints}. Esto se debe, en parte, a diferentes algoritmos iterativos de orden lineal (donde el m\'as importante es \textit{Sequential Impulse}), de \textit{caching} y tambi\'en a la utilizaci\'on de un modelo de fricci\'on de Coulomb aproximado \cite{Catto}. Adem\'as, el motor f\'isico brinda la posibilidad de regular la precisi\'on requerida en estos c\'alculos (sin olvidar que, con iguales recursos, a mayor precisi\'on, mayor capacidad de c\'omputo requerida y, ergo, mayor tiempo). Dado que la construcci\'on del humanoide implica definir caracter\'isticas y restricciones de movimiento de cada una de sus partes, lo antes mencionado fue crucial para la elecci\'on de \textit{Bullet Physics} en este proyecto.
 
 \subsubsection{Funcionamiento}
@@ -368,8 +368,8 @@ El ensayo tiene como par\'ametros de entrada: $v_{i}$ (velocidad inicial) y $e_{
  \begin{equation}
   \epsilon_{rel} = \frac{e_{sim}-e_{medida}}{e_{sim}}
 \end{equation}
-
-Se muestran los experimentos num\'ericos realizados. En ellos, $v_{i}= \{$ -0.5, -3.5, -4, -5 y -10$\} \frac{m}{s}$ y $e_{sim}= \{ $0.2, 0.5 y 0.8$\} $.
+\\ Se muestra en la Tabla \ref{table1} lo arrojado por los experimentos num\'ericos efectuados. En ellos, \\
+$v_{i}= \{$ -0.5, -3.5, -4, -5 y -10$\} \frac{m}{s}$ y $e_{sim}= \{ $0.2, 0.5 y 0.8$\} $.
 \begin{table}[H]%
   \centering
   	\begin{tabular}{ | c | c || c | c | c | }
@@ -458,7 +458,7 @@ Se acompa\~nan a esta presentaci\'on: el c\'odigo fuente y el manual de instalac
 
 %\begin{adjustwidth}{1.1cm}{0cm}
 Dentro de los diversos modelos existentes (\cite{flexibleMuscle}\cite{Wojtyra}); en este proyecto se procur\'o utilizar uno que fuera sencillo pero representativo a la vez.\\ 
-Se modela al cuerpo humano, con el motor \textit{Bullet Physics}, como un conjunto de segmentos unidos por articulaciones (Fig. \ref{fig:humanoid}). A cada uno de ellos se les aplica una fuerza en el centro de masa de cada segmento (denominada Actuador). Que la caminata se produzca o no, depende del tipo de actuador utilizado (la funci\'on utilizada para la fuerza), y de sus par\'ametros. El objetivo, entonces, se reduce a encontrar dichos par\'ametros. Para eso se usan los algoritmos gen\'eticos, un m\'etodo de Inteligencia Artificial. De este modo, se obtiene, de forma an\'aloga a la selecci\'on natural, los individuos que mejor se adapten a la caminata. Tanto los actuadores como el algoritmo gen\'etico se explicar\'an m\'as adelante.
+Se modela al cuerpo humano, con el motor \textit{Bullet Physics}, como un conjunto de segmentos unidos por articulaciones (Fig. \ref{fig:humanoid}). A cada uno de ellos se les aplica una fuerza en el centro de masa de cada segmento (denominada Actuador). Que la caminata se produzca o no, depende del tipo de actuador utilizado (la funci\'on utilizada para la fuerza), y de sus par\'ametros. El objetivo, entonces, se reduce a encontrar dichos par\'ametros. Para eso se usan los algoritmos gen\'eticos, un m\'etodo de Inteligencia Artificial. De este modo se obtiene, de forma an\'aloga a la selecci\'on natural, los individuos que mejor se adapten a la caminata. Tanto los actuadores como el algoritmo gen\'etico se explicar\'an m\'as adelante.
 
 \begin{figure}[H]%
   \centering
@@ -469,7 +469,7 @@ Se modela al cuerpo humano, con el motor \textit{Bullet Physics}, como un conjun
 
 \subsection{Composici\'on F\'isica del Humanoide}
 Como ya se expres\'o, el humanoide fue modelado en \textit{Bullet} como un conjunto de segmentos (cuerpos r\'igidos), unidos por articulaciones. \\
-Se dividi\'o al cuerpo humano en: cabeza, tronco, miembro superior, pelvis y miembro inferior (muslo, pierna y pie). Considerar la mitad superior del cuerpo implicaba mayor complejidad (manejo de equilibrio, humanoide m\'as pesado y con mayor volumen, etc.). Ergo, solo se tom\'o la pelvis y el miembro inferior (ver Fig. \ref{fig:seg_and_art}).\\
+Se dividi\'o al cuerpo humano en: cabeza, tronco, miembro superior, pelvis y miembro inferior (muslo, pierna y pie). Pero a los fines de este proyecto, s\'olo se consideraron la pelvis y el miembro inferior (ver Fig. \ref{fig:seg_and_art}).\\
 A continuaci\'on se presenta la composici\'on de cada segmento (de acuerdo a la biomec\'anica \cite{biomechanics}). \\
 \begin {table}[H]
 	\begin{center}
@@ -494,7 +494,7 @@ A continuaci\'on se presenta la composici\'on de cada segmento (de acuerdo a la 
 %\end{adjustwidth}
 
 \subsection{Articulaciones}
-Para unir los distintos segmentos entre s\'i, se utilizaron articulaciones bisagra con 1 grado de libertad: en el eje Z, donde ocurre la caminata; y en el eje Y, perpendicular al piso (ver Fig. \ref{fig:seg_and_art}). \\
+Para unir los distintos segmentos entre s\'i, se utilizaron articulaciones bisagra con 1 grado de libertad: en el eje X, para que los segmentos puedan moverse en dos ejes: el Z, donde ocurre la caminata, y el Y, perpendicular al piso (ver Fig. \ref{fig:seg_and_art}). \\
 Asimismo, para cada caso en particular, se definieron cotas para los \'angulos que pueden existir entre los segmentos. Esto es muy importante, no s\'olo porque se adec\'ua a datos biol\'ogicos, sino porque, de otro modo la caminata no podr\'ia lograrse: si los \'angulos son demasiado altos, la caminata se produce girando las piernas por encima de la pelvis; si por el contrario, son demasiado bajos, las piernas van a estar muy r\'igidas, originando pocos pasos y muy cortos.\\
 Por otra parte, a la pelvis se le restringe todo tipo de rotaci\'on. \\
 
@@ -621,7 +621,7 @@ La informaci\'on gen\'etica de cada individuo, est\'a compuesta por dos partes: 
 
 \subsubsection{Par\'ametros}
 \label{sub:parametros}
-Tanto la funci\'on partida, como los actuadores, tienen como par\'ametros: amplitud ($A$ o $B$); fase ($\phi$), que indica d\'onde comienza el paso y se mide en radianes; frecuencia ($\omega$); y t\'ermino independiente ($C$).
+Tanto la funci\'on partida como los actuadores tienen como par\'ametros: amplitud ($A$ o $B$); fase ($\phi$), que indica d\'onde comienza el paso y se mide en radianes; frecuencia ($\omega$); y t\'ermino independiente ($C$).
 
 
 \subsubsection{Valores}
@@ -742,7 +742,7 @@ En la Tabla \ref{table7} se muestra la composici\'on del cromosoma de cada indiv
 	\end{tabular}
   \captionsetup{justification=centering}
   \caption{Cantidad de par\'ametros seg\'un tipo de actuador o funci\'on partida }%
-  \label{table7}%
+  \label{table6}%
 \end{table}
 
 
@@ -777,7 +777,7 @@ El papel de la funci\'on de \textit{fitness} $F$ en un algoritmo gen\'etico es e
 \begin{equation}
   F = H * V *D * S *  PA
 \end{equation}
-Los cuatro tienen la misma importancia y, por eso, como se ver\'a a continuaci\'on, est\'an definidos de forma similar (con una funci\'on exponencial y pueden valer entre 0 y 1). Con todo esto, dado que el \textit{fitness} est\'a pensado como un producto, basta con que uno de los m\'odulos sea muy chico para  ``anular'' al individuo (es decir, otorgarle un valor que tiende a cero). Sin embargo, los diferentes m\'odulos no son completamente independientes entre s\'i: por ejemplo, si la altura es demasiado baja, posiblemente la velocidad y la direcci\'on no sean adecuadas. \\
+Los cinco tienen la misma importancia y, por eso, como se ver\'a a continuaci\'on, est\'an definidos de forma similar (con una funci\'on exponencial y pueden valer entre 0 y 1). Con todo esto, dado que el \textit{fitness} est\'a pensado como un producto, basta con que uno de los m\'odulos sea muy chico para  ``anular'' al individuo (es decir, otorgarle un valor que tiende a cero). Sin embargo, los diferentes m\'odulos no son completamente independientes entre s\'i: por ejemplo, si la altura es demasiado baja, posiblemente la velocidad y la direcci\'on no sean adecuadas. \\
 %\end{adjustwidth}
 
 \subsubsection{Altura}
@@ -800,7 +800,7 @@ Indica qu\'e tan cercana es la velocidad del individuo con respecto a una veloci
 \begin{equation}
   V = \frac{\sum_{n=0}^{T} {e^{-C( v_{t_{n}} - V_{O} )^2  }}}{N}
 \end{equation}
-\\ donde $t_{0}$ es el tiempo inicial, $t_{T}$ el tiempo final, $v_{t_{n}}$ es la velocidad  y $V_{O}$ la velocidad objetivo en el eje Z (el eje de la caminata).
+\\ donde $t_{0}$ es el tiempo inicial, $t_{T}$ el tiempo final, $v_{t_{n}}$ es la velocidad de la pelvis en el instante de tiempo $t_{n}$, y $V_{O}$ la velocidad objetivo en el eje Z (el eje de la caminata).
 \\
 Sigue una l\'ogica y c\'alculo similares al factor de altura: a mayor discrepancia de la velocidad real del humanoide con $V_{O}$, menor (y m\'as cercano a cero) es el valor arrojado por el m\'odulo de velocidad. 
 
@@ -828,12 +828,12 @@ Para mayor simplicidad, la simetr\'ia $S$ se calcul\'o a partir de los pies (y n
 
 \subsubsection{Pies abajo}
 \label{piesabajo}
-Con los m\'odulos señalados anteriormente, se resalta que el humanoide camine con una velocidad y direcci\'on determinadas, que no se caiga y que mantenga simetr\'ia mientras ejecuta sus movimientos. Pero, todo esto dar\'ia, en el mejor de los casos, una caminata estilo ``estrella". \\
+Con los m\'odulos se\~nalados anteriormente, se resalta que el humanoide camine con una velocidad y direcci\'on determinadas, que no se caiga y que mantenga simetr\'ia mientras ejecuta sus movimientos. Pero, todo esto dar\'ia, en el mejor de los casos, una caminata estilo ``estrella". \\
 Sin embargo, una caracter\'istica fundamental en una caminata normal es que las piernas (ergo, los pies tambi\'en) no sobrepasen la cadera. Si bien \'esta es una propiedad negativa (expresa lo que no debe tener una caminata), y se puede correr el riesgo de restringir demasiado, su ausencia da resultados peores.
 \begin{equation}
  PA = \frac{\sum_{n=0}^{T} { \frac{1}{2} ( \alpha  [e^{-C( ldf ^2) } + e^{-C( rdf ^2) }]  } } {N}
 \end{equation}
-\\ donde  $\alpha = max(min(lf,rf)-hip,0),1) $ (es decir, vale 0 si la altura del pie izquierdo o derecho supera a la de la cadera, y 1 en otro caso); y $ldf $ y $rdf $ es la diferencia entre la posici\'on inicial de los pies y la altura en el momento $t_{n}$ de los pies izquierdo y derecho, respectivamente. \\
+\\ donde $ldf $ y $rdf $ son las diferencias entre la posici\'on inicial de los pies y la altura en el momento $t_{n}$ de los pies izquierdo y derecho, respectivamente, y $\alpha = max(min(lf,rf)-hip,0),1)$, siendo $lf$, $rf$ y $hip$ las alturas del pie izquierdo, pie derecho, y la cadera (es decir, vale 0 si la altura del pie izquierdo o derecho supera a la de la cadera, y 1 en otro caso). \\
 %\end{adjustwidth}
 
 
@@ -870,8 +870,10 @@ Dicha probabilidad de mutaci\'on es de 0.3.
 Considerando los individuos definidos en el punto xx, se realizaron experimentos, corriendo el algoritmo gen\'etico, y evaluando el resultado obtenido posteriormente (ya sea num\'erica o gr\'aficamente). A continuaci\'on se analizan distintos aspectos relevantes. 
 
 \subsection{Evoluci\'on del \textit{fitness} seg\'un tipo de individuo}
-En el caso del individuo de tipo 2, puede observarse que, aun cuando el \textit{fitness} llega a 0.6 (y no a 1, su cota superior), tiene un buen rendimiento, ya que, suponiendo que cada uno de los m\'odulos del \textit{fitness} est\'an al 90\%, se tendr\'ia que 0.9$^5 =$ 0.59.
 
+En el caso del individuo de tipo 2, puede observarse que, aun cuando el \textit{fitness} llega a 0.6 (y no a 1, su cota superior), tiene un buen rendimiento, ya que, suponiendo que cada uno de los m\'odulos del \textit{fitness} est\'an al 90\%, se tendr\'ia que 0.9$^5 =$ 0.59.
+Los individuos que usan actuadores de Fourier son los que producen \textit{fitness} m\'as bajos; el de orden 2 (individuo de tipo 3) se estanca a las pocas generaciones (al igual que el de tipo 1). El \textit{fitness} del individuo con actuadores Fourier de orden 9 se "ameseta" progresivamente (por la generaci\'on 500).\\
+Por otra parte, el individuo de tipo 5 (con actuadores doble coseno), va mejorando su \textit{fitness} paulatinamente. Esto es ben
 \begin{figure}[H]%
   \centering
   \frame{\includegraphics[width=0.75\linewidth]{resultados_001.png}} 

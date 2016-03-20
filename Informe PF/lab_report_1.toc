@@ -42,7 +42,7 @@
 \contentsline {subsection}{\numberline {7.1}Evoluci\'on del \textit {fitness} seg\'un tipo de individuo}{21}{subsection.7.1}
 \contentsline {subsection}{\numberline {7.2}Velocidad seg\'un tipo de individuo}{21}{subsection.7.2}
 \contentsline {subsection}{\numberline {7.3}Altura seg\'un tipo de individuo}{22}{subsection.7.3}
-\contentsline {subsection}{\numberline {7.4}Comparaci\'on de tipos de individuo}{22}{subsection.7.4}
+\contentsline {subsection}{\numberline {7.4}Comparaci\'on de tipos de individuo}{23}{subsection.7.4}
 \contentsline {subsection}{\numberline {7.5}Video}{23}{subsection.7.5}
 \contentsline {section}{\numberline {8}Conclusiones}{23}{section.8}
 \contentsline {section}{Referencias}{23}{section.8}

@@ -28,7 +28,7 @@
 #define FITNESS_EXPONENT_CONSTANT 5
 
 
-#define FIRST_STEP_TIME 0.7
+#define FIRST_STEP_TIME 0.0
 
 PassiveWalkerExperiment* PassiveWalkerExperiment::walkerInstance;
 

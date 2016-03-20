@@ -18,10 +18,10 @@ enum BodyType {
 
 // PARAMETERS
 #define POPULATION_SIZE             50
-#define GENERATIONS                 100
+#define GENERATIONS                 1000
 #define GENOME_MUTATION             0.3
 #define REPLACEMENT_PERCENTAGE      0.7
-#define LAST_RESULTS                (true || STATIC_PELVIS)
+#define LAST_RESULTS                (false || STATIC_PELVIS)
 #define PELVIS_EMPUJON              0 // 0 = no, 1 = yes
 #define RIEL                        0
 
@@ -31,9 +31,9 @@ enum BodyType {
 //#define     FIRST_STEP_DOUBLE_COSINE       1
 
 // SECOND STEP
-//#define     GENERIC                     1
+#define     GENERIC                     1
 //#define     FOURIER                   1
-#define     DOUBLE_COSINE             1
+//#define     DOUBLE_COSINE             1
 //#define     EXTRA_FOURIER             1
 
 
