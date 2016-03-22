@@ -865,24 +865,25 @@ En el algoritmo gen\'etico se utilizan 1000 generaciones, de 50 individuos cada 
 \section{Resultados Obtenidos}
 Considerando los individuos definidos en el punto \ref{individuos_implementacion}, se realizaron pruebas, corriendo el algoritmo gen\'etico, y evaluando el resultado obtenido posteriormente (ya sea num\'erica o gr\'aficamente). A continuaci\'on se analizan distintos aspectos relevantes. 
 
-\subsection{Evoluci\'on del \textit{fitness} seg\'un tipo de individuo}
+\subsection{Evoluci\'on del \textit{fitness} seg\'un tipo de individuos}
 
 Los individuos que usan actuadores de Fourier son los que producen \textit{fitness} m\'as bajos; el de orden 2 (individuo de tipo 3) se estanca a las pocas generaciones (al igual que el de tipo 1). El \textit{fitness} del individuo con actuadores Fourier de orden 9 se ``ameseta" progresivamente (despu\'es de 500 generaciones).\\
+El individuo de tipo 1 es el individuo con \textit{fitness} m\'as alto, pero que se obtuvo a las pocas generaciones (es decir que es un m\'aximo local). El individuo de tipo 2 (con actuadores gen\'ericos y funci\'on partida) va aumentando su \textit{fitness} progresivamente, aunque sin superar al de tipo 1.\\
 Por otra parte, el individuo de tipo 5 (con actuadores doble coseno), va mejorando su \textit{fitness} paulatinamente, lo que impide estancarse en un m\'aximo local. Adem\'as, tiene el segundo mejor \textit{fitness}.\\
 Puede notarse que los rangos manejados en la Fig. \ref{fig:resultados_fitness} casi alcanzan el 0.7 (y no a 1, su cota superior). Esto se debe a que la funci\'on de \textit{fitness} est\'a definida como un producto de ciertos m\'odulos: suponiendo que cada uno de ellos estuviera al 92\%, se tendr\'ia  0.92$^5 =$ 0.659.
 \begin{figure}[H]%
   \centering
   \frame{\includegraphics[width=0.75\linewidth]{resultados_001.png}} 
-  \caption{Evoluci\'on del \textit{fitness} seg\'un tipo de individuo}%
+  \caption{Evoluci\'on del \textit{fitness} seg\'un tipo de individuos}%
   \label{fig:resultados_fitness} %
 \end{figure}
 
-\subsection{Velocidad seg\'un tipo de individuo}
+\subsection{Velocidad seg\'un tipo de individuos}
 A continuaci\'on, se muestra, para cada individuo, su velocidad instant\'anea a lo largo del tiempo.
 \begin{figure}[H]%
   \centering
   \frame{\includegraphics[width=0.75\linewidth]{resultados_003.png}} 
-  \caption{Velocidad seg\'un tipo de individuo}%
+  \caption{Velocidad seg\'un tipo de individuos}%
   \label{fig:resultados_velocidad} %
 \end{figure}
 Como puede observarse en el caso de los individuos 3 y 4 (Fourier de orden 2 y 9, respectivamente), se producen picos altos y pronunciados en la velocidad. Eso repercute en que la velocidad media no sea 1.3 $\frac{m}{s}$ (que es la velocidad objetivo), y ergo, en el m\'odulo de velocidad del \textit{fitness} (provocando que \'este sea m\'as bajo).\\
@@ -890,12 +891,12 @@ Como puede observarse en el caso de los individuos 3 y 4 (Fourier de orden 2 y 9
 En el individuo de tipo 1, tambi\'en se producen picos un poco menos pronunciados, pero luego de los 10 segundos, no se registra ninguna velocidad. Eso sucede porque el humanoide queda suspendido cuando intenta caer hacia atr\'as.\\
 Por \'ultimo, en el individuo de tipo 5, la velocidad oscila de forma c\'iclica, continuada y armoniosa (no hay picos altos).
 
-\subsection{Altura seg\'un tipo de individuo}
+\subsection{Altura seg\'un tipo de individuos}
 Como puede identificarse en la Figura \ref{fig:resultados_altura}, la altura de los individuos es otra caracter\'istica para diferenciarlos en su rendimiento.\\ 
 \begin{figure}[H]%
   \centering
   \frame{\includegraphics[width=0.75\linewidth]{resultados_002.png}} 
-  \caption{Altura (posici\'on de la pelvis) seg\'un tipo de individuo}%
+  \caption{Altura (posici\'on de la pelvis) seg\'un tipo de individuos}%
   \label{fig:resultados_altura} %
 \end{figure}
 
