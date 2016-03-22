@@ -234,7 +234,7 @@ En base a los modelos f\'isico-matem\'aticos que representan a cada uno de los d
 
 \paragraph{Verificaci\'on del coeficiente de fricci\'on}\mbox{}
 
-Para determinar el modelo utilizado por \textit{Bullet} para simular las fuerzas resultantes sobre un cuerpo por acci\'on de la fricci\'on, se simul\'o un cubo, de $m_{cube}=1kg$ y $l_{cube}=1m$, que tiene una velocidad inicial constante ($v_{i}$) en el eje horizontal, que gradualmente se detiene por acci\'on de la fricci\'on, hasta llegar al reposo (Fig. \ref{fig:translatingCube}). 
+Para determinar el modelo utilizado por \textit{Bullet} para simular las fuerzas resultantes sobre un cuerpo por acci\'on de la fricci\'on, se simul\'o un cubo, de $m_{cube}=1kg$ y $l_{cube}=1m$, que tiene una velocidad inicial constante ($v_{i}$) en el eje horizontal, que gradualmente se detiene por acci\'on de la fricci\'on, hasta llegar al reposo (Fig. \ref{fig:translatingCube}).
 \begin{figure}[H]%
   \centering
   \frame{\includegraphics[width=0.4\linewidth]{translatingCube.png}}
@@ -249,8 +249,7 @@ En este caso, el cuerpo empieza su movimiento en el origen, por lo tanto la posi
 \begin{equation}
   -\boldsymbol{ F_{\mu_d} } = \mu_d \boldsymbol{F_N} 
 \end{equation}
-donde $\boldsymbol{F_N}=mg$ es la fuerza normal que act\'ua sobre la caja de masa $m$ por acci\'on de la gravedad $g = 10 \frac{m}{s}$, y $\mu_d$ es el coeficiente de fricci\'on din\'amico.\\
-
+donde $\boldsymbol{F_N}=mg$ es la fuerza normal que act\'ua sobre la caja de masa $m$ por acci\'on de la gravedad $g = 10 \frac{m}{s}$, y $\mu_d$ es el coeficiente de fricci\'on din\'amico.\\\\
 Finalmente, se obtiene la aceleraci\'on:
  \begin{equation}
   a = \frac{  \boldsymbol{F_{\mu_d}}   }{m}= \frac{-\mu_d\boldsymbol{F_N}}{m} = \frac{-\mu_d mg}{m} = -\mu_dmg
@@ -401,7 +400,6 @@ $v_{i}= \{$ -0.5, -3.5, -4, -5 y -10$\} \frac{m}{s}$ y $e_{sim}= \{ $0.2, 0.5 y 
   \caption{Coeficientes de restituci\'on obtenidos de simular el sistema descripto en Fig. \ref{fig:fallingBall} }%
   \label{table1}%
 \end{table}
-
 Los resultados exponen una limitaci\'on del motor f\'isico: no representa correctamente las colisiones el\'asticas entre esferas y cuerpos r\'igidos, que ocurren a velocidades bajas. Esto queda en evidencia en la Tabla \ref{table1}. En cada una de ellas el error fue de casi 1. La raz\'on por la que ocurre este hecho se debe a que \textit{Bullet} utiliza un algoritmo de colisi\'on que frena la velocidad de un objeto que est\'a a punto de colisionar. Haciendo esto puede evitar que los s\'olidos se traspasen y de esta forma se pueden realizar c\'alculos de fuerza m\'as precisos. \\
 En el caso de los ensayos, las esferas poseen una velocidad muy baja, cuando est\'an a punto de colisionar \textit{Bullet} reduce a\'un m\'as esta velocidad y eventualmente quedan con una velocidad tan baja que al chocar contra el suelo se aplica el efecto restitutivo a esta velocidad casi nula y se resuelve que la esfera debe quedar en reposo, cuando en realidad deber\'ia poseer una velocidad baja, pero no despreciable.
 
