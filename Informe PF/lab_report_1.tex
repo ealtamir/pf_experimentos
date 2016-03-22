@@ -183,7 +183,7 @@ Este proyecto tiene como objetivo crear una simulaci\'on y animaci\'on de un hum
 Siempre ha sido de inter\'es la simulaci\'on biomec\'anica de seres vivos, especialmente en las ciencias naturales (zoolog\'ia, medicina, etc.). \\
 Ahora bien, \'ultimamente se ha incrementado el inter\'es en otras \'areas de aplicaci\'on, como los videojuegos (creaci\'on de personajes con reacciones m\'as reales), y la ingenier\'ia (verbigracia: dise\~no de espacios cerrados, con mayores medidas de seguridad).\\
 Una caracter\'istica muy importante de este trabajo es que el humanoide no es fruto de una animaci\'on, sino un objeto compuesto de segmentos f\'isicos, que interaccionan entre s\'i y con el entorno, por medio de las leyes f\'isicas; agregando as\'i realismo a la situaci\'on simulada.  La otra propiedad es que el b\'ipedo aprenda por s\'i solo a caminar en l\'inea recta, sin tener en su trayectoria ning\'un obst\'aculo.\\
-Este problema se puede abordar de diversas maneras, involucrando: redes neuronales\footnote{Una red neuronal es un paradigma de aprendizaje autom\'atico. Se trata de un sistema de interconexi\'on de neuronas que colaboran entre s\'i, para producir un est\'imulo de salida. Dada una entrada del sistema, se produce una salida, originada por varias transformaciones intermedias.}, sistemas de control\footnote{definir sistema de control} (\textit{passive walkers}\footnote{Un \textit{passive walker} utiliza el movimiento natural (\textit{swinging}) de las piernas para ahorrar energ\'ia usada por motores. Para caminar, calcula la posici\'on de ciertos puntos (las articulaciones, mayormente).}), algoritmos gen\'eticos, entre otras. Pero varios de ellos implican modelos te\'oricos complejos de humanoide (considerando m\'usculos con distintos materiales, etc.). \\ 
+Este problema se puede abordar de diversas maneras, involucrando: redes neuronales \footnote{Una red neuronal es un paradigma de aprendizaje autom\'atico. Se trata de un sistema de interconexi\'on de neuronas que colaboran entre s\'i, para producir un est\'imulo de salida. Dada una entrada del sistema, se produce una salida, originada por varias transformaciones intermedias.}, sistemas de control\footnote{Un sistema de control es un dispositivo (o conjunto de) que maneja, dirige o regula el comportamiento de otros dispositivos o sistemas, para minimizar los fallos y obtener los resultados deseados.} (\textit{passive walkers}\footnote{Un \textit{passive walker} utiliza el movimiento natural (\textit{swinging}) de las piernas para ahorrar energ\'ia usada por motores. Para caminar, calcula la posici\'on de ciertos puntos (las articulaciones, mayormente).})\cite{Wojtyra}, algoritmos gen\'eticos\cite{flexibleMuscle}, entre otras. Pero varios de ellos implican modelos te\'oricos complejos de humanoide (considerando m\'usculos con distintos materiales, etc.). \\ 
 En este proyecto se busc\'o aplicar algoritmos gen\'eticos, y lograr la caminata usando un modelo de humanoide basado en cuerpos r\'igidos, unidos por articulaciones, y cuyo desplazamiento depende de torques aplicados a dichos cuerpos. \\
 El presente informe, describe y analiza pormenorizadamente: en la secci\'on 2, las herramientas aplicadas; en la 3, el modelo del humanoide utilizado; en la 4 y 5, los diferentes tipos de actuadores y funciones de partida y contorno; en la 6, el algoritmo gen\'etico; y en la 7 y 8, los resultados obtenidos con sus respectivas conclusiones.
 
@@ -230,30 +230,26 @@ de c\'omputo.
 
 %\begin{adjustwidth}{1.3cm}{0cm}
 Hay reglas f\'isicas relacionadas con el entorno y que son muy importantes para la caminata: el modelo de fricci\'on, con sus respectivos coeficientes de fricci\'on y restituci\'on.\\  
-\\\\En base a los modelos f\'isico-matem\'aticos que representan a cada uno de los dos fen\'omenos en cuesti\'on (y que se explicar\'an a continuaci\'on), y pensando en posibles futuras simulaciones de varios humanoides chocando e interactuando entre s\'i; se llevaron a cabo dos ensayos para verificar el funcionamiento del simulador f\'isico \textit{Bullet}.
+En base a los modelos f\'isico-matem\'aticos que representan a cada uno de los dos fen\'omenos en cuesti\'on (y que se explicar\'an a continuaci\'on), y pensando en posibles futuras simulaciones de varios humanoides chocando e interactuando entre s\'i; se llevaron a cabo dos ensayos para verificar el funcionamiento del simulador f\'isico \textit{Bullet}.
 
 \paragraph{Verificaci\'on del coeficiente de fricci\'on}\mbox{}
 
 Para determinar el modelo utilizado por \textit{Bullet} para simular las fuerzas resultantes sobre un cuerpo por acci\'on de la fricci\'on, se simul\'o un cubo, de $m_{cube}=1kg$ y $l_{cube}=1m$, que tiene una velocidad inicial constante ($v_{i}$) en el eje horizontal, que gradualmente se detiene por acci\'on de la fricci\'on, hasta llegar al reposo (Fig. \ref{fig:translatingCube}). 
-
 \begin{figure}[H]%
   \centering
   \frame{\includegraphics[width=0.4\linewidth]{translatingCube.png}}
     \caption{Visualizaci\'on del sistema del cubo}
     \label{fig:translatingCube} 
 \end{figure} 
-
-
-Para este experimento se utiliz\'o el modelo matem\'atico que representa la posici\'on del cuerpo en el eje horizontal en funci\'on del tiempo $t$, representado por la siguiente ecuaci\'on:
- 
+Para esta prueba se utiliz\'o el modelo matem\'atico que representa la posici\'on del cuerpo en el eje horizontal en funci\'on del tiempo $t$, representado por la siguiente ecuaci\'on: 
  \begin{equation}
   x(t) = x_i +v_i t+\frac{1}{2} at^2
 \end{equation}
-\\ En este caso, el cuerpo empieza su movimiento en el origen, por lo tanto la posici\'on inicial ($x_i$) es cero. $v_{i}$ es la velocidad inicial, y $a$, la aceleraci\'on. Debido a la fricci\'on entre el cuerpo y el suelo, se genera una fuerza de rozamiento $\boldsymbol{ F_{\mu_{d}} } $\footnote{En las ecuaciones, los vectores se escriben en negrita. Y las fuerzas son vectores.} (ec. (2)) en la misma direcci\'on que la velocidad del s\'olido y en sentido contrario.\\
+En este caso, el cuerpo empieza su movimiento en el origen, por lo tanto la posici\'on inicial ($x_i$) es cero. $v_{i}$ es la velocidad inicial, y $a$, la aceleraci\'on. Debido a la fricci\'on entre el cuerpo y el suelo, se genera una fuerza de rozamiento $\boldsymbol{ F_{\mu_{d}} } $\footnote{En las ecuaciones, los vectores se escriben en negrita. Y las fuerzas son vectores.} (ec. (2)) en la misma direcci\'on que la velocidad del s\'olido y en sentido contrario.
 \begin{equation}
   -\boldsymbol{ F_{\mu_d} } = \mu_d \boldsymbol{F_N} 
 \end{equation}
-donde $\boldsymbol{F_N}=mg$ es la fuerza normal que act\'ua sobre la caja de masa $m$ por acci\'on de la gravedad $g$, y $\mu_d$ es el coeficiente de fricci\'on din\'amico.\\
+donde $\boldsymbol{F_N}=mg$ es la fuerza normal que act\'ua sobre la caja de masa $m$ por acci\'on de la gravedad $g = 10 \frac{m}{s}$, y $\mu_d$ es el coeficiente de fricci\'on din\'amico.\\
 
 Finalmente, se obtiene la aceleraci\'on:
  \begin{equation}
@@ -261,10 +257,12 @@ Finalmente, se obtiene la aceleraci\'on:
 \end{equation}
 Considerando las ec. (1) y (3), se puede obtener el modelo matem\'atico que predice el movimiento de la caja:
  \begin{equation}
+ \label{modelo_cube}
   x(t) = x_i +v_i t-\frac{1}{2} \mu_d gt^2
 \end{equation}
-\\
-
+El intervalo de tiempo f\'isico (o \textit{timestep}) utilizado es $\Delta t=\frac{1}{60} s$. El \textit{timestep} de animaci\'on (es decir,
+cada cu\'anto tiempo se guardan en un archivo los datos logrados) es $\Delta t' = $0.1 y el tiempo de simulaci\'on es de $s=100\Delta t$.\\
+Seguidamente, se muestran los gr\'aficos obtenidos al correr los experimentos num\'ericos con los siguientes valores: $v_{i}= \{$ 1, 3 y 10$\} \frac{m}{s}$ y $\mu_{d}= \{ $0.25, 0.50 y 0.75$\} $. Se compara la distancia en el eje Z de la caja en Bullet con su distancia en el mismo eje seg\'un la ec. (\ref{modelo_cube}). 
 \begin{figure}[H]%
   \centering
   \subfloat[][]{
@@ -337,12 +335,8 @@ Considerando las ec. (1) y (3), se puede obtener el modelo matem\'atico que pred
   \label{fig3} %
   \vspace*{0ex}
 \end{figure}
-
-
-Los gr\'aficos (Fig. \ref{fig1}, \ref{fig2} y \ref{fig3}) demuestran que los resultados de las pruebas fueron favorables. Los valores obtenidos a partir de la simulaci\'on se corresponden con los alcanzados a partir del modelo matem\'atico. Esto es un indicador de que \textit{Bullet} debe estar usando dichos modelos para ejecutar las simulaciones.\\
-No obstante, cabe destacar que, los gr\'aficos que corresponden a la Fig. \ref{fig3}, presentan una discrepancia mayor entre la simulaci\'on y el modelo. Este hecho puede deberse a que cuanto menor sea la cantidad de puntos tomados, menor ser\'a la resoluci\'on de la simulaci\'on, y mayor ser\'a el error cometido.
-
-%Los resultados obtenidos (ver Fig. \ref{fig1}, \ref{fig2} y \ref{fig3}) exponen que posiblemente \textit{Bullet} utilice el modelo antes expuesto a la hora de simular. No obstante, vale aclarar que, cuanto mayor sea el paso de simulaci\'on  (o \textit{timestep}) empleado, mayor es la discrepancia entre la simulaci\'on y el modelo, posiblemente porque la precisi\'on es menor y eso lleva a cometer un error mayor.
+Las Fig. \ref{fig1} y \ref{fig2} demuestran que los resultados de las pruebas fueron favorables. Los valores obtenidos a partir de la simulaci\'on se corresponden (en mayor o menor medida) con los alcanzados a partir del modelo matem\'atico. Esto es un indicador de que \textit{Bullet} debe estar usando dichos modelos para ejecutar las simulaciones. Vale observar que, cuanto mayor es la velocidad inicial ($v_{i}$), mayor es la similitud entre los dos casos.\\
+No obstante, los gr\'aficos que corresponden a la Fig. \ref{fig3}, presentan una discrepancia mayor entre la simulaci\'on y el modelo. Este hecho puede deberse al mecanismo utilizado por \textit{Bullet} para resolver la fricci\'on de un cuerpo a velocidades muy bajas.
 
 \paragraph{Verificaci\'on del coeficiente de restituci\'on}\mbox{}
 
@@ -378,29 +372,29 @@ $v_{i}= \{$ -0.5, -3.5, -4, -5 y -10$\} \frac{m}{s}$ y $e_{sim}= \{ $0.2, 0.5 y 
 	  		$\boldsymbol{v_{i}}$ & $\boldsymbol{e_{sim}}$ & $\boldsymbol{v_{f}}$ & $\boldsymbol{e_{medida}}$ & $\boldsymbol{\epsilon_{rel}}$ \\
 			\hline 
 			\hline
-			\multirow{3}{*}{\textbf{-0.5} $\boldsymbol{\frac{m}{s}}$} & \textbf{0.2} & 0.000249 $\frac{m}{s}$& 0.000498 & 0.997\\ \cline{2-5}
-								& \textbf{0.5} & 0.000219 $\frac{m}{s}$ & 0.000438 & 0.999\\ \cline{2-5}
-	  							& \textbf{0.8} & 0.001037 $\frac{m}{s}$ & 0.002074 & 0.997 \\ \cline{2-5}
+			\multirow{3}{*}{-0.5 $\boldsymbol{\frac{m}{s}}$} & 0.2 & 0.000249 $\frac{m}{s}$& 0.000498 & 0.997\\ \cline{2-5}
+								& 0.5 & 0.000219 $\frac{m}{s}$ & 0.000438 & 0.999\\ \cline{2-5}
+	  							& 0.8 & 0.001037 $\frac{m}{s}$ & 0.002074 & 0.997 \\ \cline{2-5}
 	  		\hline 
 			\hline
-			\multirow{3}{*}{\textbf{-3.5} $\boldsymbol{\frac{m}{s}}$} & \textbf{0.2} & 0.000057 $\frac{m}{s}$ & 0 & 1\\ \cline{2-5}
-	  							& \textbf{0.5} & 0.000018 $\frac{m}{s}$ & 0 & 1 \\ \cline{2-5}
-								& \textbf{0.8} & 0.3 $\frac{m}{s}$ & 0.0857 & 0.893 \\ \cline{2-5}
+			\multirow{3}{*}{-3.5 $\boldsymbol{\frac{m}{s}}$} & 0.2 & 0.000057 $\frac{m}{s}$ & 0 & 1\\ \cline{2-5}
+	  							& 0.5 & 0.000018 $\frac{m}{s}$ & 0 & 1 \\ \cline{2-5}
+								& 0.8 & 0.3 $\frac{m}{s}$ & 0.0857 & 0.893 \\ \cline{2-5}
 	  		\hline
 			\hline
-			\multirow{3}{*}{\textbf{-4} $\boldsymbol{\frac{m}{s}}$} & \textbf{0.2} & 0.000473 $\frac{m}{s}$ & 0.00012 & 1\\ \cline{2-5}
-	  							& \textbf{0.5} & 0.000424 $\frac{m}{s}$ & 0.00011 & 1 \\ \cline{2-5}
-	  							& \textbf{0.8} & 1.23 $\frac{m}{s}$ & 0.3 & 0.625 \\ \cline{2-5}
+			\multirow{3}{*}{-4 $\boldsymbol{\frac{m}{s}}$} & 0.2 & 0.000473 $\frac{m}{s}$ & 0.00012 & 1\\ \cline{2-5}
+	  							& 0.5 & 0.000424 $\frac{m}{s}$ & 0.00011 & 1 \\ \cline{2-5}
+	  							& 0.8 & 1.23 $\frac{m}{s}$ & 0.3 & 0.625 \\ \cline{2-5}
 	  		\hline
 			\hline
-			\multirow{3}{*}{\textbf{-5} $\boldsymbol{\frac{m}{s}}$} & \textbf{0.2} & 1 $\frac{m}{s}$ & 0.2 & 0 \\ \cline{2-5}
-	  							& \textbf{0.5} & 2.5 $\frac{m}{s}$ & 0.5 & 0 \\ \cline{2-5}
-	  							& \textbf{0.8} & 4 $\frac{m}{s}$ & 0.8 & 0 \\ \cline{2-5}
+			\multirow{3}{*}{-5 $\boldsymbol{\frac{m}{s}}$} & 0.2 & 1 $\frac{m}{s}$ & 0.2 & 0 \\ \cline{2-5}
+	  							& 0.5 & 2.5 $\frac{m}{s}$ & 0.5 & 0 \\ \cline{2-5}
+	  							& 0.8 & 4 $\frac{m}{s}$ & 0.8 & 0 \\ \cline{2-5}
 			\hline
 			\hline
-			\multirow{3}{*}{\textbf{-10} $\boldsymbol{\frac{m}{s}}$} & \textbf{0.2} & 2 $\frac{m}{s}$ & 0.2 & 0\\ \cline{2-5}
-	  							& \textbf{0.5} & 5 $\frac{m}{s}$ & 0.5 & 0 \\ \cline{2-5}
-	  							& \textbf{0.8} & 8 $\frac{m}{s}$ & 0.8 & 0 \\ \cline{2-5}
+			\multirow{3}{*}{-10 $\boldsymbol{\frac{m}{s}}$} & 0.2 & 2 $\frac{m}{s}$ & 0.2 & 0\\ \cline{2-5}
+	  							& 0.5 & 5 $\frac{m}{s}$ & 0.5 & 0 \\ \cline{2-5}
+	  							& 0.8 & 8 $\frac{m}{s}$ & 0.8 & 0 \\ \cline{2-5}
 			\hline
 	\end{tabular}
   \captionsetup{justification=centering}
@@ -458,7 +452,7 @@ Se acompa\~nan a esta presentaci\'on: el c\'odigo fuente y el manual de instalac
 \section{Modelo Utilizado}
 
 %\begin{adjustwidth}{1.1cm}{0cm}
-Dentro de los diversos modelos existentes (\cite{flexibleMuscle}\cite{Wojtyra}); en este proyecto se procur\'o utilizar uno que fuera sencillo pero representativo a la vez.\\ 
+Dentro de los diversos modelos existentes (\cite{Wojtyra}\cite{flexibleMuscle}); en este proyecto se procur\'o utilizar uno que fuera sencillo pero representativo a la vez.\\ 
 Se modela al cuerpo humano, con el motor \textit{Bullet Physics}, como un conjunto de segmentos unidos por articulaciones (Fig. \ref{fig:humanoid}). A cada uno de ellos se les aplica una fuerza en el centro de masa de cada segmento (denominada Actuador). Que la caminata se produzca o no, depende del tipo de actuador utilizado (la funci\'on utilizada para la fuerza), y de sus par\'ametros. El objetivo, entonces, se reduce a encontrar dichos par\'ametros. Para eso se usan los algoritmos gen\'eticos, un m\'etodo de Inteligencia Artificial. De este modo se obtiene, de forma an\'aloga a la selecci\'on natural, los individuos que mejor se adapten a la caminata. Tanto los actuadores como el algoritmo gen\'etico se explicar\'an m\'as adelante.
 
 \begin{figure}[H]%
@@ -470,7 +464,7 @@ Se modela al cuerpo humano, con el motor \textit{Bullet Physics}, como un conjun
 
 \subsection{Composici\'on F\'isica del Humanoide}
 Como ya se expres\'o, el humanoide fue modelado en \textit{Bullet} como un conjunto de segmentos (cuerpos r\'igidos), unidos por articulaciones. \\
-Se dividi\'o al cuerpo humano en: cabeza, tronco, miembro superior, pelvis y miembro inferior (muslo, pierna y pie). Pero a los fines de este proyecto, s\'olo se consideraron la pelvis y el miembro inferior (ver Fig. \ref{fig:seg_and_art}).\\
+Se dividi\'o al cuerpo humano en: cabeza, tronco, miembro superior, pelvis y miembro inferior (muslo, pierna y pie). A los fines de este proyecto, s\'olo se consideraron la pelvis y el miembro inferior (ver Fig. \ref{fig:seg_and_art}).\\
 A continuaci\'on se presenta la composici\'on de cada segmento (de acuerdo a la biomec\'anica \cite{biomechanics}). \\
 \begin {table}[H]
 	\begin{center}
@@ -940,6 +934,10 @@ Los actuadores fueron important\'isimos.
 %----------------------------------------------------------------------------------------
 
 \begin{thebibliography}{1}
+\bibitem{Wojtyra}
+Marek Wojtyra, \emph{Multibody Simulation Model of Human Walking - Warsaw University of Technology, 2003}
+\bibitem{flexibleMuscle}
+Thomas Geijtenbeek, Michiel van de Panne y A. Frank van der Stappen, \emph{Flexible Muscle-Based Locomotion for Bipedal Creatures, 2013 }
 \bibitem{wikiPhysicsEngine} Wikipedia: $https://es.wikipedia.org/wiki/Physics\_engine$
 \bibitem{Comparissons}
 Andreas Gerndt y otros, \emph{An Evaluation of Open Source Physics Engines for Use in Virtual Reality Assembly Simulations. Fecha de publicaci\'on: 2012}
@@ -949,10 +947,6 @@ Tom Erez y otros, \emph{Simulation Tools for Model-Based Robotics: Comparison of
 \bibitem{Catto}
 Erin Catto, \emph{Iterative Dynamic with Temporal Coherence. Fecha de publicaci\'on: 2005}
 \bibitem{LinkGaLib} Sitio web de GaLib: $http://lancet.mit.edu/ga/$
-\bibitem{flexibleMuscle}
-Thomas Geijtenbeek, Michiel van de Panne y A. Frank van der Stappen, \emph{Flexible Muscle-Based Locomotion for Bipedal Creatures, 2013 }
-\bibitem{Wojtyra}
-Marek Wojtyra, \emph{Multibody Simulation Model of Human Walking - Warsaw University of Technology, 2003}
 \bibitem{biomechanics} $http://www.exrx.net/Kinesiology/Segments.html$
 \bibitem{Cuadrupedo}
 Kevin Kenny, M\'aximo Videla y Axel Wassington, \emph{Proyecto Final para la obtenci\'on del t\'itulo: Ingeniero en Inform\'atica - ITBA, 2014}
