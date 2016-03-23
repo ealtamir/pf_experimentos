@@ -165,7 +165,7 @@
 Este proyecto tiene como objetivo crear una simulaci\'on y animaci\'on de un humano virtual, con las siguientes propiedades:
 \begin{itemize}[leftmargin=5.5mm]
 \item Biomec\'anica: que tanto su estructura (peso, altura y posici\'on de cada una de sus partes) como su interacci\'on con el entorno, respondan a comportamientos f\'isicos reales y exactos.
-\item Inteligencia Artificial: que aprenda a caminar por s\'i mismo, utilizando para ello m\'etodos de \textit{soft computing} como Algoritmos Gen\'eticos.
+\item Inteligencia artificial: que aprenda a caminar por s\'i mismo, utilizando para ello m\'etodos de \textit{soft computing} como algoritmos gen\'eticos.
 \end{itemize}
 
 \end{adjustwidth}
@@ -183,8 +183,8 @@ Este proyecto tiene como objetivo crear una simulaci\'on y animaci\'on de un hum
 Siempre ha sido de inter\'es la simulaci\'on biomec\'anica de seres vivos, especialmente en las ciencias naturales (zoolog\'ia, medicina, etc.). \\
 Ahora bien, \'ultimamente se ha incrementado el inter\'es en otras \'areas de aplicaci\'on, como los videojuegos (creaci\'on de personajes con reacciones m\'as reales), y la ingenier\'ia (verbigracia: dise\~no de espacios cerrados, con mayores medidas de seguridad).\\
 Una caracter\'istica muy importante de este trabajo es que el humanoide no es fruto de una animaci\'on, sino un objeto compuesto de segmentos f\'isicos, que interaccionan entre s\'i y con el entorno, por medio de las leyes f\'isicas; agregando as\'i realismo a la situaci\'on simulada.  La otra propiedad es que el b\'ipedo aprenda por s\'i solo a caminar en l\'inea recta, sin tener en su trayectoria ning\'un obst\'aculo.\\
-Este problema se puede abordar de diversas maneras, involucrando: redes neuronales \footnote{Una red neuronal es un paradigma de aprendizaje autom\'atico. Se trata de un sistema de interconexi\'on de neuronas que colaboran entre s\'i, para producir un est\'imulo de salida. Dada una entrada del sistema, se produce una salida, originada por varias transformaciones intermedias.}, sistemas de control\footnote{Un sistema de control es un dispositivo (o conjunto de) que maneja, dirige o regula el comportamiento de otros dispositivos o sistemas, para minimizar los fallos y obtener los resultados deseados.} (\textit{passive walkers}\footnote{Un \textit{passive walker} utiliza el movimiento natural (\textit{swinging}) de las piernas para ahorrar energ\'ia usada por motores. Para caminar, calcula la posici\'on de ciertos puntos (las articulaciones, mayormente).})\cite{Wojtyra}, algoritmos gen\'eticos\cite{flexibleMuscle}, entre otras. Pero varios de ellos implican modelos te\'oricos complejos de humanoide (considerando m\'usculos con distintos materiales, etc.). \\ 
-En este proyecto se busc\'o aplicar algoritmos gen\'eticos, y lograr la caminata usando un modelo de humanoide basado en cuerpos r\'igidos, unidos por articulaciones, y cuyo desplazamiento depende de torques aplicados a dichos cuerpos. \\
+Este problema se puede abordar de diversas maneras, involucrando: redes neuronales\footnote{Una red neuronal es un paradigma de aprendizaje autom\'atico. Se trata de un sistema de interconexi\'on de neuronas que colaboran entre s\'i, para producir un est\'imulo de salida. Dada una entrada del sistema, se produce una salida, originada por varias transformaciones intermedias.}, sistemas de control\footnote{Un sistema de control es un dispositivo (o conjunto de) que maneja, dirige o regula el comportamiento de otros dispositivos o sistemas, para minimizar los fallos y obtener los resultados deseados.} (\textit{passive walkers}\footnote{Un \textit{passive walker} utiliza el movimiento natural (\textit{swinging}) de las piernas para ahorrar energ\'ia usada por motores. Para caminar, calcula la posici\'on de ciertos puntos (las articulaciones, mayormente).})\cite{Wojtyra}, algoritmos gen\'eticos\cite{flexibleMuscle}, entre otras. Pero varios de ellos implican modelos te\'oricos complejos de humanoide (considerando m\'usculos con distintos materiales, etc.). \\ 
+En este proyecto se busc\'o aplicar algoritmos gen\'eticos, y lograr la caminata usando un modelo de humanoide basado en un conjunto de segmentos (cuerpos r\'igidos), unidos entre s\'i por articulaciones, cuyo desplazamiento depende de torques aplicados a dichos cuerpos, y sus par\'ametros se ajustan a partir de la evoluci\'on del algoritmo. \\
 El presente informe, describe y analiza pormenorizadamente: en la secci\'on 2, las herramientas aplicadas; en la 3, el modelo del humanoide utilizado; en la 4 y 5, los diferentes tipos de actuadores y funciones de partida y contorno; en la 6, el algoritmo gen\'etico; y en la 7 y 8, los resultados obtenidos con sus respectivas conclusiones.
 
 %\end{adjustwidth}
@@ -198,10 +198,10 @@ El presente informe, describe y analiza pormenorizadamente: en la secci\'on 2, l
 \section{Herramientas}
 
 %\begin{adjustwidth}{1cm}{0cm}
-\subsection{Motor F\'isico}
+\subsection{Motor f\'isico}
 
 %\begin{adjustwidth}{1.2cm}{0cm}
-Se le llama motor f\'isico o \textit{physics engine} a un  ``\textit{software} capaz de realizar simulaciones de ciertos sistemas f\'isicos, como la din\'amica del cuerpo r\'igido, el movimiento de un fluido y la elasticidad" \cite{wikiPhysicsEngine}. \\
+Se llama motor f\'isico o \textit{physics engine} a un  ``\textit{software} capaz de realizar simulaciones de ciertos sistemas f\'isicos, como la din\'amica del cuerpo r\'igido, el movimiento de un fluido y la elasticidad" \cite{wikiPhysicsEngine}. \\
 Actualmente, existen muchos motores f\'isicos: ya sea de c\'odigo propietario (\textit{PhysX}, \textit{Havok}), como \textit{open-source} (\textit{Bullet Physics}, \textit{Box2D}, \textit{Newton}, \textit{OGRE}). Considerando an\'alisis relacionados \cite{Comparissons}\cite{Comparissons2}, y el hecho de que el espacio simulado fuese en 3D, se decidi\'o que \textit{Bullet Physics}\cite{LinkBullet} es el m\'as id\'oneo. Est\'a implementado en C++ y ha sido utilizado en varios juegos (\textit{Grand Theft Auto IV} y \textit{V}, etc); en los efectos especiales de pel\'iculas (\textit{Hancock}, \textit{Bolt}, etc.); y proyectos cient\'ificos, como la herramienta \textit{open-source} \textit{Tensegrity Robotics Toolkit} de la NASA\footnote{http://bulletphysics.org/Bullet/phpBB3/viewtopic.php?f=17\&t=9978}; entre otros.\\
 Si bien (como se ver\'a m\'as adelante) \textit{Bullet} tiene problemas asociados con el coeficiente de restituci\'on, posee una muy buena \textit{performance} en la detecci\'on de colisiones, la din\'amica y la resoluci\'on de \textit{constraints}. Esto se debe, en parte, a diferentes algoritmos iterativos de orden lineal (donde el m\'as importante es \textit{Sequential Impulse}), de \textit{caching} y tambi\'en a la utilizaci\'on de un modelo de fricci\'on de Coulomb aproximado \cite{Catto}. Adem\'as, el motor f\'isico brinda la posibilidad de regular la precisi\'on requerida en estos c\'alculos (sin olvidar que, con iguales recursos, a mayor precisi\'on, mayor capacidad de c\'omputo requerida y, ergo, mayor tiempo). Dado que la construcci\'on del humanoide implica definir caracter\'isticas y restricciones de movimiento de cada una de sus partes, lo antes mencionado fue crucial para la elecci\'on de \textit{Bullet Physics} en este proyecto.
 
@@ -240,12 +240,12 @@ Para determinar el modelo utilizado por \textit{Bullet} para simular las fuerzas
   \frame{\includegraphics[width=0.4\linewidth]{translatingCube.png}}
     \caption{Visualizaci\'on del sistema del cubo}
     \label{fig:translatingCube} 
-\end{figure} 
-Para esta prueba se utiliz\'o el modelo matem\'atico que representa la posici\'on del cuerpo en el eje horizontal en funci\'on del tiempo $t$, representado por la siguiente ecuaci\'on: 
+\end{figure}
+\noindent Para esta prueba se utiliz\'o el modelo matem\'atico que representa la posici\'on del cuerpo en el eje horizontal en funci\'on del tiempo $t$, representado por la siguiente ecuaci\'on: 
  \begin{equation}
   x(t) = x_i +v_i t+\frac{1}{2} at^2
 \end{equation}
-En este caso, el cuerpo empieza su movimiento en el origen, por lo tanto la posici\'on inicial ($x_i$) es cero. $v_{i}$ es la velocidad inicial, y $a$, la aceleraci\'on. Debido a la fricci\'on entre el cuerpo y el suelo, se genera una fuerza de rozamiento $\boldsymbol{ F_{\mu_{d}} } $\footnote{En las ecuaciones, los vectores se escriben en negrita. Y las fuerzas son vectores.} (ec. (2)) en la misma direcci\'on que la velocidad del s\'olido y en sentido contrario.
+En este caso, el cuerpo empieza su movimiento en el origen, por lo tanto la posici\'on inicial ($x_i$) es cero. $v_{i}$ es la velocidad inicial, y $a$, la aceleraci\'on. Debido a la fricci\'on entre el cuerpo y el suelo, se genera una fuerza de rozamiento $\boldsymbol{ F_{\mu_{d}} } $\footnote{En las ecuaciones, los vectores se escriben en negrita.} (ec. (2)) en la misma direcci\'on que la velocidad del s\'olido y en sentido contrario.
 \begin{equation}
   -\boldsymbol{ F_{\mu_d} } = \mu_d \boldsymbol{F_N} 
 \end{equation}
@@ -334,7 +334,7 @@ Seguidamente, se muestran los gr\'aficos obtenidos al correr los experimentos nu
   \label{fig3} %
   \vspace*{0ex}
 \end{figure}
-Las Fig. \ref{fig1} y \ref{fig2} demuestran que los resultados de las pruebas fueron favorables. Los valores obtenidos a partir de la simulaci\'on se corresponden (en mayor o menor medida) con los alcanzados a partir del modelo matem\'atico. Esto es un indicador de que \textit{Bullet} debe estar usando dichos modelos para ejecutar las simulaciones. Vale observar que, cuanto mayor es la velocidad inicial ($v_{i}$), mayor es la similitud entre los dos casos.\\
+\noindent Las Fig. \ref{fig1} y \ref{fig2} demuestran que los resultados de las pruebas fueron favorables. Los valores obtenidos a partir de la simulaci\'on se corresponden (en mayor o menor medida) con los alcanzados a partir del modelo matem\'atico. Esto es un indicador de que \textit{Bullet} debe estar usando dichos modelos para ejecutar las simulaciones. Vale observar que, cuanto mayor es la velocidad inicial ($v_{i}$), mayor es la similitud entre los dos casos.\\
 No obstante, los gr\'aficos que corresponden a la Fig. \ref{fig3}, presentan una discrepancia mayor entre la simulaci\'on y el modelo. Este hecho puede deberse al mecanismo utilizado por \textit{Bullet} para resolver la fricci\'on de un cuerpo a velocidades muy bajas.
 
 \paragraph{Verificaci\'on del coeficiente de restituci\'on}\mbox{}
@@ -358,12 +358,11 @@ cada cu\'anto tiempo se guardan en un archivo los datos logrados) es $\Delta t' 
     \label{fig:fallingBall} 
 \end{figure} 
 \vspace{10pt} 
-El ensayo tiene como par\'ametros de entrada: $v_{i}$ (velocidad inicial) y $e_{sim}$ (coeficiente de restituci\'on esperado). Por otro lado, se obtiene $v_{f}$ (velocidad de la esfera al finalizar la simulaci\'on); y luego se calculan $e_{medida}$ (coeficiente de restituci\'on obtenido a partir de la ec. \eqref{eq:restitution_coef}) y $\epsilon_{rel}$, que es el error relativo entre los coeficientes $e_{sim}$ y $e_{medida}$, calculado de la siguiente manera: \\
+\noindent El ensayo tiene como par\'ametros de entrada: $v_{i}$ (velocidad inicial) y $e_{sim}$ (coeficiente de restituci\'on esperado). Por otro lado, se obtiene $v_{f}$ (velocidad de la esfera al finalizar la simulaci\'on); y luego se calculan $e_{medida}$ (coeficiente de restituci\'on obtenido a partir de la ec. \eqref{eq:restitution_coef}) y $\epsilon_{rel}$, que es el error relativo entre los coeficientes $e_{sim}$ y $e_{medida}$, calculado de la siguiente manera: \\
  \begin{equation}
   \epsilon_{rel} = \frac{e_{sim}-e_{medida}}{e_{sim}}
 \end{equation}
-Se muestra en la Tabla \ref{table1} lo arrojado por los experimentos num\'ericos efectuados. En ellos, \\
-$v_{i}= \{$ -0.5, -3.5, -4, -5 y -10$\} \frac{m}{s}$ y $e_{sim}= \{ $0.2, 0.5 y 0.8$\} $.
+En la Tabla \ref{table1} se puede observar lo arrojado por los experimentos num\'ericos que se efectuaron; usando: $v_{i}= \{$ -0.5, -3.5, -4, -5 y -10$\} \frac{m}{s}$ y $e_{sim}= \{ $0.2, 0.5 y 0.8$\} $.
 \begin{table}[H]%
   \centering
   	\begin{tabular}{ | c | c || c | c | c | }
@@ -371,36 +370,36 @@ $v_{i}= \{$ -0.5, -3.5, -4, -5 y -10$\} \frac{m}{s}$ y $e_{sim}= \{ $0.2, 0.5 y 
 	  		$\boldsymbol{v_{i}}$ & $\boldsymbol{e_{sim}}$ & $\boldsymbol{v_{f}}$ & $\boldsymbol{e_{medida}}$ & $\boldsymbol{\epsilon_{rel}}$ \\
 			\hline 
 			\hline
-			\multirow{3}{*}{-0.5 $\boldsymbol{\frac{m}{s}}$} & 0.2 & 0.000249 $\frac{m}{s}$& 0.000498 & 0.997\\ \cline{2-5}
+			\multirow{3}{*}{-0.5 $\frac{m}{s}$} & 0.2 & 0.000249 $\frac{m}{s}$& 0.000498 & 0.997\\ \cline{2-5}
 								& 0.5 & 0.000219 $\frac{m}{s}$ & 0.000438 & 0.999\\ \cline{2-5}
 	  							& 0.8 & 0.001037 $\frac{m}{s}$ & 0.002074 & 0.997 \\ \cline{2-5}
 	  		\hline 
 			\hline
-			\multirow{3}{*}{-3.5 $\boldsymbol{\frac{m}{s}}$} & 0.2 & 0.000057 $\frac{m}{s}$ & 0 & 1\\ \cline{2-5}
+			\multirow{3}{*}{-3.5 $\frac{m}{s}$} & 0.2 & 0.000057 $\frac{m}{s}$ & 0 & 1\\ \cline{2-5}
 	  							& 0.5 & 0.000018 $\frac{m}{s}$ & 0 & 1 \\ \cline{2-5}
 								& 0.8 & 0.3 $\frac{m}{s}$ & 0.0857 & 0.893 \\ \cline{2-5}
 	  		\hline
 			\hline
-			\multirow{3}{*}{-4 $\boldsymbol{\frac{m}{s}}$} & 0.2 & 0.000473 $\frac{m}{s}$ & 0.00012 & 1\\ \cline{2-5}
+			\multirow{3}{*}{-4 $\frac{m}{s}$} & 0.2 & 0.000473 $\frac{m}{s}$ & 0.00012 & 1\\ \cline{2-5}
 	  							& 0.5 & 0.000424 $\frac{m}{s}$ & 0.00011 & 1 \\ \cline{2-5}
 	  							& 0.8 & 1.23 $\frac{m}{s}$ & 0.3 & 0.625 \\ \cline{2-5}
 	  		\hline
 			\hline
-			\multirow{3}{*}{-5 $\boldsymbol{\frac{m}{s}}$} & 0.2 & 1 $\frac{m}{s}$ & 0.2 & 0 \\ \cline{2-5}
+			\multirow{3}{*}{-5 $\frac{m}{s}$} & 0.2 & 1 $\frac{m}{s}$ & 0.2 & 0 \\ \cline{2-5}
 	  							& 0.5 & 2.5 $\frac{m}{s}$ & 0.5 & 0 \\ \cline{2-5}
 	  							& 0.8 & 4 $\frac{m}{s}$ & 0.8 & 0 \\ \cline{2-5}
 			\hline
 			\hline
-			\multirow{3}{*}{-10 $\boldsymbol{\frac{m}{s}}$} & 0.2 & 2 $\frac{m}{s}$ & 0.2 & 0\\ \cline{2-5}
+			\multirow{3}{*}{-10 $\frac{m}{s}$} & 0.2 & 2 $\frac{m}{s}$ & 0.2 & 0\\ \cline{2-5}
 	  							& 0.5 & 5 $\frac{m}{s}$ & 0.5 & 0 \\ \cline{2-5}
 	  							& 0.8 & 8 $\frac{m}{s}$ & 0.8 & 0 \\ \cline{2-5}
 			\hline
 	\end{tabular}
   \captionsetup{justification=centering}
-  \caption{Coeficientes de restituci\'on obtenidos de simular el sistema descripto en Fig. \ref{fig:fallingBall} }%
+  \caption{Coeficientes de restituci\'on obtenidos ($e_{medida}$) de simular el sistema descripto en Fig. \ref{fig:fallingBall}}%
   \label{table1}%
 \end{table}
-Los resultados exponen una limitaci\'on del motor f\'isico: no representa correctamente las colisiones el\'asticas entre esferas y cuerpos r\'igidos, que ocurren a velocidades bajas. Esto queda en evidencia en la Tabla \ref{table1}. En cada una de ellas el error fue de casi 1. La raz\'on por la que ocurre este hecho se debe a que \textit{Bullet} utiliza un algoritmo de colisi\'on que frena la velocidad de un objeto que est\'a a punto de colisionar. Haciendo esto puede evitar que los s\'olidos se traspasen y de esta forma se pueden realizar c\'alculos de fuerza m\'as precisos. \\
+\noindent Los resultados exponen una limitaci\'on del motor f\'isico: no representa correctamente las colisiones el\'asticas entre esferas y cuerpos r\'igidos, que ocurren a velocidades bajas. Esto queda en evidencia en la Tabla \ref{table1}. En cada una de ellas el error fue de casi 1. La raz\'on por la que ocurre este hecho se debe a que \textit{Bullet} utiliza un algoritmo de colisi\'on que frena la velocidad de un objeto que est\'a a punto de colisionar. Haciendo esto puede evitar que los s\'olidos se traspasen y de esta forma se pueden realizar c\'alculos de fuerza m\'as precisos. \\
 En el caso de los ensayos, las esferas poseen una velocidad muy baja, cuando est\'an a punto de colisionar \textit{Bullet} reduce a\'un m\'as esta velocidad y eventualmente quedan con una velocidad tan baja que al chocar contra el suelo se aplica el efecto restitutivo a esta velocidad casi nula y se resuelve que la esfera debe quedar en reposo, cuando en realidad deber\'ia poseer una velocidad baja, pero no despreciable.
 
 
@@ -422,20 +421,20 @@ Como toda herramienta, \textit{Bullet} tiene aspectos negativos, entre los que s
 \end{itemize}
 
 
-\subsection{Librer\'ia de Algoritmos Gen\'eticos}
+\subsection{Librer\'ia de algoritmos gen\'eticos}
 
 %\begin{adjustwidth}{1.2cm}{0cm}
-Se utiliz\'o la conocida librer\'ia de Algoritmos Gen\'eticos para C++ GaLib, desarrollada por Matthew Wall del MIT \cite{LinkGaLib}. \\
+Se utiliz\'o la conocida librer\'ia de algoritmos gen\'eticos para C++ GaLib, desarrollada por Matthew Wall del MIT \cite{LinkGaLib}. \\
 Ofrece funcionalidades como: programaci\'on paralela, diversos m\'etodos de selecci\'on (\textit{elite}, \textit{roulette}), estrategias de reemplazo (de padres, aleatorio, del peor), entre otras.
 
 
 %\end{adjustwidth}
 
-\subsection{C\'odigo Fuente}
+\subsection{C\'odigo fuente}
 
 %\begin{adjustwidth}{1.2cm}{0cm}
 Al estar \textit{Bullet} implementado en C++, el c\'odigo fuente tambi\'en est\'a desarrollado en ese lenguaje. En \textit{Bullet}, se define un \textit{World} (o mundo f\'isico) en donde se puede insertar, entre otras cosas, cuerpos r\'igidos. En este caso en particular, el mundo consta de un plano  (el suelo) y  el humanoide encima (compuesto por cuerpos r\'igidos y otros elementos f\'isicos). \\
-El \textit{software} creado incluye: creaci\'on del humanoide, siendo \'este capaz de desplazarse por medio de actuadores (que se ver\'an en la Secci\'on \ref{actuadores}); el desarrollo del algoritmo gen\'etico (la definici\'on de los individuos, la funci\'on de \textit{fitness}, m\'etodos de selecci\'on, etc.); visualizaci\'on gr\'afica del mejor humanoide logrado por el algoritmo gen\'etico; y la posibilidad de realizar gr\'aficos referidos a la evoluci\'on del algoritmo gen\'etico (\textit{fitness} por cada generaci\'on, etc.). \\
+El \textit{software} creado incluye: creaci\'on del humanoide, siendo \'este capaz de desplazarse por medio de actuadores (que se ver\'an en la Secci\'on \ref{actuadores}); el desarrollo del algoritmo gen\'etico (definici\'on de los individuos, funci\'on de \textit{fitness}, m\'etodos de selecci\'on, etc.); visualizaci\'on gr\'afica del mejor humanoide logrado por el algoritmo gen\'etico; y la posibilidad de realizar gr\'aficos referidos a la evoluci\'on del algoritmo gen\'etico (\textit{fitness} por cada generaci\'on, etc.). \\
 Se acompa\~nan a esta presentaci\'on: el c\'odigo fuente y el manual de instalaci\'on y uso.
 
 %\end{adjustwidth}
@@ -447,11 +446,11 @@ Se acompa\~nan a esta presentaci\'on: el c\'odigo fuente y el manual de instalac
 %	SECTION 3 - MODELO UTILIZADO
 %----------------------------------------------------------------------------------------
 
-\section{Modelo Utilizado}
+\section{Modelo utilizado}
 
 %\begin{adjustwidth}{1.1cm}{0cm}
-Dentro de los diversos modelos existentes (\cite{Wojtyra}\cite{flexibleMuscle}); en este proyecto se procur\'o utilizar uno que fuera sencillo pero representativo a la vez.\\ 
-Se modela al cuerpo humano, con el motor \textit{Bullet Physics}, como un conjunto de segmentos unidos por articulaciones (Fig. \ref{fig:humanoid}). A cada uno de ellos se les aplica una fuerza en el centro de masa de cada segmento (denominada Actuador). Que la caminata se produzca o no, depende del tipo de actuador utilizado (la funci\'on utilizada para la fuerza), y de sus par\'ametros. El objetivo, entonces, se reduce a encontrar dichos par\'ametros. Para eso se usan los algoritmos gen\'eticos, un m\'etodo de Inteligencia Artificial. De este modo se obtiene, de forma an\'aloga a la selecci\'on natural, los individuos que mejor se adapten a la caminata. Tanto los actuadores como el algoritmo gen\'etico se explicar\'an m\'as adelante.
+Dentro de los diversos modelos existentes (\cite{Wojtyra}\cite{flexibleMuscle}), en este proyecto se procur\'o utilizar uno que fuera sencillo pero representativo a la vez.\\ 
+Se modela al cuerpo humano, con el motor \textit{Bullet Physics}, como un conjunto de segmentos unidos entre s\'i por articulaciones (Fig. \ref{fig:humanoid}). A cada uno de ellos se les aplica un torque en el centro de masa de cada segmento (denominado actuador). Que la caminata se produzca o no, depende del tipo de actuador empleado (la funci\'on utilizada para el torque), y de sus par\'ametros. El objetivo es encontrar dichos par\'ametros. Para eso se usan los algoritmos gen\'eticos, un m\'etodo de inteligencia artificial. De este modo se obtiene, de forma an\'aloga a la selecci\'on natural, los individuos que mejor se adapten a la caminata. Tanto los actuadores como el algoritmo gen\'etico se explicar\'an m\'as adelante.
 
 \begin{figure}[H]%
   \centering
@@ -460,36 +459,42 @@ Se modela al cuerpo humano, con el motor \textit{Bullet Physics}, como un conjun
     \label{fig:humanoid}
 \end{figure} 
 
-\subsection{Composici\'on F\'isica del Humanoide}
-Como ya se expres\'o, el humanoide fue modelado en \textit{Bullet} como un conjunto de segmentos (cuerpos r\'igidos), unidos por articulaciones. \\
-Se dividi\'o al cuerpo humano en: cabeza, tronco, miembro superior, pelvis y miembro inferior (muslo, pierna y pie). A los fines de este proyecto, s\'olo se consideraron la pelvis y el miembro inferior (ver Fig. \ref{fig:seg_and_art}).\\
-A continuaci\'on se presenta la composici\'on de cada segmento (de acuerdo a la biomec\'anica \cite{biomechanics}). \\
+\subsection{Composici\'on f\'isica del humanoide}
+Como ya se expres\'o, el humanoide fue modelado en \textit{Bullet} como un conjunto de segmentos (cuerpos r\'igidos), unidos entre s\'i por articulaciones. \\
+Se dividi\'o al cuerpo humano en: cabeza, tronco, miembro superior (brazo, antebrazo y mano), pelvis y miembro inferior (muslo, pierna y pie). \\
+A los fines de este proyecto, s\'olo se consideraron pelvis y miembro inferior (ver Fig. \ref{fig:seg_and_art}(\protect\subref*{fig7:a})).\\
+La Tabla \ref{table2} presenta la composici\'on de cada uno de los segmentos del humano virtual (de acuerdo a la biomec\'anica \cite{biomechanics}). \\
 \begin {table}[H]
 	\begin{center}
-		\begin{tabular}{ | c | c | c | c | c | c |}
+	\resizebox{\linewidth}{!}{%
+		\begin{tabular}{ | c | c | c | c | c | c | c |}
 	  		 \hline
-	  		\textbf{Parte} & \textbf{Cantidad} & \textbf{Forma} & \textbf{Largo (en m)} & \textbf{Peso (en kg)} & \textbf{Uniones}\\
+	  		\multicolumn{2}{| c |}{\textbf{Parte}} & \textbf{Cantidad} & \textbf{Forma} & \textbf{Largo (en m)} & \textbf{Peso (en kg)} & \textbf{Uniones}\\
 	  		\hline 
 	  		\hline
-	  		Pelvis & 1 & esf\'erico & 0.08655 & 9.9718 & Cadera\\
+			\multicolumn{2}{| c |}{Pelvis} & 1 & esf\'erico & 0.08655 & 9.9718 & Cadera\\
+			\hline
+			\hline
+	  		\multirow{3}{*}{\begin{sideways}\parbox{1.5cm}{Miembro\\ inferior} \end{sideways} } & Muslo & 2 & esfero-cilindro & 0.4015 & 10.3368 & Cadera y Rodilla\\
+	  																		\cline{2-7}
+	  																		& Pierna & 2 & esfero-cilindro &  0.4015 & 3.1609 & Rodilla y Tobillo\\
+	  																		\cline{2-7}
+	  																		& Pie & 2 & esfero-cilindro & - & 1.0001 & Tobillo\\
 	  		\hline
-	  		Muslo & 2 & esfero-cilindro & 0.4015 & 10.3368 & Cadera y Rodilla\\
-	  		\hline
-	  		Pierna & 2 & esfero-cilindro &  0.4015 & 3.1609 & Rodilla y Tobillo\\
-	  		\hline
-	  		Pie & 2 & esfero-cilindro & - & 1.0001 & Tobillo\\
-	  		\hline
+			
 		\end{tabular}
-		\caption{Segmentos del humanoide}
+		}
+		\caption{Composici\'on de cada segmento del humanoide}
+		\label{table2}
 	\end{center}
 \end{table}
 
 %\end{adjustwidth}
 
 \subsection{Articulaciones}
-Para unir los distintos segmentos entre s\'i, se utilizaron articulaciones bisagra con 1 grado de libertad, en el eje X, para que los segmentos puedan moverse en dos ejes: el Z, donde ocurre la caminata, y el Y, perpendicular al piso (ver Fig. \ref{fig:seg_and_art}). \\
-Asimismo, para cada caso en particular, se definieron cotas para los \'angulos que pueden existir entre los segmentos. Esto es muy importante, no s\'olo porque se adec\'ua a datos biol\'ogicos, sino porque, de otro modo la caminata no podr\'ia lograrse: si los \'angulos son demasiado altos, la caminata se produce girando las piernas por encima de la pelvis; si por el contrario, son demasiado bajos, las piernas van a estar muy r\'igidas, originando pocos pasos y muy cortos.\\
-Por otra parte, la pelvis no puede rotar (se le impide hacerlo); y se le restringe la amplitud con la que puede moverse la cadera (de $\frac{-\pi}{4}$ a $\frac{\pi}{4}$). Todo esto se hace porque, en caso contrario, el b\'ipedo necesitar\'ia un sistema de control para mantener el equilibrio, y eso excede el alcance de este trabajo.\\
+Para unir los distintos segmentos entre s\'i, se utilizaron articulaciones bisagra con 1 grado de libertad, en el eje X, para que los segmentos puedan moverse en dos ejes: el Z, donde ocurre la caminata, y el Y, perpendicular al piso (ver Fig. \ref{fig:seg_and_art}(\protect\subref*{fig7:b})). \\
+A su vez, para cada caso en particular, se definieron cotas para los \'angulos que pueden existir entre los segmentos. Esto es muy importante, no s\'olo porque se adec\'ua a datos biol\'ogicos, sino porque, de otro modo la caminata no podr\'ia lograrse: si los \'angulos son demasiado altos, la caminata se produce girando las piernas por encima de la pelvis; si por el contrario, son demasiado bajos, las piernas van a estar muy r\'igidas, originando pocos pasos y muy cortos.\\
+Asimismo, la pelvis no puede rotar (se le impide hacerlo); y se restringe la amplitud con la que puede moverse la cadera (de $\frac{-\pi}{4}$ a $\frac{\pi}{4}$). Esto se realiza porque, en caso contrario, el b\'ipedo necesitar\'ia un sistema de control para mantener el equilibrio, y eso excede el alcance de este trabajo.
 
 \begin{figure}[H]%
   \centering
@@ -531,7 +536,7 @@ Es el actuador m\'as sencillo, tanto matem\'atica como computacionalmente.
 \begin{equation}
   f(t) =  A_1 \sin(\omega_1t+\phi)+A_2 \cos(\omega_2t+\phi)+C
 \end{equation}
-donde $f(t)$ es la funci\'on del actuador evaluada en el instante de tiempo $t$, $A_{1}$ y $A_{2}$ son amplitudes, $\omega_1$ y $\omega_2$ son frecuencias (en $\frac{1}{s}$), $\phi$ es la fase (en radianes), y $C$ es un t\'ermino independiente.\\
+donde $f(t)$ es la funci\'on del actuador evaluada en el instante de tiempo $t$, $A_{1}$ y $A_{2}$ son amplitudes, $\omega_1$ y $\omega_2$ son frecuencias (en $\frac{1}{s}$), $\phi$ es la fase en radianes, y $C$ es un t\'ermino independiente.\\
 La fase $\phi$ es la misma en el seno y en el coseno, para evitar que se formen otro tipo de funciones no c\'iclicas.
 \subsection{Fourier de orden 2}
 Este actuador utiliza una serie de Fourier de dos t\'erminos. 
@@ -586,7 +591,7 @@ f(t) =  \left\{
 
 \section{Condiciones iniciales y de contorno}
 Como las funciones peri\'odicas se\~naladas en los actuadores, no fueron suficientes para lograr la caminata, se le adosaron las funciones que se detallan seguidamente. 
-\subsection{Funci\'on Partida}
+\subsection{Funci\'on partida}
 El andar del humanoide es c\'iclico. Sin embargo, por la posici\'on inicial del individuo, se requiere para el tiempo del primer paso, una funci\'on distinta a la del resto de la caminata. El tipo de funci\'on puede ser cualquiera de los actuadores vistos anteriormente (pero no necesariamente con los mismos valores de amplitud, frecuencia y fase asignados a las piernas). Empero, se utiliz\'o la funci\'on vista en el actuador gen\'erico. \\
 Por otra parte, para simplificar el modelo, se decidi\'o  que el tiempo considerado para el primer paso sea fijo, y de 0.7 segundos. Dicho valor fue extra\'ido de forma experimental.
 
@@ -605,7 +610,7 @@ siendo $f(t)$ la funci\'on de movimiento (o actuador) en el momento $t$, y $f_{i
 %	SECTION 6 - ALGORITMO GENETICO
 %----------------------------------------------------------------------------------------
 
-\section{Algoritmo Gen\'etico}
+\section{Algoritmo gen\'etico}
 
 
 \subsection{Individuo}
@@ -711,9 +716,8 @@ Para favorecer el an\'alisis de las distintas caracter\'isticas arriba indicadas
 \end{table}
 
 \subsubsection{Constituci\'on del cromosoma}
-La longitud del cromosoma de un individuo depende de los actuadores y la funci\'on partida usados.
-Cada uno de ellos, a su vez, tienen los par\'ametros presentados en la secci\'on \ref{sub:parametros}. Sus respectivas cantidades pueden verse en la Tabla \ref{table6}.\\
-En la Tabla \ref{table7} se muestra la composici\'on del cromosoma de cada individuo. En ella se puede observar c\'omo seg\'un el tipo de individuo, var\'ia la cantidad de genes, es decir, el tama\~no del cromosoma. Vale aclarar que la funci\'on partida se especifica para cada segmento (las dos piernas y los dos muslos); en cambio, para los actuadores, s\'olo se definen dos (uno para las piernas y otro para los muslos).
+Los distintos actuadores y la funci\'on partida tienen los par\'ametros presentados en la secci\'on \ref{sub:parametros}. Sus respectivas cantidades pueden verse en la Tabla \ref{table6}.\\
+En la Tabla \ref{table7} se muestra la composici\'on del cromosoma de cada individuo, que depende de los actuadores y la funci\'on partida usados. En ella se puede observar c\'omo seg\'un el tipo de individuo, var\'ia la cantidad de genes, es decir, la longitud del cromosoma. Vale aclarar que la funci\'on partida se especifica para cada segmento (las dos piernas y los dos muslos); en cambio, para los actuadores, s\'olo se definen dos (uno para las piernas y otro para los muslos).
 
 \begin{table}[H]%
   \centering
@@ -723,7 +727,7 @@ En la Tabla \ref{table7} se muestra la composici\'on del cromosoma de cada indiv
 						\cline{3-6}
 	  		 \multicolumn{2}{c |}{} 	&  \textbf{Amplitud} &  \textbf{Frecuencia} &  \textbf{Fase} &  \textbf{T\'ermino independiente}\\
 			\hline
-			\multirow{4}{*}{\textbf{\begin{sideways}\ Actuadores \end{sideways} }} & \textbf{Gen\'erico} &  2 & 2 & 1 & 1\\ 
+			\multirow{4}{*}{\textbf{\begin{sideways}\ Actuador \end{sideways} }} & \textbf{Gen\'erico} &  2 & 2 & 1 & 1\\ 
 	  															\cline{2-6}
 																& \textbf{Fourier de orden 2} & 4 & 1 & 1 & 1 \\ 
 	  															\cline{2-6}
@@ -736,7 +740,7 @@ En la Tabla \ref{table7} se muestra la composici\'on del cromosoma de cada indiv
 	  		\hline 
 	\end{tabular}
   \captionsetup{justification=centering}
-  \caption{Cantidad de par\'ametros seg\'un tipo de actuador o funci\'on partida }%
+  \caption{Cantidad de par\'ametros seg\'un tipo de actuador y funci\'on partida }%
   \label{table6}%
 \end{table}
 
@@ -814,7 +818,7 @@ Se\~nala qu\'e tan similares son la direcci\'on objetivo (un vector unitario, qu
 
 \subsubsection{Simetr\'ia}
 \label{simetria}
-Se\~nala qu\'e tan equidistantes se encuentran los pies de la cadera, a lo largo de la caminata. Aplicando solamente los m\'odulos antes mencionados, provocaba resultados en donde una pierna quedaba m\'as distante de la pelvis que la otra, lo que produc\'ia que el humanoide se terminara arrastrando, posiblemente afectando a la velocidad.\\
+Este indicador marca qu\'e tan equidistantes se encuentran los pies de la cadera, a lo largo de la caminata. Aplicando solamente los m\'odulos antes mencionados, provocaba resultados en donde una pierna quedaba m\'as distante de la pelvis que la otra, lo que produc\'ia que el humanoide se terminara arrastrando, posiblemente afectando a la velocidad.\\
 Para mayor simplicidad, la simetr\'ia $S$ se calcul\'o a partir de los pies (y no de las piernas). Se tomaron en cuenta s\'olo los ejes X y Z, porque son los relacionados a la velocidad y a la direcci\'on, respectivamente.
 \begin{equation}
  S = \frac{\sum_{n=0}^{T} { \frac{1}{2} [e^{-C( lf_{Z} + rf_{Z}| ^2) } + e^{-C( lf_{X} + rf_{X}| ^2) }]  } } {N}
@@ -832,7 +836,7 @@ Sin embargo, una caracter\'istica fundamental en una caminata normal es que las 
 %\end{adjustwidth}
 
 
-\subsection{Par\'ametros del Algoritmo}
+\subsection{Par\'ametros del algoritmo}
 
 \subsubsection{M\'etodos de selecci\'on}
 \label{metodos de seleccion}
@@ -862,7 +866,7 @@ En el algoritmo gen\'etico se utilizan 1000 generaciones, de 50 individuos cada 
 %	SECTION 7 - RESULTADOS OBTENIDOS
 %----------------------------------------------------------------------------------------
 
-\section{Resultados Obtenidos}
+\section{Resultados obtenidos}
 Considerando los individuos definidos en el punto \ref{individuos_implementacion}, se realizaron pruebas, corriendo el algoritmo gen\'etico, y evaluando el resultado obtenido posteriormente (ya sea num\'erica o gr\'aficamente). A continuaci\'on se analizan distintos aspectos relevantes. 
 
 \subsection{Evoluci\'on del \textit{fitness} seg\'un tipo de individuos}
@@ -886,9 +890,10 @@ A continuaci\'on, se muestra, para cada individuo, su velocidad instant\'anea a 
   \caption{Velocidad seg\'un tipo de individuos}%
   \label{fig:resultados_velocidad} %
 \end{figure}
-Como puede observarse en el caso de los individuos 3 y 4 (Fourier de orden 2 y 9, respectivamente), se producen picos altos y pronunciados en la velocidad. Eso repercute en que la velocidad media no sea 1.3 $\frac{m}{s}$ (que es la velocidad objetivo), y ergo, en el m\'odulo de velocidad del \textit{fitness} (provocando que \'este sea m\'as bajo).\\
+\noindent Como puede observarse en el caso de los individuos 3 y 4 (Fourier de orden 2 y 9, respectivamente), se producen picos altos y pronunciados en la velocidad. Eso repercute en que la velocidad media no sea 1.3 $\frac{m}{s}$ (que es la velocidad objetivo), y ergo, en el m\'odulo de velocidad del \textit{fitness} (provocando que \'este sea m\'as bajo).\\
 %En el caso de los individuos 1 y 2, la velocidad instant\'anea oscila de forma suave. 
 En el individuo de tipo 1, tambi\'en se producen picos un poco menos pronunciados, pero luego de los 10 segundos, no se registra ninguna velocidad. Eso sucede porque el humanoide queda suspendido cuando intenta caer hacia atr\'as.\\
+La velocidad del individuo de tipo 2 oscila de forma irregular, pero no tiene picos demasiado elevados.\\ 
 Por \'ultimo, en el individuo de tipo 5, la velocidad oscila de forma c\'iclica, continuada y armoniosa (no hay picos altos).
 
 \subsection{Altura seg\'un tipo de individuos}
@@ -899,18 +904,19 @@ Como puede identificarse en la Figura \ref{fig:resultados_altura}, la altura de 
   \caption{Altura (posici\'on de la pelvis) seg\'un tipo de individuos}%
   \label{fig:resultados_altura} %
 \end{figure}
-
-En efecto, los individuos de tipo 3 y 4 (que utilizan actuadores de Fourier de orden 2 y 9, respectivamente), son los que caen de forma m\'as abrupta, y aunque intentan levantarse, vuelven a caer con la misma intensidad. \\
+\noindent En efecto, los individuos de tipo 3 y 4 (que utilizan actuadores de Fourier de orden 2 y 9, respectivamente), son los que caen de forma m\'as abrupta, y aunque intentan levantarse, vuelven a caer con la misma intensidad. \\
 Por su parte, el individuo de tipo 1 (actuador Gen\'erico sin funci\'on partida) mantiene su altura, hasta que a los 10 segundos queda suspendido a una altura levemente menor. Esto ocurre porque se cae para atr\'as, y las limitaciones de la cadera impiden que caiga. El individuo de tipo 2, con actuadores gen\'ericos y funci\'on partida, logra mantener la altura, hasta que cae hacia adelante, en cuclillas. Considerando que cuando cae no vuelve a levantarse (ya que en ese movimiento suelen emplearse los brazos y manos), tiene un comportamiento similar a una caminata real. \\
 En lo que respecta al individuo de tipo 5, que utiliza como actuadores la funci\'on de doble coseno, mantiene su altura de forma constante, pero con oscilaciones leves y continuadas en el tiempo. De los cinco, es el que da mayor cantidad de pasos.
 
 
 \subsection{Comparaci\'on de tipo de individuos}
 En base a lo visto anteriormente, queda claro que los actuadores de Fourier no dieron buenos resultados tanto en fitness, como en altura y velocidad.\\
-Por otra parte, es necesario incluir la funci\'on partida (es decir, separar a la caminata en un ``primer paso", y el ciclo), ya que si bien su ausencia puede originar \textit{fitness} m\'as altos, genera inestabilidad a los pocos segundos (como en el individuo de tipo 1).
+Por otra parte, es necesario incluir la funci\'on partida (es decir, separar a la caminata en un ``primer paso", y el ciclo), ya que si bien su ausencia puede originar \textit{fitness} m\'as altos, genera inestabilidad a los pocos segundos (como en el individuo de tipo 1).\\
+El individuo de tipo 5 logra un movimiento c\'iclico y repetitvo, que deriva en una caminata \textit{ad infinitum}, pero con el costo de que sea ``rob\'otica" (muy parecida a lo visto con un \textit{passive walker}). 
 
 \subsection{Video}
-¿Ac\'a ir\'ia el link del video?
+Para una mejor visualizaci\'on de los distintos individuos obtenidos, y de su evoluci\'on a lo largo de las generaciones del algoritmo gen\'etico, se acompa\~na video.\\
+\textbf{Ac\'a va el link del video}
 
 
 %----------------------------------------------------------------------------------------
@@ -920,6 +926,9 @@ Por otra parte, es necesario incluir la funci\'on partida (es decir, separar a l
 \section{Conclusiones}
 
 %\begin{adjustwidth}{1.1cm}{0cm}
+Junto con las ideas esbozadas en la secci\'on anterior. 
+Algo que vale la pena notar es que los actuadores que mejores resultados dieron, fueron aquellos en donde se empleaba dos frecuencias $\omega$ en vez de una.\\
+Lo ocurrido con el individuo de tipo 1 (gen\'erico y sin funci\'on partida), que es el que tiene un \textit{fitness} m\'as alto, pero que no produce una caminata acorde, posiblemente se deba a que el tiempo de simulaci\'on empleado en el algoritmo gen\'etico, fuera corto.
 Principalmente el generico y el doble coseno son los que mejor caminan, tanto en fitness como en altura.\\
 Pero son dos caminatas distintas, una un poco m\'as natural (generico) y la otra m\'as "robotica" pero estable.\\
 Si hay que elegir como mejor a uno de los dos, habria que decidir entre realismo (el humanoide se cae, pero es m\'as natural), y estabilidad (no se cae nunca, pero parece un "passive walker").\\
