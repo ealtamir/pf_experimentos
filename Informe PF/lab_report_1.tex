@@ -867,6 +867,7 @@ En el algoritmo gen\'etico se utilizan 1000 generaciones, de 50 individuos cada 
 %----------------------------------------------------------------------------------------
 
 \section{Resultados obtenidos}
+\label{resultados}
 Considerando los individuos definidos en el punto \ref{individuos_implementacion}, se realizaron pruebas, corriendo el algoritmo gen\'etico, y evaluando el resultado obtenido posteriormente (ya sea num\'erica o gr\'aficamente). A continuaci\'on se analizan distintos aspectos relevantes. 
 
 \subsection{Evoluci\'on del \textit{fitness} seg\'un tipo de individuos}
@@ -926,14 +927,13 @@ Para una mejor visualizaci\'on de los distintos individuos obtenidos, y de su ev
 \section{Conclusiones}
 
 %\begin{adjustwidth}{1.1cm}{0cm}
-Junto con las ideas esbozadas en la secci\'on anterior. 
+En la secci\'on \ref{resultados} se verifica que las funciones utilizadas en los actuadores son decisivas para lograr una caminata.\\
 Algo que vale la pena notar es que los actuadores que mejores resultados dieron, fueron aquellos en donde se empleaba dos frecuencias $\omega$ en vez de una.\\
-Lo ocurrido con el individuo de tipo 1 (gen\'erico y sin funci\'on partida), que es el que tiene un \textit{fitness} m\'as alto, pero que no produce una caminata acorde, posiblemente se deba a que el tiempo de simulaci\'on empleado en el algoritmo gen\'etico, fuera corto.
-Principalmente el generico y el doble coseno son los que mejor caminan, tanto en fitness como en altura.\\
-Pero son dos caminatas distintas, una un poco m\'as natural (generico) y la otra m\'as "robotica" pero estable.\\
-Si hay que elegir como mejor a uno de los dos, habria que decidir entre realismo (el humanoide se cae, pero es m\'as natural), y estabilidad (no se cae nunca, pero parece un "passive walker").\\
+Lo ocurrido con el individuo de tipo 1 (gen\'erico y sin funci\'on partida), que es el que tiene un \textit{fitness} m\'as alto, aunque no produce una caminata acorde, posiblemente se deba a que el tiempo de simulaci\'on empleado en el algoritmo gen\'etico, fuera corto.\\
+Se comprob\'o que los individuos con actuadores gen\'erico y doble coseno son los que mejor caminan, manteniendo su altura por m\'as tiempo y con \textit{fitness} m\'as alto. Sin embargo, son caminatas muy distintas: la del primero resulta ser m\'as natural, pero se cae m\'as r\'apido; mientras que la del segundo es m\'as ``rob\'otica" (ya que parece un \textit{passive walker}), pero m\'as estable (no se cae nunca ni se queda quieto).\\
 La funcion de fitness que se plantea (con sus m\'odulos) indica propiedades ideales para una caminata, pero que no implican realismo en la misma. Y entonces dos individuos con fitness parecidos dieron como fruto caminatas muy distintas.\\
-Los actuadores fueron important\'isimos. 
+Si hay que elegir como mejor a uno de los dos, habr\'ia que decidir entre realismo (el humanoide se cae, pero es m\'as natural), y estabilidad (no se cae nunca, pero parece un \textit{passive walker}).\\
+Entre los trabajos a futuro basados en este proyecto, se encuentran: lograr que la caminata sea m\'as natural y estable en el tiempo; que la caminata sea en 3D (y no plana); analizar el comportamiento de varios humanoides interactuando entre s\'i.
 
 %\end{adjustwidth}
 
