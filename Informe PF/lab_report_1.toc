@@ -12,7 +12,7 @@
 \contentsline {subsection}{\numberline {2.2}Librer\'ia de algoritmos gen\'eticos}{12}{subsection.2.2}
 \contentsline {subsection}{\numberline {2.3}C\'odigo fuente}{12}{subsection.2.3}
 \contentsline {section}{\numberline {3}Modelo utilizado}{12}{section.3}
-\contentsline {subsection}{\numberline {3.1}Composici\'on f\'isica del humanoide}{13}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.1}Composici\'on f\'isica del humanoide}{12}{subsection.3.1}
 \contentsline {subsection}{\numberline {3.2}Articulaciones}{13}{subsection.3.2}
 \contentsline {section}{\numberline {4}Actuadores}{14}{section.4}
 \contentsline {subsection}{\numberline {4.1}Gen\'erico}{14}{subsection.4.1}

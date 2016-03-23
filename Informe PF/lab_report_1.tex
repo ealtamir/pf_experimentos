@@ -340,7 +340,7 @@ No obstante, los gr\'aficos que corresponden a la Fig. \ref{fig3}, presentan una
 \paragraph{Verificaci\'on del coeficiente de restituci\'on}\mbox{}
 
 El segundo ensayo simula una esfera a una altura determinada sobre el suelo, que tiene una velocidad $v_{i}$ en el eje perpendicular al piso y que eventualmente colisiona contra el mismo.
-Se desea comprobar que la colisi\'on entre el cuerpo y el suelo respete que la velocidad final $v_{f}$ de la esfera despu\'es del choque sea proporcional a su coeficiente de restituci\'on $e$ dado por la ecuaci\'on:\\ 
+Se desea comprobar que la colisi\'on entre el cuerpo y el suelo respete que la velocidad final $v_{f}$ de la esfera despu\'es del choque sea proporcional a su coeficiente de restituci\'on ($e$) dado por la ecuaci\'on:\\ 
  \begin{equation}
  \label{eq:restitution_coef}
   e = \frac{v_f}{v_i} 
@@ -449,21 +449,22 @@ Se acompa\~nan a esta presentaci\'on: el c\'odigo fuente y el manual de instalac
 \section{Modelo utilizado}
 
 %\begin{adjustwidth}{1.1cm}{0cm}
-Dentro de los diversos modelos existentes (\cite{Wojtyra}\cite{flexibleMuscle}), en este proyecto se procur\'o utilizar uno que fuera sencillo pero representativo a la vez.\\ 
-Se modela al cuerpo humano, con el motor \textit{Bullet Physics}, como un conjunto de segmentos unidos entre s\'i por articulaciones (Fig. \ref{fig:humanoid}). A cada uno de ellos se les aplica un torque en el centro de masa de cada segmento (denominado actuador). Que la caminata se produzca o no, depende del tipo de actuador empleado (la funci\'on utilizada para el torque), y de sus par\'ametros. El objetivo es encontrar dichos par\'ametros. Para eso se usan los algoritmos gen\'eticos, un m\'etodo de inteligencia artificial. De este modo se obtiene, de forma an\'aloga a la selecci\'on natural, los individuos que mejor se adapten a la caminata. Tanto los actuadores como el algoritmo gen\'etico se explicar\'an m\'as adelante.
+Dentro de los diversos modelos existentes (\cite{Wojtyra}\cite{flexibleMuscle}), en este trabajo se procur\'o utilizar uno que fuera sencillo pero representativo a la vez.\\ 
+Se modela al cuerpo humano, con el motor \textit{Bullet Physics}, como un conjunto de segmentos unidos entre s\'i por articulaciones. A cada uno de ellos se les aplica un torque en el centro de masa de cada segmento (denominado actuador). Que la caminata se produzca o no, depende del tipo de actuador empleado (la funci\'on utilizada para el torque), y de sus par\'ametros. El objetivo es encontrar dichos par\'ametros. Para eso se usan los algoritmos gen\'eticos, un m\'etodo de inteligencia artificial. De este modo se obtiene, de forma an\'aloga a la selecci\'on natural, los individuos que mejor se adapten a la caminata. Tanto los actuadores como el algoritmo gen\'etico se explicar\'an m\'as adelante.
 
-\begin{figure}[H]%
-  \centering
-  \frame{\includegraphics[width=0.25\linewidth]{humanoid.png}}  
-    \caption{Humanoide dise\~nado}
-    \label{fig:humanoid}
-\end{figure} 
+
 
 \subsection{Composici\'on f\'isica del humanoide}
 Como ya se expres\'o, el humanoide fue modelado en \textit{Bullet} como un conjunto de segmentos (cuerpos r\'igidos), unidos entre s\'i por articulaciones. \\
 Se dividi\'o al cuerpo humano en: cabeza, tronco, miembro superior (brazo, antebrazo y mano), pelvis y miembro inferior (muslo, pierna y pie). \\
-A los fines de este proyecto, s\'olo se consideraron pelvis y miembro inferior (ver Fig. \ref{fig:seg_and_art}(\protect\subref*{fig7:a})).\\
-La Tabla \ref{table2} presenta la composici\'on de cada uno de los segmentos del humano virtual (de acuerdo a la biomec\'anica \cite{biomechanics}). \\
+A los fines de este proyecto, s\'olo se consideraron pelvis y miembro inferior (Fig. \ref{fig:humanoid_segments}).
+\begin{figure}[H]%
+  \centering
+  \frame{\includegraphics[width=0.28\linewidth]{humanoid_segments.png}}  
+    \caption{Segmentos del humanoide}
+    \label{fig:humanoid_segments}
+\end{figure} 
+La Tabla \ref{table2} presenta la composici\'on de cada uno de los segmentos del humano virtual (de acuerdo a la biomec\'anica \cite{biomechanics}).
 \begin {table}[H]
 	\begin{center}
 	\resizebox{\linewidth}{!}{%
@@ -492,7 +493,7 @@ La Tabla \ref{table2} presenta la composici\'on de cada uno de los segmentos del
 %\end{adjustwidth}
 
 \subsection{Articulaciones}
-Para unir los distintos segmentos entre s\'i, se utilizaron articulaciones bisagra con 1 grado de libertad, en el eje X, para que los segmentos puedan moverse en dos ejes: el Z, donde ocurre la caminata, y el Y, perpendicular al piso (ver Fig. \ref{fig:seg_and_art}(\protect\subref*{fig7:b})). \\
+Para unir los distintos segmentos entre s\'i, se utilizaron articulaciones bisagra con 1 grado de libertad, en el eje X, para que los segmentos puedan moverse en dos ejes: el Z, donde ocurre la caminata, y el Y, perpendicular al piso (ver Fig. \ref{fig:seg_and_art}(\protect\subref*{fig7:a}) y (\protect\subref*{fig7:b})). \\
 A su vez, para cada caso en particular, se definieron cotas para los \'angulos que pueden existir entre los segmentos. Esto es muy importante, no s\'olo porque se adec\'ua a datos biol\'ogicos, sino porque, de otro modo la caminata no podr\'ia lograrse: si los \'angulos son demasiado altos, la caminata se produce girando las piernas por encima de la pelvis; si por el contrario, son demasiado bajos, las piernas van a estar muy r\'igidas, originando pocos pasos y muy cortos.\\
 Asimismo, la pelvis no puede rotar (se le impide hacerlo); y se restringe la amplitud con la que puede moverse la cadera (de $\frac{-\pi}{4}$ a $\frac{\pi}{4}$). Esto se realiza porque, en caso contrario, el b\'ipedo necesitar\'ia un sistema de control para mantener el equilibrio, y eso excede el alcance de este trabajo.
 
@@ -500,16 +501,16 @@ Asimismo, la pelvis no puede rotar (se le impide hacerlo); y se restringe la amp
   \centering
   \subfloat[][]{
   	\centering
-	  \frame{\includegraphics[width=0.35\linewidth]{humanoid_segments.png}} 
+	  \frame{\includegraphics[width=0.24\linewidth]{humanoid_axis.png}} 
 	\label{fig7:a} 
   }
   \qquad
   \subfloat[][]{
   	\centering
-	  \frame{\includegraphics[width=0.45\linewidth]{humanoid_articulations.png}}
+	  \frame{\includegraphics[width=0.34\linewidth]{humanoid_articulations.png}}
 	\label{fig7:b} 
   }
-  \caption{Humanoide dise\~nado: (\protect\subref*{fig7:a}) segmentos, y (\protect\subref*{fig7:b}) articulaciones}%
+  \caption{Humanoide dise\~nado: (\protect\subref*{fig7:a}) ejes, y (\protect\subref*{fig7:b}) articulaciones}%
   \label{fig:seg_and_art} %
 \end{figure}
 
