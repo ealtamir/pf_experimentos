@@ -183,7 +183,7 @@ Este proyecto tiene como objetivo crear una simulaci\'on y animaci\'on de un hum
 Siempre ha sido de inter\'es la simulaci\'on biomec\'anica de seres vivos, especialmente en las ciencias naturales (zoolog\'ia, medicina, etc.). \\
 Ahora bien, \'ultimamente se ha incrementado el inter\'es en otras \'areas de aplicaci\'on, como los videojuegos (creaci\'on de personajes con reacciones m\'as reales), y la ingenier\'ia (verbigracia: dise\~no de espacios cerrados, con mayores medidas de seguridad).\\
 Una caracter\'istica muy importante de este trabajo es que el humanoide no es fruto de una animaci\'on, sino un objeto compuesto de segmentos f\'isicos, que interaccionan entre s\'i y con el entorno, por medio de las leyes f\'isicas; agregando as\'i realismo a la situaci\'on simulada.  La otra propiedad es que el b\'ipedo aprenda por s\'i solo a caminar en l\'inea recta, sin tener en su trayectoria ning\'un obst\'aculo.\\
-Este problema se puede abordar de diversas maneras, involucrando: redes neuronales\footnote{Una red neuronal es un paradigma de aprendizaje autom\'atico. Se trata de un sistema de interconexi\'on de neuronas que colaboran entre s\'i, para producir un est\'imulo de salida. Dada una entrada del sistema, se produce una salida, originada por varias transformaciones intermedias.}, sistemas de control\footnote{Un sistema de control es un dispositivo (o conjunto de) que maneja, dirige o regula el comportamiento de otros dispositivos o sistemas, para minimizar los fallos y obtener los resultados deseados.} (\textit{passive walkers}\footnote{Un \textit{passive walker} utiliza el movimiento natural (\textit{swinging}) de las piernas para ahorrar energ\'ia usada por motores. Para caminar, calcula la posici\'on de ciertos puntos (las articulaciones, mayormente).})\cite{Wojtyra}, algoritmos gen\'eticos\cite{flexibleMuscle}, entre otras. Pero varios de ellos implican modelos te\'oricos complejos de humanoide (considerando m\'usculos con distintos materiales, etc.). \\ 
+Este problema se puede abordar de diversas maneras, involucrando: redes neuronales\footnote{Una red neuronal es un paradigma de aprendizaje autom\'atico. Se trata de un sistema de interconexi\'on de neuronas que colaboran entre s\'i, para producir un est\'imulo de salida. Dada una entrada del sistema, se produce una salida, originada por varias transformaciones intermedias.}, sistemas de control\footnote{Un sistema de control es un dispositivo (o conjunto de) que maneja, dirige o regula el comportamiento de otros dispositivos o sistemas, para minimizar los fallos y obtener los resultados deseados.} (\textit{passive walkers}\footnote{Un \textit{passive walker} utiliza el movimiento natural (\textit{swinging}) de las piernas para ahorrar energ\'ia usada por motores. Para caminar, calcula la posici\'on de ciertos puntos (las articulaciones, mayormente).})\cite{Wojtyra}, algoritmos gen\'eticos\footnote{Los algoritmos gen\'eticos son m\'etodos adaptativos, que pueden ser utilizados para resolver problemas de b\'usqueda y optimizaci\'on. Est\'an basados en la teor\'ia de la selecci\'on natural, planteada por Charles Robert Darwin en 1859.}\cite{flexibleMuscle}, entre otras. Pero varios de ellos implican modelos te\'oricos complejos de humanoide (considerando m\'usculos con distintos materiales, etc.). \\ 
 En este proyecto se busc\'o aplicar algoritmos gen\'eticos, y lograr la caminata usando un modelo de humanoide basado en un conjunto de segmentos (cuerpos r\'igidos), unidos entre s\'i por articulaciones, cuyo desplazamiento depende de torques aplicados a dichos cuerpos, y sus par\'ametros se ajustan a partir de la evoluci\'on del algoritmo. \\
 El presente informe, describe y analiza pormenorizadamente: en la secci\'on 2, las herramientas aplicadas; en la 3, el modelo del humanoide utilizado; en la 4 y 5, los diferentes tipos de actuadores y funciones de partida y contorno; en la 6, el algoritmo gen\'etico; y en la 7 y 8, los resultados obtenidos con sus respectivas conclusiones.
 
@@ -207,7 +207,7 @@ Si bien (como se ver\'a m\'as adelante) \textit{Bullet} tiene problemas asociado
 
 \subsubsection{Funcionamiento}
 El motor f\'isico se encarga de la simulaci\'on de cuerpos r\'igidos y la interacci\'on entre los mismos.
-En particular debe: calcular el resultado de colisiones, arreglar el solapamiento
+En particular debe calcular el resultado de colisiones, arreglar el solapamiento
 de los cuerpos en el espacio de simulaci\'on, estimar las fuerzas producidas debido a la fricci\'on, 
 y mantener el cumplimiento de restricciones que puedan existir entre los cuerpos 
 (por ejemplo, un v\'inculo para formar una articulaci\'on). Para lograrlo, \textit{Bullet} modela, 
@@ -261,7 +261,7 @@ Considerando las ec. (1) y (3), se puede obtener el modelo matem\'atico que pred
 \end{equation}
 El intervalo de tiempo f\'isico (o \textit{timestep}) utilizado es $\Delta t=\frac{1}{60} s$. El \textit{timestep} de animaci\'on (es decir,
 cada cu\'anto tiempo se guardan en un archivo los datos logrados) es $\Delta t' = $0.1 y el tiempo de simulaci\'on es de $s=100\Delta t$.\\
-Seguidamente, se muestran los gr\'aficos obtenidos al correr los experimentos num\'ericos con los siguientes valores: $v_{i}= \{$ 1, 3 y 10$\} \frac{m}{s}$ y $\mu_{d}= \{ $0.25, 0.50 y 0.75$\} $. Se compara la distancia en el eje Z de la caja en Bullet con su distancia en el mismo eje seg\'un la ec. (\ref{modelo_cube}). 
+Seguidamente, se muestran los gr\'aficos obtenidos al correr los experimentos num\'ericos con los siguientes valores: $v_{i}= \{$ 1, 3 y 10$\} \frac{m}{s}$ y $\mu_{d}= \{ $0.25, 0.50 y 0.75$\} $. Se compara la distancia en el eje Z de la caja en Bullet, con su distancia en el mismo eje seg\'un la ec. (\ref{modelo_cube}). 
 \begin{figure}[H]%
   \centering
   \subfloat[][]{
@@ -339,15 +339,15 @@ No obstante, los gr\'aficos que corresponden a la Fig. \ref{fig3}, presentan una
 
 \paragraph{Verificaci\'on del coeficiente de restituci\'on}\mbox{}
 
-El segundo ensayo simula una esfera a una altura determinada sobre el suelo, que tiene una velocidad $v_{i}$ en el eje perpendicular al piso y que eventualmente colisiona contra el mismo.
-Se desea comprobar que la colisi\'on entre el cuerpo y el suelo respete que la velocidad final $v_{f}$ de la esfera despu\'es del choque sea proporcional a su coeficiente de restituci\'on ($e$) dado por la ecuaci\'on:\\ 
+El segundo ensayo simula una esfera a una altura determinada sobre el suelo, que tiene una velocidad inicial ($v_{i}$) en el eje perpendicular al piso, y que eventualmente colisiona contra el mismo.
+Se desea comprobar que, la colisi\'on entre el cuerpo y el suelo respete que la velocidad final ($v_{f}$) de la esfera despu\'es del choque, sea proporcional a su coeficiente de restituci\'on ($e$) dado por la ecuaci\'on:
  \begin{equation}
  \label{eq:restitution_coef}
   e = \frac{v_f}{v_i} 
 \end{equation}
 \\
 Para efectuar la colisi\'on con el suelo, se emple\'o una esfera s\'olida ubicada a 4 metros del suelo, cuya masa y radio son $m_{sphere} = 1\ kg$ y $r_{sphere}=1\ m$,
-respectivamente (ver Fig. \ref{fig:fallingBall}).  A la esfera se le asigna, adem\'as, un coeficiente de restituci\'on determinado.\\
+respectivamente (Fig. \ref{fig:fallingBall}).  A la esfera se le asigna, adem\'as, un coeficiente de restituci\'on determinado.\\
 Se eligi\'o un ambiente sin gravedad ($g = 0 \frac{m}{s^2}$). De esta forma, se podr\'a tener en cuenta s\'olo la velocidad inicial ($v_{i}$) y la velocidad final ($v_{f}$) para el c\'alculo del coeficiente de restituci\'on ($e$) (ver ec. \eqref{eq:restitution_coef}).\\
 El intervalo de tiempo f\'isico (o \textit{timestep}) utilizado es $\Delta t=$0.001 $s$. El \textit{timestep} de animaci\'on (es decir,
 cada cu\'anto tiempo se guardan en un archivo los datos logrados) es $\Delta t' = $0.1 y el tiempo de simulaci\'on es de $s=100\Delta t$. El coeficiente de fricci\'on es $\mu = $0.75. \\
@@ -457,23 +457,23 @@ Se modela al cuerpo humano, con el motor \textit{Bullet Physics}, como un conjun
 \subsection{Composici\'on f\'isica del humanoide}
 Como ya se expres\'o, el humanoide fue modelado en \textit{Bullet} como un conjunto de segmentos (cuerpos r\'igidos), unidos entre s\'i por articulaciones. \\
 Se dividi\'o al cuerpo humano en: cabeza, tronco, miembro superior (brazo, antebrazo y mano), pelvis y miembro inferior (muslo, pierna y pie). \\
-A los fines de este proyecto, s\'olo se consideraron pelvis y miembro inferior (Fig. \ref{fig:humanoid_segments}).
+Para este proyecto, s\'olo se consideraron pelvis y miembro inferior (Fig. \ref{fig:humanoid_segments}).
 \begin{figure}[H]%
   \centering
   \frame{\includegraphics[width=0.28\linewidth]{humanoid_segments.png}}  
     \caption{Segmentos del humanoide}
     \label{fig:humanoid_segments}
 \end{figure} 
-La Tabla \ref{table2} presenta la composici\'on de cada uno de los segmentos del humano virtual, de acuerdo a la biomec\'anica \cite{biomechanics}.
+\noindent La Tabla \ref{table2} presenta la composici\'on de cada uno de los segmentos del humano virtual, de acuerdo a la biomec\'anica \cite{biomechanics}.
 \begin {table}[H]
 	\begin{center}
 	\resizebox{\linewidth}{!}{%
-		\begin{tabular}{ | c | c | c | c | c | c | c |}
+		\begin{tabular}{ | c | c || c | c | c | c | c |}
 	  		 \hline
-	  		\multicolumn{2}{| c |}{\textbf{Parte}} & \textbf{Cantidad} & \textbf{Forma} & \textbf{Largo (en m)} & \textbf{Peso (en kg)} & \textbf{Uniones}\\
+	  		\multicolumn{2}{| c ||}{\textbf{Parte}} & \textbf{Cantidad} & \textbf{Forma} & \textbf{Largo (en m)} & \textbf{Peso (en kg)} & \textbf{Uniones}\\
 	  		\hline 
 	  		\hline
-			\multicolumn{2}{| c |}{Pelvis} & 1 & esf\'erico & 0.08655 & 9.9718 & Cadera\\
+			\multicolumn{2}{| c ||}{Pelvis} & 1 & esf\'erico & 0.08655 & 9.9718 & Cadera\\
 			\hline
 			\hline
 	  		\multirow{3}{*}{\begin{sideways}\parbox{1.5cm}{Miembro\\ inferior} \end{sideways} } & Muslo & 2 & esfero-cilindro & 0.4015 & 10.3368 & Cadera y Rodilla\\
@@ -495,19 +495,19 @@ La Tabla \ref{table2} presenta la composici\'on de cada uno de los segmentos del
 \subsection{Articulaciones}
 Para unir los distintos segmentos entre s\'i, se utilizaron articulaciones bisagra con 1 grado de libertad, en el eje X, para que los segmentos puedan moverse en dos ejes: el Z, donde ocurre la caminata, y el Y, perpendicular al piso (ver Fig. \ref{fig:seg_and_art}(\protect\subref*{fig7:a}) y (\protect\subref*{fig7:b})). \\
 A su vez, para cada caso en particular, se definieron cotas para los \'angulos que pueden existir entre los segmentos. Esto es muy importante, no s\'olo porque se adec\'ua a datos biol\'ogicos, sino porque, de otro modo la caminata no podr\'ia lograrse: si los \'angulos son demasiado altos, la caminata se produce girando las piernas por encima de la pelvis; si por el contrario, son demasiado bajos, las piernas van a estar muy r\'igidas, originando pocos pasos y muy cortos.\\
-Asimismo, la pelvis no puede rotar (se le impide hacerlo); y se restringe la amplitud con la que puede moverse la cadera (de $\frac{-\pi}{4}$ a $\frac{\pi}{4}$). Esto se realiza porque, en caso contrario, el b\'ipedo necesitar\'ia un sistema de control para mantener el equilibrio, y eso excede el alcance de este trabajo.
+Asimismo, se le impide rotar a la pelvis, y se restringe la amplitud con la que puede moverse la cadera (de $\frac{-\pi}{4}$ a $\frac{\pi}{4}$). Esto se realiza porque, en caso contrario, el b\'ipedo necesitar\'ia un sistema de control para mantener el equilibrio, y eso excede el alcance de este trabajo.
 
 \begin{figure}[H]%
   \centering
   \subfloat[][]{
   	\centering
-	  \frame{\includegraphics[width=0.24\linewidth]{humanoid_axis.png}} 
+	  \frame{\includegraphics[width=0.28\linewidth]{humanoid_axis.png}} 
 	\label{fig7:a} 
   }
   \qquad
   \subfloat[][]{
   	\centering
-	  \frame{\includegraphics[width=0.34\linewidth]{humanoid_articulations.png}}
+	  \frame{\includegraphics[width=0.38\linewidth]{humanoid_articulations.png}}
 	\label{fig7:b} 
   }
   \caption{Humanoide dise\~nado: (\protect\subref*{fig7:a}) ejes, y (\protect\subref*{fig7:b}) articulaciones}%
@@ -523,8 +523,7 @@ Asimismo, la pelvis no puede rotar (se le impide hacerlo); y se restringe la amp
 
 A cada uno de los segmentos correspondientes al muslo y la pierna del b\'ipedo, se le aplica un torque (o actuador) en el eje X (perpendicular a la trayectoria), como se ve en Fig \ref{fig:actuator}. As\'i, pueden moverse para arriba o para abajo (con respecto a la articulaci\'on a la que pertenecen). \\
 A fin de simplificar el modelo, el humanoide tiene el mismo tipo de actuador utilizado en todos los segmentos.\\
-Es necesario aclarar que la caminata producida por el humanoide es plana (en 2D y no en 3D, como deber\'ia ser en una caminata real). Esto se debe a que la trayectoria pensada para el b\'ipedo es una l\'inea recta, y logrando que los segmentos se muevan en un solo eje es suficiente para cumplir con dicha trayectoria. Tambi\'en contribuye el hecho de que el torque se aplique en una sola dimensi\'on. Por otra parte, los actuadores definidos a continuaci\'on son peri\'odicos, y por eso no se pueden aplicar en el eje Z de los segmentos (se necesitar\'ian actuadores reactivos, para poder detectar cuando el humanoide se est\'a cayendo, etc.).\\
-Para indicar el m\'odulo de dicho torque, se dise\~naron diferentes funciones (todas ellas peri\'odicas), mencionadas en las subsecciones que siguen. \\
+Es necesario aclarar que la caminata producida por el humanoide es plana (en 2D). Esto se debe a que la trayectoria pensada para el b\'ipedo es una l\'inea recta, y logrando que los segmentos se muevan en un solo eje es suficiente para cumplir con dicha trayectoria. Tambi\'en contribuye el hecho de que el torque se aplique en una sola dimensi\'on. Por otra parte, los actuadores definidos a continuaci\'on son peri\'odicos, y por eso no se pueden aplicar en el eje Z de los segmentos (se necesitar\'ian actuadores reactivos, para poder detectar cuando el humanoide se est\'a cayendo, etc.). Para indicar el m\'odulo de dicho torque, se dise\~naron diferentes funciones (todas ellas peri\'odicas), mencionadas en las subsecciones que siguen. \\
 \begin{figure}[H]%
   \centering
   \frame{\includegraphics[width=0.4\linewidth]{actuators.png}}
@@ -557,7 +556,7 @@ Es una extensi\'on del actuador anterior, pero con 9 t\'erminos. Por ser de mayo
 \end{split}
 \end{equation}
 donde $A_{i}$ y $B_{i}$ con $1 \leq i \leq 9$ son amplitudes.
-\subsection{Doble coseno}
+\subsection{Coseno doble frecuencia}
 Basada en \cite{Cuadrupedo}, esta funci\'on peri\'odica utiliza medio ciclo de una funci\'on sinusoidal, y medio ciclo de otra (ambas pueden tener frecuencias distintas). Esto podr\'ia tener sentido porque en una caminata, un miembro inferior primero avanza hacia adelante y luego se extiende hacia atr\'as, y es razonable que esos dos movimientos se produzcan a frecuencias distintas.\\
 %De esta manera, se consigue una caminata m\'as natural, y que no ocurre con los actuadores de Fourier, que producen una doble flexi\'on de las rodillas en cada ciclo.\\
 La idea es lograr una funci\'on peri\'odica a partir de una que no lo es (ya que $t$ es lineal). Para eso, se utiliza $\psi (t)$ (ec. \eqref{eq:phi}) que aplica una transformaci\'on a los n\'umeros reales, para que se encuentren dentro del rango del ciclo completo (con las dos frecuencias). $\omega$ es la frecuencia de $f(t)$ (ec. \eqref{eq:ft}), que utiliza medio ciclo con frecuencia $\omega_1$ y medio ciclo con frecuencia $\omega_2$.
@@ -677,7 +676,7 @@ Cada uno de los segmentos tiene propiedades f\'isicas distintas (masa, largo, et
 								& Muslo y Pierna & T\'ermino independiente & -10 & 10 \\
 	  		\hline
 			\hline
-			\multirow{5}{*}{Doble Coseno} & Muslo & Amplitud & -50 & 50\\ \cline{2-5}
+			\multirow{5}{*}{Coseno doble frecuencia} & Muslo & Amplitud & -50 & 50\\ \cline{2-5}
 								& Pierna & Amplitud & -30 & 30\\ \cline{2-5}
 	  							& Muslo y Pierna & Frecuencia & 0.01 & 5 \\ \cline{2-5}
 	  							&Muslo y Pierna & Fase & $-\pi$ & $\pi$ \\ \cline{2-5}
@@ -708,7 +707,7 @@ Para favorecer el an\'alisis de las distintas caracter\'isticas arriba indicadas
 	  		\hline 
 			\textbf{Tipo 4} & Fourier de orden 9 & S\'i & S\'i\\ 
 	  		\hline 
-			\textbf{Tipo 5} & Doble coseno & S\'i & S\'i\\ 
+			\textbf{Tipo 5} & Coseno doble frecuencia& S\'i & S\'i\\ 
 	  		\hline 
 	\end{tabular}
   \captionsetup{justification=centering}
@@ -722,6 +721,7 @@ En la Tabla \ref{table7} se muestra la composici\'on del cromosoma de cada indiv
 
 \begin{table}[H]%
   \centering
+     \resizebox{\linewidth}{!}{%
   	\begin{tabular}{ | c | c || c | c | c | c |}
 	  		\cline{3-6}
 			 \multicolumn{2}{c}{}  & \multicolumn{4}{| c |}{ \textbf{Par\'ametros} }\\
@@ -734,12 +734,13 @@ En la Tabla \ref{table7} se muestra la composici\'on del cromosoma de cada indiv
 	  															\cline{2-6}
 																& \textbf{Fourier de orden 9} & 18 & 1 & 1 & 1 \\ 
 	  															\cline{2-6}
-																& \textbf{Doble coseno}  & 1 & 2 & 1 & 1 \\ 
+																& \textbf{Coseno doble frecuencia}  & 1 & 2 & 1 & 1 \\ 
 	  		\hline
 			\hline 
 			\multicolumn{2}{| c ||}{\textbf{Funci\'on partida}} & 2 & 2 & 1 & 1 \\ 
 	  		\hline 
 	\end{tabular}
+	}
   \captionsetup{justification=centering}
   \caption{Cantidad de par\'ametros seg\'un tipo de actuador y funci\'on partida }%
   \label{table6}%
@@ -869,14 +870,14 @@ En el algoritmo gen\'etico se utilizan 1000 generaciones, de 50 individuos cada 
 
 \section{Resultados obtenidos}
 \label{resultados}
-Considerando los individuos definidos en el punto \ref{individuos_implementacion}, se realizaron pruebas, corriendo el algoritmo gen\'etico, y evaluando el resultado obtenido posteriormente (ya sea num\'erica o gr\'aficamente). A continuaci\'on se analizan distintos aspectos relevantes. 
+Considerando los individuos definidos en el punto \ref{individuos_implementacion}, se realizaron pruebas, corriendo el algoritmo gen\'etico, y evaluando el resultado alcanzado posteriormente (ya sea num\'erica o gr\'aficamente). A continuaci\'on se analizan distintos aspectos relevantes. 
 
 \subsection{Evoluci\'on del \textit{fitness} seg\'un tipo de individuos}
 
-Los individuos que usan actuadores de Fourier son los que producen \textit{fitness} m\'as bajos; el de orden 2 (individuo de tipo 3) se estanca a las pocas generaciones (al igual que el de tipo 1). El \textit{fitness} del individuo con actuadores Fourier de orden 9 se ``ameseta" progresivamente (despu\'es de 500 generaciones).\\
+Los individuos que usan actuadores de Fourier son los que producen \textit{fitness} m\'as bajos; el de orden 2 (individuo de tipo 3) se estanca a las pocas generaciones (al igual que el de tipo 1); el \textit{fitness} del individuo con actuadores Fourier de orden 9 se ``ameseta" progresivamente (despu\'es de 500 generaciones).\\
 El individuo de tipo 1 es el individuo con \textit{fitness} m\'as alto, pero que se obtuvo a las pocas generaciones (es decir que es un m\'aximo local). El individuo de tipo 2 (con actuadores gen\'ericos y funci\'on partida) va aumentando su \textit{fitness} progresivamente, aunque sin superar al de tipo 1.\\
-Por otra parte, el individuo de tipo 5 (con actuadores doble coseno), va mejorando su \textit{fitness} paulatinamente, lo que impide estancarse en un m\'aximo local. Adem\'as, tiene el segundo mejor \textit{fitness}.\\
-Puede notarse que los rangos manejados en la Fig. \ref{fig:resultados_fitness} casi alcanzan el 0.7 (y no a 1, su cota superior). Esto se debe a que la funci\'on de \textit{fitness} est\'a definida como un producto de ciertos m\'odulos: suponiendo que cada uno de ellos estuviera al 92\%, se tendr\'ia  0.92$^5 =$ 0.659.
+Por otra parte, el individuo de tipo 5 (con actuadores coseno doble frecuencia), va mejorando su \textit{fitness} paulatinamente, lo que impide estancarse en un m\'aximo local. Adem\'as, tiene el segundo mejor \textit{fitness}.\\
+Puede notarse que los rangos manejados en la Fig. \ref{fig:resultados_fitness} casi alcanzan el 0.7 (y no a 1, su cota superior). Esto se debe a que la funci\'on de \textit{fitness} est\'a definida como un producto de ciertos m\'odulos: suponiendo que cada uno de ellos estuviera al 92\%, se tendr\'ia  0.92$^5 =$ 0.659.\\
 \begin{figure}[H]%
   \centering
   \frame{\includegraphics[width=0.75\linewidth]{resultados_001.png}} 
@@ -885,7 +886,7 @@ Puede notarse que los rangos manejados en la Fig. \ref{fig:resultados_fitness} c
 \end{figure}
 
 \subsection{Velocidad seg\'un tipo de individuos}
-A continuaci\'on, se muestra, para cada individuo, su velocidad instant\'anea a lo largo del tiempo.
+A continuaci\'on, se muestra para cada individuo, su velocidad instant\'anea a lo largo del tiempo.
 \begin{figure}[H]%
   \centering
   \frame{\includegraphics[width=0.75\linewidth]{resultados_003.png}} 
@@ -907,8 +908,8 @@ Como puede identificarse en la Figura \ref{fig:resultados_altura}, la altura de 
   \label{fig:resultados_altura} %
 \end{figure}
 \noindent En efecto, los individuos de tipo 3 y 4 (que utilizan actuadores de Fourier de orden 2 y 9, respectivamente), son los que caen de forma m\'as abrupta, y aunque intentan levantarse, vuelven a caer con la misma intensidad. \\
-Por su parte, el individuo de tipo 1 (actuador Gen\'erico sin funci\'on partida) mantiene su altura, hasta que a los 10 segundos queda suspendido a una altura levemente menor. Esto ocurre porque se cae para atr\'as, y las limitaciones de la cadera impiden que caiga. El individuo de tipo 2, con actuadores gen\'ericos y funci\'on partida, logra mantener la altura, hasta que cae hacia adelante, en cuclillas. Considerando que cuando cae no vuelve a levantarse (ya que en ese movimiento suelen emplearse los brazos y manos), tiene un comportamiento similar a una caminata real. \\
-En lo que respecta al individuo de tipo 5, que utiliza como actuadores la funci\'on de doble coseno, mantiene su altura de forma constante, pero con oscilaciones leves y continuadas en el tiempo. De los cinco, es el que da mayor cantidad de pasos.
+A su vez, el individuo de tipo 1 (actuador Gen\'erico sin funci\'on partida) mantiene su altura, hasta que a los 10 segundos queda suspendido a una altura levemente menor. Esto ocurre porque se cae para atr\'as, y las limitaciones de la cadera impiden que caiga. El individuo de tipo 2, con actuadores gen\'ericos y funci\'on partida, logra mantener la altura, hasta que cae hacia adelante, en cuclillas. Considerando que cuando cae no vuelve a levantarse (ya que en ese movimiento suelen emplearse los brazos y manos), tiene un comportamiento similar a una caminata real. \\
+En lo que respecta al individuo de tipo 5, que utiliza como actuadores la funci\'on coseno doble frecuencia, mantiene su altura de forma constante, pero con oscilaciones leves y continuadas en el tiempo. De los cinco, es el que da mayor cantidad de pasos.
 
 
 \subsection{Comparaci\'on de tipo de individuos}
@@ -931,7 +932,7 @@ Para una mejor visualizaci\'on de los distintos individuos obtenidos, y de su ev
 En la secci\'on \ref{resultados} se verifica que las funciones utilizadas en los actuadores son decisivas para lograr una caminata.\\
 Algo que vale la pena notar es que los actuadores que mejores resultados dieron, fueron aquellos en donde se empleaba dos frecuencias $\omega$ en vez de una.\\
 Lo ocurrido con el individuo de tipo 1 (gen\'erico y sin funci\'on partida), que es el que tiene un \textit{fitness} m\'as alto, aunque no produce una caminata acorde, posiblemente se deba a que el tiempo de simulaci\'on empleado en el algoritmo gen\'etico, fuera corto.\\
-Se comprob\'o que los individuos con actuadores gen\'erico y doble coseno son los que mejor caminan, manteniendo su altura por m\'as tiempo y con \textit{fitness} m\'as alto. Sin embargo, son caminatas muy distintas: la del primero resulta ser m\'as natural, pero se cae m\'as r\'apido; mientras que la del segundo es m\'as ``rob\'otica" (ya que parece un \textit{passive walker}), pero m\'as estable (no se cae nunca ni se queda quieto).\\
+Se comprob\'o que los individuos con actuadores gen\'erico y coseno doble frecuencia son los que mejor caminan, manteniendo su altura por m\'as tiempo y con \textit{fitness} m\'as alto. Sin embargo, son caminatas muy distintas: la del primero resulta ser m\'as natural, pero se cae m\'as r\'apido; mientras que la del segundo es m\'as ``rob\'otica" (ya que parece un \textit{passive walker}), pero m\'as estable (no se cae nunca ni se queda quieto).\\
 La funcion de fitness que se plantea (con sus m\'odulos) indica propiedades ideales para una caminata, pero que no implican realismo en la misma. Y entonces dos individuos con fitness parecidos dieron como fruto caminatas muy distintas.\\
 Si hay que elegir como mejor a uno de los dos, habr\'ia que decidir entre realismo (el humanoide se cae, pero es m\'as natural), y estabilidad (no se cae nunca, pero parece un \textit{passive walker}).\\
 Entre los trabajos a futuro basados en este proyecto, se encuentran:  que la caminata sea en 3D; y analizar el comportamiento de varios humanoides interactuando entre s\'i.
