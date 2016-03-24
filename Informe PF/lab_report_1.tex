@@ -82,7 +82,6 @@
 \usepackage{lineno} %required to line number
 \linenumbers
 
-\usepackage{rotating} % required for rotate text in tables
 
 \pagestyle{fancy}
 \fancyheadoffset{0cm} %Used for heading without margins
@@ -334,6 +333,7 @@ Seguidamente, se muestran los gr\'aficos obtenidos al correr los experimentos nu
   \label{fig3} %
   \vspace*{0ex}
 \end{figure}
+\vspace{3ex}
 \noindent Las Fig. \ref{fig1} y \ref{fig2} demuestran que los resultados de las pruebas fueron favorables. Los valores obtenidos a partir de la simulaci\'on se corresponden (en mayor o menor medida) con los alcanzados a partir del modelo matem\'atico. Esto es un indicador de que \textit{Bullet} debe estar usando dichos modelos para ejecutar las simulaciones. Vale observar que, cuanto mayor es la velocidad inicial ($v_{i}$), mayor es la similitud entre los dos casos.\\
 No obstante, los gr\'aficos que corresponden a la Fig. \ref{fig3}, presentan una discrepancia mayor entre la simulaci\'on y el modelo. Este hecho puede deberse al mecanismo utilizado por \textit{Bullet} para resolver la fricci\'on de un cuerpo a velocidades muy bajas.
 
@@ -452,12 +452,10 @@ Se acompa\~nan a esta presentaci\'on: el c\'odigo fuente y el manual de instalac
 Dentro de los diversos modelos existentes (\cite{Wojtyra}\cite{flexibleMuscle}), en este trabajo se procur\'o utilizar uno que fuera sencillo pero representativo a la vez.\\ 
 Se modela al cuerpo humano, con el motor \textit{Bullet Physics}, como un conjunto de segmentos unidos entre s\'i por articulaciones. A cada uno de ellos se les aplica un torque en el centro de masa de cada segmento (denominado actuador). Que la caminata se produzca o no, depende del tipo de actuador empleado (la funci\'on utilizada para el torque), y de sus par\'ametros. El objetivo es encontrar dichos par\'ametros. Para eso se usan los algoritmos gen\'eticos, un m\'etodo de inteligencia artificial. De este modo se obtiene, de forma an\'aloga a la selecci\'on natural, los individuos que mejor se adapten a la caminata. Tanto los actuadores como el algoritmo gen\'etico se explicar\'an m\'as adelante.
 
-
-
 \subsection{Composici\'on f\'isica del humanoide}
 Como ya se expres\'o, el humanoide fue modelado en \textit{Bullet} como un conjunto de segmentos (cuerpos r\'igidos), unidos entre s\'i por articulaciones. \\
-Se dividi\'o al cuerpo humano en: cabeza, tronco, miembro superior (brazo, antebrazo y mano), pelvis y miembro inferior (muslo, pierna y pie). \\
-Para este proyecto, s\'olo se consideraron pelvis y miembro inferior (Fig. \ref{fig:humanoid_segments}).
+Sobre la base de la anatom\'ia humana, se dividi\'o el cuerpo del humano virtual en: cabeza, tronco, miembro superior (brazo, antebrazo y mano), pelvis y miembro inferior (muslo, pierna y pie). \\
+A los fines de este proyecto (lograr la caminata), s\'olo se consideraron pelvis y miembro inferior (Fig. \ref{fig:humanoid_segments}).
 \begin{figure}[H]%
   \centering
   \frame{\includegraphics[width=0.28\linewidth]{humanoid_segments.png}}  
@@ -470,17 +468,17 @@ Para este proyecto, s\'olo se consideraron pelvis y miembro inferior (Fig. \ref{
 	\resizebox{\linewidth}{!}{%
 		\begin{tabular}{ | c | c || c | c | c | c | c |}
 	  		 \hline
-	  		\multicolumn{2}{| c ||}{\textbf{Parte}} & \textbf{Cantidad} & \textbf{Forma} & \textbf{Largo (en m)} & \textbf{Peso (en kg)} & \textbf{Uniones}\\
+	  		\multicolumn{2}{| c ||}{\textbf{Segmento}} & \textbf{Cantidad} & \textbf{Forma} & \textbf{Largo (en m)} & \textbf{Peso (en kg)} & \textbf{Uniones}\\
 	  		\hline 
 	  		\hline
 			\multicolumn{2}{| c ||}{Pelvis} & 1 & esf\'erico & 0.08655 & 9.9718 & Cadera\\
 			\hline
 			\hline
-	  		\multirow{3}{*}{\begin{sideways}\parbox{1.5cm}{Miembro\\ inferior} \end{sideways} } & Muslo & 2 & esfero-cilindro & 0.4015 & 10.3368 & Cadera y Rodilla\\
-	  																		\cline{2-7}
-	  																		& Pierna & 2 & esfero-cilindro &  0.4015 & 3.1609 & Rodilla y Tobillo\\
-	  																		\cline{2-7}
-	  																		& Pie & 2 & esfero-cilindro & - & 1.0001 & Tobillo\\
+	  		\multirow{3}{*}{\parbox{1.45cm}{Miembro inferior}  } & Muslo & 2 & esfero-cilindro & 0.4015 & 10.3368 & Cadera y Rodilla\\
+	  												\cline{2-7}
+	  											       & Pierna & 2 & esfero-cilindro &  0.4015 & 3.1609 & Rodilla y Tobillo\\
+	  											 	\cline{2-7}
+	  												& Pie & 2 & esfero-cilindro & - & 1.0001 & Tobillo\\
 	  		\hline
 			
 		\end{tabular}
@@ -493,8 +491,8 @@ Para este proyecto, s\'olo se consideraron pelvis y miembro inferior (Fig. \ref{
 %\end{adjustwidth}
 
 \subsection{Articulaciones}
-Para unir los distintos segmentos entre s\'i, se utilizaron articulaciones bisagra con 1 grado de libertad, en el eje X, para que los segmentos puedan moverse en dos ejes: el Z, donde ocurre la caminata, y el Y, perpendicular al piso (ver Fig. \ref{fig:seg_and_art}(\protect\subref*{fig7:a}) y (\protect\subref*{fig7:b})). \\
-A su vez, para cada caso en particular, se definieron cotas para los \'angulos que pueden existir entre los segmentos. Esto es muy importante, no s\'olo porque se adec\'ua a datos biol\'ogicos, sino porque, de otro modo la caminata no podr\'ia lograrse: si los \'angulos son demasiado altos, la caminata se produce girando las piernas por encima de la pelvis; si por el contrario, son demasiado bajos, las piernas van a estar muy r\'igidas, originando pocos pasos y muy cortos.\\
+Para unir los distintos segmentos entre s\'i, se utilizaron articulaciones bisagra con 1 grado de libertad, en el eje X, para que los segmentos puedan moverse en dos ejes: el Z, donde ocurre la caminata, y el Y, perpendicular al piso (Fig. \ref{fig:seg_and_art}(\protect\subref*{fig7:a}) y (\protect\subref*{fig7:b})). \\
+A su vez, para cada caso en particular, se definieron cotas para los \'angulos que pueden existir entre los segmentos (ver Tabla \ref{table_articulaciones}). Esto es muy importante, no s\'olo porque se adec\'ua a datos biol\'ogicos, sino porque, de otro modo la caminata no podr\'ia lograrse: si los \'angulos son demasiado altos, la caminata se produce girando las piernas por encima de la pelvis; si por el contrario, son demasiado bajos, las piernas van a estar muy r\'igidas, originando pocos pasos y muy cortos.\\
 Asimismo, se le impide rotar a la pelvis, y se restringe la amplitud con la que puede moverse la cadera (de $\frac{-\pi}{4}$ a $\frac{\pi}{4}$). Esto se realiza porque, en caso contrario, el b\'ipedo necesitar\'ia un sistema de control para mantener el equilibrio, y eso excede el alcance de este trabajo.
 
 \begin{figure}[H]%
@@ -513,6 +511,25 @@ Asimismo, se le impide rotar a la pelvis, y se restringe la amplitud con la que 
   \caption{Humanoide dise\~nado: (\protect\subref*{fig7:a}) ejes, y (\protect\subref*{fig7:b}) articulaciones}%
   \label{fig:seg_and_art} %
 \end{figure}
+
+\begin {table}[H]
+	\begin{center}
+		\begin{tabular}{ | c || c | c | c | c | c |}
+	  		 \hline
+	  		 \textbf{Articulaci\'on} & \textbf{\'Angulo m\'inimo} & \textbf{\'Angulo m\'aximo}\\
+	  		\hline 
+	  		\hline
+			Cadera & -$\frac{\pi}{4}$ & $\frac{\pi}{4}$\\
+			\hline
+			Rodilla & -$\pi$ & $\pi$ \\
+			\hline
+	  		Tobillo & 0 & 0 \\
+	  		\hline		
+		\end{tabular}
+		\caption{Rango de valores de \'angulo de cada articulaci\'on del humanoide}
+		\label{table_articulaciones}
+	\end{center}
+\end{table}
 
 %----------------------------------------------------------------------------------------
 %	SECTION 4 - ACTUADORES
@@ -696,7 +713,7 @@ Para favorecer el an\'alisis de las distintas caracter\'isticas arriba indicadas
   \centering
   	\begin{tabular}{ | c || c | c | c | }
 	  		\hline
-	  		\textbf{Individuos} & \textbf{Actuador} & \textbf{Funci\'on Partida} & \textbf{Fase Sincronizada} \\
+	  		\textbf{Individuo} & \textbf{Actuador} & \textbf{Funci\'on Partida} & \textbf{Fase Sincronizada} \\
 			\hline 
 			\hline
 			\textbf{Tipo 1} & Gen\'erico & No & S\'i\\ 
@@ -724,17 +741,17 @@ En la Tabla \ref{table7} se muestra la composici\'on del cromosoma de cada indiv
      \resizebox{\linewidth}{!}{%
   	\begin{tabular}{ | c | c || c | c | c | c |}
 	  		\cline{3-6}
-			 \multicolumn{2}{c}{}  & \multicolumn{4}{| c |}{ \textbf{Par\'ametros} }\\
+			 \multicolumn{2}{c}{}  & \multicolumn{4}{| c |}{ \textbf{Par\'ametro} }\\
 						\cline{3-6}
 	  		 \multicolumn{2}{c |}{} 	&  \textbf{Amplitud} &  \textbf{Frecuencia} &  \textbf{Fase} &  \textbf{T\'ermino independiente}\\
 			\hline
-			\multirow{4}{*}{\textbf{\begin{sideways}\ Actuador \end{sideways} }} & \textbf{Gen\'erico} &  2 & 2 & 1 & 1\\ 
-	  															\cline{2-6}
-																& \textbf{Fourier de orden 2} & 4 & 1 & 1 & 1 \\ 
-	  															\cline{2-6}
-																& \textbf{Fourier de orden 9} & 18 & 1 & 1 & 1 \\ 
-	  															\cline{2-6}
-																& \textbf{Coseno doble frecuencia}  & 1 & 2 & 1 & 1 \\ 
+			\multirow{4}{*}{\textbf{\rotatebox[origin=c]{90}{Actuador}  }} & \textbf{Gen\'erico} &  2 & 2 & 1 & 1\\ 
+	  													  \cline{2-6}
+														 & \textbf{Fourier de orden 2} & 4 & 1 & 1 & 1 \\ 
+	  													  \cline{2-6}
+														 & \textbf{Fourier de orden 9} & 18 & 1 & 1 & 1 \\ 
+	  													  \cline{2-6}
+														 & \textbf{Coseno doble frecuencia}  & 1 & 2 & 1 & 1 \\ 
 	  		\hline
 			\hline 
 			\multicolumn{2}{| c ||}{\textbf{Funci\'on partida}} & 2 & 2 & 1 & 1 \\ 
@@ -751,17 +768,17 @@ En la Tabla \ref{table7} se muestra la composici\'on del cromosoma de cada indiv
   \centering
   	\begin{tabular}{ | c | c || c | c | c | c | c |}
 	  		\cline{3-7}
-			 \multicolumn{2}{c}{}  & \multicolumn{5}{| c |}{ \textbf{Individuos} }\\
+			 \multicolumn{2}{c}{}  & \multicolumn{5}{| c |}{ \textbf{Individuo} }\\
 						\cline{3-7}
 	  		 \multicolumn{2}{c |}{} 	&  \textbf{Tipo 1} &  \textbf{Tipo 2} &  \textbf{Tipo 3} &  \textbf{Tipo 4} &  \textbf{Tipo 5}\\
 			\hline
-			\multirow{4}{*}{\textbf{\begin{sideways}\ Par\'ametros \end{sideways} }} & \textbf{Amplitud} &  12 & 12 & 16 & 44 & 8\\ 
-	  																\cline{2-7}
-																    & \textbf{Frecuencia} & 2 & 6 & 6 & 6 & 8\\ 
-	  																\cline{2-7}
-																    & \textbf{Fase} & 2 & 6 & 6 & 6 & 6\\ 
-	  																\cline{2-7}
-																    & \textbf{T\'ermino independiente}  & 2 & 6 & 6 & 6 & 6\\ 
+			\multirow{4}{*}{\textbf{\rotatebox[origin=c]{90}{Par\'ametro} }} & \textbf{Amplitud} &  12 & 12 & 16 & 44 & 8\\ 
+	  											    		    \cline{2-7}
+														    & \textbf{Frecuencia} & 2 & 6 & 6 & 6 & 8\\ 
+	  													    \cline{2-7}
+														    & \textbf{Fase} & 2 & 6 & 6 & 6 & 6\\ 
+	  													    \cline{2-7}
+														    & \textbf{T\'ermino independiente}  & 2 & 6 & 6 & 6 & 6\\ 
 	  		\hline 
 			\multicolumn{2}{| c ||}{\textbf{Totales}} & 18 & 30 & 34 & 62 & 28\\ 
 	  		\hline 
@@ -935,7 +952,7 @@ Lo ocurrido con el individuo de tipo 1 (gen\'erico y sin funci\'on partida), que
 Se comprob\'o que los individuos con actuadores gen\'erico y coseno doble frecuencia son los que mejor caminan, manteniendo su altura por m\'as tiempo y con \textit{fitness} m\'as alto. Sin embargo, son caminatas muy distintas: la del primero resulta ser m\'as natural, pero se cae m\'as r\'apido; mientras que la del segundo es m\'as ``rob\'otica" (ya que parece un \textit{passive walker}), pero m\'as estable (no se cae nunca ni se queda quieto).\\
 La funcion de fitness que se plantea (con sus m\'odulos) indica propiedades ideales para una caminata, pero que no implican realismo en la misma. Y entonces dos individuos con fitness parecidos dieron como fruto caminatas muy distintas.\\
 Si hay que elegir como mejor a uno de los dos, habr\'ia que decidir entre realismo (el humanoide se cae, pero es m\'as natural), y estabilidad (no se cae nunca, pero parece un \textit{passive walker}).\\
-Entre los trabajos a futuro basados en este proyecto, se encuentran:  que la caminata sea en 3D; y analizar el comportamiento de varios humanoides interactuando entre s\'i.
+Entre los trabajos a futuro para integrar a este proyecto, se encuentran lograr que la caminata se produzca en 3 dimensiones; y analizar el comportamiento de varios humanoides chocando e  interactuando entre s\'i.
 
 %\end{adjustwidth}
 

@@ -49,10 +49,14 @@ lower_y_r = lower_sines_r + lower_cosines_r;
 
 subplot(2,1,1)
 plot(x,upper_y,x,upper_y_r)
-title('Plot generic function')
-legend('upper leg','upper right leg')
+title('Actuador Fourier de orden')
+legend('Pierna','Pierna derecha')
+xlabel('t (s)')
+ylabel('f(t)')
 
 subplot(2,1,2)
 plot(x,lower_y,x,lower_y_r)
-title('Plot generic function')
-legend('lower leg','lower right leg')
+title('Actuador Fourier de orden')
+legend('Muslo','Muslo derecho')
+xlabel('t (s)')
+ylabel('f(t)')

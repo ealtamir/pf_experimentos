@@ -28,10 +28,14 @@ lower_r = lower_A * sin(lower_sin_frec * x + lower_fase + pi) + lower_B * cos(lo
 
 subplot(2,1,1)
 plot(x,upper,x,upper_r)
-title('Plot generic function')
-legend('upper leg','upper right leg')
+title('Actuador genérico')
+legend('Muslo','Muslo derecho')
+xlabel('t (s)')
+ylabel('f(t)')
 
 subplot(2,1,2)
 plot(x,lower,x,lower_r)
-title('Plot generic function')
-legend('lower leg','lower right leg')
+title('Actuador genérico')
+legend('Pierna','Pierna derecha')
+xlabel('t (s)')
+ylabel('f(t)')

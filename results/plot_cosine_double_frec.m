@@ -64,15 +64,15 @@ end
 
 subplot(2,2,1)
 plot(x,first_step_upper,x,first_step_upper_r)
-title('Plot cosine double frec function')
-legend('upper left leg first','upper right leg first')
+title('Actuador coseno doble frecuencia')
+legend('Muslo izquierdo first','Muslo derecho first')
 
 axis([0 first_step_time -50 50])
 
 subplot(2,2,3)
 plot(x,first_step_lower,x,first_step_lower_r)
-title('Plot cosine double frec function')
-legend('lower left leg first','lower right leg first')
+title('Actuador coseno doble frecuencia')
+legend('Pierna derecha first','Pierna derecha first')
 
 axis([0 first_step_time -50 50])
 
@@ -123,14 +123,14 @@ end
 
 subplot(2,2,2)
 plot(x,upper,x,upper_r)
-title('Plot cosine double frec function')
-legend('upper left leg','upper right leg')
+title('Actuador coseno doble frecuencia')
+legend('Muslo izquierdo','Muslo derecho')
 
 axis([first_step_time 3 -50 50])
 
 subplot(2,2,4)
 plot(x,lower,x,lower_r)
-title('Plot cosine double frec function')
-legend('lower left leg','lower right leg')
+title('Actuador coseno doble frecuencia')
+legend('Pierna izquierda','Pierna derecha')
 
 axis([first_step_time 3 -50 50])
