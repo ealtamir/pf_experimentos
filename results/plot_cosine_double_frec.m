@@ -27,7 +27,7 @@ first2_step_upper_W2 = chromosome(19);
 first2_step_upper_fase = chromosome(20);
 first2_step_upper_ind_term = chromosome(21);
 
-x = [0:0.001:10];    
+x = [1:0.001:3];    
 
 psi = x + first_step_upper_fase - floor((x + first_step_upper_fase)/((pi/first_step_upper_W1) + (pi/first_step_upper_W2))) * ((pi/first_step_upper_W1) + (pi/first_step_upper_W2));
 
@@ -62,19 +62,27 @@ else
     first_step_lower_r = first2_step_lower_A*cos(first2_step_lower_W2*(psi-(pi/first2_step_lower_W1)+(pi/first2_step_lower_W2))) + first2_step_lower_ind_term;
 end
 
-subplot(2,2,1)
-plot(x,first_step_upper,x,first_step_upper_r)
-title('Actuador coseno doble frecuencia')
-legend('Muslo izquierdo first','Muslo derecho first')
+% subplot(2,2,1)
+% plot(x,first_step_upper,'b',x,first_step_upper_r,'r','LineWidth',2)
+% title('Actuador coseno doble frecuencia')
+% lgnds = legend('Muslo izquierdo first','Muslo derecho first');
+% ch = get(lgnds,'Children');
+% th = findobj(ch,'Type','text');
+% set(th,'fontweight','bold','fontName','Calibri','fontsize',12);
+% xlabel('Tiempo (s)','fontweight','bold','fontName','Calibri','fontsize',12)
+% ylabel('f(t)','fontweight','bold','fontName','Calibri','fontsize',12)
+% axis([0 first_step_time -50 50])
 
-axis([0 first_step_time -50 50])
-
-subplot(2,2,3)
-plot(x,first_step_lower,x,first_step_lower_r)
-title('Actuador coseno doble frecuencia')
-legend('Pierna derecha first','Pierna derecha first')
-
-axis([0 first_step_time -50 50])
+% subplot(2,2,3)
+% plot(x,first_step_lower,'b',x,first_step_lower_r,'r','LineWidth',2)
+% title('Actuador coseno doble frecuencia')
+% lgnds = legend('Pierna derecha first','Pierna derecha first');
+% ch = get(lgnds,'Children');
+% th = findobj(ch,'Type','text');
+% set(th,'fontweight','bold','fontName','Calibri','fontsize',12);
+% xlabel('Tiempo (s)','fontweight','bold','fontName','Calibri','fontsize',12)
+% ylabel('f(t)','fontweight','bold','fontName','Calibri','fontsize',12)
+% axis([0 first_step_time -50 50])
 
 lower_A = chromosome(22);
 lower_W1 = chromosome(23);
@@ -121,16 +129,24 @@ else
     lower_r = lower_A*cos(lower_W2*(psi-(pi/lower_W1)+(pi/lower_W2))) + lower_ind_term;
 end
 
-subplot(2,2,2)
-plot(x,upper,x,upper_r)
-title('Actuador coseno doble frecuencia')
-legend('Muslo izquierdo','Muslo derecho')
 
+plot(x,upper,'b',x,upper_r,'r','LineWidth',2)
+%title('Actuador coseno doble frecuencia')
+lgnds = legend('Muslo izquierdo','Muslo derecho');
+ch = get(lgnds,'Children');
+th = findobj(ch,'Type','text');
+set(th,'fontweight','bold','fontName','Calibri','fontsize',12);
+xlabel('Tiempo (s)','fontweight','bold','fontName','Calibri','fontsize',12)
+ylabel('f(t)','fontweight','bold','fontName','Calibri','fontsize',12)
 axis([first_step_time 3 -50 50])
 
-subplot(2,2,4)
-plot(x,lower,x,lower_r)
-title('Actuador coseno doble frecuencia')
-legend('Pierna izquierda','Pierna derecha')
-
+figure(2)
+plot(x,lower,'b',x,lower_r,'r','LineWidth',2)
+%title('Actuador coseno doble frecuencia');
+lgnds = legend('Pierna izquierda','Pierna derecha');
+ch = get(lgnds,'Children');
+th = findobj(ch,'Type','text');
+set(th,'fontweight','bold','fontName','Calibri','fontsize',12);
+xlabel('Tiempo (s)','fontweight','bold','fontName','Calibri','fontsize',12)
+ylabel('f(t)','fontweight','bold','fontName','Calibri','fontsize',12)
 axis([first_step_time 3 -50 50])
