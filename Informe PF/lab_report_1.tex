@@ -697,11 +697,13 @@ siendo $f(t)$ la funci\'on de movimiento (o actuador) en el momento $t$, y $f_{i
 
 \section{Algoritmo gen\'etico}
 
+Los algoritmos gen\'eticos son un conjunto de t\'ecnicas de optimizaci\'on, inspiradas en la teor\'ia darwiniana de la selecci\'on natural. La entidad a optimizar constituye un individuo dentro de una poblaci\'on; que puede ser cruzado con otros individuos para obtener un ``hijo", que presenta caracter\'isticas de sus ``padres". A trav\'es de una funci\'on de \textit{fitness} se decide cu\'ales de ellos son los m\'as ``aptos", que luego pasar\'an a una nueva generaci\'on de individuos. Este proceso se repite hasta obtener un individuo lo suficientemente apto, que representa a la entidad optimizada.\\
+El objetivo de este proyecto es optimizar la caminata del humanoide. Ergo, en el algoritmo gen\'etico aplicado, el individuo est\'a definido por rasgos del b\'ipedo, y la funci\'on de \textit{fitness} se focaliza en mejorar diversos aspectos de dicha caminata.
 
 \subsection{Individuo}
 
-%\begin{adjustwidth}{1.25cm}{0cm}
-La informaci\'on gen\'etica de cada individuo, est\'a compuesta por dos partes: funci\'on partida (optativa) y los par\'ametros asociados a los actuadores (obligatorios). 
+%La informaci\'on gen\'etica de cada individuo, est\'a compuesta por dos partes: funci\'on partida (optativa) y los par\'ametros asociados a los actuadores (obligatorios). 
+La informaci\'on gen\'etica de cada individuo, est\'a definida como un vector y se compone de dos partes, ubicadas en forma contigua: funci\'on partida (optativa) y los par\'ametros asociados a los actuadores (obligatorios). 
 
 \subsubsection{Par\'ametros}
 \label{sub:parametros}
@@ -900,7 +902,7 @@ Se\~nala qu\'e tan similares son la direcci\'on objetivo (un vector unitario, qu
 \begin{equation}
  D = \frac{\sum_{n=0}^{T} {e^{-C( \boldsymbol{v_{t_{n}}} \cdot \boldsymbol{V_{O} } -1)^2 } } }{N}
 \end{equation}
-\\ donde $t_{0}$ es el tiempo inicial, $t_{T}$ el tiempo final, $\boldsymbol{v_{t_{n}}}$ el versor de la direcci\'on del humanoide en el momento $t_{n}$ y $\boldsymbol{V_{O}}$ el versor de la direcci\'on objetivo.
+donde $t_{0}$ es el tiempo inicial, $t_{T}$ el tiempo final, $\boldsymbol{v_{t_{n}}}$ el versor de la direcci\'on del humanoide en el momento $t_{n}$ y $\boldsymbol{V_{O}}$ el versor de la direcci\'on objetivo.
 \\ El producto escalar entre los versores responde a la Similitud Coseno: $\cos \theta = \frac{\boldsymbol{A} \cdot \boldsymbol{B} } {A B } $, donde \textbf{A} y \textbf{B} son vectores que no se encuentran normalizados, y $\theta$ es el \'angulo formado entre ellos. As\'i,  si $\cos \theta=1$, significa que los vectores est\'an paralelos entre s\'i (que es el efecto buscado en el caso de la direcci\'on). 
 \\ Al producto escalar se le resta 1, para que el m\'odulo sea consistente con la funci\'on exponencial utilizada y que valga 1 cuando $\theta = 0$, y  0 cuando $\theta = \pi$. Cabe aclarar que se trata al \'angulo en forma sim\'etrica, ya que, por ejemplo $\cos(-\pi/6) = \cos(\pi/6)$.\\
 
@@ -1021,8 +1023,8 @@ Lo ocurrido con el individuo de tipo 1 (gen\'erico y sin funci\'on partida), que
 Se comprob\'o que los individuos con actuadores gen\'erico y coseno doble frecuencia son los que mejor caminan, manteniendo su altura por m\'as tiempo y con \textit{fitness} m\'as alto. Sin embargo, son caminatas muy distintas: la del primero resulta ser m\'as natural, pero se cae m\'as r\'apido; mientras que la del segundo es m\'as ``rob\'otica" (ya que parece un \textit{passive walker}), pero m\'as estable (no se cae nunca ni se queda quieto).\\
 La funci\'on de fitness que se plantea (con sus m\'odulos) indica propiedades ideales para una caminata, pero que no implican realismo en la misma. Y entonces dos individuos con \textit{fitness} parecidos dieron como fruto caminatas muy distintas.\\
 Si hay que elegir como mejor a uno de los dos, habr\'ia que decidir entre realismo (el humanoide se cae, pero es m\'as natural), y estabilidad (no se cae nunca, pero parece un \textit{passive walker}).\\
-Entre los trabajos a futuro para integrar a este proyecto, se encuentran lograr que la caminata se produzca en 3 dimensiones; y analizar el comportamiento de varios humanoides chocando e  interactuando entre s\'i.
-
+Entre los trabajos a futuro para integrar a este proyecto, se encuentran lograr que la caminata se produzca en 3 dimensiones; y analizar el comportamiento de varios humanoides chocando e  interactuando entre s\'i.\\
+Se puede concluir que, la caminata de una persona, algo que parece simple y sencillo, muestra su verdadera complejidad cuando debe ser simulada por medio de actuadores aplicados a un conjunto de segmentos interconectados.
 
 
 %----------------------------------------------------------------------------------------
