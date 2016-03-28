@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.11.6)  27 MAR 2016 18:01
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.11.6)  28 MAR 2016 09:22
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -2132,11 +2132,6 @@ Underfull \hbox (badness 10000) in paragraph at lines 901--902
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 904--908
-
- []
-
 Package babel Info: Redefining spanish shorthand <<
 (babel)             in language  on input line 908.
 Package babel Info: Redefining spanish shorthand >>
@@ -2174,11 +2169,6 @@ Package babel Info: Redefining spanish shorthand "!
 (babel)             in language  on input line 909.
 Package babel Info: Redefining spanish shorthand "?
 (babel)             in language  on input line 909.
-
-Underfull \hbox (badness 10000) in paragraph at lines 915--917
-
- []
-
 Package babel Info: Redefining spanish shorthand <<
 (babel)             in language  on input line 918.
 Package babel Info: Redefining spanish shorthand >>
@@ -2221,30 +2211,30 @@ Package babel Info: Redefining spanish shorthand "!
 Package babel Info: Redefining spanish shorthand "?
 (babel)             in language  on input line 931.
 Package babel Info: Redefining spanish shorthand <<
-(babel)             in language  on input line 936.
+(babel)             in language  on input line 931.
 Package babel Info: Redefining spanish shorthand >>
-(babel)             in language  on input line 936.
+(babel)             in language  on input line 931.
 Package babel Info: Redefining spanish shorthand "=
-(babel)             in language  on input line 936.
+(babel)             in language  on input line 931.
 Package babel Info: Redefining spanish shorthand "~
-(babel)             in language  on input line 936.
+(babel)             in language  on input line 931.
 Package babel Info: Redefining spanish shorthand "!
-(babel)             in language  on input line 936.
+(babel)             in language  on input line 931.
 Package babel Info: Redefining spanish shorthand "?
-(babel)             in language  on input line 936.
-Package babel Info: Redefining spanish shorthand <<
-(babel)             in language  on input line 936.
-Package babel Info: Redefining spanish shorthand >>
-(babel)             in language  on input line 936.
-Package babel Info: Redefining spanish shorthand "=
-(babel)             in language  on input line 936.
-Package babel Info: Redefining spanish shorthand "~
-(babel)             in language  on input line 936.
-Package babel Info: Redefining spanish shorthand "!
-(babel)             in language  on input line 936.
-Package babel Info: Redefining spanish shorthand "?
-(babel)             in language  on input line 936.
+(babel)             in language  on input line 931.
 [21]
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 931.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 931.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 931.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 931.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 931.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 931.
 Package babel Info: Redefining spanish shorthand <<
 (babel)             in language  on input line 937.
 Package babel Info: Redefining spanish shorthand >>
@@ -2533,7 +2523,7 @@ Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1056.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1056.
 
 Package rerunfilecheck Info: File `lab_report_1.out' has not changed.
-(rerunfilecheck)             Checksum: FBA3195A00D050784DFFF63506FE7073;3412.
+(rerunfilecheck)             Checksum: 79BC1889187B011B8DE78F96F6C5FB15;3414.
  ) 
 Here is how much of TeX's memory you used:
  21429 strings out of 494501
@@ -2571,7 +2561,7 @@ cmti8.pfb></usr/local/texlive/2015basic/texmf-dist/fonts/type1/public/amsfonts/
 cm/cmti9.pfb></usr/local/texlive/2015basic/texmf-dist/fonts/type1/public/amsfon
 ts/cm/cmtt12.pfb></usr/local/texlive/2015basic/texmf-dist/fonts/type1/public/am
 sfonts/symbols/msbm10.pfb>
-Output written on lab_report_1.pdf (26 pages, 1629344 bytes).
+Output written on lab_report_1.pdf (26 pages, 1629654 bytes).
 PDF statistics:
  730 PDF objects out of 1000 (max. 8388607)
  602 compressed objects within 7 object streams

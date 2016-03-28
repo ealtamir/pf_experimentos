@@ -34,11 +34,11 @@
 \contentsline {subsubsection}{\numberline {6.2.3}Direcci\'on}{20}{subsubsection.6.2.3}
 \contentsline {subsubsection}{\numberline {6.2.4}Simetr\'ia}{21}{subsubsection.6.2.4}
 \contentsline {subsubsection}{\numberline {6.2.5}Pies abajo}{21}{subsubsection.6.2.5}
-\contentsline {subsection}{\numberline {6.3}Par\'ametros del algoritmo}{21}{subsection.6.3}
+\contentsline {subsection}{\numberline {6.3}Operadores del algoritmo}{21}{subsection.6.3}
 \contentsline {subsubsection}{\numberline {6.3.1}M\'etodos de selecci\'on}{22}{subsubsection.6.3.1}
 \contentsline {subsubsection}{\numberline {6.3.2}M\'etodos de cruza}{22}{subsubsection.6.3.2}
 \contentsline {subsubsection}{\numberline {6.3.3}Mutaci\'on}{22}{subsubsection.6.3.3}
-\contentsline {subsubsection}{\numberline {6.3.4}Otros par\'ametros}{22}{subsubsection.6.3.4}
+\contentsline {subsubsection}{\numberline {6.3.4}Otras caracter\'isticas}{22}{subsubsection.6.3.4}
 \contentsline {section}{\numberline {7}Resultados obtenidos}{22}{section.7}
 \contentsline {subsection}{\numberline {7.1}Evoluci\'on del \textit {fitness} seg\'un tipo de individuos}{22}{subsection.7.1}
 \contentsline {subsection}{\numberline {7.2}Velocidad seg\'un tipo de individuos}{23}{subsection.7.2}
