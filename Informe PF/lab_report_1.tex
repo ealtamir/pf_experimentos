@@ -202,7 +202,7 @@ El presente informe, describe y analiza pormenorizadamente: en la secci\'on 2, l
 %\begin{adjustwidth}{1.2cm}{0cm}
 Se llama motor f\'isico o \textit{physics engine} a un  ``\textit{software} capaz de realizar simulaciones de ciertos sistemas f\'isicos, como la din\'amica del cuerpo r\'igido, el movimiento de un fluido y la elasticidad" \cite{wikiPhysicsEngine}. \\
 Actualmente, existen muchos motores f\'isicos: ya sea de c\'odigo propietario (\textit{PhysX}, \textit{Havok}), como \textit{open-source} (\textit{Bullet Physics}, \textit{Box2D}, \textit{Newton}, \textit{OGRE}). Considerando an\'alisis relacionados \cite{Comparissons}\cite{Comparissons2}, y el hecho de que el espacio simulado fuese en 3D, se decidi\'o que \textit{Bullet Physics}\cite{LinkBullet} es el m\'as id\'oneo. Est\'a implementado en C++ y ha sido utilizado en varios juegos (\textit{Grand Theft Auto IV} y \textit{V}, etc); en los efectos especiales de pel\'iculas (\textit{Hancock}, \textit{Bolt}, etc.); y proyectos cient\'ificos, como la herramienta \textit{open-source} \textit{Tensegrity Robotics Toolkit} de la NASA\footnote{http://bulletphysics.org/Bullet/phpBB3/viewtopic.php?f=17\&t=9978}; entre otros.\\
-Si bien (como se ver\'a m\'as adelante) \textit{Bullet} tiene problemas asociados con el coeficiente de restituci\'on, posee una muy buena \textit{performance} en la detecci\'on de colisiones, la din\'amica y la resoluci\'on de \textit{constraints}. Esto se debe, en parte, a diferentes algoritmos iterativos de orden lineal (donde el m\'as importante es \textit{Sequential Impulse}), de \textit{caching} y tambi\'en a la utilizaci\'on de un modelo de fricci\'on de Coulomb aproximado \cite{Catto}. Adem\'as, el motor f\'isico brinda la posibilidad de regular la precisi\'on requerida en estos c\'alculos (sin olvidar que, con iguales recursos, a mayor precisi\'on, mayor capacidad de c\'omputo requerida y, ergo, mayor tiempo). Dado que la construcci\'on del humanoide implica definir caracter\'isticas y restricciones de movimiento de cada una de sus partes, lo antes mencionado fue crucial para la elecci\'on de \textit{Bullet Physics} en este proyecto.
+Si bien (como se ver\'a m\'as adelante) \textit{Bullet} tiene problemas asociados con el coeficiente de restituci\'on, posee una muy buena \textit{performance} en la detecci\'on de colisiones, la din\'amica y la resoluci\'on de \textit{constraints}. Esto se debe, en parte, a diferentes algoritmos iterativos de orden lineal (donde el m\'as importante es \textit{Sequential Impulse}), de \textit{caching} y tambi\'en a la utilizaci\'on de un modelo de fricci\'on de Coulomb aproximado \cite{Catto}. Adem\'as, el motor f\'isico brinda la posibilidad de regular la precisi\'on requerida en estos c\'alculos (sin olvidar que, con iguales recursos, a mayor precisi\'on, mayor capacidad de c\'omputo requerida y, ergo, mayor tiempo). Dado que la construcci\'on del humanoide implica definir caracter\'isticas y restricciones de movimiento de cada uno de sus segmentos, lo antes mencionado fue crucial para la elecci\'on de \textit{Bullet Physics} en este proyecto.
 
 \subsubsection{Funcionamiento}
 El motor f\'isico se encarga de la simulaci\'on de cuerpos r\'igidos y la interacci\'on entre los mismos.
@@ -233,7 +233,7 @@ En base a los modelos f\'isico-matem\'aticos que representan a cada uno de los d
 
 \paragraph{Verificaci\'on del coeficiente de fricci\'on}\mbox{}
 
-Para determinar el modelo utilizado por \textit{Bullet} para simular las fuerzas resultantes sobre un cuerpo por acci\'on de la fricci\'on, se simul\'o un cubo, de $m_{cube}=1kg$ y $l_{cube}=1m$, que tiene una velocidad inicial constante ($v_{i}$) en el eje horizontal, que gradualmente se detiene por acci\'on de la fricci\'on, hasta llegar al reposo (Fig. \ref{fig:translatingCube}).
+Para determinar el modelo utilizado por \textit{Bullet} para simular las fuerzas resultantes sobre un cuerpo por acci\'on de la fricci\'on, se simul\'o un cubo, de $m_{cube}=1kg$ y $l_{cube}=1m$, que tiene una velocidad inicial constante ($v_{i}$) en el eje horizontal, que gradualmente se detiene por acci\'on de la fricci\'on, hasta llegar al reposo (Fig. \ref{fig:translatingCube}).\\
 \begin{figure}[H]%
   \centering
   \frame{\includegraphics[width=0.4\linewidth]{translatingCube.png}}
@@ -433,8 +433,8 @@ Ofrece funcionalidades como: programaci\'on paralela, diversos m\'etodos de sele
 \subsection{C\'odigo fuente}
 
 %\begin{adjustwidth}{1.2cm}{0cm}
-Al estar \textit{Bullet} implementado en C++, el c\'odigo fuente tambi\'en est\'a desarrollado en ese lenguaje. En \textit{Bullet}, se define un \textit{World} (o mundo f\'isico) en donde se puede insertar, entre otras cosas, cuerpos r\'igidos. En este caso en particular, el mundo consta de un plano  (el suelo) y  el humanoide encima (compuesto por cuerpos r\'igidos y otros elementos f\'isicos). \\
-El \textit{software} creado incluye: creaci\'on del humanoide, siendo \'este capaz de desplazarse por medio de actuadores (que se ver\'an en la Secci\'on \ref{actuadores}); el desarrollo del algoritmo gen\'etico (definici\'on de los individuos, funci\'on de \textit{fitness}, m\'etodos de selecci\'on, etc.); visualizaci\'on gr\'afica del mejor humanoide logrado por el algoritmo gen\'etico; y la posibilidad de realizar gr\'aficos referidos a la evoluci\'on del algoritmo gen\'etico (\textit{fitness} por cada generaci\'on, etc.). \\
+Al estar \textit{Bullet} implementado en C++, el c\'odigo fuente tambi\'en est\'a desarrollado en ese lenguaje. En \textit{Bullet}, se define un \textit{World} (o mundo f\'isico) en donde se puede insertar, entre otras cosas, cuerpos r\'igidos. En este caso en particular, el mundo consta de un plano  (el suelo), y  el b\'ipedo (compuesto por cuerpos r\'igidos y otros elementos f\'isicos) ubicado sobre \'el. \\
+El \textit{software} creado incluye: construcci\'on del humanoide, siendo \'este capaz de desplazarse por medio de actuadores (que se ver\'an en la Secci\'on \ref{actuadores}); el desarrollo del algoritmo gen\'etico (definici\'on de los individuos, funci\'on de \textit{fitness}, m\'etodos de selecci\'on, etc.); visualizaci\'on gr\'afica del mejor humanoide logrado por el algoritmo gen\'etico; y la posibilidad de realizar gr\'aficos referidos a la evoluci\'on del algoritmo gen\'etico (\textit{fitness} por cada generaci\'on, etc.). \\
 Se acompa\~nan a esta presentaci\'on: el c\'odigo fuente y el manual de instalaci\'on y uso.
 
 %\end{adjustwidth}
@@ -450,7 +450,7 @@ Se acompa\~nan a esta presentaci\'on: el c\'odigo fuente y el manual de instalac
 
 %\begin{adjustwidth}{1.1cm}{0cm}
 Dentro de los diversos modelos existentes (\cite{Wojtyra}\cite{flexibleMuscle}), en este trabajo se procur\'o utilizar uno que fuera sencillo pero representativo a la vez.\\ 
-Se modela al cuerpo humano, con el motor \textit{Bullet Physics}, como un conjunto de segmentos unidos entre s\'i por articulaciones. A cada uno de ellos se les aplica un torque en el centro de masa de cada segmento (denominado actuador). Que la caminata se produzca o no, depende del tipo de actuador empleado (la funci\'on utilizada para el torque), y de sus par\'ametros. El objetivo es encontrar dichos par\'ametros. Para eso se usan los algoritmos gen\'eticos, un m\'etodo de inteligencia artificial. De este modo se obtiene, de forma an\'aloga a la selecci\'on natural, los individuos que mejor se adapten a la caminata. Tanto los actuadores como el algoritmo gen\'etico se explicar\'an m\'as adelante.
+Se modela al cuerpo del b\'ipedo, con el motor \textit{Bullet Physics}, como un conjunto de segmentos unidos entre s\'i por articulaciones. A cada uno de ellos se les aplica un torque en el centro de masa de cada segmento (denominado actuador). Que la caminata se produzca o no, depende del tipo de actuador empleado (la funci\'on utilizada para el torque), y de sus par\'ametros. El objetivo es encontrar dichos par\'ametros. Para eso se usan los algoritmos gen\'eticos, un m\'etodo de inteligencia artificial. De este modo se obtiene, de forma an\'aloga a la selecci\'on natural, los individuos que mejor se adapten a la caminata. Tanto los actuadores como el algoritmo gen\'etico se explicar\'an m\'as adelante.
 
 \subsection{Composici\'on f\'isica del humanoide}
 Como ya se expres\'o, el humanoide fue modelado en \textit{Bullet} como un conjunto de segmentos (cuerpos r\'igidos), unidos entre s\'i por articulaciones. \\
@@ -462,7 +462,7 @@ A los fines de este proyecto (lograr la caminata), s\'olo se consideraron pelvis
     \caption{Segmentos del humanoide}
     \label{fig:humanoid_segments}
 \end{figure} 
-\noindent La Tabla \ref{table2} presenta la composici\'on de cada uno de los segmentos del humano virtual, de acuerdo a la biomec\'anica \cite{biomechanics}.
+\noindent En la Tabla \ref{table2} se presenta la composici\'on f\'isica de cada uno de los segmentos del humano virtual, de acuerdo a la biomec\'anica \cite{biomechanics}.
 \begin {table}[H]
 	\begin{center}
 	\resizebox{\linewidth}{!}{%
@@ -483,7 +483,7 @@ A los fines de este proyecto (lograr la caminata), s\'olo se consideraron pelvis
 			
 		\end{tabular}
 		}
-		\caption{Composici\'on de cada segmento del humanoide}
+		\caption{Composici\'on f\'isica de cada segmento del humanoide}
 		\label{table2}
 	\end{center}
 \end{table}
