@@ -28,13 +28,13 @@
 \contentsline {subsubsection}{\numberline {6.1.2}Valores}{18}{subsubsection.6.1.2}
 \contentsline {subsubsection}{\numberline {6.1.3}Implementaci\'on de individuos}{19}{subsubsection.6.1.3}
 \contentsline {subsubsection}{\numberline {6.1.4}Constituci\'on del cromosoma}{19}{subsubsection.6.1.4}
-\contentsline {subsection}{\numberline {6.2}Fitness}{19}{subsection.6.2}
+\contentsline {subsection}{\numberline {6.2}Fitness}{20}{subsection.6.2}
 \contentsline {subsubsection}{\numberline {6.2.1}Altura}{20}{subsubsection.6.2.1}
 \contentsline {subsubsection}{\numberline {6.2.2}Velocidad}{20}{subsubsection.6.2.2}
 \contentsline {subsubsection}{\numberline {6.2.3}Direcci\'on}{20}{subsubsection.6.2.3}
 \contentsline {subsubsection}{\numberline {6.2.4}Simetr\'ia}{21}{subsubsection.6.2.4}
 \contentsline {subsubsection}{\numberline {6.2.5}Pies abajo}{21}{subsubsection.6.2.5}
-\contentsline {subsection}{\numberline {6.3}Operadores del algoritmo}{21}{subsection.6.3}
+\contentsline {subsection}{\numberline {6.3}Operadores del algoritmo}{22}{subsection.6.3}
 \contentsline {subsubsection}{\numberline {6.3.1}M\'etodos de selecci\'on}{22}{subsubsection.6.3.1}
 \contentsline {subsubsection}{\numberline {6.3.2}M\'etodos de cruza}{22}{subsubsection.6.3.2}
 \contentsline {subsubsection}{\numberline {6.3.3}Mutaci\'on}{22}{subsubsection.6.3.3}
@@ -42,7 +42,7 @@
 \contentsline {section}{\numberline {7}Resultados obtenidos}{22}{section.7}
 \contentsline {subsection}{\numberline {7.1}Evoluci\'on del \textit {fitness} seg\'un tipo de individuos}{22}{subsection.7.1}
 \contentsline {subsection}{\numberline {7.2}Velocidad seg\'un tipo de individuos}{23}{subsection.7.2}
-\contentsline {subsection}{\numberline {7.3}Altura seg\'un tipo de individuos}{23}{subsection.7.3}
+\contentsline {subsection}{\numberline {7.3}Altura seg\'un tipo de individuos}{24}{subsection.7.3}
 \contentsline {subsection}{\numberline {7.4}Comparaci\'on de tipo de individuos}{24}{subsection.7.4}
 \contentsline {subsection}{\numberline {7.5}Video}{24}{subsection.7.5}
 \contentsline {section}{\numberline {8}Conclusiones}{25}{section.8}

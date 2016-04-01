@@ -712,7 +712,7 @@ Tanto la funci\'on partida como los actuadores tienen como par\'ametros: amplitu
 
 \subsubsection{Valores}
 
-Cada uno de los segmentos tiene propiedades f\'isicas distintas (masa, largo, etc.), raz\'on por la cual no necesariamente sus genes deban tener los mismos rangos de valores, tal como puede apreciarse en las Tablas \ref{table3} y \ref{table4}. \\
+Cada uno de los segmentos tiene una composici\'on f\'isica distinta (largo, masa, etc.), raz\'on por la cual no necesariamente sus genes deban tener los mismos rangos de valores, tal como puede apreciarse en las Tablas \ref{table3} y \ref{table4}. \\
 
 \begin{table}[H]%
   \centering
@@ -779,25 +779,48 @@ Cada uno de los segmentos tiene propiedades f\'isicas distintas (masa, largo, et
 
 \subsubsection{Implementaci\'on de individuos}
 \label{individuos_implementacion}
-Para favorecer el an\'alisis de las distintas caracter\'isticas arriba indicadas, se implementaron varios individuos, cada uno de ellos con propiedades distintas (Tabla \ref{table5}).
+Para favorecer el an\'alisis de las distintas caracter\'isticas arriba indicadas, se implementaron varios individuos, cada uno de ellos con propiedades distintas (Tabla \ref{table5}). \\
+%\begin{table}[H]%
+%  \centering
+ % 	\begin{tabular}{ | c || c | c | c | }
+%	  		\hline
+%	  		\textbf{Individuo} & \textbf{Actuador} & \textbf{Funci\'on Partida} & \textbf{Fase Sincronizada} \\
+%			\hline 
+%			\hline
+%			\textbf{Tipo 1} & Gen\'erico & No & S\'i\\ 
+%	  		\hline 
+%			\textbf{Tipo 2} & Gen\'erico & S\'i & S\'i\\ 
+%	  		\hline 
+%			\textbf{Tipo 3} & Fourier de orden 2 & S\'i & S\'i\\ 
+%	  		\hline 
+%			\textbf{Tipo 4} & Fourier de orden 9 & S\'i & S\'i\\ 
+%	  		\hline 
+%			\textbf{Tipo 5} & Coseno doble frecuencia& S\'i & S\'i\\ 
+%	  		\hline 
+%	\end{tabular}
+%  \captionsetup{justification=centering}
+%  \caption{Tipo de individuos }%
+%  \label{table5}%
+%\end{table}
+
 \begin{table}[H]%
   \centering
-  	\begin{tabular}{ | c || c | c | c | }
-	  		\hline
-	  		\textbf{Individuo} & \textbf{Actuador} & \textbf{Funci\'on Partida} & \textbf{Fase Sincronizada} \\
-			\hline 
+    \resizebox{\linewidth}{!}{%
+  	\begin{tabular}{ | c || c | c | c | c | c |}
+	  		\cline{2-6}
+			\multicolumn{1}{c}{}  & \multicolumn{5}{| c |}{ \textbf{Individuo} }\\
+			\cline{2-6}			
+	  		\multicolumn{1}{c |}{}  &  \textbf{Tipo 1} &  \textbf{Tipo 2} &  \textbf{Tipo 3} &  \textbf{Tipo 4} &  \textbf{Tipo 5}\\
 			\hline
-			\textbf{Tipo 1} & Gen\'erico & No & S\'i\\ 
+			 \textbf{Actuador} &  Gen\'erico & Gen\'erico & \begin{tabular}{@{}c@{}}Fourier de\\ orden 2\end{tabular} &\begin{tabular}{@{}c@{}}Fourier de\\ orden 9\end{tabular} & \begin{tabular}{@{}c@{}}Coseno doble\\ frecuencia\end{tabular}\\  
+	  		\hline									    		   
+			 \textbf{Funci\'on partida} & No & S\'i & S\'i & S\'i & S\'i\\ 
+	  		\hline											   
+			\textbf{Fase sincronizada}  & S\'i & S\'i & S\'i & S\'i & S\'i\\ 
 	  		\hline 
-			\textbf{Tipo 2} & Gen\'erico & S\'i & S\'i\\ 
-	  		\hline 
-			\textbf{Tipo 3} & Fourier de orden 2 & S\'i & S\'i\\ 
-	  		\hline 
-			\textbf{Tipo 4} & Fourier de orden 9 & S\'i & S\'i\\ 
-	  		\hline 
-			\textbf{Tipo 5} & Coseno doble frecuencia& S\'i & S\'i\\ 
-	  		\hline 
+
 	\end{tabular}
+    }
   \captionsetup{justification=centering}
   \caption{Tipo de individuos }%
   \label{table5}%
@@ -805,7 +828,7 @@ Para favorecer el an\'alisis de las distintas caracter\'isticas arriba indicadas
 
 \subsubsection{Constituci\'on del cromosoma}
 Los distintos actuadores y la funci\'on partida tienen los par\'ametros presentados en la secci\'on \ref{sub:parametros}. Sus respectivas cantidades pueden verse en la Tabla \ref{table6}.\\
-En la Tabla \ref{table7} se muestra la composici\'on del cromosoma de cada individuo, que depende de los actuadores y la funci\'on partida usados. En ella se puede observar c\'omo seg\'un el tipo de individuo, var\'ia la cantidad de genes, es decir, la longitud del cromosoma. Vale aclarar que la funci\'on partida se especifica para cada segmento (las dos piernas y los dos muslos); en cambio, para los actuadores, s\'olo se definen dos (uno para las piernas y otro para los muslos).
+En la Tabla \ref{table7} se muestra la composici\'on del cromosoma de cada individuo, que depende de los actuadores y la funci\'on partida usados. En ella se puede observar c\'omo seg\'un el tipo de individuo, var\'ia la cantidad de genes, es decir, la longitud del cromosoma. Vale aclarar que la funci\'on partida se especifica para cada segmento (las dos piernas y los dos muslos); en cambio, para los actuadores, s\'olo se definen dos (uno para las piernas y otro para los muslos). \\
 
 \begin{table}[H]%
   \centering
@@ -814,7 +837,7 @@ En la Tabla \ref{table7} se muestra la composici\'on del cromosoma de cada indiv
 	  		\cline{3-6}
 			 \multicolumn{2}{c}{}  & \multicolumn{4}{| c |}{ \textbf{Par\'ametro} }\\
 						\cline{3-6}
-	  		 \multicolumn{2}{c |}{} 	&  \textbf{Amplitud} &  \textbf{Frecuencia} &  \textbf{Fase} &  \textbf{T\'ermino independiente}\\
+	  		 \multicolumn{2}{c |}{} 	&  \textbf{Amplitud} &  \textbf{Frecuencia} &  \textbf{Fase} & \textbf{ \begin{tabular}{@{}c@{}}T\'ermino\\ independiente\end{tabular} }\\
 			\hline
 			\multirow{4}{*}{\textbf{\rotatebox[origin=c]{90}{Actuador}  }} & \textbf{Gen\'erico} &  2 & 2 & 1 & 1\\ 
 	  													  \cline{2-6}
