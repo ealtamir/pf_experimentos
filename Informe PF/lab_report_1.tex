@@ -466,19 +466,17 @@ A los fines de este proyecto (lograr la caminata), s\'olo se consideraron pelvis
 \begin {table}[H]
 	\begin{center}
 	\resizebox{\linewidth}{!}{%
-		\begin{tabular}{ | c | c || c | c | c | c | c |}
-	  		 \hline
-	  		\multicolumn{2}{| c ||}{\textbf{Segmento}} & \textbf{Cantidad} & \textbf{Forma} & \textbf{Largo (en m)} & \textbf{Masa (en kg)} & \textbf{Uniones}\\
+		\begin{tabular}{ | c | c | c || c | c | c | c | c |}
+	  		 \cline{4-8}
+	  		\multicolumn{3}{ c |}{} & \textbf{Cantidad} & \textbf{Forma} & \textbf{Largo (en m)} & \textbf{Masa (en kg)} & \textbf{Uniones}\\
 	  		\hline 
-	  		\hline
-			\multicolumn{2}{| c ||}{Pelvis} & 1 & Esf\'erica & 0.08655 & 9.9718 & Cadera\\
-			\hline
-			\hline
-	  		\multirow{3}{*}{\parbox{1.45cm}{Miembro inferior}  } & Muslo & 2 & Esfero-cil\'indrica & 0.4015 & 10.3368 & Cadera y Rodilla\\
-	  												\cline{2-7}
-	  											       & Pierna & 2 & Esfero-cil\'indrica &  0.4015 & 3.1609 & Rodilla y Tobillo\\
-	  											 	\cline{2-7}
-	  												& Pie & 2 & Esfero-cil\'indrica & - & 1.0001 & Tobillo\\
+	  		\multirow{4}{*}{\textbf{\rotatebox[origin=c]{90}{Segmento}  } } & \multicolumn{2}{| c ||}{Pelvis} & 1 & Esf\'erica & 0.08655 & 9.9718 & Cadera\\
+												\cline{2-8}
+	  										      &\multirow{3}{*}{\parbox{1.45cm}{Miembro inferior}  } & Muslo & 2 & Esfero-cil\'indrica & 0.4015 & 10.3368 & Cadera y Rodilla\\
+	  											 \cline{3-8}
+	  										          &  & Pierna & 2 & Esfero-cil\'indrica &  0.4015 & 3.1609 & Rodilla y Tobillo\\
+	  											  \cline{3-8}
+	  											 &	& Pie & 2 & Esfero-cil\'indrica & - & 1.0001 & Tobillo\\
 	  		\hline
 			
 		\end{tabular}
