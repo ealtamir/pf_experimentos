@@ -369,7 +369,6 @@ En la Tabla \ref{table1} se puede observar lo arrojado por los experimentos num\
 	  		\hline
 	  		$\boldsymbol{v_{i}}$ & $\boldsymbol{e_{sim}}$ & $\boldsymbol{v_{f}}$ & $\boldsymbol{e_{medida}}$ & $\boldsymbol{\epsilon_{rel}}$ \\
 			\hline 
-			\hline
 			\multirow{3}{*}{-0.5 $\frac{m}{s}$} & 0.2 & 0.000249 $\frac{m}{s}$& 0.000498 & 0.997\\ \cline{2-5}
 								& 0.5 & 0.000219 $\frac{m}{s}$ & 0.000438 & 0.999\\ \cline{2-5}
 	  							& 0.8 & 0.001037 $\frac{m}{s}$ & 0.002074 & 0.997 \\ \cline{2-5}
@@ -470,13 +469,13 @@ A los fines de este proyecto (lograr la caminata), s\'olo se consideraron pelvis
 	  		 \cline{4-8}
 	  		\multicolumn{3}{ c |}{} & \textbf{Cantidad} & \textbf{Forma} & \textbf{Largo (en m)} & \textbf{Masa (en kg)} & \textbf{Uniones}\\
 	  		\hline 
-	  		\multirow{4}{*}{\textbf{\rotatebox[origin=c]{90}{Segmento}  } } & \multicolumn{2}{| c ||}{Pelvis} & 1 & Esf\'erica & 0.08655 & 9.9718 & Cadera\\
+	  		\multirow{4}{*}{\textbf{\rotatebox[origin=c]{90}{Segmento}  } } & \multicolumn{2}{| c ||}{ \textbf{Pelvis} } & 1 & Esf\'erica & 0.08655 & 9.9718 & Cadera\\
 												\cline{2-8}
-	  										      &\multirow{3}{*}{\parbox{1.45cm}{Miembro inferior}  } & Muslo & 2 & Esfero-cil\'indrica & 0.4015 & 10.3368 & Cadera y Rodilla\\
+	  										      &\multirow{3}{*}{\parbox{1.45cm}{ \textbf{Miembro inferior} }  } & \textbf{Muslo} & 2 & Esfero-cil\'indrica & 0.4015 & 10.3368 & Cadera y Rodilla\\
 	  											 \cline{3-8}
-	  										          &  & Pierna & 2 & Esfero-cil\'indrica &  0.4015 & 3.1609 & Rodilla y Tobillo\\
+	  										          &  & \textbf{Pierna} & 2 & Esfero-cil\'indrica &  0.4015 & 3.1609 & Rodilla y Tobillo\\
 	  											  \cline{3-8}
-	  											 &	& Pie & 2 & Esfero-cil\'indrica & - & 1.0001 & Tobillo\\
+	  											 &	& \textbf{Pie} & 2 & Esfero-cil\'indrica & - & 1.0001 & Tobillo\\
 	  		\hline
 			
 		\end{tabular}
@@ -510,18 +509,35 @@ Asimismo, se le impide rotar a la pelvis, y se restringe la amplitud con la que 
   \label{fig:seg_and_art} %
 \end{figure}
 
+%\begin {table}[H]
+%	\begin{center}
+%		\begin{tabular}{ | c || c | c | c | c | c |}
+%	  		 \hline
+%	  		 \textbf{Articulaci\'on} & \textbf{\'Angulo m\'inimo} & \textbf{\'Angulo m\'aximo}\\
+%	  		\hline
+%			Cadera & -$\frac{\pi}{4}$ & $\frac{\pi}{4}$\\
+%			\hline
+%			Rodilla & -$\pi$ & $\pi$ \\
+%			\hline
+%	  		Tobillo & 0 & 0 \\
+%	  		\hline		
+%		\end{tabular}
+%		\caption{Rango de valores de \'angulo de cada articulaci\'on del humanoide}
+%		\label{table_articulaciones}
+%	\end{center}
+%\end{table}
+
 \begin {table}[H]
 	\begin{center}
-		\begin{tabular}{ | c || c | c | c | c | c |}
-	  		 \hline
-	  		 \textbf{Articulaci\'on} & \textbf{\'Angulo m\'inimo} & \textbf{\'Angulo m\'aximo}\\
-	  		\hline 
+		\begin{tabular}{ | c | c || c | c |}
+	  		 \cline{3-4}
+	  		 \multicolumn{2}{ c |}{}  & \textbf{\'Angulo m\'inimo} & \textbf{\'Angulo m\'aximo}\\
 	  		\hline
-			Cadera & -$\frac{\pi}{4}$ & $\frac{\pi}{4}$\\
-			\hline
-			Rodilla & -$\pi$ & $\pi$ \\
-			\hline
-	  		Tobillo & 0 & 0 \\
+			\multirow{3}{*}{\textbf{Articulaci\'on}} & \textbf{Cadera} & -$\frac{\pi}{4}$ & $\frac{\pi}{4}$\\
+			\cline{2-4}
+			& \textbf{Rodilla} & -$\pi$ & $\pi$ \\
+			\cline{2-4}
+	  		& \textbf{Tobillo} & 0 & 0 \\
 	  		\hline		
 		\end{tabular}
 		\caption{Rango de valores de \'angulo de cada articulaci\'on del humanoide}
@@ -717,7 +733,6 @@ Cada uno de los segmentos tiene una composici\'on f\'isica distinta (largo, masa
   	\begin{tabular}{ | c | c | c || c | c | }
 	  		\hline
 	  		\textbf{Actuador} & \textbf{Segmento} & \textbf{Tipo de gen} & \textbf{M\'inimo} & \textbf{M\'aximo} \\
-			\hline 
 			\hline
 			\multirow{5}{*}{Gen\'erico} & Muslo & Amplitud & -30 & 30\\ \cline{2-5}
 								&Pierna & Amplitud & -60 & 60\\ \cline{2-5}
@@ -756,7 +771,6 @@ Cada uno de los segmentos tiene una composici\'on f\'isica distinta (largo, masa
   	\begin{tabular}{ | c | c || c | c | }
 	  		\hline
 	  		\textbf{Segmento} & \textbf{Tipo de gen} & \textbf{M\'inimo} & \textbf{M\'aximo} \\
-			\hline 
 			\hline
 			Muslo & Amplitud & -30 & 30\\
 			\hline
@@ -883,11 +897,11 @@ En la Tabla \ref{table7} se muestra la composici\'on del cromosoma de cada indiv
 \subsection{Fitness}
 
 %\begin{adjustwidth}{1.25cm}{0cm}
-El papel de la funci\'on de \textit{fitness} $F$ en un algoritmo gen\'etico es evaluar qu\'e tan bueno es un individuo. En este caso, est\'a definida como un producto de cinco m\'odulos o propiedades: altura ($H$), velocidad ($V$), direcci\'on ($D$), simetr\'ia ($S$) y pies abajo ($PA$):
+El papel de la funci\'on de \textit{fitness} ($F$) en un algoritmo gen\'etico es evaluar qu\'e tan bueno es un individuo. En este caso, est\'a definida como un producto de cinco m\'odulos o propiedades: altura ($H$), velocidad ($V$), direcci\'on ($D$), simetr\'ia ($S$) y pies abajo ($PA$):
 \begin{equation}
-  F = H * V *D * S *  PA
+  F = H \cdot V \cdot D \cdot S \cdot PA
 \end{equation}
-Los cinco tienen la misma importancia y por eso, como se ver\'a a continuaci\'on, est\'an definidos de forma similar (con una funci\'on exponencial y pueden valer entre 0 y 1). Con todo esto, dado que el \textit{fitness} est\'a pensado como un producto, basta con que uno de los m\'odulos sea muy chico para  ``anular'' al individuo (es decir, otorgarle un valor que tiende a cero). Sin embargo, los diferentes m\'odulos no son completamente independientes entre s\'i: por ejemplo, si la altura es demasiado baja, posiblemente la velocidad y la direcci\'on no sean adecuadas. \\
+Los cinco tienen la misma importancia y por eso, como se ver\'a a continuaci\'on, est\'an definidos de forma similar (con una funci\'on exponencial y pueden valer entre 0 y 1). Con todo esto, dado que el \textit{fitness} est\'a pensado como un producto, basta con que uno de los m\'odulos sea muy chico para  ``anular'' al individuo (es decir, otorgarle un valor que tiende a cero). Sin embargo, los diferentes m\'odulos no son completamente independientes entre s\'i: por ejemplo, si la altura es demasiado baja, posiblemente la velocidad y la direcci\'on no sean adecuadas. 
 %\end{adjustwidth}
 
 \subsubsection{Altura}
@@ -899,7 +913,7 @@ Es un factor relacionado con la altura del individuo en toda la simulaci\'on, y 
 \end{equation}
 \\ donde $t_{0}$ es el tiempo inicial, $t_{T}$ el tiempo final, $h_{t_{n}}$ es la altura de la pelvis en el instante de tiempo $t_{n}$, $N$ la cantidad pasos de simulaci\'on y $C$ una constante $C=5$.
 \\
-Se calcula a partir de la diferencia entre la altura en cada instante de la simulaci\'on, con su altura inicial (la altura est\'a definida como la posici\'on de la pelvis en el eje Z). Cuanto mayor sea esa diferencia, m\'as r\'apido el individuo cae, y por eso este m\'odulo tiende a cero. Por el contrario, valdr\'a uno si la diferencia es \'infima (lo que significa que el humanoide mantiene su misma altura durante la caminata).\\
+Se calcula a partir de la diferencia entre la altura en cada instante de la simulaci\'on, con su altura inicial (la altura est\'a definida como la posici\'on de la pelvis en el eje Z). Cuanto mayor sea esa diferencia, m\'as r\'apido el individuo cae, y por eso este m\'odulo tiende a cero. Por el contrario, valdr\'a uno si la diferencia es \'infima (lo que significa que el humanoide mantiene su misma altura durante la caminata).
 
 %\end{adjustwidth}
 
@@ -919,7 +933,7 @@ Sigue una l\'ogica y c\'alculo similares al factor de altura: a mayor discrepanc
 \subsubsection{Direcci\'on}
 \label{direccion}
 %\begin{adjustwidth}{1.4cm}{0cm}
-Se\~nala qu\'e tan similares son la direcci\'on objetivo (un vector unitario, que en este caso se encuentra en el eje Z) y la direcci\'on con la que camine el humanoide. Se calcula como sigue:\\
+Se\~nala qu\'e tan similares son la direcci\'on objetivo (un vector unitario, que en este caso se encuentra en el eje Z) y la direcci\'on con la que camine el humanoide. Se calcula como sigue:
 \begin{equation}
  D = \frac{\sum_{n=0}^{T} {e^{-C( \boldsymbol{v_{t_{n}}} \cdot \boldsymbol{V_{O} } -1)^2 } } }{N}
 \end{equation}
