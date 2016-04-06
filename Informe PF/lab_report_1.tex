@@ -703,6 +703,7 @@ f_{i}(t) =  f(t)
  \begin{equation}
 f_{d}(t) =  f(t+\frac{\pi}{2})
  \end{equation}
+ \\
 siendo $f(t)$ la funci\'on de movimiento (o actuador) en el momento $t$, y $f_{i}$ y $f_{d}$ las funciones de la pierna izquierda y derecha, respectivamente.
 
 
@@ -718,7 +719,7 @@ El objetivo de este proyecto es optimizar la caminata del humanoide. Ergo, en el
 \subsection{Individuo}
 
 %La informaci\'on gen\'etica de cada individuo, est\'a compuesta por dos partes: funci\'on partida (optativa) y los par\'ametros asociados a los actuadores (obligatorios). 
-La informaci\'on gen\'etica de cada individuo, est\'a definida como un vector y se compone de dos partes, ubicadas en forma contigua: funci\'on partida (optativa) y los par\'ametros asociados a los actuadores (obligatorios). 
+La informaci\'on gen\'etica de cada individuo, est\'a definida a partir de un vector que contiene de forma contigua, los par\'ametros de la funci\'on partida (optativa) y los asociados a los actuadores (obligatorios), que act\'uan sobre cada uno de los segmentos del humano virtual (muslos y piernas).  
 
 \subsubsection{Par\'ametros}
 \label{sub:parametros}
@@ -941,7 +942,7 @@ Para favorecer el an\'alisis de las distintas caracter\'isticas arriba indicadas
 
 \subsubsection{Constituci\'on del cromosoma}
 Los distintos actuadores y la funci\'on partida tienen los par\'ametros presentados en la secci\'on \ref{sub:parametros}. Sus respectivas cantidades pueden verse en la Tabla \ref{table6}.\\
-En la Tabla \ref{table7} se muestra la composici\'on del cromosoma de cada individuo, que depende de los actuadores y la funci\'on partida usados. En ella se puede observar c\'omo seg\'un el tipo de individuo, var\'ia la cantidad de genes, es decir, la longitud del cromosoma. Vale aclarar que la funci\'on partida se especifica para cada segmento (las dos piernas y los dos muslos); en cambio, para los actuadores, s\'olo se definen dos (uno para las piernas y otro para los muslos). \\
+En la Tabla \ref{table7} se muestra la composici\'on del cromosoma de cada individuo, que depende de los actuadores y la funci\'on partida usados. En ella se puede observar c\'omo seg\'un el tipo de individuo, var\'ia la cantidad de genes, es decir, la longitud del cromosoma. Vale aclarar que la funci\'on partida se especifica para cada segmento (los dos muslos y las dos piernas); en cambio, para los actuadores, s\'olo se definen dos (uno para los muslos y otro para las piernas). \\
 
 \begin{table}[H]%
   \centering
@@ -1098,7 +1099,7 @@ Considerando los individuos definidos en el punto \ref{individuos_implementacion
 
 \subsection{Evoluci\'on del \textit{fitness} seg\'un tipo de individuos}
 
-Los individuos que usan actuadores de Fourier son los que producen \textit{fitness} m\'as bajos; el de orden 2 (individuo de tipo 3) se estanca a las pocas generaciones (al igual que el de tipo 1); el \textit{fitness} del individuo con actuadores Fourier de orden 9 se ``ameseta" progresivamente (despu\'es de 500 generaciones).\\
+Los individuos que usan actuadores de Fourier son los que producen \textit{fitness} m\'as bajos; el de orden 2 (individuo de tipo 3) se estanca (al igual que el de tipo 1) a las pocas generaciones; el \textit{fitness} del individuo con actuadores Fourier de orden 9 se ``ameseta" progresivamente (despu\'es de 500 generaciones).\\
 El individuo de tipo 1 es el individuo con \textit{fitness} m\'as alto, pero que se obtuvo a las pocas generaciones (es decir que es un m\'aximo local). El individuo de tipo 2 (con actuadores gen\'ericos y funci\'on partida) va aumentando su \textit{fitness} progresivamente, aunque sin superar al de tipo 1.\\
 Por otra parte, el individuo de tipo 5 (con actuadores coseno doble frecuencia), va mejorando su \textit{fitness} paulatinamente, lo que impide estancarse en un m\'aximo local. Adem\'as, tiene el segundo mejor \textit{fitness}.\\
 Puede notarse que los rangos manejados en la Fig. \ref{fig:resultados_fitness} casi alcanzan el 0.7 (y no a 1, su cota superior). Esto se debe a que la funci\'on de \textit{fitness} est\'a definida como un producto de ciertos m\'odulos: suponiendo que cada uno de ellos estuviera al 92\%, se tendr\'ia  0.92$^5 =$ 0.659.
@@ -1151,7 +1152,7 @@ Para una mejor visualizaci\'on de los distintos individuos obtenidos, y de su ev
 %----------------------------------------------------------------------------------------
 
 \section{Conclusiones}
-El objetivo principal de este proyecto fue lograr producir la simulaci\'on biomec\'anica de una caminata de un humano virtual. Para eso, se eligi\'o el motor f\'isico \textit{Bullet Physics}, lo que requiri\'o no solo aprender sobre su funcionamiento y los m\'etodos f\'isicos implementados, sino tambi\'en realizar pruebas para verificar qu\'e tan pr\'oximos eran el modelo fisico-matem\'atico ideado y el utilizado por Bullet.\\ % , en temas de coeficiente de fricci\'on y restituci\'on.\\
+El objetivo principal de este proyecto fue lograr producir la simulaci\'on y animaci\'on biomec\'anica de la caminata de un humano virtual. Para eso, se eligi\'o el motor f\'isico \textit{Bullet Physics}, lo que requiri\'o no solo aprender sobre su funcionamiento y los m\'etodos f\'isicos implementados, sino tambi\'en realizar pruebas para verificar qu\'e tan pr\'oximos eran el modelo fisico-matem\'atico ideado y el utilizado por Bullet.\\ % , en temas de coeficiente de fricci\'on y restituci\'on.\\
 %Luego, se model\'o al humanoide como un conjunto de segmentos (cuerpos r\'igidos) unidos por articulaciones. Adem\'as, para desplazar al b\'ipedo y lograr la caminata, se aplicaron torques en cada uno de los segmentos (o actuadores),y otras funciones complementarias como funci\'on partida y fase sincronizada.\\
 Una vez modelado el humanoide, se implementaron individuos con diferentes caracter\'isticas (en especial, actuadores), para facilitar la comparaci\'on. En la secci\'on \ref{resultados} se verifica que las funciones utilizadas en los actuadores son decisivas para lograr una caminata.\\
 Los actuadores que mejores resultados dieron, fueron aquellos en donde se empleaba dos frecuencias $\omega$ en vez de una.\\
