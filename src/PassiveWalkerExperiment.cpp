@@ -121,7 +121,7 @@ void PassiveWalkerExperiment::worldStep() {
     }
     
     
-    //cout << selectedBody->getVelocity().getZ() << endl;;
+    //cout << selectedBody->getHeight() << endl;;
     timeCount += 1. / 60.;
 }
 
