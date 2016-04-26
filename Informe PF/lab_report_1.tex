@@ -191,9 +191,9 @@ Este proyecto tiene como objetivo crear una simulaci\'on y animaci\'on de un hum
 %\begin{adjustwidth}{1cm}{0cm}
 Siempre ha sido de inter\'es la simulaci\'on biomec\'anica de seres vivos, especialmente en las ciencias naturales (zoolog\'ia, medicina, etc.). \\
 Ahora bien, \'ultimamente se ha incrementado el inter\'es en otras \'areas de aplicaci\'on, como los videojuegos (creaci\'on de personajes con reacciones m\'as reales), y la ingenier\'ia (verbigracia: dise\~no de espacios cerrados, con mayores medidas de seguridad).\\
-Una caracter\'istica muy importante de este trabajo es que el humanoide no es fruto de una animaci\'on, sino un objeto compuesto de segmentos f\'isicos, que interaccionan entre s\'i y con el entorno, por medio de las leyes f\'isicas; agregando as\'i realismo a la situaci\'on simulada.  La otra propiedad es que el b\'ipedo aprenda por s\'i solo a caminar en l\'inea recta, sin tener en su trayectoria ning\'un obst\'aculo.\\
-Este problema se puede abordar de diversas maneras, involucrando: redes neuronales\footnote{Una red neuronal es un paradigma de aprendizaje autom\'atico. Se trata de un sistema de interconexi\'on de neuronas que colaboran entre s\'i, para producir un est\'imulo de salida. Dada una entrada del sistema, se produce una salida, originada por varias transformaciones intermedias.}, sistemas de control\footnote{Un sistema de control es un dispositivo (o conjunto de) que maneja, dirige o regula el comportamiento de otros dispositivos o sistemas, para minimizar los fallos y obtener los resultados deseados.} (\textit{passive walkers}\footnote{Un \textit{passive walker} utiliza el movimiento natural (\textit{swinging}) de las piernas para ahorrar energ\'ia usada por motores. Para caminar, calcula la posici\'on de ciertos puntos (las articulaciones, mayormente).})\cite{Wojtyra}, algoritmos gen\'eticos\footnote{Los algoritmos gen\'eticos son m\'etodos adaptativos, que pueden ser utilizados para resolver problemas de b\'usqueda y optimizaci\'on. Est\'an basados en la teor\'ia de la selecci\'on natural, planteada por Charles Robert Darwin en 1859.}\cite{flexibleMuscle}, entre otras. Pero varios de ellos implican modelos te\'oricos complejos de humanoide (considerando m\'usculos con distintos materiales, etc.). \\ 
-En este proyecto se busc\'o aplicar algoritmos gen\'eticos, y lograr la caminata usando un modelo de humanoide basado en un conjunto de segmentos (cuerpos r\'igidos), unidos entre s\'i por articulaciones, cuyo desplazamiento depende de torques aplicados a dichos cuerpos, y sus par\'ametros se ajustan a partir de la evoluci\'on del algoritmo. \\
+Una caracter\'istica muy importante de este trabajo es que el humanoide no es fruto de una animaci\'on realizada por un artesano, que mueve cada uno de los segmentos a mano; sino un objeto compuesto de segmentos f\'isicos, que interaccionan entre s\'i y con el entorno, por medio de las leyes f\'isicas; agregando as\'i realismo a la situaci\'on simulada.  La otra propiedad es que el b\'ipedo aprenda por s\'i solo a caminar en l\'inea recta, sin tener en su trayectoria ning\'un obst\'aculo.\\
+Este problema se puede abordar de diversas maneras, involucrando: redes neuronales\footnote{Una red neuronal es un paradigma de aprendizaje autom\'atico. Se trata de un sistema de interconexi\'on de neuronas que colaboran entre s\'i, para producir un est\'imulo de salida. Dada una entrada del sistema, se produce una salida, originada por varias transformaciones intermedias.}, sistemas de control\footnote{Un sistema de control es un dispositivo (o conjunto de) que maneja, dirige o regula el comportamiento de otros dispositivos o sistemas, para minimizar los fallos y obtener los resultados deseados.} (\textit{passive walkers}\footnote{Un \textit{passive walker} utiliza el movimiento natural (\textit{swinging}) de las piernas para ahorrar energ\'ia usada por motores. Para caminar, calcula la posici\'on de ciertos puntos (las articulaciones, mayormente).})\cite{Wojtyra}, algoritmos gen\'eticos\footnote{Los algoritmos gen\'eticos son m\'etodos adaptativos, que pueden ser utilizados para resolver problemas de b\'usqueda y optimizaci\'on. Est\'an basados en la teor\'ia de la selecci\'on natural, planteada por Charles Robert Darwin en 1859.}\cite{flexibleMuscle}, entre otras. Varios de ellos implican modelos te\'oricos complejos de humanoide (considerando m\'usculos con distintos materiales, etc.). \\
+Asimismo, existe un trabajo previo cuyo prop\'osito era lograr la caminata de un cuadr\'upedo, utilizando algoritmos gen\'eticos\cite{Cuadrupedo}. Continuando con esta l\'inea de investigaci\'on y extendi\'endola a b\'ipedos, en este proyecto tambi\'en se busc\'o aplicar algoritmos gen\'eticos, y lograr la caminata usando un modelo de humanoide basado en un conjunto de segmentos (cuerpos r\'igidos), unidos entre s\'i por articulaciones, cuyo desplazamiento depende de torques aplicados a dichos cuerpos, y sus par\'ametros se ajustan a partir de la evoluci\'on del algoritmo. \\
 El presente informe, describe y analiza pormenorizadamente: en la secci\'on 2, las herramientas aplicadas; en la 3, el modelo del humanoide utilizado; en la 4 y 5, los diferentes tipos de actuadores y funciones de partida y contorno; en la 6, el algoritmo gen\'etico; y en la 7 y 8, los resultados obtenidos con sus respectivas conclusiones.
 
 %\end{adjustwidth}
@@ -434,8 +434,8 @@ Como toda herramienta, \textit{Bullet} tiene aspectos negativos, entre los que s
 
 %\begin{adjustwidth}{1.2cm}{0cm}
 Se utiliz\'o la conocida librer\'ia de algoritmos gen\'eticos para C++ GaLib, desarrollada por Matthew Wall del MIT \cite{LinkGaLib}. \\
-Ofrece funcionalidades como: programaci\'on paralela, diversos m\'etodos de selecci\'on (\textit{elite}, \textit{roulette}), estrategias de reemplazo (de padres, aleatorio, del peor), entre otras.
-
+Ofrece funcionalidades como: programaci\'on paralela, diversos m\'etodos de selecci\'on (\textit{elite}, \textit{roulette}), estrategias de reemplazo (de padres, aleatorio, del peor), entre otras.\\
+Cabe aclarar que, antes de optar por GaLib, se hab\'ia adoptado la librer\'ia Kataklinger, pero finalmente fue descartada, debido a errores o \textit{bugs} en la misma (y que, cada vez, resultaban ser m\'as inmanejables).
 
 %\end{adjustwidth}
 
@@ -1245,6 +1245,8 @@ Se puede concluir que, la caminata de una persona, algo que parece simple y senc
 Marek Wojtyra, \emph{Multibody Simulation Model of Human Walking - Warsaw University of Technology, 2003}
 \bibitem{flexibleMuscle}
 Thomas Geijtenbeek, Michiel van de Panne y A. Frank van der Stappen, \emph{Flexible Muscle-Based Locomotion for Bipedal Creatures, 2013 }
+\bibitem{Cuadrupedo}
+Kevin Kenny, M\'aximo Videla y Axel Wassington, \emph{Proyecto Final para la obtenci\'on del t\'itulo: Ingeniero en Inform\'atica - ITBA, 2014}
 \bibitem{wikiPhysicsEngine} Wikipedia: $https://es.wikipedia.org/wiki/Physics\_engine$
 \bibitem{Comparissons}
 Andreas Gerndt y otros, \emph{An Evaluation of Open Source Physics Engines for Use in Virtual Reality Assembly Simulations. Fecha de publicaci\'on: 2012}
@@ -1255,8 +1257,7 @@ Tom Erez y otros, \emph{Simulation Tools for Model-Based Robotics: Comparison of
 Erin Catto, \emph{Iterative Dynamic with Temporal Coherence. Fecha de publicaci\'on: 2005}
 \bibitem{LinkGaLib} Sitio web de GaLib: $http://lancet.mit.edu/ga/$
 \bibitem{biomechanics} $http://www.exrx.net/Kinesiology/Segments.html$
-\bibitem{Cuadrupedo}
-Kevin Kenny, M\'aximo Videla y Axel Wassington, \emph{Proyecto Final para la obtenci\'on del t\'itulo: Ingeniero en Inform\'atica - ITBA, 2014}
+
 \end{thebibliography}
 
 %----------------------------------------------------------------------------------------
