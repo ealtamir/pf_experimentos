@@ -18,7 +18,7 @@ enum BodyType {
 
 // PARAMETERS
 #define POPULATION_SIZE             50
-#define GENERATIONS                 1000
+#define GENERATIONS                 500
 #define GENOME_MUTATION             0.3
 #define REPLACEMENT_PERCENTAGE      0.7
 #define LAST_RESULTS                (true || STATIC_PELVIS)
@@ -79,7 +79,7 @@ const BodyType BODY_TYPE = BodyType::extra_fourier;
 const int ACTUATOR_SIZE = FIRST_STEP_ACTUATOR_SIZE + SECOND_STEP_ACTUATOR_SIZE;
 
 const btScalar DEFAULT_EXPERIMENT_INTERVAL = 0.001;
-const btScalar SIMULATION_STEPS = 60 * 5; // if it's 60 the simulation is 1 second
+const btScalar SIMULATION_STEPS = 60 * 10; // if it's 60 the simulation is 1 second
 const btScalar DIRECTION_CONSTANT = 0.02;
 const btScalar VELOCITY_CONSTANT = 4.6;
 const btScalar TARGET_SPEED = 0.7;
