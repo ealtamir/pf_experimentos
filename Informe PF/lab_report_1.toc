@@ -15,35 +15,35 @@
 \contentsline {subsection}{\numberline {3.1}Composici\'on f\'isica del humanoide}{12}{subsection.3.1}
 \contentsline {subsection}{\numberline {3.2}Articulaciones}{13}{subsection.3.2}
 \contentsline {section}{\numberline {4}Actuadores}{14}{section.4}
-\contentsline {subsection}{\numberline {4.1}Gen\'erico}{15}{subsection.4.1}
-\contentsline {subsection}{\numberline {4.2}Fourier de orden 2}{15}{subsection.4.2}
-\contentsline {subsection}{\numberline {4.3}Fourier de orden 9}{16}{subsection.4.3}
-\contentsline {subsection}{\numberline {4.4}Coseno doble frecuencia}{16}{subsection.4.4}
+\contentsline {subsection}{\numberline {4.1}Gen\'erico}{14}{subsection.4.1}
+\contentsline {subsection}{\numberline {4.2}Coseno doble frecuencia}{15}{subsection.4.2}
+\contentsline {subsection}{\numberline {4.3}Fourier de orden 2}{16}{subsection.4.3}
+\contentsline {subsection}{\numberline {4.4}Fourier de orden 9}{16}{subsection.4.4}
 \contentsline {section}{\numberline {5}Condiciones iniciales y de contorno}{17}{section.5}
 \contentsline {subsection}{\numberline {5.1}Funci\'on partida}{17}{subsection.5.1}
 \contentsline {subsection}{\numberline {5.2}Fase sincronizada}{17}{subsection.5.2}
-\contentsline {section}{\numberline {6}Algoritmo gen\'etico}{18}{section.6}
-\contentsline {subsection}{\numberline {6.1}Individuo}{18}{subsection.6.1}
+\contentsline {section}{\numberline {6}Algoritmo gen\'etico}{17}{section.6}
+\contentsline {subsection}{\numberline {6.1}Individuo}{17}{subsection.6.1}
 \contentsline {subsubsection}{\numberline {6.1.1}Par\'ametros}{18}{subsubsection.6.1.1}
-\contentsline {subsubsection}{\numberline {6.1.2}Valores}{19}{subsubsection.6.1.2}
-\contentsline {subsubsection}{\numberline {6.1.3}Implementaci\'on de individuos}{20}{subsubsection.6.1.3}
-\contentsline {subsubsection}{\numberline {6.1.4}Constituci\'on del cromosoma}{20}{subsubsection.6.1.4}
-\contentsline {subsection}{\numberline {6.2}Fitness}{21}{subsection.6.2}
-\contentsline {subsubsection}{\numberline {6.2.1}Altura}{21}{subsubsection.6.2.1}
+\contentsline {subsubsection}{\numberline {6.1.2}Valores}{18}{subsubsection.6.1.2}
+\contentsline {subsubsection}{\numberline {6.1.3}Implementaci\'on de individuos}{19}{subsubsection.6.1.3}
+\contentsline {subsubsection}{\numberline {6.1.4}Constituci\'on del cromosoma}{19}{subsubsection.6.1.4}
+\contentsline {subsection}{\numberline {6.2}Fitness}{20}{subsection.6.2}
+\contentsline {subsubsection}{\numberline {6.2.1}Altura}{20}{subsubsection.6.2.1}
 \contentsline {subsubsection}{\numberline {6.2.2}Velocidad}{21}{subsubsection.6.2.2}
-\contentsline {subsubsection}{\numberline {6.2.3}Direcci\'on}{22}{subsubsection.6.2.3}
-\contentsline {subsubsection}{\numberline {6.2.4}Simetr\'ia}{22}{subsubsection.6.2.4}
+\contentsline {subsubsection}{\numberline {6.2.3}Direcci\'on}{21}{subsubsection.6.2.3}
+\contentsline {subsubsection}{\numberline {6.2.4}Simetr\'ia}{21}{subsubsection.6.2.4}
 \contentsline {subsubsection}{\numberline {6.2.5}Pies abajo}{22}{subsubsection.6.2.5}
-\contentsline {subsection}{\numberline {6.3}Operadores del algoritmo}{23}{subsection.6.3}
-\contentsline {subsubsection}{\numberline {6.3.1}M\'etodos de selecci\'on}{23}{subsubsection.6.3.1}
-\contentsline {subsubsection}{\numberline {6.3.2}M\'etodos de cruza}{23}{subsubsection.6.3.2}
-\contentsline {subsubsection}{\numberline {6.3.3}Mutaci\'on}{23}{subsubsection.6.3.3}
+\contentsline {subsection}{\numberline {6.3}Operadores del algoritmo}{22}{subsection.6.3}
+\contentsline {subsubsection}{\numberline {6.3.1}M\'etodos de selecci\'on}{22}{subsubsection.6.3.1}
+\contentsline {subsubsection}{\numberline {6.3.2}M\'etodos de cruza}{22}{subsubsection.6.3.2}
+\contentsline {subsubsection}{\numberline {6.3.3}Mutaci\'on}{22}{subsubsection.6.3.3}
 \contentsline {subsubsection}{\numberline {6.3.4}Otras caracter\'isticas}{23}{subsubsection.6.3.4}
 \contentsline {section}{\numberline {7}Resultados obtenidos}{23}{section.7}
 \contentsline {subsection}{\numberline {7.1}Evoluci\'on del \textit {fitness} seg\'un tipo de individuos}{24}{subsection.7.1}
-\contentsline {subsection}{\numberline {7.2}Velocidad seg\'un tipo de individuos}{25}{subsection.7.2}
-\contentsline {subsection}{\numberline {7.3}Altura seg\'un tipo de individuos}{26}{subsection.7.3}
-\contentsline {subsection}{\numberline {7.4}Comparaci\'on de tipo de individuos}{26}{subsection.7.4}
+\contentsline {subsection}{\numberline {7.2}Velocidad seg\'un tipo de individuos}{24}{subsection.7.2}
+\contentsline {subsection}{\numberline {7.3}Altura seg\'un tipo de individuos}{25}{subsection.7.3}
+\contentsline {subsection}{\numberline {7.4}Comparaci\'on de tipo de individuos}{25}{subsection.7.4}
 \contentsline {subsection}{\numberline {7.5}Video}{26}{subsection.7.5}
-\contentsline {section}{\numberline {8}Conclusiones}{27}{section.8}
+\contentsline {section}{\numberline {8}Conclusiones}{26}{section.8}
 \contentsline {section}{Referencias}{27}{section.8}
