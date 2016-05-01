@@ -608,7 +608,7 @@ La fase $\phi$ es la misma en el seno y en el coseno, para evitar que se formen 
 
 \subsection{Coseno doble frecuencia}
 Basada en \cite{Cuadrupedo}, esta funci\'on peri\'odica utiliza medio ciclo de una funci\'on sinusoidal, y medio ciclo de otra (ambas pueden tener frecuencias distintas). Esto podr\'ia tener sentido porque en una caminata, un miembro inferior primero avanza hacia adelante y luego se extiende hacia atr\'as, y es razonable que esos dos movimientos se produzcan a frecuencias distintas  (Fig. \ref{actuadores:coseno_doble_frecuencia} (\subref*{actuadores:coseno_doble_frecuencia_muslo}) y (\subref*{actuadores:coseno_doble_frecuencia_pierna})).\\
-La idea es lograr una funci\'on peri\'odica a partir de una que no lo es (ya que $t$ es lineal). Para eso, se utiliza la funci\'on $\psi (t)$ (ec. \eqref{eq:phi}) que aplica una transformaci\'on a los n\'umeros reales, para que se encuentren dentro del rango del ciclo completo (con las dos frecuencias). $\omega$ es la frecuencia de $f(t)$ (ec. \eqref{eq:ft}), que utiliza medio ciclo con frecuencia $\omega_1$ y medio ciclo con frecuencia $\omega_2$.
+La idea es lograr una funci\'on peri\'odica a partir de una que no lo es (ya que $t$ es lineal). Para eso, se utiliza la funci\'on $\psi (t)$ (ec. \eqref{eq:phi}) que aplica una transformaci\'on a los n\'umeros reales, para que se encuentren dentro del rango del ciclo completo (con las dos frecuencias). $\omega$ es la frecuencia de $f(t)$ en $\frac{1}{s}$ (ec. \eqref{eq:ft}), que utiliza medio ciclo con frecuencia $\omega_1$ y medio ciclo con frecuencia $\omega_2$.
 \begin{equation} 
 \label{eq:phi}
 \begin{aligned}[c]
@@ -653,11 +653,11 @@ f(t) =  \left\{
 
 
 \subsection{Fourier de orden 2}
-Este actuador utiliza una serie de Fourier de dos t\'erminos. 
+Este actuador utiliza una serie de Fourier de dos t\'erminos. Dado que origina un resultado que, si bien es peri\'odico, puede no ser de naturaleza sinusoidal, lo cual puede ser beneficioso para realizar otro tipo de movimientos.
 \begin{equation}
   f(t) =  A_1 \sin(\omega t+\phi)+B_1 \cos(\omega t+\phi)+A_2 \sin(2\omega t+\phi)+B_2 \cos(2\omega t+\phi)+C
 \end{equation}
-donde $A_{1}$, $A_{2}$, $B_{1}$ y $B_{2}$ son amplitudes y $\omega$ es frecuencia (en $\frac{1}{s}$) (ver Fig. \ref{actuadores:fourier2} (\subref*{actuadores:fourier2_muslo}) y (\subref*{actuadores:fourier2_pierna})).
+donde $A_{1}$, $A_{2}$, $B_{1}$ y $B_{2}$ son amplitudes (ver Fig. \ref{actuadores:fourier2} (\subref*{actuadores:fourier2_muslo}) y (\subref*{actuadores:fourier2_pierna})).
 \begin{figure}[H]%
   \centering
   \subfloat[][]{
@@ -674,6 +674,7 @@ donde $A_{1}$, $A_{2}$, $B_{1}$ y $B_{2}$ son amplitudes y $\omega$ es frecuenci
   \caption{Ejemplo de actuador fourier de orden 2 aplicado en: (\protect\subref*{actuadores:fourier2_muslo}) muslo, y (\protect\subref*{actuadores:fourier2_pierna}) pierna}%
   \label{actuadores:fourier2} %
 \end{figure}
+
 
 \subsection{Fourier de orden 9}
 Es una extensi\'on del actuador anterior, pero con 9 t\'erminos. Por ser de mayor grado, brinda una mayor precisi\'on. Sin embargo, es m\'as dificil de manejar computacionalmente; y, adem\'as, que sea m\'as preciso no garantiza que con \'el se pueda lograr una buena caminata  (ver Fig. \ref{actuadores:fourier9} (\subref*{actuadores:fourier9_muslo}) y (\subref*{actuadores:fourier9_pierna})).\\
@@ -712,8 +713,12 @@ donde $A_{i}$ y $B_{i}$ con $1 \leq i \leq 9$ son amplitudes.
 \section{Condiciones iniciales y de contorno}
 Como las funciones peri\'odicas se\~naladas en los actuadores, no fueron suficientes para lograr la caminata, se le adosaron las funciones que se detallan seguidamente. 
 \subsection{Funci\'on partida}
-El andar del humanoide es c\'iclico. Sin embargo, por la posici\'on inicial del individuo, se requiere para el tiempo del primer paso, una funci\'on distinta a la del resto de la caminata. El tipo de funci\'on puede ser cualquiera de los actuadores vistos anteriormente (pero no necesariamente con los mismos valores de amplitud, frecuencia y fase asignados a las piernas). Empero, se utiliz\'o la funci\'on vista en el actuador gen\'erico. \\
-Por otra parte, para simplificar el modelo, se decidi\'o  que el tiempo considerado para el primer paso sea fijo, y de 0.7 segundos. Dicho valor fue extra\'ido de forma experimental.
+La caminata se divide en dos partes bien definidas:\\
+La primera, denominada ``funci\'on partida'' y que es opcional, el humanoide comienza con una posici\'on diferente a la que tendr\'a en el resto de la caminata (las dos extremidades bien extendidas), representa el primer paso dado por el individuo. Para simplificar el modelo, se decidi\'o que el tiempo considerado para el primer paso sea fijo, y de 0.7 segundos. Dicho valor fue extra\'ido de forma experimental. Se aplican actuadores gen\'ericos en cada uno de los cuatro segmentos movibles (muslos y piernas). \\
+La segunda es el resto de la caminata, que debe ser c\'iclica y peri\'odica (para poder, eventualmente, repetirse \textit{ad infinitum}). Aqu\'i se pueden aplicar cualquiera de los actuadores vistos en la secci\'on anterior, que pueden ser distintos a los usados en la funci\'on partida, pero solo un tipo de ellos para los segmentos.
+\\
+%El andar del humanoide es c\'iclico. Sin embargo, por la posici\'on inicial del individuo, se requiere para el tiempo del primer paso, una funci\'on distinta a la del resto de la caminata. El tipo de funci\'on puede ser cualquiera de los actuadores vistos anteriormente (pero no necesariamente con los mismos valores de amplitud, frecuencia y fase asignados a las piernas). Empero, se utiliz\'o la funci\'on vista en el actuador gen\'erico. \\
+%Por otra parte, para simplificar el modelo, se decidi\'o  que el tiempo considerado para el primer paso sea fijo, y de 0.7 segundos. Dicho valor fue extra\'ido de forma experimental.
 
 \subsection{Fase sincronizada}
 En una caminata, las piernas deben guardar simetr\'ia: mientras una va hacia adelante, la otra va hacia atr\'as (y viceversa). Esto, de acuerdo con  los actuadores definidos en la secci\'on anterior, implica que las funciones de movimiento de cada pierna est\'en desfasadas en medio ciclo ($\frac{\pi}{2}$):\\

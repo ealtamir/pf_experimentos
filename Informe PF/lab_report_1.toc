@@ -23,7 +23,7 @@
 \contentsline {subsection}{\numberline {5.1}Funci\'on partida}{17}{subsection.5.1}
 \contentsline {subsection}{\numberline {5.2}Fase sincronizada}{17}{subsection.5.2}
 \contentsline {section}{\numberline {6}Algoritmo gen\'etico}{17}{section.6}
-\contentsline {subsection}{\numberline {6.1}Individuo}{17}{subsection.6.1}
+\contentsline {subsection}{\numberline {6.1}Individuo}{18}{subsection.6.1}
 \contentsline {subsubsection}{\numberline {6.1.1}Par\'ametros}{18}{subsubsection.6.1.1}
 \contentsline {subsubsection}{\numberline {6.1.2}Valores}{18}{subsubsection.6.1.2}
 \contentsline {subsubsection}{\numberline {6.1.3}Implementaci\'on de individuos}{19}{subsubsection.6.1.3}
