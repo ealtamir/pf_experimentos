@@ -444,7 +444,7 @@ Como toda herramienta, \textit{Bullet} tiene aspectos negativos, entre los que s
 %\begin{adjustwidth}{1.2cm}{0cm}
 Se utiliz\'o la conocida librer\'ia de algoritmos gen\'eticos para C++ GaLib, desarrollada por Matthew Wall del MIT \cite{LinkGaLib}. \\
 Ofrece funcionalidades como: programaci\'on paralela, diversos m\'etodos de selecci\'on (\textit{elite}, \textit{roulette}), estrategias de reemplazo (de padres, aleatorio, del peor), entre otras.\\
-Cabe aclarar que, antes de optar por GaLib, se hab\'ia adoptado la librer\'ia Kataklinger, pero finalmente fue descartada, debido a errores o \textit{bugs} en la misma (y que, cada vez, resultaban ser m\'as inmanejables).
+Cabe aclarar que, antes de optar por GaLib, se hab\'ia adoptado la librer\'ia de algoritmos gen\'eticos de Mladen Jankovic, pero finalmente fue descartada, debido a errores o \textit{bugs} en la misma (y que, cada vez, resultaban ser m\'as inmanejables).
 
 %\end{adjustwidth}
 
@@ -1191,11 +1191,11 @@ En la Fig. \ref{fig:individuosGraphic2} se representan los individuos definidos 
 Sobre ellos se realizaron pruebas, corriendo el algoritmo gen\'etico, y evaluando el resultado alcanzado posteriormente (ya sea num\'erica o gr\'aficamente). \\
 A continuaci\'on se analizan distintos aspectos relevantes. Vale aclarar que, en el caso de la altura y la velocidad, se muestran los resultados de los mejores caminantes de cada tipo; y en el caso del fitness, los resultados de corridas t\'ipicas del algoritmo gen\'etico para cada tipo.
 
-\subsection{Evoluci\'on del \textit{fitness} seg\'un tipo de individuos}
-
-Los individuos que usan actuadores de Fourier son los que producen \textit{fitness} m\'as bajos; el de orden 2 (individuo de tipo 4) se estanca (al igual que el de tipo 1) a las pocas generaciones; el \textit{fitness} del individuo con actuadores Fourier de orden 9 se ``ameseta" progresivamente (despu\'es de 500 generaciones).\\
-El individuo de tipo 1 es el individuo con \textit{fitness} m\'as alto, obtenido a las pocas generaciones (es decir que es un m\'aximo local). El individuo de tipo 2 (con actuador gen\'erico y funci\'on partida) va aumentando su \textit{fitness} progresivamente, aunque sin superar al de tipo 1.\\
-Por otra parte, el individuo de tipo 3 (con actuador coseno doble frecuencia), va mejorando su \textit{fitness} paulatinamente, lo que impide estancarse en un m\'aximo local. Adem\'as, tiene el segundo mejor \textit{fitness}.\\
+\subsection{Evoluci\'on del \textit{fitness} promedio seg\'un tipo de individuos}
+En la Fig. \ref{fig:resultados_fitness} se muestra el \textit{fitness} promedio por generaci\'on seg\'un los tipos de individuo definidos. Est\'an asociados 
+%Los individuos que usan actuadores de Fourier son los que producen \textit{fitness} m\'as bajos; el de orden 2 (individuo de tipo 4) se estanca (al igual que el de tipo 1) a las pocas generaciones; el \textit{fitness} del individuo con actuadores Fourier de orden 9 se ``ameseta" progresivamente (despu\'es de 500 generaciones).\\
+%El individuo de tipo 1 es el individuo con \textit{fitness} m\'as alto, obtenido a las pocas generaciones (es decir que es un m\'aximo local). El individuo de tipo 2 (con actuador gen\'erico y funci\'on partida) va aumentando su \textit{fitness} progresivamente, aunque sin superar al de tipo 1.\\
+%Por otra parte, el individuo de tipo 3 (con actuador coseno doble frecuencia), va mejorando su \textit{fitness} paulatinamente, lo que impide estancarse en un m\'aximo local. Adem\'as, tiene el segundo mejor \textit{fitness}.\\
 Puede notarse que los rangos manejados en la Fig. \ref{fig:resultados_fitness} casi alcanzan el 0.7 (y no a 1, su cota superior). Esto se debe a que la funci\'on de \textit{fitness} est\'a definida como un producto de ciertos m\'odulos: suponiendo que cada uno de ellos estuviera al 92\%, se tendr\'ia  0.92$^5 =$ 0.659.
 \begin{figure}[H]%
   \centering
@@ -1237,8 +1237,13 @@ Por otra parte, es necesario incluir la funci\'on partida (es decir, separar a l
 El individuo de tipo 3 logra un movimiento c\'iclico y repetitvo, que deriva en una caminata \textit{ad infinitum}, pero con el costo de que sea ``rob\'otica" (muy parecida a lo visto con un \textit{passive walker}). 
 
 \subsection{Video}
-Para una mejor visualizaci\'on de los mejores individuos obtenidos, y de su evoluci\'on a lo largo de las generaciones del algoritmo gen\'etico, se acompa\~na video.\\
-\textbf{Ac\'a va el link del video}
+De los cinco individuos presentados, los que mejor pudieron realizar la caminata fueron tres, a saber: tipo 1 y 2 (gen\'erico con y sin funci\'on partida), y tipo 3 (coseno doble frecuencia).\\
+ Para poder visualizar mejor su comportamiento, se acompa\~nan los videos.\\ 
+%Para una mejor visualizaci\'on de los mejores individuos obtenidos, y de su evoluci\'on a lo largo de las generaciones del algoritmo gen\'etico, se acompa\~na video.\\
+%\textbf{Ac\'a va el link del video}
+Individuo Tipo 1: \url{https://www.youtube.com/watch?v=J6j8UNlbg3w}\\
+Individuo Tipo 2: \url{https://www.youtube.com/watch?v=t7jtbVL7eyY}\\
+Individuo Tipo 3: \url{https://www.youtube.com/watch?v=z9QRa7wH1QI}\\
 
 
 %----------------------------------------------------------------------------------------

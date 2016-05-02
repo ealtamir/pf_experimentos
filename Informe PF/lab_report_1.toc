@@ -40,7 +40,7 @@
 \contentsline {subsubsection}{\numberline {6.3.3}Mutaci\'on}{22}{subsubsection.6.3.3}
 \contentsline {subsubsection}{\numberline {6.3.4}Otras caracter\'isticas}{23}{subsubsection.6.3.4}
 \contentsline {section}{\numberline {7}Resultados obtenidos}{23}{section.7}
-\contentsline {subsection}{\numberline {7.1}Evoluci\'on del \textit {fitness} seg\'un tipo de individuos}{24}{subsection.7.1}
+\contentsline {subsection}{\numberline {7.1}Evoluci\'on del \textit {fitness} promedio seg\'un tipo de individuos}{24}{subsection.7.1}
 \contentsline {subsection}{\numberline {7.2}Velocidad seg\'un tipo de individuos}{24}{subsection.7.2}
 \contentsline {subsection}{\numberline {7.3}Altura seg\'un tipo de individuos}{25}{subsection.7.3}
 \contentsline {subsection}{\numberline {7.4}Comparaci\'on de tipo de individuos}{25}{subsection.7.4}
