@@ -47,3 +47,4 @@
 \contentsline {subsection}{\numberline {7.5}Video}{26}{subsection.7.5}
 \contentsline {section}{\numberline {8}Conclusiones}{26}{section.8}
 \contentsline {section}{Referencias}{27}{section.8}
+\contentsline {section}{Agradecimientos}{27}{section.8}

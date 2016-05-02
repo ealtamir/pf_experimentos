@@ -714,8 +714,8 @@ donde $A_{i}$ y $B_{i}$ con $1 \leq i \leq 9$ son amplitudes.
 Como las funciones peri\'odicas se\~naladas en los actuadores, no fueron suficientes para lograr la caminata, se le adosaron las funciones que se detallan seguidamente. 
 \subsection{Funci\'on partida}
 La caminata se divide en dos partes bien definidas:\\
-La primera, denominada ``funci\'on partida'' y que es opcional, el humanoide comienza con una posici\'on diferente a la que tendr\'a en el resto de la caminata (las dos extremidades bien extendidas), representa el primer paso dado por el individuo. Para simplificar el modelo, se decidi\'o que el tiempo considerado para el primer paso sea fijo, y de 0.7 segundos. Dicho valor fue extra\'ido de forma experimental. Se aplican actuadores gen\'ericos en cada uno de los cuatro segmentos movibles (muslos y piernas). \\
-La segunda es el resto de la caminata, que debe ser c\'iclica y peri\'odica (para poder, eventualmente, repetirse \textit{ad infinitum}). Aqu\'i se pueden aplicar cualquiera de los actuadores vistos en la secci\'on anterior, que pueden ser distintos a los usados en la funci\'on partida, pero solo un tipo de ellos para los segmentos.
+La primera denominada funci\'on partida, es opcional y representa el primer paso dado por el b\'ipedo. En ella, el humanoide comienza con una posici\'on (las dos extremidades bien extendidas) diferente a la que tendr\'a en el resto de la caminata. Se aplican actuadores gen\'ericos en cada uno de los cuatro segmentos movibles (muslos y piernas). Para simplificar el modelo, se decidi\'o que esta etapa durara 0.7 segundos. Dicho valor fue extra\'ido de forma experimental. \\
+La segunda es el resto de la caminata, y debe ser c\'iclica y peri\'odica (para poder eventualmente repetirse \textit{ad infinitum}). Aqu\'i se puede utilizar cualquiera de los actuadores vistos en la secci\'on anterior, pero solo un tipo de ellos es aplicado a los segmentos. 
 \\
 %El andar del humanoide es c\'iclico. Sin embargo, por la posici\'on inicial del individuo, se requiere para el tiempo del primer paso, una funci\'on distinta a la del resto de la caminata. El tipo de funci\'on puede ser cualquiera de los actuadores vistos anteriormente (pero no necesariamente con los mismos valores de amplitud, frecuencia y fase asignados a las piernas). Empero, se utiliz\'o la funci\'on vista en el actuador gen\'erico. \\
 %Por otra parte, para simplificar el modelo, se decidi\'o  que el tiempo considerado para el primer paso sea fijo, y de 0.7 segundos. Dicho valor fue extra\'ido de forma experimental.
@@ -729,7 +729,7 @@ f_{i}(t) =  f(t)
 f_{d}(t) =  f(t+\frac{\pi}{2})
  \end{equation}
  \\
-siendo $f(t)$ la funci\'on de movimiento (o actuador) en el momento $t$, y $f_{i}$ y $f_{d}$ las funciones de la pierna izquierda y derecha, respectivamente.
+siendo $f(t)$ la funci\'on de movimiento (o actuador) en el momento $t$, y $f_{i}$ y $f_{d}$ las funciones de la pierna izquierda y derecha, respectivamente.\\
 
 
 %----------------------------------------------------------------------------------------
@@ -744,7 +744,7 @@ El objetivo de este proyecto es optimizar la caminata del humanoide. Ergo, en el
 \subsection{Individuo}
 
 %La informaci\'on gen\'etica de cada individuo, est\'a compuesta por dos partes: funci\'on partida (optativa) y los par\'ametros asociados a los actuadores (obligatorios). 
-La informaci\'on gen\'etica de cada individuo, est\'a definida a partir de un vector que contiene de forma contigua, los par\'ametros de la funci\'on partida (optativa) y los asociados a los actuadores (obligatorios), que act\'uan sobre cada uno de los segmentos (muslos y piernas) del humano virtual.  
+La informaci\'on gen\'etica de cada individuo, est\'a definida a partir de un vector que contiene de forma contigua, los par\'ametros de la funci\'on partida (optativa) y los asociados a los actuadores (obligatorios), que act\'uan sobre cada uno de los segmentos (muslos y piernas) del humano virtual. \\ 
 
 \subsubsection{Par\'ametros}
 \label{sub:parametros}
@@ -865,7 +865,7 @@ La Fig. \ref{fig:individuoGraphic} muestra la estructura del individuo y su comp
   \caption{Esquema de un individuo - Ejemplo}
   \label{fig:individuoGraphic} 
 \end{figure}
-
+\vspace{2pt}
 \subsubsection{Valores}
 
 Cada uno de los segmentos tiene una composici\'on f\'isica distinta (largo, masa, etc.), raz\'on por la cual no necesariamente sus genes deban tener los mismos rangos de valores, tal como puede apreciarse en las Tablas \ref{table3} y \ref{table4}. \\
@@ -1108,10 +1108,13 @@ Sin embargo, una caracter\'istica fundamental en una caminata normal es que las 
 
 \subsection{Operadores del algoritmo}
 Permiten controlar en detalle el proceso de optimizaci\'on. En particular, se busca un balance entre la diversidad de los individuos, el aumento del \textit{fitness} a lo largo del algoritmo, y evitar la convergencia hacia una poblaci\'on sobre la cual no se puede seguir mejorando.
+
 \subsubsection{M\'etodos de selecci\'on}
 \label{metodos de seleccion}
+
 %\begin{adjustwidth}{1.4cm}{0cm}
-De la vasta cantidad de m\'etodos de selecci\'on que existen, se utilizaron: \textbf{\textit{Elite}} (en donde se elige el individuo con mayor aptitud de la poblaci\'on); y \textbf{\textit{Roulette}} (m\'etodo estoc\'astico, que selecciona un individuo de la poblaci\'on total al azar, con una probabilidad proporcional a su \textit{fitness}).
+De la vasta cantidad de m\'etodos de selecci\'on que existen se utiliz\'o \textbf{\textit{Roulette}}, m\'etodo estoc\'astico que selecciona un individuo de la poblaci\'on total al azar, con una probabilidad proporcional a su \textit{fitness}.\\
+Para no perder la mejor soluci\'on encontrada en cada generaci\'on, se activ\'o el \textbf{\textit{Elitism}}, t\'ecnica en la cual el individuo con mayor \textit{fitness} permanece intacto en la siguiente generaci\'on.
 %\end{adjustwidth}
 
 \subsubsection{M\'etodos de cruza}
@@ -1138,7 +1141,7 @@ En el algoritmo gen\'etico se utilizan 1000 generaciones, de 50 individuos cada 
 
 \section{Resultados obtenidos}
 \label{resultados}
-En la Fig. \ref{fig:individuosGraphic2} se representan los individuos definidos en el algoritmo gen\'etico con sus caracter\'isticas.
+En la Fig. \ref{fig:individuosGraphic2} se representan los individuos definidos con sus caracter\'isticas.\\
 \begin{figure}[H]%
    \centering
   \begin{tikzpicture}[mindmap, grow cyclic, every node/.style={concept, scale=0.8},  font=\bfseries,
@@ -1185,20 +1188,19 @@ En la Fig. \ref{fig:individuosGraphic2} se representan los individuos definidos 
 \end{figure}
 
 
-
 Sobre ellos se realizaron pruebas, corriendo el algoritmo gen\'etico, y evaluando el resultado alcanzado posteriormente (ya sea num\'erica o gr\'aficamente). \\
-A continuaci\'on se analizan distintos aspectos relevantes. 
+A continuaci\'on se analizan distintos aspectos relevantes. Vale aclarar que, en el caso de la altura y la velocidad, se muestran los resultados de los mejores caminantes de cada tipo; y en el caso del fitness, los resultados de corridas t\'ipicas del algoritmo gen\'etico para cada tipo.
 
 \subsection{Evoluci\'on del \textit{fitness} seg\'un tipo de individuos}
 
-Los individuos que usan actuadores de Fourier son los que producen \textit{fitness} m\'as bajos; el de orden 2 (individuo de tipo 3) se estanca (al igual que el de tipo 1) a las pocas generaciones; el \textit{fitness} del individuo con actuadores Fourier de orden 9 se ``ameseta" progresivamente (despu\'es de 500 generaciones).\\
-El individuo de tipo 1 es el individuo con \textit{fitness} m\'as alto, pero que se obtuvo a las pocas generaciones (es decir que es un m\'aximo local). El individuo de tipo 2 (con actuadores gen\'ericos y funci\'on partida) va aumentando su \textit{fitness} progresivamente, aunque sin superar al de tipo 1.\\
-Por otra parte, el individuo de tipo 5 (con actuadores coseno doble frecuencia), va mejorando su \textit{fitness} paulatinamente, lo que impide estancarse en un m\'aximo local. Adem\'as, tiene el segundo mejor \textit{fitness}.\\
+Los individuos que usan actuadores de Fourier son los que producen \textit{fitness} m\'as bajos; el de orden 2 (individuo de tipo 4) se estanca (al igual que el de tipo 1) a las pocas generaciones; el \textit{fitness} del individuo con actuadores Fourier de orden 9 se ``ameseta" progresivamente (despu\'es de 500 generaciones).\\
+El individuo de tipo 1 es el individuo con \textit{fitness} m\'as alto, obtenido a las pocas generaciones (es decir que es un m\'aximo local). El individuo de tipo 2 (con actuador gen\'erico y funci\'on partida) va aumentando su \textit{fitness} progresivamente, aunque sin superar al de tipo 1.\\
+Por otra parte, el individuo de tipo 3 (con actuador coseno doble frecuencia), va mejorando su \textit{fitness} paulatinamente, lo que impide estancarse en un m\'aximo local. Adem\'as, tiene el segundo mejor \textit{fitness}.\\
 Puede notarse que los rangos manejados en la Fig. \ref{fig:resultados_fitness} casi alcanzan el 0.7 (y no a 1, su cota superior). Esto se debe a que la funci\'on de \textit{fitness} est\'a definida como un producto de ciertos m\'odulos: suponiendo que cada uno de ellos estuviera al 92\%, se tendr\'ia  0.92$^5 =$ 0.659.
 \begin{figure}[H]%
   \centering
   \frame{\includegraphics[width=0.72\linewidth]{resultados_001.png}} 
-  \caption{Evoluci\'on del \textit{fitness} seg\'un tipo de individuos}%
+  \caption{Evoluci\'on del \textit{fitness} promedio seg\'un tipo de individuos}%
   \label{fig:resultados_fitness} %
 \end{figure}
 
@@ -1210,11 +1212,11 @@ Seguidamente, se muestra para cada individuo, su velocidad instant\'anea a lo la
   \caption{Velocidad seg\'un tipo de individuos}%
   \label{fig:resultados_velocidad} %
 \end{figure}
-\noindent Como puede observarse en el caso de los individuos 3 y 4 (Fourier de orden 2 y 9, respectivamente), se producen picos altos y pronunciados en la velocidad. Eso repercute en que la velocidad media no sea 1.3 $\frac{m}{s}$ (que es la velocidad objetivo), y ergo, en el m\'odulo de velocidad del \textit{fitness} (provocando que \'este sea m\'as bajo).\\
+\noindent Como puede observarse en el caso de los individuos 4 y 5 (Fourier de orden 2 y 9, respectivamente), se producen picos altos y pronunciados en la velocidad. Eso repercute en que la velocidad media no sea 1.3 $\frac{m}{s}$ (que es la velocidad objetivo), y ergo, en el m\'odulo de velocidad del \textit{fitness} (provocando que \'este sea m\'as bajo).\\
 %En el caso de los individuos 1 y 2, la velocidad instant\'anea oscila de forma suave. 
 En el individuo de tipo 1, tambi\'en se producen picos un poco menos pronunciados, pero luego de los 10 segundos, no se registra ninguna velocidad. Eso sucede porque el humanoide queda suspendido cuando intenta caer hacia atr\'as.\\
 La velocidad del individuo de tipo 2 oscila de forma irregular, pero no tiene picos muy elevados.\\ 
-Por \'ultimo, en el individuo de tipo 5, la velocidad oscila de forma c\'iclica, continuada y armoniosa (no hay picos altos).
+Por \'ultimo, en el individuo de tipo 3, la velocidad oscila de forma c\'iclica, continuada y armoniosa (no hay picos altos).
 
 \subsection{Altura seg\'un tipo de individuos}
 Como puede identificarse en la Figura \ref{fig:resultados_altura}, la altura de los individuos es otra caracter\'istica para diferenciarlos en su rendimiento.
@@ -1224,18 +1226,18 @@ Como puede identificarse en la Figura \ref{fig:resultados_altura}, la altura de 
   \caption{Altura (posici\'on de la pelvis) seg\'un tipo de individuos}%
   \label{fig:resultados_altura} %
 \end{figure}
-\noindent En efecto, los individuos de tipo 3 y 4 (que utilizan actuadores de Fourier de orden 2 y 9, respectivamente), son los que caen de forma m\'as abrupta, y aunque intentan levantarse, vuelven a caer con la misma intensidad. \\
-A su vez, el individuo de tipo 1 (actuador Gen\'erico sin funci\'on partida) mantiene su altura, hasta que a los 10 segundos queda suspendido a una altura levemente menor. Esto ocurre porque se cae para atr\'as, y las limitaciones de la cadera impiden que caiga. El individuo de tipo 2, con actuadores gen\'ericos y funci\'on partida, logra mantener la altura, hasta que cae hacia adelante, en cuclillas. Considerando que cuando cae no vuelve a levantarse (ya que en ese movimiento suelen emplearse los brazos y manos), tiene un comportamiento similar a una caminata real. \\
-En lo que respecta al individuo de tipo 5, que utiliza como actuadores la funci\'on coseno doble frecuencia, mantiene su altura de forma constante, pero con oscilaciones leves y continuadas en el tiempo. De los cinco, es el que da mayor cantidad de pasos.
+\noindent En efecto, los individuos de tipo 4 y 5 (que utilizan actuadores de Fourier de orden 2 y 9, respectivamente), son los que caen de forma m\'as abrupta, y aunque intentan levantarse, vuelven a caer con la misma intensidad. \\
+A su vez, el individuo de tipo 1 (actuador gen\'erico sin funci\'on partida) mantiene su altura, hasta que a los 10 segundos queda suspendido a una altura levemente menor. Esto ocurre porque se cae para atr\'as, y las limitaciones de la cadera impiden que caiga. El individuo de tipo 2, con actuador gen\'erico y funci\'on partida, logra mantener la altura, hasta que cae hacia adelante, en cuclillas. Considerando que cuando cae no vuelve a levantarse (ya que en ese movimiento suelen emplearse los brazos y manos), tiene un comportamiento similar a una caminata real. \\
+En lo que respecta al individuo de tipo 3, que utiliza como actuador la funci\'on coseno doble frecuencia, mantiene su altura de forma constante, pero con oscilaciones leves y continuadas en el tiempo. De los cinco, es el que da mayor cantidad de pasos.
 
 
 \subsection{Comparaci\'on de tipo de individuos}
 En base a lo visto anteriormente, queda claro que los actuadores de Fourier no dieron buenos resultados tanto en fitness, como en altura y velocidad.\\
 Por otra parte, es necesario incluir la funci\'on partida (es decir, separar a la caminata en un ``primer paso", y el ciclo), ya que si bien su ausencia puede originar \textit{fitness} m\'as altos, genera inestabilidad a los pocos segundos (como en el individuo de tipo 1).\\
-El individuo de tipo 5 logra un movimiento c\'iclico y repetitvo, que deriva en una caminata \textit{ad infinitum}, pero con el costo de que sea ``rob\'otica" (muy parecida a lo visto con un \textit{passive walker}). 
+El individuo de tipo 3 logra un movimiento c\'iclico y repetitvo, que deriva en una caminata \textit{ad infinitum}, pero con el costo de que sea ``rob\'otica" (muy parecida a lo visto con un \textit{passive walker}). 
 
 \subsection{Video}
-Para una mejor visualizaci\'on de los distintos individuos obtenidos, y de su evoluci\'on a lo largo de las generaciones del algoritmo gen\'etico, se acompa\~na video.\\
+Para una mejor visualizaci\'on de los mejores individuos obtenidos, y de su evoluci\'on a lo largo de las generaciones del algoritmo gen\'etico, se acompa\~na video.\\
 \textbf{Ac\'a va el link del video}
 
 
@@ -1281,6 +1283,10 @@ Erin Catto, \emph{Iterative Dynamic with Temporal Coherence. Fecha de publicaci\
 \end{thebibliography}
 
 %----------------------------------------------------------------------------------------
+
+\section*{Agradecimientos}
+\addcontentsline{toc}{section}{Agradecimientos} %Including Agradecimientos in table of contents
+Agradecemos la calidad y excelencia acad\'emica recibidas por parte de todos los docentes a lo largo de la carrera, que nos permiti\'o realizar un proyecto final que integra los conocimientos y capacidades adquiridos. Asimismo, a la Dra. Silvia Alicia G\'omez, directora de la carrera de Ingenier\'ia Inform\'atica, por su apoyo incondicional durante todos estos a\~nos. Y muy especialmente a nuestro tutor Dr. Daniel Ricardo Parisi, a quien tambi\'en le agradecemos su valiosa colaboraci\'on y su experta ayuda en la preparaci\'on de este proyecto.
 
 
 \end{document}
