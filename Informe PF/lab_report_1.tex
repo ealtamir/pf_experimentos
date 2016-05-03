@@ -862,7 +862,7 @@ La Fig. \ref{fig:individuoGraphic} muestra la estructura del individuo y su comp
 
   \end{tikzpicture}
   \vspace{5pt}
-  \caption{Esquema de un individuo - Ejemplo}
+  \caption{Esquema de un individuo (Ejemplo con actuador gen\'erico)}
   \label{fig:individuoGraphic} 
 \end{figure}
 \vspace{2pt}
@@ -888,7 +888,7 @@ Cada uno de los segmentos tiene una composici\'on f\'isica distinta (largo, masa
 	\end{tabular}
   \captionsetup{justification=centering}
   \caption{Rango de valores que puede tomar cada gen, para la funci\'on partida}%
-  \label{table4}%
+  \label{table3}%
 \end{table}
 \vspace{1pt}
 
@@ -928,7 +928,7 @@ Cada uno de los segmentos tiene una composici\'on f\'isica distinta (largo, masa
 	\end{tabular}
   \captionsetup{justification=centering}
   \caption{Rango de valores que puede tomar cada gen, seg\'un el tipo de actuador }%
-  \label{table3}%
+  \label{table4}%
 \end{table}
 
 
@@ -1192,11 +1192,11 @@ Sobre ellos se realizaron pruebas, corriendo el algoritmo gen\'etico, y evaluand
 A continuaci\'on se analizan distintos aspectos relevantes. Vale aclarar que, en el caso de la altura y la velocidad, se muestran los resultados de los mejores caminantes de cada tipo; y en el caso del fitness, los resultados de corridas t\'ipicas del algoritmo gen\'etico para cada tipo.
 
 \subsection{Evoluci\'on del \textit{fitness} promedio seg\'un tipo de individuos}
-En la Fig. \ref{fig:resultados_fitness} se muestra el \textit{fitness} promedio por generaci\'on seg\'un los tipos de individuo definidos. Est\'an asociados 
+En la Fig. \ref{fig:resultados_fitness} se muestra el \textit{fitness} promedio por generaci\'on, producido por corridas t\'ipicas del algoritmo gen\'etico, seg\'un los tipos de individuo definidos. Si bien los resultados no son concluyentes, s\'i vale la pena decir que los individuos con actuador gen\'erico (tipo 1 y 2) y coseno doble frecuencia (tipo 3), logran alcanzar un \textit{fitness} m\'as alto que el resto.\\
 %Los individuos que usan actuadores de Fourier son los que producen \textit{fitness} m\'as bajos; el de orden 2 (individuo de tipo 4) se estanca (al igual que el de tipo 1) a las pocas generaciones; el \textit{fitness} del individuo con actuadores Fourier de orden 9 se ``ameseta" progresivamente (despu\'es de 500 generaciones).\\
 %El individuo de tipo 1 es el individuo con \textit{fitness} m\'as alto, obtenido a las pocas generaciones (es decir que es un m\'aximo local). El individuo de tipo 2 (con actuador gen\'erico y funci\'on partida) va aumentando su \textit{fitness} progresivamente, aunque sin superar al de tipo 1.\\
 %Por otra parte, el individuo de tipo 3 (con actuador coseno doble frecuencia), va mejorando su \textit{fitness} paulatinamente, lo que impide estancarse en un m\'aximo local. Adem\'as, tiene el segundo mejor \textit{fitness}.\\
-Puede notarse que los rangos manejados en la Fig. \ref{fig:resultados_fitness} casi alcanzan el 0.7 (y no a 1, su cota superior). Esto se debe a que la funci\'on de \textit{fitness} est\'a definida como un producto de ciertos m\'odulos: suponiendo que cada uno de ellos estuviera al 92\%, se tendr\'ia  0.92$^5 =$ 0.659.
+Por otra parte, puede notarse que los rangos manejados casi alcanzan el 0.7 (y no a 1, su cota superior). Esto se debe a que la funci\'on de \textit{fitness} est\'a definida como un producto de ciertos m\'odulos: suponiendo que cada uno de ellos estuviera al 92\%, se tendr\'ia  0.92$^5 =$ 0.659.
 \begin{figure}[H]%
   \centering
   \frame{\includegraphics[width=0.72\linewidth]{resultados_001.png}} 
@@ -1205,11 +1205,11 @@ Puede notarse que los rangos manejados en la Fig. \ref{fig:resultados_fitness} c
 \end{figure}
 
 \subsection{Velocidad seg\'un tipo de individuos}
-Seguidamente, se muestra para cada individuo, su velocidad instant\'anea a lo largo del tiempo.
+Seguidamente, se muestra para cada tipo de individuo, su velocidad instant\'anea de la pelvis a lo largo del tiempo.
 \begin{figure}[H]%
   \centering
   \frame{\includegraphics[width=0.72\linewidth]{resultados_003.png}} 
-  \caption{Velocidad seg\'un tipo de individuos}%
+  \caption{Velocidad instant\'anea seg\'un tipo de individuos}%
   \label{fig:resultados_velocidad} %
 \end{figure}
 \noindent Como puede observarse en el caso de los individuos 4 y 5 (Fourier de orden 2 y 9, respectivamente), se producen picos altos y pronunciados en la velocidad. Eso repercute en que la velocidad media no sea 1.3 $\frac{m}{s}$ (que es la velocidad objetivo), y ergo, en el m\'odulo de velocidad del \textit{fitness} (provocando que \'este sea m\'as bajo).\\
@@ -1232,9 +1232,9 @@ En lo que respecta al individuo de tipo 3, que utiliza como actuador la funci\'o
 
 
 \subsection{Comparaci\'on de tipo de individuos}
-En base a lo visto anteriormente, queda claro que los actuadores de Fourier no dieron buenos resultados tanto en fitness, como en altura y velocidad.\\
-Por otra parte, es necesario incluir la funci\'on partida (es decir, separar a la caminata en un ``primer paso", y el ciclo), ya que si bien su ausencia puede originar \textit{fitness} m\'as altos, genera inestabilidad a los pocos segundos (como en el individuo de tipo 1).\\
-El individuo de tipo 3 logra un movimiento c\'iclico y repetitvo, que deriva en una caminata \textit{ad infinitum}, pero con el costo de que sea ``rob\'otica" (muy parecida a lo visto con un \textit{passive walker}). 
+Seg\'un lo visto, queda claro que los actuadores de Fourier no dieron buenos resultados.\\
+Asimismo, es necesario incluir la funci\'on partida (es decir, separar a la caminata en un ``primer paso", y el ciclo), ya que si bien su ausencia puede originar \textit{fitness} m\'as altos, genera inestabilidad a los pocos segundos (como en el individuo de tipo 1).\\
+El individuo de tipo 3 logra un movimiento c\'iclico y repetitvo, que deriva en una caminata \textit{ad infinitum}, con el costo de que sea ``rob\'otica" (muy parecida a lo observado con un \textit{passive walker}). 
 
 \subsection{Video}
 De los cinco individuos presentados, los que mejor pudieron realizar la caminata fueron tres, a saber: tipo 1 y 2 (gen\'erico con y sin funci\'on partida), y tipo 3 (coseno doble frecuencia).\\
@@ -1255,10 +1255,11 @@ El objetivo principal de este proyecto fue lograr producir la simulaci\'on y ani
 %Luego, se model\'o al humanoide como un conjunto de segmentos (cuerpos r\'igidos) unidos por articulaciones. Adem\'as, para desplazar al b\'ipedo y lograr la caminata, se aplicaron torques en cada uno de los segmentos (o actuadores),y otras funciones complementarias como funci\'on partida y fase sincronizada.\\
 Una vez modelado el humanoide, se implementaron individuos con diferentes caracter\'isticas (en especial, actuadores), para facilitar la comparaci\'on. En la secci\'on \ref{resultados} se verifica que las funciones utilizadas en los actuadores son decisivas para lograr una caminata.\\
 Los actuadores que mejores resultados dieron, fueron aquellos en donde se empleaba dos frecuencias $\omega$ en vez de una.\\
-Lo ocurrido con el individuo de tipo 1 (gen\'erico y sin funci\'on partida), que es el que tiene un \textit{fitness} m\'as alto, aunque no produce una caminata acorde, posiblemente se deba a que el tiempo de simulaci\'on empleado en el algoritmo gen\'etico, fuera corto.\\
-Se comprob\'o que los individuos con actuadores gen\'erico y coseno doble frecuencia son los que mejor caminan, manteniendo su altura por m\'as tiempo y con \textit{fitness} m\'as alto. Sin embargo, son caminatas muy distintas: la del primero resulta ser m\'as natural, pero se cae m\'as r\'apido; mientras que la del segundo es m\'as ``rob\'otica" (ya que parece un \textit{passive walker}), pero m\'as estable (no se cae nunca ni se queda quieto).\\
-La funci\'on de fitness que se plantea (con sus m\'odulos) indica propiedades ideales para una caminata, pero que no implican realismo en la misma. Y entonces dos individuos con \textit{fitness} parecidos dieron como fruto caminatas muy distintas.\\
+%Lo ocurrido con el individuo de tipo 1 (gen\'erico y sin funci\'on partida), que es el que tiene un \textit{fitness} m\'as alto, aunque no produce una caminata acorde, posiblemente se deba a que el tiempo de simulaci\'on empleado en el algoritmo gen\'etico, fuera corto.\\
+Se comprob\'o que los individuos con actuadores gen\'erico y coseno doble frecuencia son los que mejor caminan, manteniendo su altura por m\'as tiempo y con \textit{fitness} m\'as alto. Sin embargo, son caminatas muy distintas: la del primero resulta ser m\'as natural, pero se cae m\'as r\'apido; mientras que la del segundo es m\'as ``rob\'otica" (ya que parece un \textit{passive walker}), pero m\'as estable (no se cae ni se queda quieto).\\
 Si hay que elegir como mejor a uno de los dos, habr\'ia que decidir entre realismo (el humanoide se cae, pero es m\'as natural), y estabilidad (no se cae, pero parece un \textit{passive walker}).\\
+La funci\'on de fitness que se plantea (con sus m\'odulos) indica propiedades ideales para una caminata, pero que no implican realismo en la misma. Y entonces dos individuos con \textit{fitness} parecidos dieron como fruto caminatas muy distintas.\\
+Por otra parte, el haber seguido la l\'inea de investigaci\'on de los cuadr\'upedos, si bien logr\'o una caminata, no fue suficiente. Un sistema de control para manejar el equilibrio ser\'ia necesario.\\
 Entre los trabajos a futuro para integrar a este proyecto, se encuentran lograr que la caminata se produzca en 3 dimensiones; y analizar el comportamiento de varios humanoides chocando e  interactuando entre s\'i.\\
 Se puede concluir que, la caminata de una persona, algo que parece simple y sencillo, muestra su verdadera complejidad cuando debe ser simulada por medio de actuadores aplicados a un conjunto de segmentos interconectados.
 
@@ -1291,7 +1292,7 @@ Erin Catto, \emph{Iterative Dynamic with Temporal Coherence. Fecha de publicaci\
 
 \section*{Agradecimientos}
 \addcontentsline{toc}{section}{Agradecimientos} %Including Agradecimientos in table of contents
-Agradecemos la calidad y excelencia acad\'emica recibidas por parte de todos los docentes a lo largo de la carrera, que nos permiti\'o realizar un proyecto final que integra los conocimientos y capacidades adquiridos. Asimismo, a la Dra. Silvia Alicia G\'omez, directora de la carrera de Ingenier\'ia Inform\'atica, por su apoyo incondicional durante todos estos a\~nos. Y muy especialmente a nuestro tutor Dr. Daniel Ricardo Parisi, a quien tambi\'en le agradecemos su valiosa colaboraci\'on y su experta ayuda en la preparaci\'on de este proyecto.
+A la Dra. Silvia Alicia G\'omez, directora de la carrera de Ingenier\'ia Inform\'atica, por su apoyo incondicional durante todos estos a\~nos. Asimismo, a todos los docentes que tuvimos a lo largo de la carrera, por la calidad y excelencia acad\'emica recibidas, que nos permiti\'o realizar un proyecto final que integra los conocimientos y capacidades adquiridos.  Y muy especialmente a nuestro tutor Dr. Daniel Ricardo Parisi, a quien tambi\'en le agradecemos su valiosa colaboraci\'on y su experta ayuda en la preparaci\'on de este proyecto.
 
 
 \end{document}
