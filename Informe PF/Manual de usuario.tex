@@ -1,0 +1,117 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% University/School Laboratory Report
+% LaTeX Template
+% Version 3.1 (25/3/14)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original author:
+% Linux and Unix Users Group at Virginia Tech Wiki 
+% (https://vtluug.org/wiki/Example_LaTeX_chem_lab_report)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass{article}
+\usepackage[spanish,es-tabla]{babel}
+
+\usepackage[a4paper,
+ %left=20mm,
+ top=30mm,
+ bottom=25mm,
+ headheight=80pt,
+ headsep=15mm
+ ]{geometry}
+
+
+\usepackage[version=3]{mhchem} % Package for chemical equation typesetting
+\usepackage{graphicx} % Required for the inclusion of images
+
+\usepackage{amsfonts}
+\usepackage{amsmath} % Required for some math elements 
+\usepackage{mathtools}
+
+\usepackage{multirow}
+
+
+\usepackage{changepage} % Required in text margins
+\usepackage{xcolor} % Required changing color 
+\usepackage{sectsty} %Required to change section headers
+\usepackage{titlesec} % Required for section spacing
+\usepackage{enumitem}
+\usepackage{tocloft} % Better in table of contents
+\usepackage[blocks]{authblk}% The option is for block layout
+\usepackage[pdfborder={0 0 0}]{hyperref}% For email addresses
+\usepackage{fancyhdr} %Required for Headers
+
+\usepackage[nottoc]{tocbibind} %Better to add references and more in table of contents (nottoc is to remove indice in toc)
+
+\usepackage{layout} %Used for "margin debugging"
+
+\usepackage[export]{adjustbox} 
+\usepackage{float}
+
+\usepackage{subfig}% http://ctan.org/pkg/subfig
+
+
+\pagestyle{fancy}
+\fancyheadoffset{0cm} %Used for heading without margins
+\fancyhead[L]{} % 1. sectionname
+
+\rhead{ \textit{Simulaci\'on y Animaci\'on Biomec\'anica de un Humanoide}}
+\renewcommand{\headrulewidth}{0.4pt}
+
+
+\renewcommand\cfttoctitlefont{\hfill\huge\bfseries\color{cyan}}
+\renewcommand\cftaftertoctitle{\hfill\mbox{}}
+
+\setlist{leftmargin=5.5mm}
+
+\titlespacing*{\section} {0pt}{6ex}{2ex}
+\titlespacing*{\subsection} {0pt}{4ex}{0.7ex}
+
+\sectionfont{\color{cyan}} % Changing color to section headers
+\subsectionfont{\color{cyan}} % Changing color to subsection headers
+\subsubsectionfont{\color{cyan}} % Changing color to subsubsection headers
+\paragraphfont{\color{cyan}} % Changing color to subsubsubsection headers
+%\setlength\parindent{0pt} % Removes all indentation from paragraphs
+
+\renewcommand{\labelitemi}{$-$}
+
+\renewcommand{\baselinestretch}{1.25} 
+
+\usepackage{verbatimbox}
+\newcommand{\at}{\makeatletter @\makeatother}
+
+%----------------------------------------------------------------------------------------
+%	DOCUMENT INFORMATION
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+\newpage
+
+
+\section*{ Manual de Usuario - Proyecto Final Humanoide}
+
+\begin{enumerate}
+\item{ Para correr el proyecto, abrirlo en XCode y ejecutar $main.cpp$
+}
+
+\item En la clase $PassiveWalkerExperiment.h$ est\'a la variable $LAST\_RESULTS$ que, si se encuentra en $true$, va a mostrar los resultados ubicados en la carpeta $/code/results/$ con el nombre de $fitness_file.txt$. Si se encuentra en $false$, se corre el algoritmo gen\'etico.
+
+\item Mientras se corre el algoritmo gen\'etico, se puede consultar el archivo ubicado en \\$/code/bin/Debug/bog4.dat$ para saber la generaci\'on en la que se encuentra y el fitness promedio y m\'aximo hasta el momento.
+
+\item Para elegir el individuo a utilizar, en la clase $PassiveWalkerExperiment.h$, comentar/descomentar tanto en $FIRST\_STEP$ como en $SECOND\_STEP$ el tipo de actuador, pero asegurarse que s\'olo uno de ellos quede activado.
+
+\end{enumerate}
+
+
+\end{document}
