@@ -1065,7 +1065,7 @@ Se calcula a partir de la diferencia entre la altura en cada instante de la simu
 \subsubsection{Velocidad}
 \label{velocidad}
 %\begin{adjustwidth}{1.4cm}{0cm}
-Indica qu\'e tan cercana es la velocidad del individuo con respecto a una velocidad objetivo (en este caso, es de 1.2 m/h), y se expresa de la siguiente forma:\\
+Indica qu\'e tan cercana es la velocidad del individuo con respecto a una velocidad objetivo (en este caso, es de 0.7 m/h), y se expresa de la siguiente forma:\\
 \begin{equation}
   V = \frac{\sum_{n=0}^{T} {e^{-C( v_{t_{n}} - V_{O} )^2  }}}{N}
 \end{equation}
@@ -1212,7 +1212,7 @@ Seguidamente, se muestra para cada tipo de individuo, su velocidad instant\'anea
   \caption{Velocidad instant\'anea seg\'un tipo de individuos}%
   \label{fig:resultados_velocidad} %
 \end{figure}
-\noindent Como puede observarse en el caso de los individuos 4 y 5 (Fourier de orden 2 y 9, respectivamente), se producen picos pronunciados en la velocidad. Eso repercute en que la velocidad media no sea 1.3 $\frac{m}{s}$ (que es la velocidad objetivo), y ergo, en el m\'odulo de velocidad del \textit{fitness} (provocando que \'este sea m\'as bajo).\\
+\noindent Como puede observarse en el caso de los individuos 4 y 5 (Fourier de orden 2 y 9, respectivamente), se producen picos pronunciados en la velocidad. Eso repercute en que la velocidad media no sea 0.7 $m/h$ (que es la velocidad objetivo), y ergo, en el m\'odulo de velocidad del \textit{fitness} (provocando que \'este sea m\'as bajo).\\
 %En el caso de los individuos 1 y 2, la velocidad instant\'anea oscila de forma suave. 
 En el individuo de tipo 1, tambi\'en se producen picos un poco menos pronunciados, pero luego de los 10 segundos, no se registra ninguna velocidad. Eso sucede porque el humanoide queda suspendido cuando intenta caer hacia atr\'as.\\
 La velocidad del individuo de tipo 2 oscila de forma irregular, pero no tiene picos muy elevados.\\ 
