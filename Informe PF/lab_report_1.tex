@@ -1229,14 +1229,14 @@ Como puede identificarse en la Figura \ref{fig:resultados_altura}, la altura de 
   \label{fig:resultados_altura} %
 \end{figure}
 \noindent En efecto, los individuos de tipo 4 y 5 (que utilizan actuadores de Fourier de orden 2 y 9, respectivamente), son los que caen de forma m\'as abrupta, y aunque intentan levantarse, vuelven a caer con la misma intensidad. \\
-A su vez, el individuo de tipo 1 (actuador gen\'erico sin funci\'on partida) mantiene su altura, hasta que a los 10 segundos queda suspendido a una altura levemente menor. Esto ocurre porque se cae para atr\'as, y las limitaciones de la cadera impiden que caiga. El individuo de tipo 2, con actuador gen\'erico y funci\'on partida, logra mantener la altura, hasta que cae hacia adelante, en cuclillas. Considerando que cuando cae no vuelve a levantarse (ya que en ese movimiento suelen emplearse los brazos y manos), tiene un comportamiento similar a una caminata real. \\
+A su vez, el individuo de tipo 1 (actuador gen\'erico sin funci\'on partida) mantiene su altura, hasta que a los 10 segundos queda suspendido a una altura levemente menor. Esto ocurre porque se cae para atr\'as, y las restricciones a los grados de libertad de la cadera impiden que caiga. El individuo de tipo 2, con actuador gen\'erico y funci\'on partida, logra mantener la altura, hasta que cae. Considerando que cuando cae no vuelve a levantarse (ya que en ese movimiento suelen emplearse los brazos y manos), tiene un comportamiento similar a una caminata real. \\
 En lo que respecta al individuo de tipo 3, que utiliza como actuador la funci\'on coseno doble frecuencia, mantiene su altura de forma constante, pero con oscilaciones leves y continuadas en el tiempo. De los cinco, es el que da mayor cantidad de pasos.
 
 
 \subsection{Comparaci\'on de tipo de individuos}
 Seg\'un lo visto, queda claro que los actuadores de Fourier no dieron buenos resultados.\\
 Asimismo, es necesario incluir la funci\'on partida (es decir, separar a la caminata en un ``primer paso", y el ciclo), ya que si bien su ausencia puede originar \textit{fitness} m\'as altos, genera inestabilidad a los pocos segundos (como en el individuo de tipo 1).\\
-El individuo de tipo 3 logra un movimiento c\'iclico y repetitvo, que deriva en una caminata \textit{ad infinitum}, con el costo de que sea ``rob\'otica" (muy parecida a lo observado con un \textit{passive walker}). 
+El individuo de tipo 3 logra un movimiento c\'iclico y repetitvo, que deriva en una caminata \textit{ad infinitum}. 
 
 \subsection{Video}
 De los cinco individuos presentados, los que mejor pudieron realizar la caminata fueron tres, a saber: tipo 1 y 2 (gen\'erico con y sin funci\'on partida), y tipo 3 (coseno doble frecuencia).\\
