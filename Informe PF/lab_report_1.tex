@@ -864,7 +864,7 @@ La Fig. \ref{fig:individuoGraphic} muestra la estructura del individuo y su comp
 
   \end{tikzpicture}
   \vspace{5pt}
-  \caption{Esquema de un individuo (Ejemplo con actuador gen\'erico)}
+  \caption{Esquema de un individuo}
   \label{fig:individuoGraphic} 
 \end{figure}
 \vspace{2pt}
@@ -1253,17 +1253,15 @@ Individuo Tipo 3: \url{https://www.youtube.com/watch?v=z9QRa7wH1QI}\\
 %----------------------------------------------------------------------------------------
 
 \section{Conclusiones}
-El objetivo principal de este proyecto fue lograr producir la simulaci\'on y animaci\'on biomec\'anica de la caminata de un humano virtual. Para eso, se eligi\'o el motor f\'isico \textit{Bullet Physics}, lo que requiri\'o no solo aprender sobre su funcionamiento y los m\'etodos f\'isicos implementados, sino tambi\'en realizar pruebas para verificar qu\'e tan pr\'oximos eran el modelo fisico-matem\'atico ideado y el utilizado por Bullet.\\ % , en temas de coeficiente de fricci\'on y restituci\'on.\\
-%Luego, se model\'o al humanoide como un conjunto de segmentos (cuerpos r\'igidos) unidos por articulaciones. Adem\'as, para desplazar al b\'ipedo y lograr la caminata, se aplicaron torques en cada uno de los segmentos (o actuadores),y otras funciones complementarias como funci\'on partida y fase sincronizada.\\
+El objetivo principal de este proyecto fue lograr producir la simulaci\'on y animaci\'on biomec\'anica de la caminata de un humano virtual. Para eso, se eligi\'o el motor f\'isico \textit{Bullet Physics}, lo que requiri\'o no solo aprender sobre su funcionamiento y los m\'etodos f\'isicos implementados, sino tambi\'en realizar pruebas para verificar qu\'e tan pr\'oximos eran el modelo fisico-matem\'atico ideado y el utilizado por Bullet.\\ 
 Una vez modelado el humanoide, se implementaron individuos con diferentes caracter\'isticas (en especial, actuadores), para facilitar la comparaci\'on. En la secci\'on \ref{resultados} se verifica que las funciones utilizadas en los actuadores son decisivas para lograr una caminata.\\
 Los actuadores que mejores resultados dieron, fueron aquellos en donde se empleaba dos frecuencias $\omega$ en vez de una.\\
-%Lo ocurrido con el individuo de tipo 1 (gen\'erico y sin funci\'on partida), que es el que tiene un \textit{fitness} m\'as alto, aunque no produce una caminata acorde, posiblemente se deba a que el tiempo de simulaci\'on empleado en el algoritmo gen\'etico, fuera corto.\\
-Se comprob\'o que los individuos con actuadores gen\'erico y coseno doble frecuencia son los que mejor caminan, manteniendo su altura por m\'as tiempo y con \textit{fitness} m\'as alto. Sin embargo, son caminatas muy distintas: la del primero resulta ser m\'as natural, pero se cae m\'as r\'apido; mientras que la del segundo es m\'as ``rob\'otica" (ya que parece un \textit{passive walker}), pero m\'as estable (no se cae ni se queda quieto).\\
-Si hay que elegir como mejor a uno de los dos, habr\'ia que decidir entre realismo (el humanoide se cae, pero es m\'as natural), y estabilidad (no se cae, pero parece un \textit{passive walker}).\\
-La funci\'on de fitness que se plantea (con sus m\'odulos) indica propiedades ideales para una caminata, pero que no implican realismo en la misma. Y entonces dos individuos con \textit{fitness} parecidos dieron como fruto caminatas muy distintas.\\
-Por otra parte, el haber seguido la l\'inea de investigaci\'on del modelo del cuadr\'upedo, si bien logr\'o una caminata, no fue suficiente. Un sistema de control para manejar el equilibrio ser\'ia necesario.\\
+Si bien el individuo de tipo 1 con actuador gen\'erico y sin funci\'on partida logra dar algunos pasos (en promedio ocho), agregar dicha funci\'on (es decir, separar la caminata en dos partes, y considerar una funci\'on del primer paso), logr\'o en algunos casos mejores resultados, como ocurre con los individuos de tipo 2 y tipo 3, que efect\'uan una mayor cantidad de pasos (en promedio doce y veinte, respectivamente). \\
+Tambi\'en se comprob\'o que los individuos con actuadores gen\'erico y coseno doble frecuencia son los que mejor caminan, manteniendo su altura por m\'as tiempo y con \textit{fitness} m\'as alto. Sin embargo, son caminatas muy distintas: la del primero resulta ser con pasos largos; mientras que la del segundo realiza m\'as pasos y m\'as cortos.\\ 
+Los individuos con actuadores Fourier de orden 2 y 9 fueron los que peores resultados arrojaron, tanto en el \textit{fitness} promedio, como en la cantidad de pasos logrados. \\
+En lo que respecta a la l\'inea de investigaci\'on que se sigui\'o del modelo del cuadr\'upedo virtual, se logr\'o con algunas variaciones la caminata en un b\'ipedo; pero el costo fue sacarle grados de libertad en el movimiento y evitar la rotaci\'on de la cadera, produciendo as\'i una caminata plana.  Esto significa una limitaci\'on del modelo. Si se agregara un grado de libertad m\'as, ser\'ia necesario aplicar un sistema de control para manejar el equilibrio del humano virtual.\\
 Entre los trabajos a futuro para integrar a este proyecto, se encuentran lograr que la caminata se produzca en 3 dimensiones; y analizar el comportamiento de varios humanoides chocando e  interactuando entre s\'i.\\
-Se puede concluir que, la caminata de una persona, algo que parece simple y sencillo, muestra su verdadera complejidad cuando debe ser simulada por medio de actuadores aplicados a un conjunto de segmentos interconectados.
+Finalmente, la caminata de una persona, algo que parece simple y sencillo, muestra su verdadera complejidad cuando debe ser simulada por medio de actuadores aplicados a un conjunto de segmentos interconectados.
 \newpage
 
 %----------------------------------------------------------------------------------------
