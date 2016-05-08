@@ -44,8 +44,8 @@ upper_cos_frec3 = chromosome(35);
 upper_fase3 = chromosome(36);
 upper_ind_term3 = chromosome(37);
 
-x = [0:0.001:3];
-x2 = [3:0.001:5];
+x = [0:0.001:0.7];
+x2 = [0.7:0.001:5];
 
 upper = upper_A * sin(upper_sin_frec * x + upper_fase) + upper_B * cos(upper_cos_frec * x + upper_fase) + upper_ind_term;
 
@@ -55,26 +55,26 @@ upper_r = upper_A2 * sin(upper_sin_frec2 * x + upper_fase2) + upper_B2 * cos(upp
 
 lower_r = lower_A2 * sin(lower_sin_frec2 * x + lower_fase2) + lower_B2 * cos(lower_cos_frec2 * x + lower_fase2) + lower_ind_term2;
 
-upper2 = upper_A3 * sin(upper_sin_frec3 * x + upper_fase3) + upper_B3 * cos(upper_cos_frec3 * x + upper_fase3) + upper_ind_term3;
+upper2 = upper_A3 * sin(upper_sin_frec3 * x2 + upper_fase3) + upper_B3 * cos(upper_cos_frec3 * x2 + upper_fase3) + upper_ind_term3;
 
-lower2 = lower_A3 * sin(lower_sin_frec3 * x + lower_fase3) + lower_B3 * cos(lower_cos_frec3 * x + lower_fase3) + lower_ind_term3;
+lower2 = lower_A3 * sin(lower_sin_frec3 * x2 + lower_fase3) + lower_B3 * cos(lower_cos_frec3 * x2 + lower_fase3) + lower_ind_term3;
 
-upper_r2 = upper_A3 * sin(upper_sin_frec3 * x + upper_fase3 + pi) + upper_B3 * cos(upper_cos_frec3 * x + upper_fase3 + pi) + upper_ind_term3;
+upper_r2 = upper_A3 * sin(upper_sin_frec3 * x2 + upper_fase3 + pi) + upper_B3 * cos(upper_cos_frec3 * x2 + upper_fase3 + pi) + upper_ind_term3;
 
-lower_r2 = lower_A3 * sin(lower_sin_frec3 * x + lower_fase3 + pi) + lower_B3 * cos(lower_cos_frec3 * x + lower_fase3 + pi) + lower_ind_term3;
+lower_r2 = lower_A3 * sin(lower_sin_frec3 * x2 + lower_fase3 + pi) + lower_B3 * cos(lower_cos_frec3 * x2 + lower_fase3 + pi) + lower_ind_term3;
 
 %subplot(2,1,1)
 %plot(x,upper,'b',x,upper_r,'r','LineWidth',2)
 %title('Actuador gen�rico','fontweight','bold','fontName','Calibri','fontsize',14)
-lgnds = legend('Muslo izquierdo','Muslo derecho');
-ch = get(lgnds,'Children');
-th = findobj(ch,'Type','text');
-set(th,'fontweight','bold','fontName','Calibri','fontsize',12);
-xlabel('Tiempo (s)','fontweight','bold','fontName','Calibri','fontsize',12)
-ylabel('f(t)','fontweight','bold','fontName','Calibri','fontsize',12)
+%lgnds = legend('Muslo izquierdo','Muslo derecho');
+%ch = get(lgnds,'Children');
+%th = findobj(ch,'Type','text');
+%set(th,'fontweight','bold','fontName','Calibri','fontsize',12);
+%xlabel('Tiempo (s)','fontweight','bold','fontName','Calibri','fontsize',12)
+%ylabel('f(t)','fontweight','bold','fontName','Calibri','fontsize',12)
 
 %figure(2)
-plot(x,lower2,'b',x,lower_r2,'r','LineWidth',2)
+plot([x,x2],[lower,lower2],'b','LineWidth',5,[x,x2],[lower_r,lower_r2],'r','LineWidth',5)
 %title('Actuador gen�rico','fontweight','bold','fontName','Calibri','fontsize',14)
 lgnds = legend('Pierna izquierda','Pierna derecha');
 ch = get(lgnds,'Children');
